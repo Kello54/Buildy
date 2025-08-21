@@ -1,0 +1,15 @@
+site_name: V18 Platform Docs
+theme: material
+plugins:
+  - search
+  - swagger-ui:
+      swagger_path: openapi/platform.json
+
+nav:
+  - Home: index.md
+  - Runbooks: runbooks.md
+  - Dashboards: dashboards.md
+  - API:
+      - Quotasvc: openapi/generated/quotasvc.json
+      - Workers: openapi/generated/workers.json
+      - Full Platform: openapi/platform.json
