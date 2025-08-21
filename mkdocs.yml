@@ -3,13 +3,13 @@ theme: material
 plugins:
   - search
   - swagger-ui:
-      swagger_path: openapi/platform.json
+      swagger_path: platform.json
 
 nav:
   - Home: docs/index.md
   - Runbooks: docs/runbooks.md
   - Dashboards: docs/dashboards.md
   - API:
-      - Quotasvc: openapi/generated/quotasvc.json
-      - Workers: openapi/generated/workers.json
-      - Full Platform: openapi/platform.json
+      - Quotasvc: quotasvc.json
+      - Workers: workers.json
+      - Full Platform: platform.json
