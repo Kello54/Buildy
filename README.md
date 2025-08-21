@@ -5,3 +5,6 @@
 [![API Docs](https://img.shields.io/badge/api-openapi-green)](https://Kello54.github.io/v18-platform/)
 
 Enterprise-grade multi-tenant platform with quotas, tracing, chaos engineering, disaster recovery, monitoring, and live API documentation.
+# V18 Platform Docs
+
+[![Deploy MkDocs site](https://github.com/kello54/buildy/actions/workflows/deploy.yml/badge.svg)](https://github.com/YOUR-USERNAME/YOUR-REPO/actions/workflows/deploy.yml)
