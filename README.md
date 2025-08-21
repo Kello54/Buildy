@@ -5,3 +5,4 @@
 [![API Docs](https://img.shields.io/badge/api-openapi-green)](https://Kello54.github.io/v18-platform/)
 
 Enterprise-grade multi-tenant platform with quotas, tracing, chaos engineering, disaster recovery, monitoring, and live API documentation. 
+ 
