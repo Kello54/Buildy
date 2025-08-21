@@ -1,15 +1,29 @@
-site_name: V18 Platform Docs
-theme: material
-plugins:
-  - search
-  - swagger-ui:
-      swagger_path: openapi/platform.json
+name: Deploy MkDocs site
 
-nav:
-  - Home: index.md
-  - Runbooks: runbooks.md
-  - Dashboards: dashboards.md
-  - API:
-      - Quotasvc: openapi/generated/quotasvc.json
-      - Workers: openapi/generated/workers.json
-      - Full Platform: openapi/platform.json
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install MkDocs and plugins
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-swagger-ui
+
+      - name: Build and deploy
+        run: mkdocs gh-deploy --force
