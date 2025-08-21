@@ -1,3 +1,0 @@
-# Dashboards
-Grafana dashboards overview. 
- 
