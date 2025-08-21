@@ -6,9 +6,9 @@ plugins:
       swagger_path: openapi/platform.json
 
 nav:
-  - Home: index.md
-  - Runbooks: runbooks.md
-  - Dashboards: dashboards.md
+  - Home: docs/index.md
+  - Runbooks: docs/runbooks.md
+  - Dashboards: docs/dashboards.md
   - API:
       - Quotasvc: openapi/generated/quotasvc.json
       - Workers: openapi/generated/workers.json
