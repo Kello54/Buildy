@@ -1,7 +1,5 @@
 # API Reference
 
-The full API documentation is embedded below:
+The API is displayed below:
 
-:::swagger-ui
-    src: platform.json
-:::
+<swagger-ui />
