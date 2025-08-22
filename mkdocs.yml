@@ -5,10 +5,10 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      spec_file: docs/swagger.json
+      swagger_config: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API: platform.json
