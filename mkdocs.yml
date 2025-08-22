@@ -1,23 +1,31 @@
 site_name: V18 Platform Docs
+site_description: Documentation for the V18 Platform
+site_author: Kello54
+
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - search.highlight
+    - search.share
 
 plugins:
   - search
   - swagger-ui-tag:
-      urls:
-        - name: Platform
-          url: docs/platform.json
-        - name: Quota Service
-          url: docs/quotasvc.json
-        - name: Workers
-          url: docs/workers.json
+      spec: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Platform: platform.json
-      - Quota Service: quotasvc.json
-      - Workers: workers.json
+  - API: api.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
