@@ -1,17 +1,37 @@
 site_name: V18 Platform Docs
+site_description: Documentation for the V18 Platform
+site_author: V18 Team
+repo_url: https://github.com/your-username/your-repo
+repo_name: GitHub
+
 theme:
   name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
 
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - name: Platform API
-          path: docs/platform.json
+      swagger_path: docs/platform.json
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Platform: platform.json
+      - Platform API: platform.json
