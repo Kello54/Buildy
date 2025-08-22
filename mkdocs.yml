@@ -4,11 +4,20 @@ theme:
 
 plugins:
   - search
-  - swagger-ui
+  - swagger-ui:
+      spec_file:
+        - docs/swagger.json
+        - docs/quotasvc.json
+        - docs/workers.json
+        - docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
+      - API Guide: api.md
+      - Main API: swagger.json
+      - Quota Service: quotasvc.json
+      - Workers: workers.json
       - Platform: platform.json
