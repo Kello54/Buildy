@@ -4,11 +4,11 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
+  - swagger-ui-tag:
       spec_file: docs/swagger.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: swagger.json
+  - API: api.md
