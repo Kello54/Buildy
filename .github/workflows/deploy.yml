@@ -32,6 +32,30 @@ jobs:
       - name: Build site
         run: mkdocs build --clean
 
+      # ✅ Copy Swagger JSON alongside site for direct preview
+      - name: Copy Swagger spec for preview
+        run: |
+          mkdir -p site/swagger-preview
+          cp docs/platform.json site/swagger-preview/platform.json
+          cat > site/swagger-preview/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Swagger Preview</title>
+            <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+          </head>
+          <body>
+            <div id="swagger-ui"></div>
+            <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+            <script>
+              window.onload = () => {
+                SwaggerUIBundle({ url: "platform.json", dom_id: '#swagger-ui' });
+              };
+            </script>
+          </body>
+          </html>
+          EOF
+
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
