@@ -1,1 +1,9 @@
+/* Make Swagger UI take full width */
+.md-content {
+  max-width: 100% !important;
+}
 
+.swagger-ui {
+  margin: 0;
+  padding: 0;
+}
