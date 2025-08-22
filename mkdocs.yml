@@ -1,5 +1,13 @@
 site_name: V18 Platform Docs
-theme: material
+site_url: https://kello54.github.io/Buildy/   # replace with your repo Pages URL
+theme:
+  name: material
+  logo: images/logo.png      # path inside docs/
+  favicon: images/favicon.png
+  palette:
+    scheme: default
+    primary: blue
+    accent: deep purple
 
 plugins:
   - search
