@@ -5,7 +5,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json
+      spec_file: docs/platform.json   # <— fixed option name
 
 nav:
   - Home: index.md
