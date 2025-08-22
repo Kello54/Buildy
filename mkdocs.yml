@@ -5,10 +5,11 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json   # ✅ this is the correct key
+      spec_file: docs/platform.json   # ✅ correct key
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API:
+      - Reference: platform.json
