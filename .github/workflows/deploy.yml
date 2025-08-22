@@ -1,9 +1,10 @@
-name: build
+name: Deploy MkDocs
 
 on:
   push:
     branches:
-      - main
+      - main  # change if your default branch is different
+  pull_request:
 
 jobs:
   build:
@@ -20,14 +21,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs-material
-          pip install mkdocs-swagger-ui-tag
-
-      - name: Verify installed packages
-        run: pip list
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Build MkDocs site
-        run: mkdocs build   # ⚡ removed --strict to stop warnings failing build
+        run: mkdocs build --strict
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
