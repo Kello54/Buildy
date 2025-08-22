@@ -85,7 +85,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
 
-  # ✅ Deploy PR previews with temporary URL
+  # ✅ Deploy PR previews to temporary URL + comment link
   preview:
     if: github.event_name == 'pull_request'
     needs: build
@@ -93,6 +93,7 @@ jobs:
     permissions:
       pages: write
       id-token: write
+      pull-requests: write
 
     steps:
       - name: Download built site
@@ -107,4 +108,19 @@ jobs:
           path: site
 
       - name: Deploy preview
+        id: deploy
         uses: actions/deploy-pages@v4
+
+      - name: Comment with preview URL
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ✅ Docs preview is live!
+
+            🔗 [View Preview Site](${{ steps.deploy.outputs.page_url }})
+
+            Swagger UI preview: open  
+            ```
+            /swagger-preview/index.html
+            ```
+            at that URL.
