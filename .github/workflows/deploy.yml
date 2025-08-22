@@ -63,7 +63,7 @@ jobs:
           name: site
           path: site
 
-  # ✅ Only deploy when pushing to main
+  # ✅ Deploy main branch to permanent GitHub Pages
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
@@ -85,23 +85,26 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
 
-  # ✅ PR comment with artifact link
-  comment:
+  # ✅ Deploy PR previews with temporary URL
+  preview:
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
 
     steps:
-      - name: Comment with preview link
-        uses: marocchino/sticky-pull-request-comment@v2
+      - name: Download built site
+        uses: actions/download-artifact@v4
         with:
-          message: |
-            ✅ Docs built successfully!
+          name: site
+          path: site
 
-            🔗 Download artifact: (see **Actions → Artifacts → site**)
+      - name: Upload preview to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
 
-            Once downloaded, open:
-            ```
-            site/swagger-preview/index.html
-            ```
-            in your browser to see the Swagger UI preview.
+      - name: Deploy preview
+        uses: actions/deploy-pages@v4
