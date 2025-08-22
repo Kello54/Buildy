@@ -3,7 +3,7 @@ name: Build and Deploy Docs
 on:
   push:
     branches:
-      - main   # ✅ change this if your default branch is 'master'
+      - main   # ✅ change if your default branch is 'master'
 
 jobs:
   deploy:
@@ -23,21 +23,18 @@ jobs:
           pip install mkdocs-material
           pip install mkdocs-swagger-ui
 
-      # ✅ Clean up gh-pages branch before deploying
-      - name: Reset gh-pages branch
-        run: |
-          git fetch origin
-          git push origin --delete gh-pages || true
-
       - name: Build site
         run: mkdocs build --clean
 
-      # ✅ Upload built site as artifact (downloadable .zip in Actions tab)
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
           name: site
           path: site
 
+      # ✅ Official GitHub Pages deploy action
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force --clean
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
