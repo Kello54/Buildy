@@ -23,5 +23,11 @@ jobs:
           pip install mkdocs-material
           pip install mkdocs-swagger-ui
 
+      # ✅ Clean up gh-pages branch before deploying
+      - name: Reset gh-pages branch
+        run: |
+          git fetch origin
+          git push origin --delete gh-pages || true
+
       - name: Build and deploy
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --force --clean
