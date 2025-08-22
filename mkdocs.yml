@@ -5,23 +5,17 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - file: docs/swagger.json
-          name: Main API
-        - file: docs/quotasvc.json
-          name: Quota Service
-        - file: docs/workers.json
-          name: Workers
-        - file: docs/platform.json
-          name: Platform
+      swagger_path: docs/platform.json
+  - swagger-ui:
+      swagger_path: docs/quotasvc.json
+  - swagger-ui:
+      swagger_path: docs/workers.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - API Guide: api.md
-      - Main API: swagger.json
+      - Platform: platform.json
       - Quota Service: quotasvc.json
       - Workers: workers.json
-      - Platform: platform.json
