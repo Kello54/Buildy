@@ -5,7 +5,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json   # ✅ correct key
+      spec_file: docs/platform.json
 
 nav:
   - Home: index.md
