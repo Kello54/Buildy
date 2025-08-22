@@ -5,9 +5,9 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      specs:
-        - name: Platform API
-          file: docs/platform.json
+      files:
+        - file: docs/platform.json
+          name: Platform API
 
 nav:
   - Home: index.md
