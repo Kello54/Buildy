@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - main   # ✅ change if your default branch is 'master'
+  pull_request:   # ✅ new: run checks + preview on PRs
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +25,7 @@ jobs:
           pip install mkdocs-swagger-ui
           pip install openapi-spec-validator
 
-      # ✅ Validate OpenAPI/Swagger spec before build
+      # ✅ Validate OpenAPI/Swagger spec
       - name: Validate OpenAPI spec
         run: |
           python -m openapi_spec_validator docs/platform.json
@@ -32,7 +33,7 @@ jobs:
       - name: Build site
         run: mkdocs build --clean
 
-      # ✅ Copy Swagger JSON alongside site for direct preview
+      # ✅ Generate Swagger UI preview
       - name: Copy Swagger spec for preview
         run: |
           mkdir -p site/swagger-preview
@@ -56,13 +57,29 @@ jobs:
           </html>
           EOF
 
+      # ✅ Upload artifact (for PRs and pushes)
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
           name: site
           path: site
 
-      # ✅ Deploy with official GitHub Pages action
+  # ✅ Only deploy when pushing to main
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
