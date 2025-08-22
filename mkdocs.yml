@@ -6,7 +6,10 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      spec: docs/platform.json
+      swagger_ui: 
+        urls:
+          - name: Platform API
+            url: docs/platform.json
 
 nav:
   - Home: index.md
