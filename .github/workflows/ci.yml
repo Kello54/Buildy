@@ -1,42 +1,33 @@
-name: build
+name: Deploy MkDocs
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: '3.10'
 
       - name: Install dependencies
-  run: |
-    pip install mkdocs-material
-    pip install mkdocs-swagger-ui-tag
-
-      - name: Validate OpenAPI spec
         run: |
-          python -m openapi_spec_validator docs/swagger.json
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Build site
-        run: |
-          mkdocs build --strict --clean
+      - name: Build MkDocs site
+        run: mkdocs build --strict
 
-      - name: Generate Swagger Preview
-        run: echo "Swagger preview generated"
-
-      - name: Upload site artifact
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: site
-          path: site
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
