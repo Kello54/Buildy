@@ -18,7 +18,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json
+      spec_file: docs/platform.json   # 👈 this is the correct key
 
 markdown_extensions:
   - admonition
