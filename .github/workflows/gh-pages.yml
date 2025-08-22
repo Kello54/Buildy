@@ -1,16 +1,16 @@
-name: build
+name: github pages
 
 on:
   push:
     branches:
-      - main  # or "master" depending on your repo
+      - main  # change if your default branch is different
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up job
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -21,7 +21,7 @@ jobs:
       - name: Install MkDocs and plugins
         run: |
           pip install mkdocs-material
-          pip install mkdocs-swagger-ui
+          pip install mkdocs-swagger-ui-tag
 
       - name: Build and deploy
         run: mkdocs gh-deploy --force
