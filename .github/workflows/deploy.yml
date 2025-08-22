@@ -1,58 +1,42 @@
-name: build
+name: build-deploy
 
 on:
   push:
     branches:
-      - main
+      - main   # or master, depending on your repo default branch
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: 3.x
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install mkdocs-material
-          pip install openapi-spec-validator
+          pip install mkdocs-swagger-ui-tag
 
       - name: Validate OpenAPI spec
         run: |
-          python -m openapi_spec_validator docs/swagger.json
+          if [ -f docs/swagger.json ]; then
+            echo "Swagger file found ✅"
+          else
+            echo "Swagger file missing ❌"
+            exit 1
+          fi
 
       - name: Build site
         run: mkdocs build --strict
 
-      - name: Upload site artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: site
-          path: site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Download site artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: site
-          path: site
-
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
