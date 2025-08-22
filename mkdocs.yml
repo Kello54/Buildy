@@ -1,15 +1,7 @@
 site_name: V18 Platform Docs
-site_description: Documentation for the V18 Platform
-site_author: Kello54
 
 theme:
   name: material
-  features:
-    - navigation.instant
-    - navigation.sections
-    - navigation.tabs
-    - search.highlight
-    - search.share
 
 plugins:
   - search
@@ -21,11 +13,3 @@ nav:
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API: api.md
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
