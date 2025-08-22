@@ -21,20 +21,22 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install mkdocs-material
           pip install mkdocs-swagger-ui
           pip install openapi-spec-validator
 
-      # ✅ Validate OpenAPI/Swagger spec
+      # ✅ Validate OpenAPI/Swagger spec (fail fast)
       - name: Validate OpenAPI spec
         run: |
           python -m openapi_spec_validator docs/platform.json
 
+      # ✅ Build MkDocs site (clean build each time)
       - name: Build site
-        run: mkdocs build --clean
+        run: mkdocs build --strict --clean
 
-      # ✅ Generate Swagger UI preview
-      - name: Copy Swagger spec for preview
+      # ✅ Generate Swagger UI preview page inside site/
+      - name: Generate Swagger Preview
         run: |
           mkdir -p site/swagger-preview
           cp docs/platform.json site/swagger-preview/platform.json
@@ -57,6 +59,7 @@ jobs:
           </html>
           EOF
 
+      # ✅ Upload site as artifact (always available for download)
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
@@ -85,7 +88,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
 
-  # ✅ Deploy PR previews to temporary URL + comment link
+  # ✅ Deploy PR previews with sticky comment link
   preview:
     if: github.event_name == 'pull_request'
     needs: build
@@ -114,13 +117,11 @@ jobs:
       - name: Comment with preview URL
         uses: marocchino/sticky-pull-request-comment@v2
         with:
+          header: docs-preview   # ✅ ensures single sticky comment
           message: |
             ✅ Docs preview is live!
 
             🔗 [View Preview Site](${{ steps.deploy.outputs.page_url }})
 
-            Swagger UI preview: open  
-            ```
-            /swagger-preview/index.html
-            ```
-            at that URL.
+            Swagger UI preview available at:  
+            👉 ${{ steps.deploy.outputs.page_url }}/swagger-preview/index.html
