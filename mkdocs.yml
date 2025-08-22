@@ -6,10 +6,10 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      spec: docs/platform.json   # ✅ fixed 'spec_file' -> 'spec'
+      swagger_path: docs/platform.json   # ✅ corrected key
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md                  # ✅ added so API page shows in sidebar
+  - API: api.md
