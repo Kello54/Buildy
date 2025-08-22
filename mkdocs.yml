@@ -1,45 +1,15 @@
-site_name: Buildy
-site_url: https://<kello54>.github.io/<buildy>   # replace with your repo URL
-site_author: Buildy Team
-site_description: "Buildy Documentation Platform"
+site_name: V18 Platform Docs
 
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/logo.png
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: amber
-    - scheme: slate
-      primary: indigo
-      accent: amber
-  features:
-    - navigation.instant
-    - navigation.sections
-    - navigation.top
-    - search.suggest
-    - search.highlight
-    - content.code.copy
-    - content.action.edit
-    - content.action.view
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/<your-username>/<your-repo>
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/<your-handle>
-    - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/<your-profile>
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
+      spec: docs/platform.json   # ✅ fixed 'spec_file' -> 'spec'
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: platform.json
+  - API: api.md                  # ✅ added so API page shows in sidebar
