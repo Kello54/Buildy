@@ -4,17 +4,11 @@ theme: material
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - name: Full Platform
-          path: docs/platform.json
-        - name: Quotasvc
-          path: docs/quotasvc.json
-        - name: Workers
-          path: docs/workers.json
+      swagger_path: docs/platform.json
 
 nav:
   - Home: index.md
-  - Runbooks: docsrunbooks.md
+  - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
       - Quotasvc: quotasvc.json
