@@ -29,5 +29,15 @@ jobs:
           git fetch origin
           git push origin --delete gh-pages || true
 
-      - name: Build and deploy
+      - name: Build site
+        run: mkdocs build --clean
+
+      # ✅ Upload built site as artifact (downloadable .zip in Actions tab)
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site
+
+      - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force --clean
