@@ -1,4 +1,2 @@
-mkdocs>=1.5
-mkdocs-material>=9.0
-mkdocs-swagger-ui-tag>=0.2.4
-openapi-spec-validator>=0.7
+mkdocs-material
+mkdocs-swagger-ui-tag==0.3.7
