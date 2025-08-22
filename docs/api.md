@@ -2,4 +2,6 @@
 
 The full API documentation is embedded below:
 
-<swagger-ui src="platform.json"></swagger-ui>
+:::swagger-ui
+    src: platform.json
+:::
