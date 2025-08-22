@@ -1,16 +1,17 @@
-name: Deploy MkDocs site
+name: Build and Deploy MkDocs
 
 on:
   push:
     branches:
-      - main
+      - main   # or your default branch
 
 permissions:
-  contents: write
+  contents: write   # 👈 this is required so the bot can push to gh-pages
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -23,7 +24,7 @@ jobs:
       - name: Install MkDocs and plugins
         run: |
           pip install mkdocs-material
-          pip install mkdocs-swagger-ui
+          pip install mkdocs-swagger-ui-tag
 
       - name: Build and deploy
         run: mkdocs gh-deploy --force
