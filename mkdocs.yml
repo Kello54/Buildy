@@ -4,8 +4,7 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
-      path: docs/platform.json
+  - swagger-ui
 
 nav:
   - Home: index.md
