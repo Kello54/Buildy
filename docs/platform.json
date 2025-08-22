@@ -1,1 +1,20 @@
-
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Platform API",
+    "description": "This is the API specification for the Platform service.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "summary": "Check service status",
+        "responses": {
+          "200": {
+            "description": "The service is healthy"
+          }
+        }
+      }
+    }
+  }
+}
