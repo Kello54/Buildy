@@ -1,4 +1,4 @@
-site_name: V18 Platform Docs
+site_name: Buildy Docs
 theme:
   name: material
 
@@ -11,4 +11,4 @@ nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: swagger-ui
+  - API: swagger.json
