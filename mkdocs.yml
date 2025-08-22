@@ -1,9 +1,9 @@
 site_name: V18 Platform Docs
 theme: material
+
 plugins:
   - search
-  - swagger-ui:
-      swagger_path: platform.json
+  - swagger-ui
 
 nav:
   - Home: index.md
