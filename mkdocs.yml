@@ -1,23 +1,17 @@
 site_name: V18 Platform Docs
+site_url: https://<kello54>.github.io/<buildy>/
 
 theme:
   name: material
 
 plugins:
   - search
-  - swagger-ui-tag:
-      urls:
-        - name: Platform API
-          url: docs/platform.json
-        - name: Quota Service API
-          url: docs/quotasvc.json
-        - name: Swagger API
-          url: docs/swagger.json
-        - name: Workers API
-          url: docs/workers.json
+  - swagger-ui:
+      spec_file: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API Reference: platform.json
+      
