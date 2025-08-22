@@ -1,10 +1,9 @@
-name: Build and Deploy Docs
+name: build
 
 on:
   push:
     branches:
-      - main   # ✅ change if your default branch is 'master'
-  pull_request:
+      - main
 
 jobs:
   build:
@@ -12,116 +11,48 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install mkdocs-material
-          pip install mkdocs-swagger-ui
           pip install openapi-spec-validator
 
-      # ✅ Validate OpenAPI/Swagger spec (fail fast)
       - name: Validate OpenAPI spec
         run: |
-          python -m openapi_spec_validator docs/platform.json
+          python -m openapi_spec_validator docs/swagger.json
 
-      # ✅ Build MkDocs site (clean build each time)
       - name: Build site
-        run: mkdocs build --strict --clean
+        run: mkdocs build --strict
 
-      # ✅ Generate Swagger UI preview page inside site/
-      - name: Generate Swagger Preview
-        run: |
-          mkdir -p site/swagger-preview
-          cp docs/platform.json site/swagger-preview/platform.json
-          cat > site/swagger-preview/index.html <<'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Swagger Preview</title>
-            <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
-          </head>
-          <body>
-            <div id="swagger-ui"></div>
-            <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
-            <script>
-              window.onload = () => {
-                SwaggerUIBundle({ url: "platform.json", dom_id: '#swagger-ui' });
-              };
-            </script>
-          </body>
-          </html>
-          EOF
-
-      # ✅ Upload site as artifact (always available for download)
       - name: Upload site artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: site
           path: site
 
-  # ✅ Deploy main branch to permanent GitHub Pages
   deploy:
-    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Download built site
-        uses: actions/download-artifact@v4
+      - name: Download site artifact
+        uses: actions/download-artifact@v3
         with:
           name: site
           path: site
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
-
-  # ✅ Deploy PR previews with sticky comment link
-  preview:
-    if: github.event_name == 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-      pull-requests: write
-
-    steps:
-      - name: Download built site
-        uses: actions/download-artifact@v4
-        with:
-          name: site
-          path: site
-
-      - name: Upload preview to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-      - name: Deploy preview
-        id: deploy
-        uses: actions/deploy-pages@v4
-
-      - name: Comment with preview URL
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: docs-preview   # ✅ ensures single sticky comment
-          message: |
-            ✅ Docs preview is live!
-
-            🔗 [View Preview Site](${{ steps.deploy.outputs.page_url }})
-
-            Swagger UI preview available at:  
-            👉 ${{ steps.deploy.outputs.page_url }}/swagger-preview/index.html
