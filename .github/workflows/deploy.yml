@@ -22,6 +22,12 @@ jobs:
         run: |
           pip install mkdocs-material
           pip install mkdocs-swagger-ui
+          pip install openapi-spec-validator
+
+      # ✅ Validate OpenAPI/Swagger spec before build
+      - name: Validate OpenAPI spec
+        run: |
+          python -m openapi_spec_validator docs/platform.json
 
       - name: Build site
         run: mkdocs build --clean
@@ -32,7 +38,7 @@ jobs:
           name: site
           path: site
 
-      # ✅ Official GitHub Pages deploy action
+      # ✅ Deploy with official GitHub Pages action
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
