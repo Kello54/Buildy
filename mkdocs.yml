@@ -9,6 +9,12 @@ plugins:
       urls:
         - name: Platform API
           url: docs/platform.json
+        - name: Quota Service API
+          url: docs/quotasvc.json
+        - name: Swagger API
+          url: docs/swagger.json
+        - name: Workers API
+          url: docs/workers.json
 
 nav:
   - Home: index.md
