@@ -1,2 +1,2 @@
+mkdocs
 mkdocs-material
-mkdocs-swagger-ui-tag==0.3.7
