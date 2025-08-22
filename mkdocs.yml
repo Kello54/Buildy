@@ -1,50 +1,14 @@
 site_name: V18 Platform Docs
-site_url: https://<your-username>.github.io/<your-repo>/   # 🔑 update with your repo
-repo_url: https://github.com/<your-username>/<your-repo>
-repo_name: GitHub
-
 theme:
   name: material
-  logo: images/logo.png          # place your logo here
-  favicon: images/favicon.png    # place your favicon here
-  features:
-    - navigation.tabs
-    - navigation.top
-    - navigation.expand
-    - search.suggest
-    - search.highlight
-    - content.code.copy
-    - content.action.edit
-
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: pink
 
 plugins:
   - search
   - swagger-ui:
-      swagger_url: docs/platform.json
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight
-  - pymdownx.tabbed
-  - pymdownx.tasklist
+      spec_file: docs/platform.json   # ✅ Corrected key
 
 nav:
   - Home: index.md
-  - Guides:
-      - Runbooks: runbooks.md
-      - Dashboards: dashboards.md
-  - API:
-      - Overview: api.md
-      - Reference (Swagger): platform.json
-  - Contributing: contributing.md
+  - Runbooks: runbooks.md
+  - Dashboards: dashboards.md
+  - API: api.md
