@@ -1,15 +1,17 @@
-site_name: Buildy Docs
-
+site_name: V18 Platform Docs
 theme:
   name: material
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
+      specs:
+        - name: Platform API
+          path: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API:
+      - Platform: platform.json
