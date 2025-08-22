@@ -1,19 +1,12 @@
 site_name: Buildy Docs
-site_description: Documentation for the Buildy platform
-site_author: Kello54
 
 theme:
   name: material
-  language: en
-  custom_dir: overrides
 
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
-
-extra_css:
-  - stylesheets/api.css
 
 nav:
   - Home: index.md
