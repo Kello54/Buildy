@@ -1,15 +1,40 @@
 site_name: V18 Platform Docs
+site_description: Documentation for the V18 Platform
+site_author: V18 Team
+site_url: https://<your-username>.github.io/<your-repo>/   # 🔑 update this
 
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  language: en
 
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json   # ✅ corrected key
+      spec_file: docs/platform.json   # ✅ validated in workflow
+      path: api                       # Docs available at /api/
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist
+  - pymdownx.emoji
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API:
+      - API Reference (Swagger): api/index.html
