@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main   # ✅ change if your default branch is 'master'
-  pull_request:   # ✅ new: run checks + preview on PRs
+  pull_request:
 
 jobs:
   build:
@@ -57,7 +57,6 @@ jobs:
           </html>
           EOF
 
-      # ✅ Upload artifact (for PRs and pushes)
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
@@ -85,3 +84,24 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
+
+  # ✅ PR comment with artifact link
+  comment:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Comment with preview link
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ✅ Docs built successfully!
+
+            🔗 Download artifact: (see **Actions → Artifacts → site**)
+
+            Once downloaded, open:
+            ```
+            site/swagger-preview/index.html
+            ```
+            in your browser to see the Swagger UI preview.
