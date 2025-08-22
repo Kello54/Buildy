@@ -5,7 +5,9 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      swagger_config: docs/platform.json
+      specs:
+        - name: Platform API
+          file: docs/platform.json
 
 nav:
   - Home: index.md
