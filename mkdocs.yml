@@ -6,8 +6,9 @@ repo_name: Kello54/Buildy
 
 theme:
   name: material
-  logo: images/logo.png      # path inside docs/
+  logo: images/logo.png
   favicon: images/favicon.png
+  language: en
   palette:
     - scheme: default
       primary: indigo
@@ -27,6 +28,12 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+  font:
+    text: "Inter"
+    code: "Fira Code"
+
+extra_css:
+  - stylesheets/custom.css
 
 plugins:
   - search
@@ -41,4 +48,5 @@ nav:
       - API Spec: swagger.json
       - API Docs: api.md
   - Quotas: quotasvc.json
+
 
