@@ -1,8 +1,14 @@
 site_name: V18 Platform Docs
-site_url: https://<kello54>.github.io/<buildy>/
+site_url: https://kello54.github.io/buildy/
+site_description: "Documentation for the V18 Platform"
 
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
 
 plugins:
   - search
@@ -13,4 +19,3 @@ nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API Reference: platform.json
