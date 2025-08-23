@@ -1,9 +1,9 @@
-name: deploy
+name: build
 
 on:
   push:
     branches:
-      - main  # change to 'master' if that's your default branch
+      - main
 
 jobs:
   build:
@@ -19,9 +19,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
