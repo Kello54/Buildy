@@ -5,13 +5,15 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      swagger_ui: 
-        - name: Platform API
-          spec: docs/platform.json
+      spec: docs/platform.json
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+  - minify:
+      minify_html: true
+  - redirects
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Platform API: platform.json
+  - API: api.md
