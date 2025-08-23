@@ -4,13 +4,7 @@ theme:
 
 plugins:
   - search
-  - swagger-ui-tag:
-      swagger_ui: docs/platform.json
-  - git-revision-date-localized:
-      fallback_to_build_date: true
-  - minify:
-      minify_html: true
-  - redirects
+  - swagger-ui-tag
 
 nav:
   - Home: index.md
