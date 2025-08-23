@@ -1,45 +1,43 @@
-# 🛠️ Welcome to Buildy Docs
+# 🛠️ Buildy Documentation
 
 ![Buildy Logo](images/logo.png){ align=right width=120 }
 
 Welcome to the official **Buildy Documentation Platform**.  
-Here you’ll find everything you need to understand, use, and extend the Buildy system.
+Here you’ll find everything you need to understand, use, and extend the Buildy system.  
 
 ---
 
-## ✨ What is Buildy?
+## ✨ Overview
 
-Buildy is your **next-gen automation and orchestration platform**, designed to help you:
+Buildy is a **next-generation automation and orchestration platform**.  
+It empowers teams to:  
+
 - ⚡ Speed up deployments  
 - 📊 Manage dashboards & monitoring  
 - 🔒 Standardize runbooks  
 - 🌍 Scale with confidence  
 
----
-
-## 📖 Documentation Sections
-
-- **[Runbooks](runbooks.md)** → Step-by-step operations guides  
-- **[Dashboards](dashboards.md)** → Visual monitoring and insights  
-- **[API Reference](api.md)** → REST API documentation  
-- **[Swagger Spec](swagger.json)** → Interactive API explorer  
-- **[Platform Config](platform.json)** → Core system definitions  
+Whether you’re a **developer, operator, or manager**, Buildy gives you the tools to move faster and with clarity.  
 
 ---
 
-## 🎨 Branding
+## 📖 Sections in This Documentation
 
-Buildy uses **deep purple** and **gold** as its primary identity colors.  
-We recommend using them in dashboards, slides, and customer-facing assets for a consistent look.  
+- **[Home](index.md)** → You are here  
+- **[Runbooks](runbooks.md)** → Step-by-step guides for common tasks  
+- **[Dashboards](dashboards.md)** → Monitoring, KPIs, and visual insights  
+- **[API Reference](api.md)** → REST API details  
+- **[Swagger Spec](platform.json)** → Interactive OpenAPI explorer  
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-1. Install prerequisites  
-2. Clone the repo  
-3. Build the docs with:
+To build and serve the docs locally:  
 
 ```bash
-mkdocs serve
+# Install dependencies
+pip install -r requirements.txt
 
+# Serve the site locally
+mkdocs serve
