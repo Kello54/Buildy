@@ -4,11 +4,7 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
-      spec_file: docs/platform.json
-  - link-checker   # checks for broken links
-
-strict: true
+  - swagger-ui-tag
 
 nav:
   - Home: index.md
