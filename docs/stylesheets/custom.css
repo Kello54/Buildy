@@ -1,122 +1,52 @@
-/* =======================
-   Buildy Docs Custom CSS
-   Theme: Purple & Gold
-   ======================= */
+/* === Buildy Custom Branding === */
 
-/* Header styling */
-.md-header {
-  background-color: #5e35b1; /* Royal Purple */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+/* Brand colors */
+:root {
+  --md-primary-fg-color: #6A1B9A; /* Deep Purple */
+  --md-accent-fg-color: #FFD54F; /* Gold */
 }
 
-/* Navigation tabs */
-.md-tabs__link {
-  font-weight: 500;
-  color: #ffffff;
-  transition: color 0.2s ease;
+/* Header and nav styling */
+.md-header, .md-tabs {
+  background-color: var(--md-primary-fg-color) !important;
 }
 
-.md-tabs__link:hover {
-  color: #ffd54f; /* Golden Yellow */
-}
-
-/* Sidebar navigation */
-.md-nav__link {
-  font-weight: 500;
-}
-
-.md-nav__link--active {
-  color: #5e35b1; /* Royal Purple */
-}
-
-/* Headings */
-h1, h2, h3, h4 {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  color: #311b92; /* Deep Purple */
-  margin-top: 1.2em;
-  margin-bottom: 0.6em;
-}
-
-/* Paragraphs */
-p {
-  line-height: 1.7;
-  font-size: 1.05rem;
-  color: #3e3e3e;
-}
-
-/* Code blocks */
-code, pre {
-  font-family: "Fira Code", monospace;
-  font-size: 0.9rem;
-  border-radius: 6px;
-}
-
-pre code {
-  background: #f8f4ff; /* Light lavender */
-  padding: 1em;
-  display: block;
-  overflow-x: auto;
-}
-
-/* Tables */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1em 0;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 0.75em 1em;
-  border: 1px solid #e0e0e0;
-}
-
-th {
-  background: #ede7f6; /* Pale purple */
-  font-weight: 600;
-  color: #4527a0;
+.md-header__title, .md-nav__title {
+  color: white !important;
 }
 
 /* Links */
-a {
-  color: #8e24aa; /* Vivid Purple */
-  text-decoration: none;
-  transition: color 0.2s ease;
+a, .md-typeset a {
+  color: var(--md-primary-fg-color);
 }
 
-a:hover {
-  color: #ffb300; /* Bright Gold */
-  text-decoration: underline;
+a:hover, .md-typeset a:hover {
+  color: var(--md-accent-fg-color);
 }
 
-/* Logo size */
-.md-header__button.md-logo img {
-  height: 38px;
-}
-
-/* Callouts / Admonitions */
-.md-typeset .admonition {
+/* Buttons */
+.md-button {
+  background-color: var(--md-primary-fg-color);
+  color: white;
   border-radius: 8px;
-  padding: 0.75em 1em;
+  transition: 0.2s ease-in-out;
 }
 
-/* Note */
-.md-typeset .admonition.note {
-  border-left: 6px solid #5e35b1;
-  background: #ede7f6;
+.md-button:hover {
+  background-color: var(--md-accent-fg-color);
+  color: black;
 }
 
-/* Warning */
-.md-typeset .admonition.warning {
-  border-left: 6px solid #ffb300;
-  background: #fff8e1;
+/* Headings */
+h1, h2, h3 {
+  color: var(--md-primary-fg-color);
 }
 
-/* Tip */
-.md-typeset .admonition.tip {
-  border-left: 6px solid #8e24aa;
-  background: #f3e5f5;
+/* Code blocks */
+.md-typeset code {
+  background-color: #f3e5f5;
+  color: #4a148c;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
 }
 
