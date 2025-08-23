@@ -4,12 +4,12 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
-      spec_file: docs/platform.json
+  - swagger-ui
   - mike
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: platform.json
+  - API:
+      - Platform Spec: platform.json
