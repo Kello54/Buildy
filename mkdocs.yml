@@ -1,22 +1,32 @@
-site_name: V18 Platform Docs
-site_url: https://kello54.github.io/buildy/
-site_description: "Documentation for the V18 Platform"
+site_name: Buildy Docs
+site_url: https://kello54.github.io/Buildy/
 
 theme:
   name: material
-  features:
-    - navigation.tabs
-    - navigation.top
-    - search.suggest
-    - search.highlight
-
-plugins:
-  - search
-  - swagger-ui:
-      spec_file: docs/platform.json
+  custom_dir: docs/stylesheets   # allows custom CSS overrides
+  palette:
+    - scheme: default
+      primary: blue
+      accent: teal
+    - scheme: slate
+      primary: blue
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo: images/logo.png       # put your logo inside docs/images/
+  favicon: images/favicon.png # put a small icon inside docs/images/
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  
+  - API:
+      - API Guide: api.md
+      - Platform Spec: platform.json
+      - Quota Service: quotasvc.json
+      - Workers: workers.json
+      - Swagger Spec: swagger.json
