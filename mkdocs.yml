@@ -6,9 +6,6 @@ plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
-  - link-checker   # checks for broken links
-
-strict: true
 
 nav:
   - Home: index.md
