@@ -5,7 +5,8 @@ theme:
 plugins:
   - search
   - swagger-ui-tag:
-      spec: docs/platform.json
+      swagger_ui:
+        spec_file: docs/platform.json
   - git-revision-date-localized:
       fallback_to_build_date: true
   - minify:
