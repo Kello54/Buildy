@@ -6,11 +6,23 @@ theme:
     accent: amber
   logo: images/logo.png
   favicon: images/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
 
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
+  - mike:  # versioning plugin
+      alias: true
+
+extra:
+  version:
+    provider: mike
 
 nav:
   - Home: index.md
