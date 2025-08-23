@@ -1,36 +1,15 @@
 site_name: V18 Platform Docs
 theme:
   name: material
-  palette:
-    primary: deep purple
-    accent: amber
-  logo: images/logo.png
-  favicon: images/favicon.ico
-  features:
-    - navigation.instant
-    - navigation.tabs
-    - navigation.top
-    - content.code.copy
-    - content.action.edit
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
-  - mike:  # versioning plugin
-      alias: true
-
-extra:
-  version:
-    provider: mike
+      swagger_path: docs/platform.json   # ✅ correct option
+  - mike                                 # ✅ no alias here
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - Architecture: architecture.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
-  - Troubleshooting: troubleshooting.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
+  - API: platform.json
