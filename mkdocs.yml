@@ -5,8 +5,9 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json   # ✅ correct option
-  - mike                                 # ✅ no alias here
+      specs:
+        - file: docs/platform.json
+  - mike
 
 nav:
   - Home: index.md
