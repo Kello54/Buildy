@@ -1,32 +1,44 @@
 site_name: Buildy Docs
-site_url: https://kello54.github.io/Buildy/
+site_description: Documentation for the Buildy platform
+site_author: Buildy Team
+repo_url: https://github.com/Kello54/Buildy
+repo_name: Kello54/Buildy
 
 theme:
   name: material
-  custom_dir: docs/stylesheets   # allows custom CSS overrides
+  logo: images/logo.png      # path inside docs/
+  favicon: images/favicon.png
   palette:
     - scheme: default
-      primary: blue
-      accent: teal
-    - scheme: slate
-      primary: blue
-      accent: teal
+      primary: indigo
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
-  font:
-    text: Roboto
-    code: Roboto Mono
-  logo: images/logo.png       # put your logo inside docs/images/
-  favicon: images/favicon.png # put a small icon inside docs/images/
+    - scheme: slate
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+  - swagger-ui:
+      spec_file: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - API Guide: api.md
-      - Platform Spec: platform.json
-      - Quota Service: quotasvc.json
-      - Workers: workers.json
-      - Swagger Spec: swagger.json
+  - API Reference:
+      - API Spec: swagger.json
+      - API Docs: api.md
+  - Quotas: quotasvc.json
+
