@@ -1,52 +1,29 @@
 site_name: Buildy Docs
-site_description: Documentation for the Buildy platform
+site_description: Documentation for Buildy
 site_author: Buildy Team
-repo_url: https://github.com/Kello54/Buildy
-repo_name: Kello54/Buildy
 
 theme:
   name: material
-  logo: images/logo.png
+  logo: images/logo.PNG
   favicon: images/favicon.png
-  language: en
   palette:
     - scheme: default
-      primary: indigo
-      accent: deep orange
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: deep orange
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
+      primary: deep purple    # Main purple tone
+      accent: amber           # Golden accent
+    - scheme: slate           # Optional dark mode
+      primary: deep purple
+      accent: amber
   features:
-    - navigation.tabs
+    - navigation.instant
+    - navigation.sections
     - navigation.top
     - search.suggest
     - search.highlight
-    - content.code.copy
-  font:
-    text: "Inter"
-    code: "Fira Code"
 
-extra_css:
-  - stylesheets/custom.css
-
-plugins:
-  - search
-  - swagger-ui:
-      spec_file: docs/platform.json
-
-nav:
-  - Home: index.md
-  - Runbooks: runbooks.md
-  - Dashboards: dashboards.md
-  - API Reference:
-      - API Spec: swagger.json
-      - API Docs: api.md
-  - Quotas: quotasvc.json
-
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-org/your-repo
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/your-handle
 
