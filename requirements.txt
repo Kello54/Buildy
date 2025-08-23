@@ -1,3 +1,2 @@
-mkdocs
 mkdocs-material
-mkdocs-swagger-ui-tag
+mkdocs-swagger-ui
