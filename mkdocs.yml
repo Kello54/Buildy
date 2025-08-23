@@ -4,8 +4,10 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
-      - file: docs/platform.json   # Path to your API spec
+  - swagger-ui-tag:
+      swagger_ui: 
+        - name: Platform API
+          spec: docs/platform.json
 
 nav:
   - Home: index.md
