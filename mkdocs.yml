@@ -1,24 +1,17 @@
 site_name: V18 Platform Docs
-strict: true
-
 theme:
   name: material
-  palette:
-    primary: deep purple
-    accent: amber
 
 plugins:
   - search
-  - swagger-ui-tag
-  - link-checker
+  - swagger-ui:
+      spec_file: docs/platform.json
+  - link-checker   # checks for broken links
+
+strict: true
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - Architecture: architecture.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API: api.md
-  - Troubleshooting: troubleshooting.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
