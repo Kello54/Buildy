@@ -5,8 +5,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - file: docs/platform.json
+      spec_file: docs/platform.json
   - mike
 
 nav:
