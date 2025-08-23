@@ -1,6 +1,4 @@
 mkdocs-material
 mkdocs-swagger-ui-tag
+mkdocs-link-checker
 pymdown-extensions
-mkdocs-git-revision-date-localized-plugin
-mkdocs-minify-plugin
-mkdocs-redirects
