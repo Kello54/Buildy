@@ -1,29 +1,45 @@
-# V18 Platform Documentation
+# 🛠️ Welcome to Buildy Docs
 
-Welcome to the **V18 Platform Docs** 🚀  
-This site provides guides, references, and API specifications for the V18 platform.
+![Buildy Logo](images/logo.png){ align=right width=120 }
+
+Welcome to the official **Buildy Documentation Platform**.  
+Here you’ll find everything you need to understand, use, and extend the Buildy system.
+
+---
+
+## ✨ What is Buildy?
+
+Buildy is your **next-gen automation and orchestration platform**, designed to help you:
+- ⚡ Speed up deployments  
+- 📊 Manage dashboards & monitoring  
+- 🔒 Standardize runbooks  
+- 🌍 Scale with confidence  
 
 ---
 
 ## 📖 Documentation Sections
 
-- [Runbooks](runbooks.md) – Step-by-step guides for operations and troubleshooting  
-- [Dashboards](dashboards.md) – Monitoring and analytics dashboards  
-- [API](api.md) – Overview of available APIs  
-  - [Quotasvc API](quotasvc.json)  
-  - [Workers API](workers.json)  
-  - [Full Platform API](platform.json)  
+- **[Runbooks](runbooks.md)** → Step-by-step operations guides  
+- **[Dashboards](dashboards.md)** → Visual monitoring and insights  
+- **[API Reference](api.md)** → REST API documentation  
+- **[Swagger Spec](swagger.json)** → Interactive API explorer  
+- **[Platform Config](platform.json)** → Core system definitions  
 
 ---
 
-## 🛠️ About V18 Platform
+## 🎨 Branding
 
-The V18 Platform helps with **building material price comparison** by exposing services and dashboards.  
-Use this documentation to get started, integrate APIs, and maintain system reliability.
+Buildy uses **deep purple** and **gold** as its primary identity colors.  
+We recommend using them in dashboards, slides, and customer-facing assets for a consistent look.  
 
 ---
 
-## 🔗 Resources
+## 🚀 Getting Started
 
-- GitHub Repository: [Buildy](https://github.com/Kello54/Buildy)  
-- Contact: *Add your support email or Slack channel here*  
+1. Install prerequisites  
+2. Clone the repo  
+3. Build the docs with:
+
+```bash
+mkdocs serve
+
