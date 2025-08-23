@@ -1,47 +1,24 @@
-site_name: Buildy Docs
-site_description: Buildy Documentation Platform
-site_author: Buildy Team
-site_url: https://kello54.github.io/Buildy/
-
-# Theme
+site_name: V18 Platform Docs
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/favicon.png
   palette:
-    - scheme: default
-      primary: deep purple
-      accent: amber
-    - scheme: slate
-      primary: deep purple
-      accent: amber
-  features:
-    - navigation.instant
-    - navigation.sections
-    - navigation.expand
-    - toc.integrate
-    - search.highlight
-    - search.share
-    - content.code.copy
+    primary: deep purple
+    accent: amber
+  logo: images/logo.png
+  favicon: images/favicon.ico
 
-# Extra CSS (custom branding)
-extra_css:
-  - stylesheets/custom.css
-
-# Plugins
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
 
-# Navigation
 nav:
   - Home: index.md
+  - Getting Started: getting-started.md
+  - Architecture: architecture.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - API Reference: api.md
-      - Swagger Spec: swagger.json
-  - Platform: platform.json
-  - Quotas: quotasvc.json
-
+  - API: api.md
+  - Troubleshooting: troubleshooting.md
+  - Changelog: changelog.md
+  - Contributing: contributing.md
