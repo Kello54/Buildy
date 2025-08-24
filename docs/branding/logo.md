@@ -1,16 +1,11 @@
-# Logo Guidelines
+# Logo
 
-The Buildy logo represents the platform’s identity.
+Our official logo should be used in all documents and platforms.
 
-## Primary Logo
-Use the full-color Buildy logo whenever possible.
+![Logo](../images/logo.png){ width="200" }
 
-![Buildy Logo](images/logo.png)
+## Usage Guidelines
+- ✅ Use on a light background
+- ❌ Do not stretch or distort
+- ❌ Do not change the colors
 
-## Usage Rules
-- Do not stretch, rotate, or distort the logo.  
-- Always maintain clear space around the logo.  
-- Use only approved color versions.  
-
-## Favicon
-Use `favicon.png` for small icons and tab branding.
