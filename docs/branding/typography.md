@@ -1,23 +1,23 @@
 # Typography
 
-Our typefaces define our voice and clarity.
+Typography shapes our communication style.  
+We use clean, modern, and accessible fonts.
 
-## Headings
-We use **Roboto** (or the Material default) for headings.
+## Primary Font
+- **Roboto** (Sans-serif)  
+  - For UI, body text, and documentation
 
-# H1 Heading
-## H2 Heading
-### H3 Heading
+## Secondary Font
+- **Montserrat** (Sans-serif)  
+  - For headings, highlights, and call-outs
 
----
+## Hierarchy
+- **H1**: Page titles (Montserrat, 32px, bold)  
+- **H2**: Section headers (Montserrat, 24px, medium)  
+- **Body text**: Roboto, 16px, regular  
+- **Captions/Notes**: Roboto, 14px, light  
 
-## Body Text
-The body font should remain clean and legible.
-
-*Example of body text in paragraph style.*
-
----
-
-## Usage
-- Headings: short and descriptive
-- Body text: clear and concise
+## Usage Guidelines
+- Limit to **two fonts only** (no substitutions)  
+- Maintain consistent line spacing (1.5x body size)  
+- Avoid excessive bold or italics  
