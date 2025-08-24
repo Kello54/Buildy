@@ -1,47 +1,17 @@
-site_name: Buildy Platform Docs
-site_url: https://kello54.github.io/Buildy/
-repo_url: https://github.com/kello54/Buildy
-repo_name: kello54/Buildy
-
+site_name: V18 Platform Docs
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/favicon.png
-  palette:
-    - scheme: default
-      primary: deep purple
-      accent: amber
-    - scheme: slate
-      primary: deep purple
-      accent: amber
 
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
 
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/kello54/Buildy
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/yourhandle
-  features:
-    - navigation.expand
-    - navigation.top
-    - navigation.sections
-    - content.code.copy
-    - content.action.edit
-    - search.suggest
-    - search.highlight
-
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Overview: api.md
-      - Reference: platform.json
+  - API: api.md
   - Branding:
       - Overview: branding/index.md
       - Logo: branding/logo.md
