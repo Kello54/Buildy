@@ -1,23 +1,15 @@
 site_name: V18 Platform Docs
-site_description: Documentation for the V18 Platform
-site_author: Kello54
-
 theme:
   name: material
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - search.suggest
-    - search.highlight
-    - content.code.copy
 
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/platform.json
+      spec_file: docs/platform.json
+      path: api   # this will serve your API docs at /api/
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: swagger-ui
+  - API: api/index.html
