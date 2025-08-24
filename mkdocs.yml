@@ -4,7 +4,6 @@ site_author: Kello54
 
 theme:
   name: material
-  language: en
   features:
     - navigation.tabs
     - navigation.sections
@@ -15,11 +14,10 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      swagger_ui: docs/platform.json
+      swagger_path: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Platform API: swagger-ui
+  - API: swagger-ui
