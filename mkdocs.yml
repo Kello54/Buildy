@@ -1,8 +1,8 @@
 site_name: V18 Platform Docs
 theme:
   name: material
-  logo: images/logo.png        # Logo in the top-left
-  favicon: images/favicon.png  # Browser tab icon
+  logo: images/logo.png        # Logo in sidebar/header
+  favicon: images/favicon.png  # Tab icon
 
 plugins:
   - search
