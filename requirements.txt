@@ -1,3 +1,2 @@
-mkdocs>=1.5.3
-mkdocs-material>=9.5.0
-mkdocs-swagger-ui-tag>=0.6.7
+mkdocs-material
+mkdocs-swagger-ui
