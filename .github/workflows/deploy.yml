@@ -1,20 +1,17 @@
-name: Deploy MkDocs
+name: deploy
 
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: write
+      - main   # make sure this matches your default branch
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.x
-      - run: pip install mkdocs-material
+          python-version: '3.x'
+      - run: pip install mkdocs-material mkdocs-swagger-ui
       - run: mkdocs gh-deploy --force
