@@ -1,14 +1,15 @@
-# Colors
+# Brand Colors
 
-Our primary color palette is based on **purple and gold**.
+Our palette combines **modern purple tones** with **gold highlights**.  
+These colors must be used consistently across UI, marketing, and documentation.
 
-| Name      | Hex       | Preview |
-|-----------|-----------|---------|
-| Primary   | `#6A0DAD` | ![#6A0DAD](https://via.placeholder.com/30/6A0DAD/000000?text=+) |
-| Accent    | `#FFD700` | ![#FFD700](https://via.placeholder.com/30/FFD700/000000?text=+) |
-| Neutral   | `#F5F5F5` | ![#F5F5F5](https://via.placeholder.com/30/F5F5F5/000000?text=+) |
+| Purpose         | Color        | Hex     | Preview |
+|-----------------|-------------|---------|---------|
+| Primary         | Purple       | #6A0DAD | ![#6A0DAD](https://placehold.co/20x20/6A0DAD/6A0DAD.png) |
+| Secondary       | Gold         | #FFD700 | ![#FFD700](https://placehold.co/20x20/FFD700/FFD700.png) |
+| Background      | Light Gray   | #F5F5F5 | ![#F5F5F5](https://placehold.co/20x20/F5F5F5/F5F5F5.png) |
+| Text (primary)  | Dark Gray    | #333333 | ![#333333](https://placehold.co/20x20/333333/333333.png) |
 
-### Usage
-- **Purple** → Buttons, links, primary actions
-- **Gold** → Highlights, icons, accents
-- **Neutral** → Backgrounds, panels
+## Accessibility
+- Always maintain **4.5:1 contrast ratio** for text  
+- Use gold as an **accent**, not a background for text
