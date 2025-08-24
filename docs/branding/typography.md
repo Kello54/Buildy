@@ -1,15 +1,23 @@
 # Typography
 
-Typography sets the voice of Buildy’s content.
+Our typefaces define our voice and clarity.
 
 ## Headings
-Use a clean, bold sans-serif font for headings.  
-Recommended: **Roboto**, **Inter**, or **Poppins**.  
+We use **Roboto** (or the Material default) for headings.
+
+# H1 Heading
+## H2 Heading
+### H3 Heading
+
+---
 
 ## Body Text
-Use a neutral sans-serif for easy readability.  
-Recommended: **Roboto Regular** or **Open Sans**.  
+The body font should remain clean and legible.
 
-## Code
-For technical content, use a monospaced font.  
-Recommended: **Fira Code** or **Courier New**.
+*Example of body text in paragraph style.*
+
+---
+
+## Usage
+- Headings: short and descriptive
+- Body text: clear and concise
