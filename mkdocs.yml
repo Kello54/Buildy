@@ -1,15 +1,18 @@
 site_name: V18 Platform Docs
+
 theme:
   name: material
+  logo: images/logo.png
+  favicon: images/favicon.png
 
 plugins:
   - search
-  - swagger-ui:
-      swagger_path: docs/platform.json
 
 nav:
-  - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Platform Spec: platform.json
+  - API: api.md
+  - Architecture: architecture.md
+  - Changelog: changelog.md
+  - Contributing: contributing.md
+  - Branding: branding/index.md
