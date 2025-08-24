@@ -6,13 +6,10 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - file: docs/platform.json
-          name: Platform API
+      swagger_path: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API:
-      - Platform: platform.json
+  - API: swagger-ui
