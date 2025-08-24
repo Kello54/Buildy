@@ -1,38 +1,15 @@
-site_name: Buildy
-site_description: Building material price comparison app
-site_author: Kello54
-repo_url: https://github.com/Kello54/Buildy
-
+site_name: V18 Platform Docs
 theme:
   name: material
-  logo: docs/images/logo.PNG
-  favicon: docs/images/favicon.png
-  features:
-    - navigation.instant
-    - navigation.expand
-    - navigation.sections
-    - toc.integrate
-    - content.code.copy
-
-extra_css:
-  - stylesheets/custom.css
-  - stylesheets/api.css
-
-nav:
-  - Home: index.md
-  - API:
-      - Overview: api.md
-      - Reference: swagger.json
-  - Dashboards: dashboards.md
-  - Architecture: architecture.md
-  - Runbooks: runbooks.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
 
 plugins:
   - search
   - swagger-ui:
-      swagger_path: docs/swagger.json
-      output_path: docs/api.md
-      syntaxHighlight: true
-      displayRequestDuration: true
+      spec_file: docs/platform.json
+
+nav:
+  - Home: index.md
+  - Runbooks: runbooks.md
+  - Dashboards: dashboards.md
+  - API:
+      - Platform API: platform.json
