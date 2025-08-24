@@ -1,21 +1,44 @@
 site_name: V18 Platform Docs
 site_url: https://kello54.github.io/Buildy/
+site_description: Documentation for the V18 Platform
+repo_url: https://github.com/Kello54/Buildy
+repo_name: Kello54/Buildy
 
 theme:
   name: material
-  logo: images/logo.png   # <-- now lowercase and fixed
-  favicon: images/logo.png
-  features:
-    - navigation.instant
-    - navigation.tabs
-    - navigation.expand
-    - toc.integrate
-    - content.code.copy
+  logo: images/logo.png
+  favicon: images/favicon.png
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Runbooks:
+      - Overview: runbooks/overview.md
+      - Guide 1: runbooks/guide1.md
+      - Guide 2: runbooks/guide2.md
+  - Dashboard:
+      - Overview: dashboard/overview.md
+      - Metrics: dashboard/metrics.md
+      - Reports: dashboard/reports.md
+  - API Reference:
+      - Platform API: platform/openapi.yaml
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.yaml   # adjust if your API file is different
+      spec_file: docs/platform/openapi.yaml
 
 markdown_extensions:
   - admonition
@@ -23,13 +46,3 @@ markdown_extensions:
   - footnotes
   - toc:
       permalink: true
-
-nav:
-  - Home: index.md
-  - Runbooks:
-      - Dashboard: runbooks/dashboard.md
-      - API Reference: runbooks/api.md
-  - Platform:
-      - Overview: platform/overview.md
-      - Guides: platform/guides.md
-      - Reference: platform/reference.md
