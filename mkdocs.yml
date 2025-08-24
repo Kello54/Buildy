@@ -1,18 +1,35 @@
 site_name: V18 Platform Docs
+site_url: https://kello54.github.io/Buildy/
 
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/favicon.png
+  logo: images/logo.png   # <-- now lowercase and fixed
+  favicon: images/logo.png
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.expand
+    - toc.integrate
+    - content.code.copy
 
 plugins:
   - search
+  - swagger-ui:
+      spec_file: docs/platform.yaml   # adjust if your API file is different
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+      permalink: true
 
 nav:
-  - Runbooks: runbooks.md
-  - Dashboards: dashboards.md
-  - API: api.md
-  - Architecture: architecture.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
-  - Branding: branding/index.md
+  - Home: index.md
+  - Runbooks:
+      - Dashboard: runbooks/dashboard.md
+      - API Reference: runbooks/api.md
+  - Platform:
+      - Overview: platform/overview.md
+      - Guides: platform/guides.md
+      - Reference: platform/reference.md
