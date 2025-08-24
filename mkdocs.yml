@@ -6,16 +6,11 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
+      spec: docs/platform.json   # ✅ fixed from spec_file to spec
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
-  - Branding:
-      - Overview: branding/index.md
-      - Logo: branding/logo.md
-      - Colours: branding/colours.md
-      - Typography: branding/typography.md
-
+  - API:
+      - Platform API: platform.json
