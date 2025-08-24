@@ -15,4 +15,4 @@ nav:
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Platform API: platform.json
+      - Platform API: platform.json 
