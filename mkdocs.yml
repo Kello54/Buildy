@@ -1,14 +1,16 @@
 site_name: V18 Platform Docs
+
 theme:
   name: material
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
+      spec: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api.md
+  - API:
+      - Platform API: platform.json
