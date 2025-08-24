@@ -5,11 +5,10 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
-      path: api   # this will serve your API docs at /api/
+      swagger_path: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: api/index.html
+  - API: swagger-ui
