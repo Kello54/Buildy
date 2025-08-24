@@ -1,11 +1,9 @@
-# Branding
+# Branding Guidelines
 
-Welcome to the **Buildy Branding Guide**.
+Welcome to the **V18 Platform Branding** documentation.  
+Here you’ll find everything you need to keep our look and feel consistent.
 
-This section defines the official branding elements for the Buildy platform:
-
-- ✅ Logos  
-- 🎨 Colors  
-- 🔤 Typography  
-
-Use these consistently across documentation, dashboards, and external assets to keep a unified brand identity.
+## Sections
+- [Logo](logo.md)
+- [Colors](colors.md)
+- [Typography](typography.md)
