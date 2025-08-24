@@ -1,14 +1,31 @@
-# Branding Overview
+# Branding
 
-Our brand identity ensures consistency and clarity across all platforms.  
-This section provides guidelines on how to properly use our logo, colors, and typography.
+Our branding guidelines define how Buildy is represented visually.
 
-## Purpose
-- Build trust through consistent visuals  
-- Improve recognition across platforms  
-- Ensure accessibility and readability  
+---
 
-## Sections
-- [Logo](logo.md)  
-- [Colors](colours.md)  
-- [Typography](typography.md)  
+## Logo
+
+Here is the official Buildy logo:
+
+![Buildy Logo](../images/logo.png){ width="200" }
+
+Use this logo consistently across all platforms.  
+Do not stretch, recolour, or distort the logo.
+
+---
+
+## Colours
+
+Our primary and secondary colours:
+
+- **Primary Purple**: `#6A0DAD`
+- **Secondary Gold**: `#FFD700`
+- **Neutral Gray**: `#333333`
+
+Example usage:
+
+```css
+--color-primary: #6A0DAD;
+--color-secondary: #FFD700;
+--color-neutral: #333333;
