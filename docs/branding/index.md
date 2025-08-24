@@ -1,9 +1,14 @@
-# Branding Guidelines
+# Branding Overview
 
-Welcome to the **V18 Platform Branding** documentation.  
-Here you’ll find everything you need to keep our look and feel consistent.
+Our brand identity ensures consistency and clarity across all platforms.  
+This section provides guidelines on how to properly use our logo, colors, and typography.
+
+## Purpose
+- Build trust through consistent visuals  
+- Improve recognition across platforms  
+- Ensure accessibility and readability  
 
 ## Sections
-- [Logo](logo.md)
-- [Colors](colors.md)
-- [Typography](typography.md)
+- [Logo](logo.md)  
+- [Colors](colours.md)  
+- [Typography](typography.md)  
