@@ -1,31 +1,24 @@
 # Branding
 
-Our branding guidelines define how Buildy is represented visually.
+Welcome to the **Branding section** of the documentation.  
+Here you’ll find guidelines, logos, and assets related to the project’s identity.
 
 ---
 
 ## Logo
+Our official logo is shown below:
 
-Here is the official Buildy logo:
-
-![Buildy Logo](../images/logo.png){ width="200" }
-
-Use this logo consistently across all platforms.  
-Do not stretch, recolour, or distort the logo.
+![Project Logo](../images/logo.png)
 
 ---
 
-## Colours
+## Usage Guidelines
+- Use the logo on light or dark backgrounds without altering proportions.  
+- Do not stretch, rotate, or recolor the logo.  
+- Always maintain clear space around the logo.
 
-Our primary and secondary colours:
+---
 
-- **Primary Purple**: `#6A0DAD`
-- **Secondary Gold**: `#FFD700`
-- **Neutral Gray**: `#333333`
-
-Example usage:
-
-```css
---color-primary: #6A0DAD;
---color-secondary: #FFD700;
---color-neutral: #333333;
+## Related Pages
+- [Stylesheets](../stylesheets/)  
+- [Contributing](../contributing.md)  
