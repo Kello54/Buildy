@@ -1,6 +1,8 @@
 site_name: V18 Platform Docs
 theme:
   name: material
+  logo: images/logo.png        # Logo in the top-left
+  favicon: images/favicon.png  # Browser tab icon
 
 plugins:
   - search
@@ -17,5 +19,3 @@ nav:
       - Logo: branding/logo.md
       - Colors: branding/colors.md
       - Typography: branding/typography.md
-
-
