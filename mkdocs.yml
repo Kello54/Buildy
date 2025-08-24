@@ -1,18 +1,8 @@
-# ==========================
-# Buildy Platform Docs Config
-# ==========================
-
-site_name: V18 Platform Docs
-site_description: Documentation for the Buildy Platform — Runbooks, Dashboards, APIs
+site_name: Buildy Platform Docs
 site_url: https://kello54.github.io/Buildy/
-site_author: Kello54
-
 repo_url: https://github.com/kello54/Buildy
-repo_name: GitHub
+repo_name: kello54/Buildy
 
-# --------------------------
-# Theme & Branding
-# --------------------------
 theme:
   name: material
   logo: images/logo.png
@@ -24,53 +14,38 @@ theme:
     - scheme: slate
       primary: deep purple
       accent: amber
+
+plugins:
+  - search
+  - swagger-ui:
+      spec_file: docs/platform.json
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kello54/Buildy
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/yourhandle
   features:
-    - navigation.tabs
+    - navigation.expand
     - navigation.top
-    - navigation.footer
-    - content.action.edit
+    - navigation.sections
     - content.code.copy
-    - content.code.annotate
+    - content.action.edit
     - search.suggest
     - search.highlight
 
-# --------------------------
-# Navigation
-# --------------------------
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Overview: api.md        # polished API intro page
-      - Reference: platform.json # Swagger UI spec
+      - Overview: api.md
+      - Reference: platform.json
+  - Branding:
+      - Overview: branding/index.md
+      - Logo: branding/logo.md
+      - Colors: branding/colors.md
+      - Typography: branding/typography.md
 
-# --------------------------
-# Plugins
-# --------------------------
-plugins:
-  - search:
-      separator: '[\s\-\.]+'
-  - swagger-ui:
-      spec_file: docs/platform.json
-  - minify:
-      minify_html: true
-
-# --------------------------
-# Markdown Extensions
-# --------------------------
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight
-  - pymdownx.tabbed
-  - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
 
