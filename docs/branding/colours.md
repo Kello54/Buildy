@@ -1,16 +1,14 @@
-# Color Palette
+# Colors
 
-The Buildy color system creates a clean, modern look.
+Our primary color palette is based on **purple and gold**.
 
-## Primary Colors
-- **Purple** `#6A0DAD` — Primary brand color  
-- **Gold** `#FFD700` — Accent and highlights  
+| Name      | Hex       | Preview |
+|-----------|-----------|---------|
+| Primary   | `#6A0DAD` | ![#6A0DAD](https://via.placeholder.com/30/6A0DAD/000000?text=+) |
+| Accent    | `#FFD700` | ![#FFD700](https://via.placeholder.com/30/FFD700/000000?text=+) |
+| Neutral   | `#F5F5F5` | ![#F5F5F5](https://via.placeholder.com/30/F5F5F5/000000?text=+) |
 
-## Secondary Colors
-- **Dark Gray** `#2E2E2E` — Background and text  
-- **Light Gray** `#F5F5F5` — Surfaces and contrast  
-
-## Usage
-- Purple = headers, highlights  
-- Gold = accents, buttons  
-- Grays = backgrounds, readability
+### Usage
+- **Purple** → Buttons, links, primary actions
+- **Gold** → Highlights, icons, accents
+- **Neutral** → Backgrounds, panels
