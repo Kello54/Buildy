@@ -1,18 +1,42 @@
 site_name: V18 Platform Docs
+site_description: Documentation for the Buildy Platform — Runbooks, Dashboards, APIs
+site_url: https://kello54.github.io/Buildy/
+repo_url: https://github.com/Kello54/Buildy
+repo_name: GitHub
+site_author: Kello54
 
 theme:
   name: material
-
-plugins:
-  - search
-  - swagger-ui:
-      spec_file: platform.json   # docs/ prefix removed
-  - minify:
-      minify_html: true
+  logo: images/logo.png
+  favicon: images/favicon.png
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+    - content.action.edit
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Platform API: platform.json 
+      - Reference: platform.json
+
+plugins:
+  - search:
+      separator: '[\s\-\.]+'
+  - swagger-ui:
+      spec_file: docs/platform.json
+  - minify:
+      minify_html: true
