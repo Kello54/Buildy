@@ -1,16 +1,15 @@
 site_name: V18 Platform Docs
-
 theme:
   name: material
 
 plugins:
   - search
   - swagger-ui:
-      spec: docs/platform.json   # ✅ correct key for your plugin
+      swagger_path: docs/platform.json
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Platform API: platform.json
+      - Platform Spec: platform.json
