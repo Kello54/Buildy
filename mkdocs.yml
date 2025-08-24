@@ -1,11 +1,18 @@
 site_name: V18 Platform Docs
+
 theme:
   name: material
+  logo: images/logo.PNG       # Make sure it matches exact case in your repo
+  favicon: images/favicon.png # Same here
+
+extra_css:
+  - stylesheets/custom.css
+  - stylesheets/api.css
 
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.json
+      spec_file: platform.json   # remove 'docs/', MkDocs looks inside docs/ by default
   - minify:
       minify_html: true
 
