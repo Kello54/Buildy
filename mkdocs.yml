@@ -1,7 +1,16 @@
 site_name: V18 Platform Docs
+site_description: Documentation for the V18 Platform
+site_author: Kello54
 
 theme:
   name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+    - content.code.copy
 
 plugins:
   - search
@@ -12,4 +21,5 @@ nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: swagger-ui
+  - API:
+      - Platform API: swagger-ui
