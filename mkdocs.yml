@@ -6,6 +6,8 @@ plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
+  - minify:
+      minify_html: true
 
 nav:
   - Home: index.md
