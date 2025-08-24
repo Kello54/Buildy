@@ -6,7 +6,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      url: docs/platform.json   # fixed
+      spec: docs/platform.json   # ✅ correct key for your plugin
 
 nav:
   - Home: index.md
