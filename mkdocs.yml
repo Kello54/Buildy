@@ -6,9 +6,7 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      specs:
-        - file: docs/platform.json   # ✅ fixed
-          name: Platform API
+      swagger_path: docs/platform.json   # changed from spec/specs
 
 nav:
   - Home: index.md
