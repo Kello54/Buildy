@@ -1,10 +1,18 @@
+# ==========================
+# Buildy Platform Docs Config
+# ==========================
+
 site_name: V18 Platform Docs
 site_description: Documentation for the Buildy Platform — Runbooks, Dashboards, APIs
 site_url: https://kello54.github.io/Buildy/
-repo_url: https://github.com/Kello54/Buildy
-repo_name: GitHub
 site_author: Kello54
 
+repo_url: https://github.com/kello54/Buildy
+repo_name: GitHub
+
+# --------------------------
+# Theme & Branding
+# --------------------------
 theme:
   name: material
   logo: images/logo.png
@@ -26,13 +34,20 @@ theme:
     - search.suggest
     - search.highlight
 
+# --------------------------
+# Navigation
+# --------------------------
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
   - API:
-      - Reference: platform.json
+      - Overview: api.md        # polished API intro page
+      - Reference: platform.json # Swagger UI spec
 
+# --------------------------
+# Plugins
+# --------------------------
 plugins:
   - search:
       separator: '[\s\-\.]+'
@@ -40,3 +55,22 @@ plugins:
       spec_file: docs/platform.json
   - minify:
       minify_html: true
+
+# --------------------------
+# Markdown Extensions
+# --------------------------
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
