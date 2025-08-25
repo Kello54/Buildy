@@ -1,35 +1,26 @@
-site_name: V18 Platform Docs
+site_name: Buildy Platform Docs
+site_url: https://kello54.github.io/Buildy/
+site_description: Documentation for the Buildy platform
 
 theme:
   name: material
   logo: images/logo.png
   favicon: images/favicon.png
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - search.highlight
-    - search.suggest
-    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Runbooks: runbooks.md
+  - Dashboards: dashboards.md
+  - API: api.md
+  - Platform: platform.md
 
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
-  - swagger-ui:
-      spec_file: docs/swagger.json
-  - swagger-ui:
-      spec_file: docs/workers.json
-  - swagger-ui:
-      spec_file: docs/quotasvc.json
 
-nav:
-  - Home: index.md
-  - Runbooks:
-      - Overview: runbooks/index.md
-  - Dashboards:
-      - Overview: dashboards/index.md
-  - API:
-      - Platform: api/platform.md
-      - Swagger: api/swagger.md
-      - Workers: api/workers.md
-      - Quotas: api/quotasvc.md
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
