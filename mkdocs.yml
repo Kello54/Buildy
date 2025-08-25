@@ -15,9 +15,21 @@ plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
+  - swagger-ui:
+      spec_file: docs/swagger.json
+  - swagger-ui:
+      spec_file: docs/workers.json
+  - swagger-ui:
+      spec_file: docs/quotasvc.json
 
 nav:
   - Home: index.md
-  - Runbooks: runbooks/index.md
-  - Dashboards: dashboards/index.md
-  - API: api/index.md
+  - Runbooks:
+      - Overview: runbooks/index.md
+  - Dashboards:
+      - Overview: dashboards/index.md
+  - API:
+      - Platform: api/platform.md
+      - Swagger: api/swagger.md
+      - Workers: api/workers.md
+      - Quotas: api/quotasvc.md
