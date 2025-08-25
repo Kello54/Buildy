@@ -1,26 +1,19 @@
-site_name: Buildy Platform Docs
-site_url: https://kello54.github.io/Buildy/
-site_description: Documentation for the Buildy platform
+site_name: V18 Platform Docs
 
 theme:
   name: material
   logo: images/logo.png
   favicon: images/favicon.png
 
-nav:
-  - Home: index.md
-  - Runbooks: runbooks.md
-  - Dashboards: dashboards.md
-  - API: api.md
-  - Platform: platform.md
-
 plugins:
   - search
   - swagger-ui:
       spec_file: docs/platform.json
 
-markdown_extensions:
-  - admonition
-  - codehilite
-  - toc:
-      permalink: true
+nav:
+  - Home: index.md
+  - Runbooks:
+      - Overview: runbooks/index.md
+      - Dashboards: runbooks/dashboards.md
+  - API: api.md
+  - Platform: platform.md
