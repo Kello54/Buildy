@@ -3,27 +3,33 @@ name: Deploy MkDocs site to GitHub Pages
 on:
   push:
     branches:
-      - main   # or master, depending on your branch
+      - main   # or master, depending on your repo
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
           pip install mkdocs-material
-          pip install mkdocs-swagger-ui
+          pip install mkdocs-swagger-ui-tag
+          pip install mkdocs-git-revision-date-plugin
 
       - name: Build site
-        run: mkdocs build
+        run: mkdocs build --strict
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
