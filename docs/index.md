@@ -1,30 +1,24 @@
-# V18 Platform Documentation
+# Buildy Platform
 
-Welcome to the **V18 Docs** — your single source of truth for running, monitoring, and scaling the V18 platform.  
-This documentation covers everything from **day-to-day operations** to **dashboards and APIs**.
+Welcome to the **Buildy Platform Documentation**.
 
----
-
-## What is V18?
-
-V18 is a modern platform for:
-
-- Streamlined deployments  
-- Automated runbooks  
-- Real-time monitoring & dashboards  
-- Business & technical KPIs  
-
-Designed for **engineering teams**, **DevOps**, and **business stakeholders**.
+This site contains guides, runbooks, dashboards, and API references to help you get the most from the Buildy platform.
 
 ---
 
-## Documentation Structure
+## 📚 Sections
 
-- [Runbooks](runbooks.md)  
-- [Dashboards](dashboards.md)  
-- [API Reference](api.md)  
-- [Branding Guidelines](branding/index.md)  
-- [Changelog](changelog.md)  
-- [Contributing](contributing.md)  
+- [Getting Started](getting-started.md)
+- [Runbooks](runbooks.md)
+- [Dashboards](dashboards.md)
+- [API Reference](api.md)
+- [Platform Configuration](platform.md)
 
 ---
+
+## 🚀 Quick Start
+
+1. Clone the repository  
+   ```bash
+   git clone https://github.com/Kello54/Buildy.git
+
