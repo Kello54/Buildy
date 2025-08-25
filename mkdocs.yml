@@ -21,7 +21,3 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Runbooks:
-      - Overview: runbooks/index.md
-      - Dashboards: runbooks/dashboards.md
-  - API: api.md
-  - Platform: platform.md
