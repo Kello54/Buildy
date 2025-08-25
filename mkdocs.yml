@@ -1,47 +1,22 @@
-site_name: V18 Platform Docs
-site_description: Documentation for the V18 platform
-site_url: https://Kello54.github.io/Buildy/
+site_name: Buildy Docs
+site_description: Documentation for the Buildy Platform
+site_url: https://kello54.github.io/Buildy/
 
 theme:
   name: material
   palette:
     - scheme: default
-      primary: purple     # Purple main color
-      accent: amber       # Gold accent
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: slate
-      primary: purple
+      primary: deep_purple
       accent: amber
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
-  features:
-    - navigation.instant
-    - navigation.sections
-    - navigation.top
-    - search.highlight
-    - search.suggest
-
-nav:
-  - Home: index.md
-  - Guides:
-      - API: api.md
-      - Architecture: architecture.md
-      - Dashboards: dashboards.md
-      - Runbooks: runbooks.md
-  - Project:
-      - Changelog: changelog.md
-      - Contributing: contributing.md
-  - Branding:
-      - Overview: branding/index.md
-      - Colours: branding/colours.md
-      - Logo: branding/logo.md
-      - Typography: branding/typography.md
+  font:
+    text: Roboto
+    code: Roboto Mono
 
 plugins:
   - search
 
-
-
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Usage: usage.md
+  - API Reference: api.md
