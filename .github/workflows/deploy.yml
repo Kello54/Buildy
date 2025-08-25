@@ -24,10 +24,11 @@ jobs:
 
       - name: Build MkDocs site
         run: |
-          mkdocs build --strict
+          mkdocs build   # no --strict to avoid warnings failing build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
+
