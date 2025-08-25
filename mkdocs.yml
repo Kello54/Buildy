@@ -19,6 +19,12 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Runbooks: runbooks/index.md
-  - API: api.md
+  - Runbooks:
+      - Overview: runbooks/index.md
+      - Runbook 1: runbooks/runbook1.md
+      - Runbook 2: runbooks/runbook2.md
+  - Dashboards:
+      - Dashboard 1: dashboards/dashboard1.md
+      - Dashboard 2: dashboards/dashboard2.md
+  - API Reference: api.md
   - Platform: platform.md
