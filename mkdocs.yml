@@ -4,12 +4,12 @@ repo_url: https://github.com/kello54/Buildy
 
 theme:
   name: material
-  logo: images/logo.png         # logo in docs/images/
-  favicon: images/favicon.png   # favicon in docs/images/
+  logo: images/logo.png         # ✅ docs/images/logo.png
+  favicon: images/favicon.png   # ✅ docs/images/favicon.png
   palette:
     - scheme: default
       primary: deep purple      # main header color
-      accent: amber             # highlight color (gold-like)
+      accent: amber             # gold highlight
     - scheme: slate
       primary: deep purple
       accent: amber
@@ -23,10 +23,10 @@ theme:
 plugins:
   - search
   - swagger-ui:
-      spec_file: docs/platform.yaml
+      spec_file: docs/platform.json   # ✅ your actual file
 
 nav:
   - Home: index.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
-  - API: platform.md
+  - API: platform.json
