@@ -1,39 +1,19 @@
-name: Deploy MkDocs site to GitHub Pages
+site_name: V18 Platform Docs
 
-on:
-  push:
-    branches:
-      - main
+theme:
+  name: material
+  logo: images/logo.png?v=1.0
+  favicon: images/favicon.png?v=1.0
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+plugins:
+  - search
+  - swagger-ui:
+      spec_file: docs/platform.json
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: |
-          pip install mkdocs-material
-          pip install mkdocs-swagger-ui-tag
-          pip install mkdocs-git-revision-date-plugin
-
-      - name: Build site
-        run: mkdocs build --strict
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
+nav:
+  - Home: index.md
+  - Runbooks:
+      - Overview: runbooks/index.md
+      - Dashboards: runbooks/dashboards.md
+  - API: api.md
+  - Platform: platform.md
