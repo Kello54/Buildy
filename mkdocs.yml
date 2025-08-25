@@ -1,14 +1,30 @@
-site_name: Buildy Docs
+site_name: Buildy Platform Docs
+site_url: https://kello54.github.io
+site_author: Buildy Team
+site_description: >-
+  Documentation for Buildy platform — guides, branding, runbooks, and dashboards.
 
 theme:
   name: material
   logo: images/logo.png
-  favicon: images/favicon.png
+  favicon: images/logo.png
+  palette:
+    primary: deep purple
+    accent: amber
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
 
 plugins:
   - search
+  - swagger-ui:
+      spec_file: docs/platform.yaml
 
 nav:
   - Home: index.md
+  - Branding: branding/logo.md
   - Runbooks: runbooks.md
-  - Dashboard: dashboard.md
+  - Dashboards: dashboards.md
