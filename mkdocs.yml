@@ -1,22 +1,24 @@
-site_name: Buildy Platform Docs
-site_url: https://kello54.github.io
-site_author: Buildy Team
-site_description: >-
-  Documentation for Buildy platform — guides, branding, runbooks, and dashboards.
+site_name: V18 Platform Docs
+site_url: https://kello54.github.io/Buildy/
+repo_url: https://github.com/kello54/Buildy
 
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/logo.png
+  logo: images/logo.png         # logo in docs/images/
+  favicon: images/favicon.png   # favicon in docs/images/
   palette:
-    primary: deep purple
-    accent: amber
+    - scheme: default
+      primary: deep purple      # main header color
+      accent: amber             # highlight color (gold-like)
+    - scheme: slate
+      primary: deep purple
+      accent: amber
   features:
-    - navigation.instant
+    - navigation.tabs
     - navigation.sections
-    - navigation.top
-    - search.highlight
     - search.suggest
+    - search.highlight
+    - content.code.copy
 
 plugins:
   - search
@@ -25,6 +27,6 @@ plugins:
 
 nav:
   - Home: index.md
-  - Branding: branding/logo.md
   - Runbooks: runbooks.md
   - Dashboards: dashboards.md
+  - API: platform.md
