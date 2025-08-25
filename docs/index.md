@@ -1,24 +1,12 @@
-# Buildy Platform
+# Welcome to Buildy 🚀
 
-Welcome to the **Buildy Platform Documentation**.
-
-This site contains guides, runbooks, dashboards, and API references to help you get the most from the Buildy platform.
-
----
-
-## 📚 Sections
-
-- [Getting Started](getting-started.md)
-- [Runbooks](runbooks.md)
-- [Dashboards](dashboards.md)
-- [API Reference](api.md)
-- [Platform Configuration](platform.md)
+Buildy helps you create, manage, and scale your projects with ease.  
+Use this site to learn how to get started, explore features, and integrate APIs.
 
 ---
 
-## 🚀 Quick Start
-
-1. Clone the repository  
-   ```bash
-   git clone https://github.com/Kello54/Buildy.git
+## 📖 Documentation Roadmap
+- [Getting Started](getting-started.md) – install & setup
+- [Usage Guide](usage.md) – core features
+- [API Reference](api.md) – endpoints & examples
 
