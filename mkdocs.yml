@@ -7,12 +7,14 @@ theme:
 
 nav:
   - Home: index.md
-  - API: api.md
-  - Architecture: architecture.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
-  - Dashboards: dashboards.md
-  - Runbooks: runbooks.md
+  - Guides:
+      - API: api.md
+      - Architecture: architecture.md
+      - Dashboards: dashboards.md
+      - Runbooks: runbooks.md
+  - Project:
+      - Changelog: changelog.md
+      - Contributing: contributing.md
   - Branding:
       - Overview: branding/index.md
       - Colours: branding/colours.md
