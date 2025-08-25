@@ -4,6 +4,25 @@ site_url: https://Kello54.github.io/Buildy/
 
 theme:
   name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
 
 nav:
   - Home: index.md
@@ -23,4 +42,5 @@ nav:
 
 plugins:
   - search
+
 
