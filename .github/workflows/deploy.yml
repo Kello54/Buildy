@@ -24,7 +24,7 @@ jobs:
 
       - name: Build MkDocs site
         run: |
-          mkdocs build   # no --strict to avoid warnings failing build
+          mkdocs build   # not strict so warnings won't fail
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
