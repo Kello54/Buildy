@@ -1,6 +1,6 @@
 ##Buildy.ie
 
-Welcome to the **Buildy Docs** — your single source of truth for running, monitoring, and scaling Buildy.  
+Welcome to the **Buildy.ie** — your building material price comparison website  
 
 
 ---
@@ -8,7 +8,7 @@ Welcome to the **Buildy Docs** — your single source of truth for running, moni
 ## 🔧 What is Buildy?
 
 Buildy is a modern platform for:  
-- Streamlined deployments  
+- Checking building material prices  
 - Automated runbooks  
 - Real-time monitoring & dashboards  
 - Business & technical KPIs  
