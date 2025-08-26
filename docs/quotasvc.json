@@ -1,1 +1,33 @@
-{"openapi":"3.0.0","info":{"title":"Quotasvc API","version":"1.0.0"},"paths":{}}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Quota Service API",
+    "description": "APIs for managing quotas",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/quota/{userId}": {
+      "get": {
+        "summary": "Get quota for a user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quota details",
+            "content": {
+              "application/json": {
+                "example": { "userId": "123", "limit": 1000, "used": 250 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
