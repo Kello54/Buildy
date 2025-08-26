@@ -1,12 +1,16 @@
-# Welcome to Buildy 🚀
+# 🚀 SITE UPDATE TEST – v1
 
-Buildy helps you create, manage, and scale your projects with ease.  
-Use this site to learn how to get started, explore features, and integrate APIs.
+Welcome to **Buildy Docs** 👋  
+This page was last updated as a test to confirm deployments are working.
 
 ---
 
-## 📖 Documentation Roadmap
-- [Getting Started](getting-started.md) – install & setup
-- [Usage Guide](usage.md) – core features
-- [API Reference](api.md) – endpoints & examples
+## ✅ Next Steps
 
+- Start with a [Runbook](runbook.md) for quick hands-on use.
+- Explore [Dashboards](dashboards.md) for monitoring.
+- Dive into the [API](api.md) to automate workflows.
+
+---
+
+📌 _This documentation is a living resource. Keep it updated as your platform evolves._
