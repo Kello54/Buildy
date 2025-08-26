@@ -14,14 +14,14 @@ theme:
 
 plugins:
   - search
-  - swagger-ui:
-      spec_file: docs/swagger.json
-  - swagger-ui:
-      spec_file: docs/platform.json
-  - swagger-ui:
-      spec_file: docs/workers.json
-  - swagger-ui:
-      spec_file: docs/quotasvc.json
+  - swagger-ui-tag:
+      spec: docs/swagger.json
+  - swagger-ui-tag:
+      spec: docs/platform.json
+  - swagger-ui-tag:
+      spec: docs/workers.json
+  - swagger-ui-tag:
+      spec: docs/quotasvc.json
 
 nav:
   - Home: index.md
