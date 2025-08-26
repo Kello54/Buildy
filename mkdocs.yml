@@ -2,13 +2,9 @@ site_name: V18 Platform Docs
 site_url: https://yourusername.github.io/your-repo/
 site_description: Documentation for the V18 platform
 
-# Where your Markdown docs live
 docs_dir: docs
-
-# Where the static site gets built
 site_dir: site/docs
 
-# Theme (Material is popular)
 theme:
   name: material
   language: en
@@ -23,19 +19,13 @@ theme:
     - search.suggest
     - search.highlight
 
-# Navigation (you can expand this later as you add files)
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Guides:
-      - Example Guide: guides/example.md
-
-# Plugins (you can add more later)
-plugins:
-  - search
-
-# Optional: extra info
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/yourusername/your-repo
+  - API: api.md
+  - Architecture: architecture.md
+  - Dashboards: dashboards.md
+  - Runbooks: runbooks.md
+  - Swagger: swagger.md
+  - Changelog: changelog.md
+  - Contributing: contributing.md
