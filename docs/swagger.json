@@ -1,1 +1,4 @@
-{"openapi":"3.0.0","info":{"title":"V18 Platform API","version":"1.0.0"},"paths":{}}
+# Swagger API
+
+```swagger-ui
+url: swagger.json
