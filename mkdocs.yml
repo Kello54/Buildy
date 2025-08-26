@@ -14,7 +14,7 @@ theme:
 
 plugins:
   - search
-  - swagger-ui   # only this plugin is needed
+  - swagger-ui
 
 nav:
   - Home: index.md
