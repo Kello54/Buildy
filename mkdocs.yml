@@ -1,35 +1,33 @@
-site_name: Buildy Docs
-site_description: Documentation for the Buildy platform
-site_url: https://kello54.github.io/Buildy/
+site_name: V18 Platform Docs
+site_url: https://kello54.github.io/V18/
+site_description: Documentation for the V18 platform
 
 theme:
   name: material
-  palette:
-    - scheme: default
-      primary: deep_purple
-      accent: amber
-  font:
-    text: Roboto
-    code: Roboto Mono
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
 
 plugins:
   - search
-  - swagger-ui-tag
+  - swagger-ui:
+      spec_file: docs/swagger.json
+  - swagger-ui:
+      spec_file: docs/platform.json
+  - swagger-ui:
+      spec_file: docs/workers.json
+  - swagger-ui:
+      spec_file: docs/quotasvc.json
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - API Reference: api.md
-  - Architecture: architecture.md
-  - Dashboards: dashboards.md
-  - Runbooks: runbooks.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
   - API Docs:
-      - Swagger API: swagger.md
-      - Platform API: platform.md
-  - JSON Specs:
-      - Platform JSON: platform.json
-      - Quota Service JSON: quotasvc.json
-      - Swagger JSON: swagger.json
-      - Workers JSON: workers.json
+      - Overview: swagger.md
+      - Main API: swagger.json
+      - Platform API: platform.json
+      - Workers API: workers.json
+      - Quota Service API: quotasvc.json
