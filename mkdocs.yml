@@ -14,6 +14,7 @@ theme:
 
 plugins:
   - search
+  - swagger-ui-tag
 
 nav:
   - Home: index.md
@@ -24,8 +25,11 @@ nav:
   - Runbooks: runbooks.md
   - Changelog: changelog.md
   - Contributing: contributing.md
+  - API Docs:
+      - Swagger API: swagger.md
+      - Platform API: platform.md
   - JSON Specs:
-      - Platform: platform.json
-      - Quota Service: quotasvc.json
-      - Swagger: swagger.json
-      - Workers: workers.json
+      - Platform JSON: platform.json
+      - Quota Service JSON: quotasvc.json
+      - Swagger JSON: swagger.json
+      - Workers JSON: workers.json
