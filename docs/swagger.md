@@ -1,13 +1,14 @@
-# API Reference
+# API Documentation
 
-Welcome to the API Reference section.  
-Each API specification below is rendered with **Swagger UI**, so you can explore endpoints, parameters, and responses interactively.
+Select an API spec from the dropdown below.
 
----
-
-## Swagger API
 ```swagger-ui
-url: swagger.json
-url: platform.json
-url: workers.json
-url: quotasvc.json
+urls:
+  - url: swagger.json
+    name: Main API
+  - url: platform.json
+    name: Platform API
+  - url: workers.json
+    name: Workers API
+  - url: quotasvc.json
+    name: Quota Service API
