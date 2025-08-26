@@ -1,22 +1,21 @@
-site_name: Buildy Docs
-site_description: Documentation for the Buildy Platform
+site_name: Buildy
 site_url: https://kello54.github.io/Buildy/
+site_description: Documentation for the Buildy platform
 
 theme:
   name: material
+  language: en
   palette:
     - scheme: default
-      primary: deep_purple
+      primary: deep purple
       accent: amber
-  font:
-    text: Roboto
-    code: Roboto Mono
-
-plugins:
-  - search
 
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
   - Usage: usage.md
-  - API Reference: api.md
+  - API Reference: api-reference.md
+
+plugins:
+  - search
+
