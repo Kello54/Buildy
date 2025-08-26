@@ -1,5 +1,5 @@
 site_name: Buildy Docs
-site_description: Documentation for the Buildy Platform
+site_description: Documentation for the Buildy platform
 site_url: https://kello54.github.io/Buildy/
 
 theme:
@@ -18,5 +18,9 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Usage: usage.md
   - API Reference: api.md
+  - Architecture: architecture.md
+  - Dashboards: dashboards.md
+  - Runbooks: runbooks.md
+  - Changelog: changelog.md
+  - Contributing: contributing.md
