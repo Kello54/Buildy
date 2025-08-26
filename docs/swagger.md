@@ -5,6 +5,6 @@ Each API spec below is rendered with Swagger UI so you can explore endpoints, pa
 
 ---
 
-## Main API
+## Swagger API
 ```swagger-ui
 url: swagger.json
