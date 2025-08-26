@@ -1,6 +1,6 @@
 # API Documentation
 
-Below you can explore all available API specifications.
+This page contains interactive Swagger UI for all services.
 
 ```swagger-ui
 urls:
