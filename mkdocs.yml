@@ -14,20 +14,9 @@ theme:
 
 plugins:
   - search
-  - swagger-ui-tag:
-      spec: docs/swagger.json
-  - swagger-ui-tag:
-      spec: docs/platform.json
-  - swagger-ui-tag:
-      spec: docs/workers.json
-  - swagger-ui-tag:
-      spec: docs/quotasvc.json
+  - swagger-ui   # keep only this one, remove all swagger-ui-tag entries
 
 nav:
   - Home: index.md
   - API Docs:
       - Overview: swagger.md
-      - Main API: swagger.json
-      - Platform API: platform.json
-      - Workers API: workers.json
-      - Quota Service API: quotasvc.json
