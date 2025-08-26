@@ -1,6 +1,6 @@
 # API Documentation
 
-Select an API spec from the dropdown below.
+Below you can explore all available API specifications.
 
 ```swagger-ui
 urls:
