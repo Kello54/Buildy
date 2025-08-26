@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Swagger API Documentation",
-    "description": "This is an example Swagger API documentation. Use the interactive UI below to explore available endpoints.",
+    "title": "Main API",
+    "description": "This is the main Swagger API",
     "version": "1.0.0"
   },
   "paths": {
@@ -14,7 +14,22 @@
             "description": "Successful response",
             "content": {
               "application/json": {
-                "example": { "message": "Hello, world!" }
+                "example": { "message": "Hello, World!" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Returns service status",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": { "status": "running", "uptime": "12345s" }
               }
             }
           }
