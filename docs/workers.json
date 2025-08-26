@@ -1,1 +1,28 @@
-{"openapi":"3.0.0","info":{"title":"Workers API","version":"1.0.0"},"paths":{}}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Workers API",
+    "description": "APIs for managing workers",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/workers": {
+      "get": {
+        "summary": "List all workers",
+        "responses": {
+          "200": {
+            "description": "Worker list",
+            "content": {
+              "application/json": {
+                "example": [
+                  { "id": "w1", "status": "active" },
+                  { "id": "w2", "status": "idle" }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
