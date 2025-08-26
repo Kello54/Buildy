@@ -1,4 +1,14 @@
-# Swagger API
+# Swagger API Documentation
+
+Welcome to the **Swagger API documentation** for Buildy.  
+This page provides an interactive view of the API defined in `swagger.json`.  
+
+You can use the interface below to:  
+- Explore available endpoints  
+- See request/response formats  
+- Try out API calls directly from the browser (if CORS & authentication allow)  
+
+---
 
 ```swagger-ui
 url: swagger.json
