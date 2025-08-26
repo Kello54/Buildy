@@ -1,6 +1,6 @@
-site_name: Buildy
+site_name: Buildy.ie
 site_url: https://kello54.github.io/Buildy/
-site_description: Documentation for the Buildy platform
+site_description: Building material price comparison website
 
 theme:
   name: material
