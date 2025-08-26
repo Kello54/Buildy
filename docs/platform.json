@@ -2,16 +2,21 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Platform API",
-    "description": "This is the API specification for the Platform service.",
+    "description": "APIs for platform-level configuration and monitoring",
     "version": "1.0.0"
   },
   "paths": {
-    "/status": {
+    "/platform/info": {
       "get": {
-        "summary": "Check service status",
+        "summary": "Get platform information",
         "responses": {
           "200": {
-            "description": "The service is healthy"
+            "description": "Platform details",
+            "content": {
+              "application/json": {
+                "example": { "name": "V18 Platform", "version": "2.3.1" }
+              }
+            }
           }
         }
       }
