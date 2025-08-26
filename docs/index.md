@@ -15,4 +15,4 @@ Buildy is a modern platform for:
 - Business & technical KPIs  
 
 👉 Designed for engineering teams, DevOps, and business stakeholders.
- 
+  
