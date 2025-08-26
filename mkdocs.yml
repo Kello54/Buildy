@@ -14,7 +14,7 @@ theme:
 
 plugins:
   - search
-  - swagger-ui   # keep only this one, remove all swagger-ui-tag entries
+  - swagger-ui   
 
 nav:
   - Home: index.md
