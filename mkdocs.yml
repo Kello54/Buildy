@@ -1,31 +1,24 @@
 site_name: Buildy
 site_url: https://kello54.github.io/Buildy/
-site_description: Documentation for the Buildy platform
-
-docs_dir: docs
-site_dir: site
+site_description: Buildy.ie – building material price comparison website
 
 theme:
   name: material
-  language: en
   palette:
-    scheme: default
-    primary: purple
-    accent: amber
-  features:
-    - navigation.top
-    - navigation.tracking
-    - navigation.instant
-    - search.suggest
-    - search.highlight
+    - scheme: default
+      primary: purple
+      accent: amber
+  logo: images/logo.png   # shows in header
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - API: api.md
-  - Architecture: architecture.md
-  - Dashboards: dashboards.md
-  - Runbooks: runbooks.md
-  - Swagger: swagger.md
-  - Changelog: changelog.md
-  - Contributing: contributing.md
+  - About: about.md
+  - Contact: contact.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
