@@ -11,10 +11,34 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.png      # change to logo.jpeg if needed
-  # favicon removed until you have one
+  logo: images/logo.png      # change to logo path
+  features:
+    - navigation.footer      # enables footer navigation
 
 plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Features: features.md
+  - Pricing: pricing.md
+  - FAQ: faq.md
+  - Contact: contact.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Kello54
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/
+    - icon: fontawesome/solid/envelope
+      link: mailto:support@buildy.example
+
+extra_footer: |
+  <p style="text-align: center;">
+    © 2025 Buildy — All rights reserved.<br>
+    Made with ❤️ using <a href="https://www.mkdocs.org/">MkDocs</a> and <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>.
+  </p>
