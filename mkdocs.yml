@@ -1,23 +1,18 @@
 site_name: Buildy
 site_url: https://kello54.github.io/Buildy/
-site_description: Building material price comparison platform
+site_description: Documentation for the Buildy platform
 
 theme:
   name: material
   palette:
     - scheme: default
       primary: deep purple   # purple theme
-      accent: amber          # gold accent
+      accent: amber          # gold accents
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.png
-  features:
-    - navigation.footer      # footer prev/next links
-    - navigation.top         # sticky top nav bar
-    - navigation.expand      # expanded sidebar
-    - toc.integrate          # integrate page TOC into sidebar
-    - content.code.copy      # "copy" button on code blocks
+  logo: images/logo.png        # logo you uploaded
+  favicon: images/favicon.png  # favicon you uploaded
 
 plugins:
   - search
@@ -34,19 +29,3 @@ nav:
   - Roadmap: roadmap.md
   - Changelog: changelog.md
   - Contact: contact.md
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Kello54
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/
-    - icon: fontawesome/solid/envelope
-      link: mailto:support@buildy.example
-
-extra_footer: |
-  <p style="text-align: center;">
-    © 2025 Buildy — All rights reserved.<br>
-    Made with ❤️ using <a href="https://www.mkdocs.org/">MkDocs</a> and 
-    <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>.
-  </p>
