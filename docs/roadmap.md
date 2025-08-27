@@ -1,7 +1,7 @@
 # Roadmap
 
-The Buildy roadmap gives a clear view of what we’re building next.  
-We want our users and suppliers to know where we’re heading 🚀.
+The Buildy roadmap shows where we are heading 🚀.  
+We want our users and suppliers to have full visibility into upcoming features.
 
 ---
 
@@ -24,7 +24,7 @@ We want our users and suppliers to know where we’re heading 🚀.
 ## 🔜 Coming Soon
 - **User Accounts** → save favourite suppliers and materials
 - **Advanced Analytics** → track price trends over time
-- **Supplier Dashboards** → allow suppliers to update prices directly
+- **Supplier Dashboards** → suppliers can update prices directly
 - **Live Price Feeds** → automatic updates from partner APIs
 
 ---
