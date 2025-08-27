@@ -59,3 +59,47 @@
   color: #ffb300; /* Active tab in gold */
   border-bottom: 2px solid #ffb300;
 }
+
+/* === Sidebar Navigation Styling === */
+.md-nav {
+  font-weight: 500;
+}
+
+.md-nav__link {
+  color: #333; /* Default text */
+  transition: color 0.2s ease;
+}
+
+.md-nav__link:hover {
+  color: #6a1b9a; /* Purple hover */
+}
+
+.md-nav__link--active {
+  color: #ffb300; /* Gold for active page */
+  font-weight: bold;
+  border-left: 3px solid #ffb300; /* Gold accent bar */
+  padding-left: 0.5rem;
+}
+
+/* === Search Bar Styling === */
+.md-search__form {
+  border: 2px solid #6a1b9a; /* Purple border */
+  border-radius: 6px;
+}
+
+.md-search__input {
+  color: #333;
+}
+
+.md-search__input:focus {
+  border-color: #ffb300; /* Gold focus */
+  box-shadow: 0 0 5px #ffb300;
+}
+
+.md-search__icon {
+  color: #6a1b9a; /* Purple search icon */
+}
+
+.md-search__icon:hover {
+  color: #ffb300; /* Gold hover */
+}
