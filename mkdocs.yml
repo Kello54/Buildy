@@ -10,8 +10,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.png      # adjust if your file is jpeg
-  favicon: images/logo.png   # temporary favicon
+  logo: images/logo.jpeg      # adjust if your file is jpeg
+  favicon: images/logo.jpeg   # temporary favicon
 
 nav:
   - Home: index.md
