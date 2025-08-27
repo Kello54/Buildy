@@ -10,7 +10,7 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.png       # ✅ your uploaded logo
+  logo: images/IMG_7935.jpeg     # ✅ your uploaded logo
   # favicon: images/favicon.png  # (optional – add later)
 
 nav:
