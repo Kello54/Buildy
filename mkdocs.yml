@@ -1,17 +1,22 @@
 site_name: Buildy
 site_url: https://kello54.github.io/Buildy/
-site_description: Buildy.ie – building material price comparison website
+site_description: Compare building material prices instantly
 
 theme:
   name: material
   palette:
-    - scheme: default
-      primary: purple
-      accent: amber
-  logo: images/logo.png   # shows in header
+    primary: deep purple
+    accent: amber
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo: images/logo.png       # ✅ your uploaded logo
+  # favicon: images/favicon.png  # (optional – add later)
 
 nav:
   - Home: index.md
+  - Features: features.md
+  - Pricing: pricing.md
   - About: about.md
   - Contact: contact.md
 
@@ -19,6 +24,15 @@ markdown_extensions:
   - admonition
   - codehilite
   - footnotes
-  - meta
   - toc:
       permalink: true
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kello54/Buildy
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/
