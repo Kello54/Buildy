@@ -9,14 +9,15 @@ theme:
     - scheme: default
       primary: purple
       accent: amber
-  logo: assets/logo.png
-  favicon: assets/favicon.png
+  logo: images/logo.png
+  favicon: images/favicon.png
   features:
     - navigation.instant
     - navigation.sections
     - navigation.top
     - search.suggest
     - search.highlight
+    - content.code.copy
 
 nav:
   - Home: index.md
@@ -28,6 +29,15 @@ nav:
   - Roadmap: roadmap.md
   - Changelog: changelog.md
   - Contact: contact.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kello54
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/
 
 markdown_extensions:
   - toc:
@@ -41,3 +51,5 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.emoji
+  - pymdownx.tasklist:
+      custom_checkbox: true
