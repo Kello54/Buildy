@@ -1,46 +1,29 @@
-# Getting Started with Buildy
+# Changelog
 
-Welcome to Buildy! 🎉  
-Follow these quick steps to start comparing building material prices.
-
----
-
-## 1. Visit the Homepage
-Go to [Buildy](index.md) to access the platform.
+Stay up to date with the latest updates to Buildy.  
+This page records new features, improvements, and fixes.
 
 ---
 
-## 2. Search for Materials
-Use the search bar to find materials such as:
-- Cement
-- Timber
-- Bricks
-- Roofing supplies
+## 2025-08-27 — Initial Website Release 🎉
+- Launched **Buildy documentation site** on GitHub Pages
+- Added pages:
+  - Home
+  - Getting Started
+  - About
+  - Features
+  - Pricing
+  - FAQ
+  - Contact
+  - Roadmap
+  - Changelog
+- Introduced purple & gold theme
+- Added footer with social links and copyright
 
 ---
 
-## 3. Compare Prices
-View a side-by-side comparison of suppliers:
-- Price per unit
-- Availability
-- Supplier ratings (coming soon)
-
----
-
-## 4. Choose a Supplier
-Select the best option for your project.  
-We’ll connect you directly with the supplier.
-
----
-
-## 5. Stay Updated
-- Check the [Pricing](pricing.md) page for sample comparisons  
-- Read the [FAQ](faq.md) for common questions  
-- [Contact Us](contact.md) if you need support
-
----
-
-## Next Steps
-- Learn more [About Buildy](about.md)  
-- Explore the [Features](features.md)  
-- Register your business as a supplier by contacting us  
+## Planned Updates
+- Live supplier integration
+- User accounts for saving price searches
+- Advanced analytics dashboard
+- Mobile app launch
