@@ -1,59 +1,41 @@
-/* ===== Buildy Custom Styles ===== */
-
-/* General link styling */
-a {
-  color: #6A0DAD; /* Deep purple */
+/* === General Theme Tweaks === */
+:root {
+  --md-primary-fg-color: #6a1b9a;   /* Purple */
+  --md-accent-fg-color: #ffb300;    /* Gold */
 }
-a:hover {
-  color: #FFD700; /* Gold */
+
+/* === Footer Styling === */
+.md-footer {
+  background: linear-gradient(to right, #6a1b9a, #ffb300);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.md-footer a {
+  color: white;
   text-decoration: underline;
 }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-  color: #6A0DAD; /* Purple */
-  font-weight: 700;
-}
-
-/* Buttons (Material theme buttons, links styled as buttons) */
-.md-typeset .md-button {
-  background-color: #6A0DAD;
-  color: white;
-  border-radius: 6px;
-  padding: 0.6em 1.2em;
-  transition: background-color 0.2s ease-in-out;
-}
-.md-typeset .md-button:hover {
-  background-color: #FFD700;
-  color: #000;
-}
-
-/* Tables */
-.md-typeset table {
-  border: 1px solid #ddd;
-}
-.md-typeset table th {
-  background-color: #6A0DAD;
-  color: white;
-}
-.md-typeset table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* Footer */
-.md-footer {
-  background-color: #6A0DAD;
-  color: white;
-}
-.md-footer a {
-  color: #FFD700;
-}
 .md-footer a:hover {
-  color: white;
+  color: #ffe082; /* lighter gold hover */
 }
 
-/* Navigation highlight */
-.md-nav__link--active {
-  color: #FFD700 !important;
+/* === Back to Top Button === */
+.md-footer button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background: white;
+  color: #6a1b9a;
   font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.md-footer button:hover {
+  background: #ffb300;
+  color: white;
 }
