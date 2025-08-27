@@ -1,4 +1,4 @@
-/* === General Theme Tweaks === */
+/* === Brand Colors === */
 :root {
   --md-primary-fg-color: #6a1b9a;   /* Purple */
   --md-accent-fg-color: #ffb300;    /* Gold */
@@ -22,7 +22,7 @@
   color: #ffe082; /* lighter gold hover */
 }
 
-/* === Back to Top Button === */
+/* === Back to Top Button in Footer === */
 .md-footer button {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
@@ -38,4 +38,24 @@
 .md-footer button:hover {
   background: #ffb300;
   color: white;
+}
+
+/* === Navigation Tabs Styling === */
+.md-tabs {
+  background: #6a1b9a; /* Purple tab bar */
+}
+
+.md-tabs__link {
+  color: white;
+  font-weight: 500;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link:focus {
+  color: #ffb300; /* Gold on hover */
+}
+
+.md-tabs__link--active {
+  color: #ffb300; /* Active tab in gold */
+  border-bottom: 2px solid #ffb300;
 }
