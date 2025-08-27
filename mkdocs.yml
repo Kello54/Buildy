@@ -1,50 +1,52 @@
-site_name: Buildy Docs
-site_url: https://your-site-url
-site_description: Documentation for Buildy - Building Material Price Comparison Platform
+site_name: Buildy
+site_url: https://kello54.github.io/V18/
+site_description: Documentation for the Buildy platform
 
 theme:
   name: material
   logo: images/logo.png
   favicon: images/favicon.png
+  custom_dir: overrides
   features:
     - navigation.tabs
+    - navigation.instant
+    - navigation.tracking
     - navigation.top
-    - navigation.footer
-    - content.code.copy
-    - content.code.annotate
-    - content.action.view
     - search.highlight
-    - search.suggest
     - search.share
+    - content.code.copy
     - content.tabs.link
-    - header.autohide
-    - content.footnote.tooltips
-    - content.tooltips
-    - content.color.toggle  # Dark/Light mode toggle
-  palette:
-    - scheme: default
-      primary: deep purple
-      accent: amber
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: slate
-      primary: deep purple
-      accent: amber
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
-  font:
-    text: Roboto
-    code: Roboto Mono
-  custom_dir: overrides
+    - toc.integrate
+    - navigation.footer
 
 extra_css:
-  - stylesheets/extra.css
+  - css/extra.css
 
 nav:
   - Home: index.md
   - About: about.md
   - Roadmap: roadmap.md
-  - Pricing: pricing.md
   - Contact: contact.md
+  - Docs:
+      - API: api.md
+      - Platform: platform.md
+      - Dashboards: dashboards.md
+      - Runbooks: runbooks.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kello54
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - def_list
+  - attr_list
+  - md_in_html
