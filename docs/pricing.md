@@ -2,7 +2,9 @@
 
 Buildy is free to use during our early stage.  
 
-Here’s a sample material comparison:
+---
+
+## Example Material Comparison
 
 | Material        | Supplier A | Supplier B | Supplier C |
 |-----------------|------------|------------|------------|
@@ -10,4 +12,9 @@ Here’s a sample material comparison:
 | Timber (per m²) | €12.00     | €11.50     | €12.20     |
 | Bricks (100 pcs)| €45.00     | €46.50     | €44.80     |
 
-More suppliers and live updates coming soon.
+---
+
+## Future Plans
+- Premium supplier analytics  
+- Live pricing integrations  
+- Subscription plans for businesses
