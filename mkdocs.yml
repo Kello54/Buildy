@@ -11,9 +11,13 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.png      # change to logo path
+  logo: images/logo.png
   features:
-    - navigation.footer      # enables footer navigation
+    - navigation.footer      # footer arrows (prev/next)
+    - navigation.top         # top nav bar
+    - navigation.expand      # expand sections in sidebar
+    - toc.integrate          # integrates page TOC into sidebar
+    - content.code.copy      # adds a "copy" button to code blocks
 
 plugins:
   - search
@@ -40,5 +44,6 @@ extra:
 extra_footer: |
   <p style="text-align: center;">
     © 2025 Buildy — All rights reserved.<br>
-    Made with ❤️ using <a href="https://www.mkdocs.org/">MkDocs</a> and <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>.
+    Made with ❤️ using <a href="https://www.mkdocs.org/">MkDocs</a> and 
+    <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>.
   </p>
