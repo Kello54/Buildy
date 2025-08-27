@@ -1,55 +1,50 @@
-site_name: Buildy
-site_url: https://kello54.github.io/Buildy/
-site_description: Building material price comparison app
+site_name: Buildy Docs
+site_url: https://your-site-url
+site_description: Documentation for Buildy - Building Material Price Comparison Platform
 
 theme:
   name: material
-  logo: images/logo.png       # your logo
-  favicon: images/favicon.png # your favicon
-  palette:
-    primary: purple
-    accent: amber
+  logo: images/logo.png
+  favicon: images/favicon.png
   features:
-    - navigation.top
     - navigation.tabs
-    - navigation.expand
-    - toc.integrate
-    - search.suggest
-    - search.highlight
+    - navigation.top
+    - navigation.footer
     - content.code.copy
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Kello54/Buildy
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/yourprofile
-
-plugins:
-  - search
+    - content.code.annotate
+    - content.action.view
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.tabs.link
+    - header.autohide
+    - content.footnote.tooltips
+    - content.tooltips
+    - content.color.toggle  # Dark/Light mode toggle
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  custom_dir: overrides
 
 extra_css:
   - stylesheets/extra.css
 
-extra_javascript:
-  - javascripts/extra.js
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
-
-# Load your overrides for custom footer
-theme:
-  name: material
-  custom_dir: overrides
-
 nav:
   - Home: index.md
   - About: about.md
-  - Docs:
-      - Getting Started: docs/getting-started.md
-      - FAQ: docs/faq.md
+  - Roadmap: roadmap.md
+  - Pricing: pricing.md
+  - Contact: contact.md
