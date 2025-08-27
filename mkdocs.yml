@@ -1,17 +1,17 @@
-site_name: V18 Platform Docs
+site_name: Buildy
 site_url: https://kello54.github.io/Buildy/
-site_description: Documentation for the V18 platform
+site_description: Documentation for the Buildy platform
 
 docs_dir: docs
-site_dir: site/docs
+site_dir: site
 
 theme:
   name: material
   language: en
   palette:
     scheme: default
-    primary: blue
-    accent: indigo
+    primary: purple
+    accent: amber
   features:
     - navigation.top
     - navigation.tracking
