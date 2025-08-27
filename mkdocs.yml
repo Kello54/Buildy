@@ -1,31 +1,52 @@
 site_name: Buildy
-site_url: https://kello54.github.io/Buildy/
-site_description: Documentation for the Buildy platform
+site_description: Compare building material prices, track trends, and connect with suppliers.
+site_url: https://kello54.github.io/V18/
 
 theme:
   name: material
+  logo: images/logo.png
+  favicon: images/favicon.png
   palette:
-    - scheme: default
-      primary: deep purple   # purple theme
-      accent: amber          # gold accents
-  font:
-    text: Roboto
-    code: Roboto Mono
-  logo: images/logo.png        # logo you uploaded
-  favicon: images/favicon.png  # favicon you uploaded
+    primary: purple
+    accent: amber
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - toc.integrate
+    - footer.social
 
-plugins:
-  - search
-  - git-revision-date-localized:
-      fallback_to_build_date: true
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com
+    - icon: fontawesome/brands/facebook
+      link: https://facebook.com
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
   - About: about.md
   - Features: features.md
   - Pricing: pricing.md
   - FAQ: faq.md
+  - Getting Started: getting-started.md
   - Roadmap: roadmap.md
   - Changelog: changelog.md
   - Contact: contact.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - footnotes
+  - tables
+  - abbr
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: "© 2025 Buildy. All rights reserved."
