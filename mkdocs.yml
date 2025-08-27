@@ -1,28 +1,23 @@
-site_name: Buildy - TEST CHANGE
-site_url: https://kello54.github.io/
-site_description: Compare building material prices
+site_name: Buildy
+site_url: https://kello54.github.io/Buildy/
+site_description: Documentation for the Buildy platform
 
 theme:
   name: material
   palette:
-    primary: red
-    accent: lime
+    primary: deep purple   # main purple colour
+    accent: amber          # gold accent colour
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.jpeg   # or .jpg / .png depending on your actual file
+  logo: images/logo.png      # adjust if your file is jpeg
+  favicon: images/logo.png   # temporary favicon
 
 nav:
   - Home: index.md
-  - Features: features.md
-  - Pricing: pricing.md
   - About: about.md
+  - Docs:
+      - Getting Started: getting-started.md
+      - Features: features.md
+      - Pricing: pricing.md
   - Contact: contact.md
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
