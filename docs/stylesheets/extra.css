@@ -1,105 +1,109 @@
-/* ===============================
-   Buildy Custom Styling
-   =============================== */
 
-/* Global Styles */
+/* ===================== */
+/* General Theme Styling */
+/* ===================== */
+:root {
+  --primary-color: #6a0dad; /* Purple */
+  --secondary-color: #ffb400; /* Gold */
+  --gradient-bg: linear-gradient(135deg, #6a0dad, #ffb400);
+  --text-light: #ffffff;
+  --text-dark: #333333;
+}
+
+/* Body tweaks */
 body {
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-}
-
-/* Header / Navbar */
-.md-header {
-  background: #6a1b9a !important; /* Strong purple */
-  color: #fff !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background 0.3s ease;
-}
-
-.md-header:hover {
-  background: #7b1fa2 !important;
-}
-
-/* Main Titles */
-h1, h2, h3, h4 {
-  font-weight: 600;
-  color: #4a148c; /* Deep purple */
-  margin-top: 1.2em;
-  margin-bottom: 0.6em;
+  color: var(--text-dark);
+  background-color: #fafafa;
 }
 
 /* Links */
 a {
-  color: #6a1b9a;
+  color: var(--primary-color);
   text-decoration: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: 0.3s ease;
 }
-
 a:hover {
-  color: #ff9800; /* Gold on hover */
-  text-shadow: 0px 0px 6px rgba(255, 152, 0, 0.6);
-  text-decoration: underline;
+  color: var(--secondary-color);
+  text-shadow: 0px 0px 6px rgba(255, 180, 0, 0.6);
 }
 
-/* Lists */
-ul li {
-  margin-bottom: 0.5em;
+/* ===================== */
+/* Header (Top Navbar)   */
+/* ===================== */
+.md-header {
+  background: var(--gradient-bg);
+  color: var(--text-light);
+  font-weight: 600;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Footer */
+/* ===================== */
+/* Footer Styling        */
+/* ===================== */
 .md-footer {
-  color: #fff;
+  background: var(--gradient-bg);
+  color: var(--text-light);
+  padding: 1.5rem 1rem;
   text-align: center;
-  padding: 1.5em 1em;
-  font-size: 0.95em;
   position: relative;
   overflow: hidden;
-
-  /* Animated Gradient */
-  background: linear-gradient(270deg, #6a1b9a, #ff9800, #6a1b9a);
-  background-size: 600% 600%;
-  animation: gradientShift 15s ease infinite;
-
-  /* Top Shadow */
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.25);
 }
 
-/* Footer Links */
-.md-footer a {
-  color: #fff;
-  font-weight: 500;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+/* Footer content wrapper */
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.md-footer a:hover {
-  color: #ffe082; /* Lighter gold */
-  text-shadow: 0 0 6px rgba(255,255,255,0.7);
+/* Footer navigation */
+.footer-nav {
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
 }
-
-/* Footer Icons (optional if you add social links later) */
-.footer-icons {
-  margin-top: 0.8em;
-}
-
-.footer-icons a {
+.footer-nav a {
+  color: var(--text-light);
   margin: 0 8px;
-  font-size: 1.2em;
-  display: inline-block;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: 0.3s ease;
+}
+.footer-nav a:hover {
+  color: var(--secondary-color);
+  text-shadow: 0 0 6px rgba(255, 180, 0, 0.8);
 }
 
+/* Social icons */
+.footer-icons {
+  margin-top: 0.75rem;
+}
+.footer-icons a {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  margin: 0 10px;
+  transition: 0.3s ease;
+}
 .footer-icons a:hover {
+  color: var(--secondary-color);
   transform: scale(1.2);
-  color: #ffe082;
+  text-shadow: 0 0 10px rgba(255, 180, 0, 0.8);
 }
 
-/* Keyframes for Gradient Animation */
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* ===================== */
+/* Buttons (Optional)    */
+/* ===================== */
+button,
+.md-button {
+  background: var(--primary-color);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  color: var(--text-light);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+button:hover,
+.md-button:hover {
+  background: var(--secondary-color);
+  color: var(--text-dark);
+  box-shadow: 0px 0px 12px rgba(255, 180, 0, 0.6);
 }
