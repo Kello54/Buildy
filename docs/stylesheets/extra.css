@@ -1,125 +1,99 @@
-/* ===================================
-   Global Styles
-=================================== */
-body {
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+/* ========== Global Styles ========== */
+:root {
+  --md-primary-fg-color: #4b0082; /* deep purple */
+  --md-accent-fg-color: #f0c420; /* gold */
+}
+
+/* Body text */
+.md-typeset {
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.7;
+  font-size: 1rem;
   color: #333;
-  background-color: #fafafa;
 }
 
-/* ===================================
-   Header & Navigation
-=================================== */
-.md-header {
-  background: linear-gradient(90deg, #4b0082, #800080);
-  color: white;
-}
-
-.md-header-nav__title {
-  font-weight: 600;
-  color: white;
-}
-
-/* Active tab highlight */
-.md-tabs__link--active {
-  color: #ffd700 !important;
-  font-weight: bold;
-}
-
-/* ===================================
-   Links
-=================================== */
-a {
-  color: #4b0082;
+/* Links */
+.md-typeset a {
+  color: var(--md-primary-fg-color);
+  font-weight: 500;
   text-decoration: none;
 }
-
-a:hover {
-  color: #ffd700;
+.md-typeset a:hover {
   text-decoration: underline;
 }
 
-/* ===================================
-   Buttons (reusable)
-=================================== */
-.button {
-  background: #4b0082;
-  color: white;
+/* Headings */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+}
+
+/* Code blocks */
+.md-typeset code {
+  background: #f9f9f9;
+  color: #c7254e;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Buttons */
+.md-typeset .md-button {
+  background: var(--md-primary-fg-color);
+  color: #fff !important;
+  border-radius: 6px;
   padding: 0.6em 1.2em;
-  border-radius: 5px;
   font-weight: 600;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.md-typeset .md-button:hover {
+  background: #360062; /* darker purple */
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
 }
 
-.button:hover {
-  background: #ffd700;
-  color: #4b0082;
-  transform: scale(1.05);
-}
-
-/* ===================================
-   Code Blocks
-=================================== */
-pre code {
-  font-size: 0.9rem;
-  border-radius: 6px;
-  padding: 1em;
-  background: #f5f2ff;
+/* Tables */
+.md-typeset table {
   border: 1px solid #ddd;
-}
-
-/* ===================================
-   Admonitions
-=================================== */
-.admonition {
   border-radius: 6px;
-  padding: 0.8rem 1rem;
+  overflow: hidden;
+}
+.md-typeset table th {
+  background: var(--md-primary-fg-color);
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+}
+.md-typeset table td {
+  border-top: 1px solid #eee;
 }
 
-.admonition.note {
-  border-left: 6px solid #4b0082;
+/* Navigation top bar */
+.md-header {
+  background: var(--md-primary-fg-color);
 }
 
-.admonition.warning {
-  border-left: 6px solid #ffd700;
+/* Sidebar */
+.md-sidebar {
+  background: #fafafa;
 }
 
-/* ===================================
-   Footer
-=================================== */
+/* ========== Footer ========== */
 .md-footer {
-  background: linear-gradient(90deg, #4b0082, #ffd700);
-  padding: 1.5rem 0;
+  background: linear-gradient(90deg, #4b0082, #f0c420);
+  color: #fff;
   text-align: center;
-  color: white;
+  padding: 1.5rem 1rem;
+  margin-top: 2rem;
 }
-
-.md-footer .footer-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
-.md-footer .footer-nav a {
-  color: white;
-  text-decoration: none;
+.md-footer a {
+  color: #fff;
   font-weight: 500;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-decoration: none;
 }
-
-.md-footer .footer-nav a:hover {
-  color: #ffd700;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
-}
-
-.md-footer .footer-text {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  opacity: 0.85;
+.md-footer a:hover {
+  text-decoration: underline;
 }
