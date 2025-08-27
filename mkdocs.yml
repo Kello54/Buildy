@@ -5,13 +5,17 @@ site_description: Documentation for the Buildy platform
 theme:
   name: material
   palette:
-    primary: deep purple   # main purple colour
-    accent: amber          # gold accent colour
+    primary: deep purple
+    accent: amber
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.jpeg      # adjust if your file is jpeg
-  favicon: images/logo.jpeg   # temporary favicon
+  logo: images/logo.jpeg
+  favicon: images/logo.jpeg
+
+plugins:
+  - search
+  - cachebuster   # <-- this is the important one
 
 nav:
   - Home: index.md
