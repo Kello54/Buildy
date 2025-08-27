@@ -1,175 +1,125 @@
-/* ------------------------------
-   General Typography & Layout
--------------------------------*/
+/* ===================================
+   Global Styles
+=================================== */
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
   line-height: 1.6;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  color: #333;
+  background-color: #fafafa;
 }
 
-.md-typeset h1, 
-.md-typeset h2, 
-.md-typeset h3 {
-  font-weight: 600;
-}
-
-/* Smooth scroll for navigation */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ------------------------------
+/* ===================================
    Header & Navigation
--------------------------------*/
+=================================== */
 .md-header {
-  background: linear-gradient(90deg, #6a1b9a, #ab47bc);
+  background: linear-gradient(90deg, #4b0082, #800080);
   color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.md-header__title {
+.md-header-nav__title {
+  font-weight: 600;
+  color: white;
+}
+
+/* Active tab highlight */
+.md-tabs__link--active {
+  color: #ffd700 !important;
   font-weight: bold;
-  letter-spacing: 0.5px;
 }
 
-/* Sticky sidebar */
-.md-sidebar {
-  position: sticky;
-  top: 60px;
-}
-
-/* ------------------------------
-   Search Bar
--------------------------------*/
-.md-search__input {
-  border-radius: 6px;
-  border: 2px solid var(--md-primary-fg-color);
-  padding: 8px 12px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.md-search__input:focus {
-  outline: none;
-  border-color: var(--md-accent-fg-color);
-  box-shadow: 0 0 6px rgba(186, 148, 255, 0.6);
-}
-
-.md-search__icon {
-  color: var(--md-primary-fg-color);
-}
-
-/* ------------------------------
-   Footer
--------------------------------*/
-.md-footer {
-  background: linear-gradient(90deg, #4527a0, #6a1b9a);
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
-
-.md-footer a {
-  color: #ffca28;
-  font-weight: 500;
+/* ===================================
+   Links
+=================================== */
+a {
+  color: #4b0082;
   text-decoration: none;
 }
 
-.md-footer a:hover {
+a:hover {
+  color: #ffd700;
   text-decoration: underline;
-  color: #fff176;
 }
 
-/* Back-to-top button */
-.back-to-top {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 8px 18px;
-  background: #ab47bc;
+/* ===================================
+   Buttons (reusable)
+=================================== */
+.button {
+  background: #4b0082;
   color: white;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
   font-weight: 600;
-  transition: all 0.3s ease;
-}
-.back-to-top:hover {
-  background: #8e24aa;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* ------------------------------
-   Admonitions (Notes, Tips, etc.)
--------------------------------*/
-.md-typeset .admonition {
-  border-radius: 8px;
-  padding: 12px 16px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+.button:hover {
+  background: #ffd700;
+  color: #4b0082;
+  transform: scale(1.05);
 }
 
-.md-typeset .admonition-title {
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Icons for admonitions */
-.md-typeset .admonition.note > .admonition-title::before {
-  content: "ℹ️";
-}
-.md-typeset .admonition.tip > .admonition-title::before {
-  content: "💡";
-}
-.md-typeset .admonition.warning > .admonition-title::before {
-  content: "⚠️";
-}
-.md-typeset .admonition.success > .admonition-title::before {
-  content: "✅";
-}
-
-/* ------------------------------
-   Tables
--------------------------------*/
-.md-typeset table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 16px 0;
-  font-size: 0.95rem;
-}
-
-.md-typeset table th {
-  background: #6a1b9a;
-  color: white;
-  padding: 10px;
-}
-
-.md-typeset table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-.md-typeset table tr:nth-child(even) {
-  background: #f3e5f5;
-}
-
-/* ------------------------------
+/* ===================================
    Code Blocks
--------------------------------*/
-.md-typeset pre > code {
-  background: #1e1e2f;
-  color: #f8f8f2;
-  border-radius: 6px;
-  padding: 12px;
-  display: block;
+=================================== */
+pre code {
   font-size: 0.9rem;
-  line-height: 1.4;
+  border-radius: 6px;
+  padding: 1em;
+  background: #f5f2ff;
+  border: 1px solid #ddd;
 }
 
-/* Inline code */
-.md-typeset code {
-  background: #f3e5f5;
-  color: #6a1b9a;
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 0.9em;
+/* ===================================
+   Admonitions
+=================================== */
+.admonition {
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+}
+
+.admonition.note {
+  border-left: 6px solid #4b0082;
+}
+
+.admonition.warning {
+  border-left: 6px solid #ffd700;
+}
+
+/* ===================================
+   Footer
+=================================== */
+.md-footer {
+  background: linear-gradient(90deg, #4b0082, #ffd700);
+  padding: 1.5rem 0;
+  text-align: center;
+  color: white;
+}
+
+.md-footer .footer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.md-footer .footer-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.md-footer .footer-nav a:hover {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.md-footer .footer-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
 }
