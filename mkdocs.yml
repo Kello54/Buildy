@@ -1,52 +1,32 @@
 site_name: Buildy
-site_url: https://kello54.github.io/V18/
-site_description: Documentation for the Buildy platform
+site_url: https://kello54.github.io/Buildy/
+site_description: Building Material Price Comparison
 
 theme:
   name: material
+  language: en
   logo: images/logo.png
   favicon: images/favicon.png
   custom_dir: overrides
   features:
     - navigation.tabs
-    - navigation.instant
-    - navigation.tracking
+    - navigation.sections
     - navigation.top
-    - search.highlight
-    - search.share
     - content.code.copy
-    - content.tabs.link
     - toc.integrate
-    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - header.autohide
+    - content.action.edit
 
 extra_css:
-  - css/extra.css
+  - stylesheets/custom.css
 
 nav:
   - Home: index.md
   - About: about.md
+  - Features: features.md
+  - Pricing: pricing.md
+  - FAQ: faq.md
   - Roadmap: roadmap.md
   - Contact: contact.md
-  - Docs:
-      - API: api.md
-      - Platform: platform.md
-      - Dashboards: dashboards.md
-      - Runbooks: runbooks.md
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/kello54
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/
-    - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - toc:
-      permalink: true
-  - def_list
-  - attr_list
-  - md_in_html
