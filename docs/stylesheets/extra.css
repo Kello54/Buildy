@@ -1,0 +1,59 @@
+/* ===== Buildy Custom Styles ===== */
+
+/* General link styling */
+a {
+  color: #6A0DAD; /* Deep purple */
+}
+a:hover {
+  color: #FFD700; /* Gold */
+  text-decoration: underline;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #6A0DAD; /* Purple */
+  font-weight: 700;
+}
+
+/* Buttons (Material theme buttons, links styled as buttons) */
+.md-typeset .md-button {
+  background-color: #6A0DAD;
+  color: white;
+  border-radius: 6px;
+  padding: 0.6em 1.2em;
+  transition: background-color 0.2s ease-in-out;
+}
+.md-typeset .md-button:hover {
+  background-color: #FFD700;
+  color: #000;
+}
+
+/* Tables */
+.md-typeset table {
+  border: 1px solid #ddd;
+}
+.md-typeset table th {
+  background-color: #6A0DAD;
+  color: white;
+}
+.md-typeset table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Footer */
+.md-footer {
+  background-color: #6A0DAD;
+  color: white;
+}
+.md-footer a {
+  color: #FFD700;
+}
+.md-footer a:hover {
+  color: white;
+}
+
+/* Navigation highlight */
+.md-nav__link--active {
+  color: #FFD700 !important;
+  font-weight: bold;
+}
