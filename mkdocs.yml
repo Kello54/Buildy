@@ -1,55 +1,55 @@
 site_name: Buildy
-site_url: https://kello54.github.io/
-site_description: Buildy - Building material price comparison platform
+site_url: https://kello54.github.io/Buildy/
+site_description: Building material price comparison app
 
 theme:
   name: material
-  language: en
+  logo: images/logo.png       # your logo
+  favicon: images/favicon.png # your favicon
   palette:
-    - scheme: default
-      primary: purple
-      accent: amber
-  logo: images/logo.png
-  favicon: images/favicon.png
+    primary: purple
+    accent: amber
   features:
-    - navigation.instant
-    - navigation.sections
     - navigation.top
+    - navigation.tabs
+    - navigation.expand
+    - toc.integrate
     - search.suggest
     - search.highlight
     - content.code.copy
 
-nav:
-  - Home: index.md
-  - About: about.md
-  - Features: features.md
-  - Pricing: pricing.md
-  - FAQ: faq.md
-  - Getting Started: getting-started.md
-  - Roadmap: roadmap.md
-  - Changelog: changelog.md
-  - Contact: contact.md
-
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/kello54
+      link: https://github.com/Kello54/Buildy
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/
-    - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/
+      link: https://twitter.com/yourprofile
+
+plugins:
+  - search
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
 
 markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
   - toc:
       permalink: true
-  - admonition
-  - footnotes
-  - def_list
-  - attr_list
-  - md_in_html
-  - tables
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.emoji
-  - pymdownx.tasklist:
-      custom_checkbox: true
+
+# Load your overrides for custom footer
+theme:
+  name: material
+  custom_dir: overrides
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Docs:
+      - Getting Started: docs/getting-started.md
+      - FAQ: docs/faq.md
