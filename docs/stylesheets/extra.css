@@ -103,3 +103,67 @@
 .md-search__icon:hover {
   color: #ffb300; /* Gold hover */
 }
+
+/* === Inline Code Styling === */
+code {
+  background: #f3e5f5;       /* light purple background */
+  color: #6a1b9a;            /* purple text */
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: monospace;
+}
+
+/* === Code Block Styling === */
+pre code {
+  display: block;
+  background: #212121;       /* dark background */
+  color: #ffeb3b;            /* gold text */
+  padding: 1em;
+  border-radius: 6px;
+  font-size: 0.95em;
+  overflow-x: auto;
+}
+
+/* Highlighted lines inside code blocks */
+.highlight .hll {
+  background-color: rgba(255, 179, 0, 0.2); /* transparent gold highlight */
+}
+
+/* === Admonitions / Callouts Styling === */
+.md-typeset .admonition,
+.md-typeset details {
+  border-left: 0.3rem solid #6a1b9a; /* purple border */
+  border-radius: 6px;
+  padding: 0.6em 1em;
+  margin: 1em 0;
+  background: #f3e5f5; /* soft purple background */
+}
+
+.md-typeset .admonition-title,
+.md-typeset details summary {
+  color: #6a1b9a;
+  font-weight: bold;
+}
+
+/* Specific callout overrides */
+.md-typeset .admonition.note { border-color: #6a1b9a; }
+.md-typeset .admonition.tip { border-color: #ffb300; }
+.md-typeset .admonition.warning { border-color: #ff5722; }
+.md-typeset .admonition.danger { border-color: #d32f2f; }
+
+/* === Buttons Styling === */
+.md-button {
+  background: #6a1b9a;
+  color: white !important;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s ease-in-out;
+}
+
+.md-button:hover {
+  background: #ffb300;
+  color: white !important;
+}
