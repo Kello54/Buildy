@@ -10,7 +10,7 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/IMG_7935.jpeg      # change to logo.jpeg if needed
+        
   # favicon removed until you have one
 
 plugins:
