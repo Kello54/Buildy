@@ -1,169 +1,105 @@
-/* === Brand Colors === */
-:root {
-  --md-primary-fg-color: #6a1b9a;   /* Purple */
-  --md-accent-fg-color: #ffb300;    /* Gold */
+/* ===============================
+   Buildy Custom Styling
+   =============================== */
+
+/* Global Styles */
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
-/* === Footer Styling === */
-.md-footer {
-  background: linear-gradient(to right, #6a1b9a, #ffb300);
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
+/* Header / Navbar */
+.md-header {
+  background: #6a1b9a !important; /* Strong purple */
+  color: #fff !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s ease;
 }
 
-.md-footer a {
-  color: white;
+.md-header:hover {
+  background: #7b1fa2 !important;
+}
+
+/* Main Titles */
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: #4a148c; /* Deep purple */
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+}
+
+/* Links */
+a {
+  color: #6a1b9a;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #ff9800; /* Gold on hover */
+  text-shadow: 0px 0px 6px rgba(255, 152, 0, 0.6);
   text-decoration: underline;
 }
 
-.md-footer a:hover {
-  color: #ffe082; /* lighter gold hover */
+/* Lists */
+ul li {
+  margin-bottom: 0.5em;
 }
 
-/* === Back to Top Button in Footer === */
-.md-footer button {
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 5px;
-  background: white;
-  color: #6a1b9a;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.md-footer button:hover {
-  background: #ffb300;
-  color: white;
-}
-
-/* === Navigation Tabs Styling === */
-.md-tabs {
-  background: #6a1b9a; /* Purple tab bar */
-}
-
-.md-tabs__link {
-  color: white;
-  font-weight: 500;
-}
-
-.md-tabs__link:hover,
-.md-tabs__link:focus {
-  color: #ffb300; /* Gold on hover */
-}
-
-.md-tabs__link--active {
-  color: #ffb300; /* Active tab in gold */
-  border-bottom: 2px solid #ffb300;
-}
-
-/* === Sidebar Navigation Styling === */
-.md-nav {
-  font-weight: 500;
-}
-
-.md-nav__link {
-  color: #333; /* Default text */
-  transition: color 0.2s ease;
-}
-
-.md-nav__link:hover {
-  color: #6a1b9a; /* Purple hover */
-}
-
-.md-nav__link--active {
-  color: #ffb300; /* Gold for active page */
-  font-weight: bold;
-  border-left: 3px solid #ffb300; /* Gold accent bar */
-  padding-left: 0.5rem;
-}
-
-/* === Search Bar Styling === */
-.md-search__form {
-  border: 2px solid #6a1b9a; /* Purple border */
-  border-radius: 6px;
-}
-
-.md-search__input {
-  color: #333;
-}
-
-.md-search__input:focus {
-  border-color: #ffb300; /* Gold focus */
-  box-shadow: 0 0 5px #ffb300;
-}
-
-.md-search__icon {
-  color: #6a1b9a; /* Purple search icon */
-}
-
-.md-search__icon:hover {
-  color: #ffb300; /* Gold hover */
-}
-
-/* === Inline Code Styling === */
-code {
-  background: #f3e5f5;       /* light purple background */
-  color: #6a1b9a;            /* purple text */
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
-  font-family: monospace;
-}
-
-/* === Code Block Styling === */
-pre code {
-  display: block;
-  background: #212121;       /* dark background */
-  color: #ffeb3b;            /* gold text */
-  padding: 1em;
-  border-radius: 6px;
+/* Footer */
+.md-footer {
+  color: #fff;
+  text-align: center;
+  padding: 1.5em 1em;
   font-size: 0.95em;
-  overflow-x: auto;
+  position: relative;
+  overflow: hidden;
+
+  /* Animated Gradient */
+  background: linear-gradient(270deg, #6a1b9a, #ff9800, #6a1b9a);
+  background-size: 600% 600%;
+  animation: gradientShift 15s ease infinite;
+
+  /* Top Shadow */
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.25);
 }
 
-/* Highlighted lines inside code blocks */
-.highlight .hll {
-  background-color: rgba(255, 179, 0, 0.2); /* transparent gold highlight */
+/* Footer Links */
+.md-footer a {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-/* === Admonitions / Callouts Styling === */
-.md-typeset .admonition,
-.md-typeset details {
-  border-left: 0.3rem solid #6a1b9a; /* purple border */
-  border-radius: 6px;
-  padding: 0.6em 1em;
-  margin: 1em 0;
-  background: #f3e5f5; /* soft purple background */
+.md-footer a:hover {
+  color: #ffe082; /* Lighter gold */
+  text-shadow: 0 0 6px rgba(255,255,255,0.7);
 }
 
-.md-typeset .admonition-title,
-.md-typeset details summary {
-  color: #6a1b9a;
-  font-weight: bold;
+/* Footer Icons (optional if you add social links later) */
+.footer-icons {
+  margin-top: 0.8em;
 }
 
-/* Specific callout overrides */
-.md-typeset .admonition.note { border-color: #6a1b9a; }
-.md-typeset .admonition.tip { border-color: #ffb300; }
-.md-typeset .admonition.warning { border-color: #ff5722; }
-.md-typeset .admonition.danger { border-color: #d32f2f; }
-
-/* === Buttons Styling === */
-.md-button {
-  background: #6a1b9a;
-  color: white !important;
-  border-radius: 5px;
-  padding: 0.5em 1em;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background 0.2s ease-in-out;
+.footer-icons a {
+  margin: 0 8px;
+  font-size: 1.2em;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.md-button:hover {
-  background: #ffb300;
-  color: white !important;
+.footer-icons a:hover {
+  transform: scale(1.2);
+  color: #ffe082;
+}
+
+/* Keyframes for Gradient Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
