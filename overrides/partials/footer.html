@@ -1,30 +1,13 @@
 <footer class="md-footer">
-  <div class="footer-content">
-    <p>© 2025 <strong>Buildy</strong> — Building Material Price Comparison</p>
-
-    <!-- Footer Navigation -->
-    <nav class="footer-nav">
-      <a href="https://kello54.github.io/V18/">Home</a> •
-      <a href="about/">About</a> •
-      <a href="pricing/">Pricing</a> •
-      <a href="faq/">FAQ</a> •
-      <a href="contact/">Contact</a>
-    </nav>
-
-    <!-- Social Icons -->
-    <div class="footer-icons">
-      <a href="https://github.com/kello54" target="_blank" aria-label="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="mailto:info@buildy.com" aria-label="Email">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="https://twitter.com/" target="_blank" aria-label="Twitter">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
-    </div>
+  <div class="footer-nav">
+    <ul>
+      <li><a href="{{ config.site_url }}">🏠 Home</a></li>
+      <li><a href="{{ base_url }}/about/">ℹ️ About</a></li>
+      <li><a href="{{ base_url }}/roadmap/">📍 Roadmap</a></li>
+      <li><a href="{{ base_url }}/contact/">✉️ Contact</a></li>
+    </ul>
   </div>
+  <p class="footer-text">
+    © {{ config.site_name }} {{ build_date_utc | date: "%Y" }} — All Rights Reserved
+  </p>
 </footer>
