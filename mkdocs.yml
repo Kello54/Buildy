@@ -1,30 +1,22 @@
 site_name: Buildy
-site_description: Compare building material prices, track trends, and connect with suppliers.
-site_url: https://kello54.github.io/V18/
+site_url: https://kello54.github.io/
+site_description: Buildy - Building material price comparison platform
 
 theme:
   name: material
-  logo: images/logo.png
-  favicon: images/favicon.png
+  language: en
   palette:
-    primary: purple
-    accent: amber
+    - scheme: default
+      primary: purple
+      accent: amber
+  logo: assets/logo.png
+  favicon: assets/favicon.png
   features:
     - navigation.instant
-    - navigation.tabs
     - navigation.sections
-    - content.code.copy
-    - toc.integrate
-    - footer.social
-
-extra:
-  social:
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com
-    - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com
-    - icon: fontawesome/brands/facebook
-      link: https://facebook.com
+    - navigation.top
+    - search.suggest
+    - search.highlight
 
 nav:
   - Home: index.md
@@ -38,15 +30,14 @@ nav:
   - Contact: contact.md
 
 markdown_extensions:
-  - admonition
-  - codehilite
   - toc:
       permalink: true
+  - admonition
   - footnotes
+  - def_list
+  - attr_list
+  - md_in_html
   - tables
-  - abbr
-
-extra_css:
-  - stylesheets/extra.css
-
-copyright: "© 2025 Buildy. All rights reserved."
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.emoji
