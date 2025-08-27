@@ -1,18 +1,13 @@
-# 🏗️ Buildy.ie  
+# Welcome to Buildy
 
-**Compare building material prices instantly.**  
-Save time, reduce costs, and find the best suppliers for your projects.  
-
----
-
-## 🔍 Key Features  
-
-- 📊 **Price Comparison** – search across multiple suppliers in real-time.  
-- 🔧 **Automated Runbooks** – streamline your workflows.  
-- 📈 **Dashboards & KPIs** – track spend, savings, and supplier performance.  
-- ⚡ **Fast & Simple** – designed for engineers, contractors, and businesses.  
+Buildy is your one-stop platform for **building material price comparison**.  
+We help contractors, suppliers, and DIY enthusiasts save time and money by finding the best prices across multiple suppliers.
 
 ---
 
-## 🚀 Get Started  
-👉 Visit the [Getting Started](getting-started.md) guide to see how Buildy can save you money today.  
+## 🚀 Get Started
+- Learn [About Buildy](about.md)
+- Explore [Features](features.md)
+- Check our [Pricing](pricing.md)
+- Visit the [FAQ](faq.md)
+- [Contact Us](contact.md) anytime
