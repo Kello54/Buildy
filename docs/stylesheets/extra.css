@@ -1,16 +1,23 @@
-
 /* ===================== */
 /* General Theme Styling */
 /* ===================== */
 :root {
   --primary-color: #6a0dad; /* Purple */
   --secondary-color: #ffb400; /* Gold */
-  --gradient-bg: linear-gradient(135deg, #6a0dad, #ffb400);
   --text-light: #ffffff;
   --text-dark: #333333;
+  --code-bg: #f4f0fa;
+  --code-border: #d8c6f5;
 }
 
-/* Body tweaks */
+/* Gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Body */
 body {
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -33,31 +40,31 @@ a:hover {
 /* Header (Top Navbar)   */
 /* ===================== */
 .md-header {
-  background: var(--gradient-bg);
+  background: linear-gradient(135deg, #6a0dad, #ffb400);
+  background-size: 200% 200%;
   color: var(--text-light);
   font-weight: 600;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  animation: gradientShift 12s ease infinite;
 }
 
 /* ===================== */
 /* Footer Styling        */
 /* ===================== */
 .md-footer {
-  background: var(--gradient-bg);
+  background: linear-gradient(135deg, #6a0dad, #ffb400, #9b59b6);
+  background-size: 300% 300%;
+  animation: gradientShift 15s ease infinite;
   color: var(--text-light);
   padding: 1.5rem 1rem;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-
-/* Footer content wrapper */
 .footer-content {
   max-width: 900px;
   margin: 0 auto;
 }
-
-/* Footer navigation */
 .footer-nav {
   margin: 0.75rem 0;
   font-size: 0.95rem;
@@ -71,8 +78,6 @@ a:hover {
   color: var(--secondary-color);
   text-shadow: 0 0 6px rgba(255, 180, 0, 0.8);
 }
-
-/* Social icons */
 .footer-icons {
   margin-top: 0.75rem;
 }
@@ -89,7 +94,7 @@ a:hover {
 }
 
 /* ===================== */
-/* Buttons (Optional)    */
+/* Buttons               */
 /* ===================== */
 button,
 .md-button {
@@ -106,4 +111,109 @@ button:hover,
   background: var(--secondary-color);
   color: var(--text-dark);
   box-shadow: 0px 0px 12px rgba(255, 180, 0, 0.6);
+}
+
+/* ===================== */
+/* Code Styling          */
+/* ===================== */
+code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.95rem;
+  font-family: 'Fira Code', monospace;
+  color: var(--primary-color);
+}
+
+pre code {
+  display: block;
+  background: #1e1e2f;
+  color: #f8f8f2;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid #3a2f5c;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Highlighted lines in code */
+.highlight .hll {
+  background-color: rgba(255, 180, 0, 0.2);
+  border-left: 4px solid var(--secondary-color);
+}
+
+/* ===================== */
+/* Table Styling         */
+/* ===================== */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+}
+th, td {
+  border: 1px solid #e2d9f3;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+th {
+  background: var(--primary-color);
+  color: var(--text-light);
+  font-weight: 600;
+}
+tr:nth-child(even) {
+  background: #f9f6ff;
+}
+tr:hover {
+  background: rgba(106, 13, 173, 0.08);
+}
+
+/* ===================== */
+/* Admonitions (Callouts)*/
+/* ===================== */
+.md-typeset .admonition {
+  border-left: 6px solid var(--primary-color);
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+}
+.md-typeset .admonition-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Specific colors */
+.md-typeset .admonition.note {
+  background: #f9f6ff;
+  border-left-color: var(--primary-color);
+}
+.md-typeset .admonition.note .admonition-title {
+  color: var(--primary-color);
+}
+
+.md-typeset .admonition.tip {
+  background: #fffbea;
+  border-left-color: var(--secondary-color);
+}
+.md-typeset .admonition.tip .admonition-title {
+  color: var(--secondary-color);
+}
+
+.md-typeset .admonition.warning {
+  background: #fff3f3;
+  border-left-color: #e74c3c;
+}
+.md-typeset .admonition.warning .admonition-title {
+  color: #e74c3c;
+}
+
+.md-typeset .admonition.success {
+  background: #f0fff4;
+  border-left-color: #2ecc71;
+}
+.md-typeset .admonition.success .admonition-title {
+  color: #2ecc71;
 }
