@@ -25,6 +25,9 @@
         <ul class="flex space-x-6">
           <li><a href="#home" class="hover:text-purple-300">Home</a></li>
           <li><a href="#features" class="hover:text-purple-300">Features</a></li>
+          <li><a href="#pricing" class="hover:text-purple-300">Pricing</a></li>
+          <li><a href="#chart" class="hover:text-purple-300">Chart</a></li>
+          <li><a href="#multi-tool" class="hover:text-purple-300">Compare</a></li>
           <li><a href="#testimonials" class="hover:text-purple-300">Testimonials</a></li>
           <li><a href="#contact" class="hover:text-purple-300">Contact</a></li>
         </ul>
@@ -36,7 +39,184 @@
   <section id="home" class="bg-gradient-to-r from-[#4b0082] to-indigo-700 text-white h-screen flex flex-col justify-center items-center text-center px-4">
     <h2 class="text-4xl md:text-6xl font-bold mb-4">Build Smarter, Not Harder</h2>
     <p class="text-lg md:text-2xl mb-8 max-w-xl">Compare tools, plan projects, and save time with Buildy.</p>
-    <a href="#features" class="bg-white text-[#4b0082] font-bold py-3 px-6 rounded shadow-lg hover:bg-gray-200 t
+    <a href="#features" class="bg-white text-[#4b0082] font-bold py-3 px-6 rounded shadow-lg hover:bg-gray-200 transition">Get Started</a>
+    <img src="docs/images/logo.png" alt="Buildy Banner" class="mt-10 max-w-full rounded shadow-lg">
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Compare Prices</h3>
+        <p>See the best deals on tools and materials instantly.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Project Planning</h3>
+        <p>Create timelines and manage resources efficiently.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Analytics</h3>
+        <p>Track costs, materials, and productivity with visual reports.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Calculator Section -->
+  <section id="pricing" class="py-20 bg-white text-gray-900">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold mb-12">Compare Tool Prices</h2>
+      <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+        <label class="block mb-4 text-left font-semibold">Select Tool:</label>
+        <select id="toolSelect" class="border border-gray-300 rounded p-2 w-full mb-4">
+          <option value="hammer">Hammer</option>
+          <option value="drill">Drill</option>
+          <option value="saw">Saw</option>
+        </select>
+
+        <label class="block mb-4 text-left font-semibold">Quantity:</label>
+        <input type="number" id="quantityInput" class="border border-gray-300 rounded p-2 w-full mb-4" min="1" value="1">
+
+        <button id="calculateBtn" class="bg-[#4b0082] text-white font-bold py-2 px-4 rounded hover:bg-purple-700 transition">Calculate Price</button>
+
+        <p id="result" class="mt-4 text-lg font-bold"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool Price Chart Section -->
+  <section id="chart" class="py-20 bg-gray-50 text-gray-900">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold mb-12">Tool Price Comparison</h2>
+      <canvas id="toolChart" class="mx-auto" width="400" height="200"></canvas>
+    </div>
+  </section>
+
+  <!-- Multi-Tool Comparison Table -->
+  <section id="multi-tool" class="py-20 bg-gray-100 text-gray-900">
+    <div class="max-w-6xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold mb-12">Compare Multiple Tools</h2>
+      <table class="min-w-full bg-white rounded-lg shadow-md">
+        <thead class="bg-[#4b0082] text-white">
+          <tr>
+            <th class="py-3 px-6">Tool</th>
+            <th class="py-3 px-6">Price ($)</th>
+            <th class="py-3 px-6">Quantity</th>
+            <th class="py-3 px-6">Total ($)</th>
+          </tr>
+        </thead>
+        <tbody id="toolTableBody">
+          <tr>
+            <td>Hammer</td>
+            <td>15</td>
+            <td><input type="number" class="border border-gray-300 rounded p-1 w-20 quantity-input" data-tool="hammer" value="1" min="1"></td>
+            <td class="total-cell" data-tool="hammer">15</td>
+          </tr>
+          <tr>
+            <td>Drill</td>
+            <td>80</td>
+            <td><input type="number" class="border border-gray-300 rounded p-1 w-20 quantity-input" data-tool="drill" value="1" min="1"></td>
+            <td class="total-cell" data-tool="drill">80</td>
+          </tr>
+          <tr>
+            <td>Saw</td>
+            <td>45</td>
+            <td><input type="number" class="border border-gray-300 rounded p-1 w-20 quantity-input" data-tool="saw" value="1" min="1"></td>
+            <td class="total-cell" data-tool="saw">45</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-[#f2f0fb] text-[#4b0082]">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold mb-12">What Our Users Say</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded shadow">
+          <p>"Buildy helped me save hours on project planning!"</p>
+          <p class="mt-4 font-bold">— John D.</p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <p>"The pricing comparison feature is a game-changer."</p>
+          <p class="mt-4 font-bold">— Sarah K.</p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <p>"I can now plan my projects without stress. Highly recommend!"</p>
+          <p class="mt-4 font-bold">— Mike L.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer id="contact" class="bg-[#4b0082] text-white py-10 mt-20">
+    <div class="max-w-6xl mx-auto text-center px-4">
+      <h3 class="text-2xl font-bold mb-4">Get in Touch</h3>
+      <p class="mb-6">Email us at <a href="mailto:contact@buildy.com" class="underline">contact@buildy.com</a></p>
+      <p>&copy; 2025 Buildy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Pricing Calculator
+    const toolPrices = { hammer: 15, drill: 80, saw: 45 };
+    const toolSelect = document.getElementById('toolSelect');
+    const quantityInput = document.getElementById('quantityInput');
+    const calculateBtn = document.getElementById('calculateBtn');
+    const result = document.getElementById('result');
+
+    calculateBtn.addEventListener('click', () => {
+      const tool = toolSelect.value;
+      const quantity = parseInt(quantityInput.value) || 1;
+      const price = toolPrices[tool] * quantity;
+      result.textContent = `Total Price: $${price}`;
+    });
+
+    // Chart.js
+    const ctx = document.getElementById('toolChart').getContext('2d');
+    const toolChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Hammer', 'Drill', 'Saw'],
+        datasets: [{
+          label: 'Price ($)',
+          data: [15, 80, 45],
+          backgroundColor: ['#4b0082', '#6a0dad', '#9370db'],
+          borderColor: ['#3a0060', '#52008f', '#7a5bb3'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // Multi-Tool Table Dynamic Totals + Chart Update
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const totalCells = document.querySelectorAll('.total-cell');
+
+    quantityInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        const tool = input.dataset.tool;
+        const quantity = parseInt(input.value) || 1;
+        const totalCell = document.querySelector(`.total-cell[data-tool="${tool}"]`);
+        totalCell.textContent = toolPrices[tool] * quantity;
+
+        // Update chart dynamically
+        const dataIndex = { hammer: 0, drill: 1, saw: 2 }[tool];
+        toolChart.data.datasets[0].data[dataIndex] = toolPrices[tool] * quantity;
+        toolChart.update();
+      });
+    });
+  </script>
+
+</body>
+</html>
+
 
 
 
