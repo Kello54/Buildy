@@ -3,104 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>V18 | Building Material Price Comparison</title>
+  <title>Buildy - Smarter Project Planning</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f8f9fa;
-      color: #333;
-      line-height: 1.6;
-    }
-    header {
-      background: #0d6efd;
-      color: #fff;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-    header p {
-      font-size: 1.2rem;
-    }
-    section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    h2 {
-      color: #0d6efd;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li::before {
-      content: "✔️ ";
-    }
-    footer {
-      background: #212529;
-      color: #ccc;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-    a {
-      color: #0d6efd;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .center {
-      text-align: center;
-      margin-top: 2rem;
+    html {
+      scroll-behavior: smooth;
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>🏗️ V18 Price Comparison</h1>
-    <p>Find the best prices on building materials — fast.</p>
+<body class="font-sans">
+
+  <!-- Navbar -->
+  <header class="bg-purple-800 text-white sticky top-0 shadow-md z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold">Buildy</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="#home" class="hover:text-purple-300">Home</a></li>
+          <li><a href="#features" class="hover:text-purple-300">Features</a></li>
+          <li><a href="#testimonials" class="hover:text-purple-300">Testimonials</a></li>
+          <li><a href="#contact" class="hover:text-purple-300">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <section>
-    <h2>🔎 Why Use V18?</h2>
-    <ul>
-      <li>Save money by spotting cheaper alternatives</li>
-      <li>Save time — no more calling around for quotes</li>
-      <li>Trusted sources — only verified suppliers</li>
-    </ul>
+  <!-- Hero Section -->
+  <section id="home" class="bg-gradient-to-r from-purple-800 to-indigo-700 text-white h-screen flex flex-col justify-center items-center text-center px-4">
+    <h2 class="text-4xl md:text-6xl font-bold mb-4">Build Smarter, Not Harder</h2>
+    <p class="text-lg md:text-2xl mb-8 max-w-xl">Compare tools, plan projects, and save time with Buildy.</p>
+    <a href="#features" class="bg-white text-purple-800 font-bold py-3 px-6 rounded shadow-lg hover:bg-gray-200 transition">Get Started</a>
   </section>
 
-  <section>
-    <h2>🚀 How It Works</h2>
-    <ol>
-      <li>Search for a material (cement, timber, steel…)</li>
-      <li>Compare prices across multiple suppliers</li>
-      <li>Choose the best deal for your project</li>
-    </ol>
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Compare Prices</h3>
+        <p>See the best deals on tools and materials instantly.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Project Planning</h3>
+        <p>Create timelines and manage resources efficiently.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">Analytics</h3>
+        <p>Track costs, materials, and productivity with visual reports.</p>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>📈 Who Is It For?</h2>
-    <p>Contractors, DIY builders, and suppliers looking for transparency and savings.</p>
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-purple-50 text-purple-900">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold mb-12">What Our Users Say</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded shadow">
+          <p>"Buildy helped me save hours on project planning!"</p>
+          <p class="mt-4 font-bold">— John D.</p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <p>"The pricing comparison feature is a game-changer."</p>
+          <p class="mt-4 font-bold">— Sarah K.</p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <p>"I can now plan my projects without stress. Highly recommend!"</p>
+          <p class="mt-4 font-bold">— Mike L.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>📬 Stay Updated</h2>
-    <p>We’re in early stages! Join the early access list:</p>
-    <p><a href="mailto:your@email.com">Contact us</a></p>
-  </section>
-
-  <div class="center">
-    <p><a href="docs/index.html">📖 Read the Documentation</a></p>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 V18 Platform — Building Material Price Comparison</p>
+  <!-- Contact / Footer Section -->
+  <footer id="contact" class="bg-purple-800 text-white py-10 mt-20">
+    <div class="max-w-6xl mx-auto text-center px-4">
+      <h3 class="text-2xl font-bold mb-4">Get in Touch</h3>
+      <p class="mb-6">Email us at <a href="mailto:contact@buildy.com" class="underline">contact@buildy.com</a></p>
+      <p>&copy; 2025 Buildy. All rights reserved.</p>
+    </div>
   </footer>
+
 </body>
 </html>
+
