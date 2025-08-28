@@ -1,124 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buildy - Smarter Project Planning</title>
-  <!-- Favicon -->
-  <link rel="icon" href="docs/images/favicon.png" type="image/png">
-  <!-- Tailwind CSS CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+  <title>Buildy</title>
+  <link rel="icon" type="image/png" href="docs/images/favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     html { scroll-behavior: smooth; }
-    [data-theme="dark"] {
-      --bg-color: #1a202c;
-      --text-color: #f5f5f5;
-      --section-bg: #2d3748;
-      --card-bg: #4a5568;
-      --accent: #9f7aea;
-    }
-    [data-theme="light"] {
-      --bg-color: #ffffff;
-      --text-color: #1a202c;
-      --section-bg: #f7fafc;
-      --card-bg: #ffffff;
-      --accent: #6b46c1;
-    }
-    body { background-color: var(--bg-color); color: var(--text-color); }
-    section { background-color: var(--section-bg); }
-    .card { background-color: var(--card-bg); }
-    .accent { color: var(--accent); }
+    .fade-section { opacity: 0; transform: translateY(20px); transition: opacity 1s, transform 1s; }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+    .page-transition { opacity: 0; transition: opacity 1s ease-in-out; }
+    body.loaded .page-transition { opacity: 1; }
   </style>
 </head>
-<body class="font-sans transition-colors duration-500">
+<body class="bg-gray-50 text-gray-900 transition-colors duration-500 page-transition">
 
   <!-- Navbar -->
-  <header class="bg-[#4b0082] text-white sticky top-0 shadow-md z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-      <div class="flex items-center space-x-2">
-        <img src="docs/images/logo.png" alt="Buildy Logo" class="h-10 w-10">
-        <h1 class="text-2xl font-bold">Buildy</h1>
-      </div>
-      <nav class="flex items-center space-x-6">
-        <ul class="flex space-x-6">
-          <li><a href="#home" class="hover:accent">Home</a></li>
-          <li><a href="#features" class="hover:accent">Features</a></li>
-          <li><a href="#pricing" class="hover:accent">Pricing</a></li>
-          <li><a href="#chart" class="hover:accent">Chart</a></li>
-          <li><a href="#multi-tool" class="hover:accent">Compare</a></li>
-          <li><a href="#testimonials" class="hover:accent">Testimonials</a></li>
-          <li><a href="#contact" class="hover:accent">Contact</a></li>
-        </ul>
-        <button id="themeToggle" class="ml-4 bg-white text-[#4b0082] px-3 py-1 rounded hover:bg-gray-200 transition">🌙</button>
-      </nav>
+  <nav class="bg-[#4b0082] text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <img src="docs/images/logo.png" alt="Buildy Logo" class="h-8">
+      <span class="font-bold text-xl">Buildy</span>
     </div>
-  </header>
+    <div class="space-x-6 hidden md:flex">
+      <a href="#features" class="hover:text-gray-300">Features</a>
+      <a href="#calculator" class="hover:text-gray-300">Calculator</a>
+      <a href="#multi-tool" class="hover:text-gray-300">Comparison</a>
+      <a href="#chart" class="hover:text-gray-300">Charts</a>
+      <a href="#testimonials" class="hover:text-gray-300">Testimonials</a>
+    </div>
+    <button id="themeToggle" class="bg-white text-[#4b0082] px-3 py-1 rounded-full">🌙</button>
+  </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-4">
-    <h2 class="text-4xl md:text-6xl font-bold mb-4 accent">Build Smarter, Not Harder</h2>
-    <p class="text-lg md:text-2xl mb-8 max-w-xl">Compare tools, plan projects, and save time with Buildy.</p>
-    <a href="#features" class="bg-[#4b0082] text-white font-bold py-3 px-6 rounded shadow-lg hover:bg-purple-700 transition">Get Started</a>
-    <img src="docs/images/logo.png" alt="Buildy Banner" class="mt-10 max-w-full rounded shadow-lg">
+  <!-- Hero -->
+  <section class="text-center py-20 bg-gradient-to-r from-[#4b0082] to-[#6a0dad] text-white">
+    <h1 class="text-5xl font-extrabold mb-6">Welcome to Buildy</h1>
+    <p class="text-xl mb-6">The smarter way to manage your construction tools and costs</p>
+    <a href="#calculator" class="bg-white text-[#4b0082] px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition">Try Now</a>
   </section>
 
-  <!-- Features Section -->
-  <section id="features" class="py-20">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
-      <div class="card p-6 rounded-lg shadow hover:shadow-lg transition">
-        <h3 class="text-xl font-bold mb-2 accent">Compare Prices</h3>
-        <p>See the best deals on tools and materials instantly.</p>
+  <!-- Features -->
+  <section id="features" class="py-20 px-6">
+    <h2 class="text-3xl font-bold text-center mb-12">Our Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="p-6 bg-white shadow rounded-xl fade-section card hover:scale-105 transition">
+        <h3 class="text-xl font-bold mb-4">Tool Management</h3>
+        <p>Easily track and organize all your tools.</p>
       </div>
-      <div class="card p-6 rounded-lg shadow hover:shadow-lg transition">
-        <h3 class="text-xl font-bold mb-2 accent">Project Planning</h3>
-        <p>Create timelines and manage resources efficiently.</p>
+      <div class="p-6 bg-white shadow rounded-xl fade-section card hover:scale-105 transition">
+        <h3 class="text-xl font-bold mb-4">Cost Calculator</h3>
+        <p>Calculate tool costs instantly with quantity support.</p>
       </div>
-      <div class="card p-6 rounded-lg shadow hover:shadow-lg transition">
-        <h3 class="text-xl font-bold mb-2 accent">Analytics</h3>
-        <p>Track costs, materials, and productivity with visual reports.</p>
+      <div class="p-6 bg-white shadow rounded-xl fade-section card hover:scale-105 transition">
+        <h3 class="text-xl font-bold mb-4">Analytics</h3>
+        <p>Visualize your spending trends with charts.</p>
       </div>
     </div>
   </section>
 
-  <!-- Pricing Calculator Section -->
-  <section id="pricing" class="py-20">
-    <div class="max-w-4xl mx-auto text-center px-4">
-      <h2 class="text-3xl font-bold mb-12 accent">Compare Tool Prices</h2>
-      <div class="card p-6 rounded-lg shadow-md">
-        <label class="block mb-4 text-left font-semibold">Select Tool:</label>
-        <select id="toolSelect" class="border border-gray-300 rounded p-2 w-full mb-4">
-          <option value="hammer">Hammer</option>
-          <option value="drill">Drill</option>
-          <option value="saw">Saw</option>
-          <option value="screwdriver">Screwdriver</option>
-          <option value="wrench">Wrench</option>
-        </select>
-
-        <label class="block mb-4 text-left font-semibold">Quantity:</label>
-        <input type="number" id="quantityInput" class="border border-gray-300 rounded p-2 w-full mb-4" min="1" value="1">
-
-        <button id="calculateBtn" class="bg-[#4b0082] text-white font-bold py-2 px-4 rounded hover:bg-purple-700 transition">Calculate Price</button>
-
-        <p id="result" class="mt-4 text-lg font-bold"></p>
-        <button id="downloadReport" class="mt-4 bg-[#4b0082] text-white px-4 py-2 rounded hover:bg-purple-700 transition">Download Report</button>
-      </div>
+  <!-- Calculator -->
+  <section id="calculator" class="py-20 bg-gray-100">
+    <div class="max-w-xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-8">Tool Pricing Calculator</h2>
+      <select id="toolSelect" class="border p-2 rounded mb-4 w-full">
+        <option value="hammer">Hammer - $15</option>
+        <option value="drill">Drill - $80</option>
+        <option value="saw">Saw - $45</option>
+        <option value="screwdriver">Screwdriver - $10</option>
+        <option value="wrench">Wrench - $25</option>
+      </select>
+      <input type="number" id="quantityInput" value="1" min="1" class="border p-2 rounded mb-4 w-full">
+      <button id="calculateBtn" class="bg-[#4b0082] text-white px-6 py-2 rounded hover:bg-[#6a0dad] transition">Calculate</button>
+      <p id="result" class="mt-4 text-lg font-semibold"></p>
+      <button id="downloadReport" class="mt-4 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">Download Report</button>
     </div>
   </section>
 
-  <!-- Tool Price Chart Section -->
-  <section id="chart" class="py-20">
-    <div class="max-w-4xl mx-auto text-center px-4">
-      <h2 class="text-3xl font-bold mb-12 accent">Tool Price Comparison</h2>
-      <canvas id="toolChart" class="mx-auto" width="400" height="200"></canvas>
-    </div>
-  </section>
-
-  <!-- Multi-Tool Comparison Table -->
-  <section id="multi-tool" class="py-20">
-    <div class="max-w-6xl mx-auto text-center px-4">
-      <h2 class="text-3xl font-bold mb-12 accent">Compare Multiple Tools</h2>
-      <table class="min-w-full card rounded-lg shadow-md">
+  <!-- Multi-Tool Table -->
+  <section id="multi-tool" class="py-20 bg-white text-gray-900">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Compare Multiple Tools</h2>
+      <input type="text" id="tableSearch" placeholder="Search tool..." class="border p-2 rounded mb-4 w-full">
+      <table class="min-w-full bg-white rounded-lg shadow-md">
         <thead class="bg-[#4b0082] text-white">
           <tr>
             <th class="py-3 px-6">Tool</th>
@@ -128,8 +92,117 @@
           </tr>
         </thead>
         <tbody id="toolTableBody">
-          <tr><td>Hammer</td><td>15</td><td><input type="number" class="border border-gray-300 rounded p-1 w-20 quantity-input" data-tool="hammer" value="1" min="1"></td><td class="total-cell" data-tool="hammer">15</td></tr>
-          <tr><td>Drill</td><td>80</td><td><input type="number" class="border border-gray-300 rounded p-1 w-20 quantity-input" data-tool="drill" value="1" min="1"></td><td class="total-cell" data-tool="drill">80</td></tr>
-          <tr><td>Saw</td><td>45</td><td><inp
+          <tr><td title="Strong and reliable">Hammer</td><td>15</td><td><input type="number" class="border rounded p-1 w-20 quantity-input" data-tool="hammer" value="1" min="1"></td><td class="total-cell" data-tool="hammer">15</td></tr>
+          <tr><td title="Powerful electric drill">Drill</td><td>80</td><td><input type="number" class="border rounded p-1 w-20 quantity-input" data-tool="drill" value="1" min="1"></td><td class="total-cell" data-tool="drill">80</td></tr>
+          <tr><td title="Sharp hand saw">Saw</td><td>45</td><td><input type="number" class="border rounded p-1 w-20 quantity-input" data-tool="saw" value="1" min="1"></td><td class="total-cell" data-tool="saw">45</td></tr>
+          <tr><td title="Essential screwdriver">Screwdriver</td><td>10</td><td><input type="number" class="border rounded p-1 w-20 quantity-input" data-tool="screwdriver" value="1" min="1"></td><td class="total-cell" data-tool="screwdriver">10</td></tr>
+          <tr><td title="Adjustable wrench">Wrench</td><td>25</td><td><input type="number" class="border rounded p-1 w-20 quantity-input" data-tool="wrench" value="1" min="1"></td><td class="total-cell" data-tool="wrench">25</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Chart -->
+  <section id="chart" class="py-20 bg-gray-100">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-8">Tool Price Analysis</h2>
+      <canvas id="toolChart" height="100"></canvas>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-20 bg-white">
+    <h2 class="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+      <div class="p-6 bg-gray-100 rounded-xl shadow fade-section hover:scale-105 transition"><p>"Buildy saved me hours of calculation work!"</p><span class="block mt-4 font-bold">– Alex</span></div>
+      <div class="p-6 bg-gray-100 rounded-xl shadow fade-section hover:scale-105 transition"><p>"The charts and reports are a game changer."</p><span class="block mt-4 font-bold">– Sam</span></div>
+      <div class="p-6 bg-gray-100 rounded-xl shadow fade-section hover:scale-105 transition"><p>"Perfect for managing my construction projects."</p><span class="block mt-4 font-bold">– Jamie</span></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#4b0082] text-white text-center py-6 mt-20">
+    <p>&copy; 2025 Buildy. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    window.addEventListener('load',()=>document.body.classList.add('loaded'));
+
+    // Dark Mode
+    const themeToggle=document.getElementById('themeToggle');
+    themeToggle.addEventListener('click',()=>{
+      document.body.classList.toggle('bg-gray-900');
+      document.body.classList.toggle('text-white');
+      themeToggle.textContent=document.body.classList.contains('bg-gray-900')?'☀️':'🌙';
+    });
+
+    // Tool Prices
+    const toolPrices={hammer:15,drill:80,saw:45,screwdriver:10,wrench:25};
+
+    // Calculator
+    document.getElementById('calculateBtn').addEventListener('click',()=>{
+      const tool=document.getElementById('toolSelect').value;
+      const qty=parseInt(document.getElementById('quantityInput').value)||1;
+      document.getElementById('result').textContent=`Total Price: $${toolPrices[tool]*qty}`;
+    });
+
+    // CSV Download
+    document.getElementById('downloadReport').addEventListener('click',()=>{
+      let csv="Tool,Quantity,Total ($)\\n";
+      Object.keys(toolPrices).forEach(tool=>{
+        const row=document.querySelector(\`.quantity-input[data-tool="\${tool}"]\`);
+        const qty=row?parseInt(row.value)||1:0;
+        csv+=\`\${tool},\${qty},\${toolPrices[tool]*qty}\\n\`;
+      });
+      const blob=new Blob([csv],{type:'text/csv'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='buildy_report.csv';a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Chart
+    const ctx=document.getElementById('toolChart').getContext('2d');
+    const toolChart=new Chart(ctx,{
+      type:'bar',
+      data:{labels:Object.keys(toolPrices),
+        datasets:[{label:'Price ($)',data:Object.values(toolPrices),
+          backgroundColor:['#4b0082','#6a0dad','#9370db','#8a2be2','#ba55d3'],
+          borderColor:['#3a0060','#52008f','#7a5bb3','#5d1ea1','#9147b5'],
+          borderWidth:1}]},
+      options:{responsive:true,animation:{duration:1000,easing:'easeInOutBounce'},
+        plugins:{tooltip:{enabled:true}},
+        scales:{y:{beginAtZero:true}}}
+    });
+
+    // Table Dynamic Totals + Chart Update
+    document.querySelectorAll('.quantity-input').forEach(input=>{
+      input.addEventListener('input',()=>{
+        const tool=input.dataset.tool;
+        const qty=parseInt(input.value)||1;
+        document.querySelector(\`.total-cell[data-tool="\${tool}"]\`).textContent=toolPrices[tool]*qty;
+        toolChart.data.datasets[0].data[Object.keys(toolPrices).indexOf(tool)]=toolPrices[tool]*qty;
+        toolChart.update();
+      });
+    });
+
+    // Live Search
+    document.getElementById('tableSearch').addEventListener('input',e=>{
+      const filter=e.target.value.toLowerCase();
+      document.querySelectorAll('#toolTableBody tr').forEach(row=>{
+        row.style.display=row.cells[0].textContent.toLowerCase().includes(filter)?'':'none';
+      });
+    });
+
+    // Reveal animations
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('visible');}
+      });
+    },{threshold:0.1});
+    document.querySelectorAll('.fade-section').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
 
 
