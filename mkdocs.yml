@@ -1,32 +1,40 @@
 site_name: Buildy
-site_url: https://kello54.github.io/Buildy/
-site_description: Building Material Price Comparison
+site_url: https://yourusername.github.io/buildy/
+site_description: Construction Price Comparison Platform
 
 theme:
   name: material
-  language: en
-  logo: images/logo.png
-  favicon: images/favicon.png
-  custom_dir: overrides
+  palette:
+    primary: purple
+    accent: yellow
+  font:
+    text: Inter
+    code: Roboto Mono
+  favicon: images/favicon.ico  # optional
+  logo: images/logo.png        # optional
   features:
-    - navigation.tabs
+    - navigation.expand
     - navigation.sections
-    - navigation.top
-    - content.code.copy
     - toc.integrate
-    - search.suggest
     - search.highlight
-    - header.autohide
-    - content.action.edit
+    - search.suggest
 
+# Include your custom CSS
 extra_css:
-  - stylesheets/custom.css
+  - css/custom.css
 
+# Enable extra JS if needed (optional)
+extra_javascript:
+  - js/back-to-top.js   # optional for back-to-top functionality
+
+# Site navigation
 nav:
   - Home: index.md
   - About: about.md
-  - Features: features.md
-  - Pricing: pricing.md
-  - FAQ: faq.md
-  - Roadmap: roadmap.md
-  - Contact: contact.md 
+  - Comparison: comparison.md
+  - Contact: contact.md
+
+# Repository info (for GitHub edit links)
+repo_name: yourusername/buildy
+repo_url: https://github.com/yourusername/buildy
+edit_uri: edit/main/docs/
