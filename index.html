@@ -81,6 +81,7 @@ header a:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(124,58,237
       <a href="#features">Features</a>
       <a href="#calculator">Calculator</a>
       <a href="#multi-tool">Compare</a>
+      <a href="#chart">Chart</a>
       <a href="#about">About</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
@@ -120,7 +121,84 @@ header a:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(124,58,237
   </div>
 </section>
 
-<!-- Calculator, Chart, Multi-Tool Comparison, About, Testimonials, Contact, Footer remain unchanged -->
+<!-- Calculator Section -->
+<section id="calculator" class="py-20 bg-white dark:bg-gray-900 dark:text-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">Tool Cost Calculator</h2>
+    <input type="number" id="quantityInput" placeholder="Enter quantity" class="border p-2 rounded mb-4 w-full md:w-1/3">
+    <p>Total Price: <span id="result">$0</span></p>
+    <button id="calculateBtn" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Calculate</button>
+  </div>
+</section>
+
+<!-- Multi-Tool Table Section -->
+<section id="multi-tool" class="py-20 bg-gray-100 dark:bg-gray-800 dark:text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center">Compare Multiple Tools</h2>
+    <table class="w-full table-auto border-collapse border border-gray-300 dark:border-gray-600">
+      <thead>
+        <tr class="bg-gray-200 dark:bg-gray-700">
+          <th class="border px-4 py-2">Tool</th>
+          <th class="border px-4 py-2">Price</th>
+          <th class="border px-4 py-2">Quantity</th>
+          <th class="border px-4 py-2">Total</th>
+        </tr>
+      </thead>
+      <tbody id="toolTableBody">
+        <tr>
+          <td class="border px-4 py-2">Hammer</td>
+          <td class="border px-4 py-2">$15</td>
+          <td class="border px-4 py-2"><input type="number" value="1" class="quantity-input border rounded px-2 py-1 w-16"></td>
+          <td class="border px-4 py-2 total-cell">$15</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Drill</td>
+          <td class="border px-4 py-2">$80</td>
+          <td class="border px-4 py-2"><input type="number" value="1" class="quantity-input border rounded px-2 py-1 w-16"></td>
+          <td class="border px-4 py-2 total-cell">$80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Chart Section -->
+<section id="chart" class="py-20 bg-white dark:bg-gray-900 dark:text-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">Price Chart</h2>
+    <canvas id="toolChart" width="400" height="200"></canvas>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-100 dark:bg-gray-800 dark:text-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">About Buildy</h2>
+    <p>Buildy is a smart tool management system for builders and makers. Calculate, compare, and visualize tool costs with ease, so you can make smarter purchasing decisions.</p>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-20 bg-white dark:bg-gray-900 dark:text-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">What Our Users Say</h2>
+    <p>"Buildy saved me hours of calculation every week!" – Alex R.</p>
+    <p>"The chart and table comparison is brilliant and easy to use." – Sam T.</p>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-gray-100 dark:bg-gray-800 dark:text-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
+    <form class="flex flex-col gap-4">
+      <input type="text" placeholder="Your Name" class="border p-2 rounded">
+      <input type="email" placeholder="Your Email" class="border p-2 rounded">
+      <textarea placeholder="Your Message" class="border p-2 rounded"></textarea>
+      <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Send</button>
+    </form>
+  </div>
+</section>
 
 <!-- Back to Top Button -->
 <button id="backToTop" class="fixed bottom-6 right-6 p-3 bg-purple-600 text-white rounded-full shadow-lg hover:bg-purple-700 transition hidden">↑ Top</button>
@@ -159,9 +237,8 @@ window.addEventListener('scroll',()=>{
   else navbar.classList.remove('shadow-lg');
 });
 
-// Count-up, Calculator, CSV export, Live search remain unchanged
-
-// Chart.js with bounce on load, staggered labels & hover pulse
+// Chart.js with bounce on load, hover pulse
+const toolPrices={Hammer:15,Drill:80}; // Example data
 const ctx=document.getElementById('toolChart').getContext('2d');
 const toolChart=new Chart(ctx,{
   type:'bar',
@@ -170,7 +247,7 @@ const toolChart=new Chart(ctx,{
     datasets:[{
       label:'Price ($)',
       data:Object.values(toolPrices),
-      backgroundColor:['#4b0082','#6a0dad','#9370db','#8a2be2','#ba55d3'],
+      backgroundColor:['#4b0082','#6a0dad'],
       borderWidth:1
     }]
   },
@@ -179,19 +256,6 @@ const toolChart=new Chart(ctx,{
     animation:{duration:1200,easing:'easeOutBounce'},
     scales:{y:{beginAtZero:true}},
     plugins:{tooltip:{enabled:true}}
-  }
-});
-document.getElementById('toolChart').addEventListener('mousemove', function(evt){
-  const points = toolChart.getElementsAtEventForMode(evt,'nearest',{intersect:true},true);
-  const meta = toolChart.getDatasetMeta(0);
-  meta.data.forEach((bar,i)=>{
-    bar.options.backgroundColor = ['#4b0082','#6a0dad','#9370db','#8a2be2','#ba55d3'][i];
-    bar.options.borderWidth = 1;
-  });
-  if(points.length){
-    points[0].element.options.backgroundColor = '#bb86fc';
-    points[0].element.options.borderWidth = 3;
-    toolChart.update();
   }
 });
 
@@ -222,8 +286,23 @@ const featureObserver=new IntersectionObserver(entries=>{
 },{threshold:0.2});
 document.querySelectorAll('.card').forEach(card=>featureObserver.observe(card));
 
-// Back to top & scroll indicator remain unchanged
+// Back to top & scroll indicator
+const backToTop=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>300) backToTop.classList.remove('hidden');
+  else backToTop.classList.add('hidden');
+  document.getElementById('scrollIndicator').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100+'%';
+});
+backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Calculator button
+document.getElementById('calculateBtn').addEventListener('click',()=>{
+  const qty=parseFloat(document.getElementById('quantityInput').value)||0;
+  const pricePer=20; // example
+  document.getElementById('result').textContent='$'+(qty*pricePer);
+});
 </script>
 </body>
 </html>
+
 
