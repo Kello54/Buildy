@@ -7,17 +7,18 @@
   <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-sans bg-white text-gray-900">
 
   <!-- Navbar -->
-  <header class="bg-purple-800 text-white sticky top-0 shadow-md z-50">
+  <header class="bg-[#4b0082] text-white sticky top-0 shadow-md z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-2xl font-bold">Buildy</h1>
+      <div class="flex items-center space-x-2">
+        <img src="your-logo.png" alt="Buildy Logo" class="h-10 w-10">
+        <h1 class="text-2xl font-bold">Buildy</h1>
+      </div>
       <nav>
         <ul class="flex space-x-6">
           <li><a href="#home" class="hover:text-purple-300">Home</a></li>
@@ -30,10 +31,11 @@
   </header>
 
   <!-- Hero Section -->
-  <section id="home" class="bg-gradient-to-r from-purple-800 to-indigo-700 text-white h-screen flex flex-col justify-center items-center text-center px-4">
+  <section id="home" class="bg-gradient-to-r from-[#4b0082] to-indigo-700 text-white h-screen flex flex-col justify-center items-center text-center px-4">
     <h2 class="text-4xl md:text-6xl font-bold mb-4">Build Smarter, Not Harder</h2>
     <p class="text-lg md:text-2xl mb-8 max-w-xl">Compare tools, plan projects, and save time with Buildy.</p>
-    <a href="#features" class="bg-white text-purple-800 font-bold py-3 px-6 rounded shadow-lg hover:bg-gray-200 transition">Get Started</a>
+    <a href="#features" class="bg-white text-[#4b0082] font-bold py-3 px-6 rounded shadow-lg hover:bg-gray-200 transition">Get Started</a>
+    <img src="your-banner.png" alt="Buildy Banner" class="mt-10 max-w-full rounded shadow-lg">
   </section>
 
   <!-- Features Section -->
@@ -41,49 +43,6 @@
     <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
       <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
         <h3 class="text-xl font-bold mb-2">Compare Prices</h3>
-        <p>See the best deals on tools and materials instantly.</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-        <h3 class="text-xl font-bold mb-2">Project Planning</h3>
-        <p>Create timelines and manage resources efficiently.</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-        <h3 class="text-xl font-bold mb-2">Analytics</h3>
-        <p>Track costs, materials, and productivity with visual reports.</p>
-      </div>
-    </div>
-  </section>
+        <p>See the best deals on tools and materials inst
 
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="py-20 bg-purple-50 text-purple-900">
-    <div class="max-w-4xl mx-auto text-center px-4">
-      <h2 class="text-3xl font-bold mb-12">What Our Users Say</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded shadow">
-          <p>"Buildy helped me save hours on project planning!"</p>
-          <p class="mt-4 font-bold">— John D.</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow">
-          <p>"The pricing comparison feature is a game-changer."</p>
-          <p class="mt-4 font-bold">— Sarah K.</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow">
-          <p>"I can now plan my projects without stress. Highly recommend!"</p>
-          <p class="mt-4 font-bold">— Mike L.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact / Footer Section -->
-  <footer id="contact" class="bg-purple-800 text-white py-10 mt-20">
-    <div class="max-w-6xl mx-auto text-center px-4">
-      <h3 class="text-2xl font-bold mb-4">Get in Touch</h3>
-      <p class="mb-6">Email us at <a href="mailto:contact@buildy.com" class="underline">contact@buildy.com</a></p>
-      <p>&copy; 2025 Buildy. All rights reserved.</p>
-    </div>
-  </footer>
-
-</body>
-</html>
 
