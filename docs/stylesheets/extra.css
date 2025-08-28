@@ -1,99 +1,102 @@
-/* ========== Global Styles ========== */
+/* ========= Global Styles ========= */
 :root {
-  --md-primary-fg-color: #4b0082; /* deep purple */
-  --md-accent-fg-color: #f0c420; /* gold */
+  --md-primary-fg-color: #4b0082;   /* deep purple */
+  --md-accent-fg-color: #f0c420;    /* gold */
+  --banner-bg-color: #2e004f;       /* darker purple for slim banner */
+  --banner-text-color: #f0c420;     /* gold text */
+}
+
+/* Slim Banner */
+.md-header::before {
+  content: "✨ Welcome to Buildy — Premium Materials Price Comparison ✨";
+  display: block;
+  width: 100%;
+  background-color: var(--banner-bg-color);
+  color: var(--banner-text-color);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* Body text */
 .md-typeset {
   font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   line-height: 1.7;
-  font-size: 1rem;
-  color: #333;
-}
-
-/* Links */
-.md-typeset a {
-  color: var(--md-primary-fg-color);
-  font-weight: 500;
-  text-decoration: none;
-}
-.md-typeset a:hover {
-  text-decoration: underline;
+  color: #222;
 }
 
 /* Headings */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
+  font-weight: 600;
+  color: var(--md-primary-fg-color);
+  letter-spacing: -0.5px;
+}
+
+/* Links */
+.md-typeset a {
+  color: var(--md-accent-fg-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+.md-typeset a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation bar */
+.md-header {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+  font-weight: 600;
+}
+
+/* Sidebar */
+.md-nav {
+  background-color: #fafafa;
+}
+.md-nav__title {
   font-weight: 700;
   color: var(--md-primary-fg-color);
 }
 
-/* Code blocks */
-.md-typeset code {
-  background: #f9f9f9;
-  color: #c7254e;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-/* Buttons */
-.md-typeset .md-button {
-  background: var(--md-primary-fg-color);
-  color: #fff !important;
+/* Buttons / accents */
+.md-button {
+  background-color: var(--md-primary-fg-color);
+  color: white;
   border-radius: 6px;
-  padding: 0.6em 1.2em;
+  padding: 6px 14px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  transition: background 0.2s ease-in-out;
 }
-.md-typeset .md-button:hover {
-  background: #360062; /* darker purple */
-  transform: translateY(-2px);
-  transition: all 0.2s ease;
+.md-button:hover {
+  background-color: #360061; /* darker purple */
 }
 
 /* Tables */
 .md-typeset table {
   border: 1px solid #ddd;
-  border-radius: 6px;
-  overflow: hidden;
+  border-collapse: collapse;
 }
-.md-typeset table th {
+.md-typeset th {
   background: var(--md-primary-fg-color);
-  color: #fff;
-  font-weight: 600;
-  text-align: left;
+  color: white;
+  padding: 6px;
 }
-.md-typeset table td {
-  border-top: 1px solid #eee;
-}
-
-/* Navigation top bar */
-.md-header {
-  background: var(--md-primary-fg-color);
+.md-typeset td {
+  padding: 6px;
+  border: 1px solid #ddd;
 }
 
-/* Sidebar */
-.md-sidebar {
-  background: #fafafa;
-}
-
-/* ========== Footer ========== */
+/* Footer */
 .md-footer {
-  background: linear-gradient(90deg, #4b0082, #f0c420);
-  color: #fff;
-  text-align: center;
-  padding: 1.5rem 1rem;
-  margin-top: 2rem;
+  background-color: #2e004f;
+  color: white;
+  font-size: 0.85rem;
 }
 .md-footer a {
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-}
-.md-footer a:hover {
-  text-decoration: underline;
+  color: var(--md-accent-fg-color);
 }
