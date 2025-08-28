@@ -1,102 +1,211 @@
-/* ========= Global Styles ========= */
+/* ========= Global Variables ========= */
 :root {
   --md-primary-fg-color: #4b0082;   /* deep purple */
   --md-accent-fg-color: #f0c420;    /* gold */
-  --banner-bg-color: #2e004f;       /* darker purple for slim banner */
-  --banner-text-color: #f0c420;     /* gold text */
+  --banner-bg-gradient: linear-gradient(90deg, #4b0082, #2e004f);
+  --banner-text-color: #f0c420;
+  --footer-bg-gradient: linear-gradient(90deg, #2e004f, #4b0082);
+  --button-bg-gradient: linear-gradient(90deg, #4b0082, #360061);
+  --table-header-gradient: linear-gradient(90deg, #4b0082, #2e004f);
 }
 
-/* Slim Banner */
+/* ========= Slim Banner ========= */
 .md-header::before {
-  content: "✨ Welcome to Buildy — Premium Materials Price Comparison ✨";
+  content: "🚀 The Future of Construction Price Comparison.";
   display: block;
   width: 100%;
-  background-color: var(--banner-bg-color);
+  background: var(--banner-bg-gradient);
   color: var(--banner-text-color);
   text-align: center;
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
   font-weight: 600;
   padding: 4px 0;
   letter-spacing: 0.5px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
 }
 
-/* Body text */
+/* ========= Body Text ========= */
 .md-typeset {
   font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   line-height: 1.7;
   color: #222;
+  max-width: 860px;
+  margin: auto;
+  padding: 0 1rem;
 }
 
-/* Headings */
+/* ========= Headings ========= */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
   font-weight: 600;
   color: var(--md-primary-fg-color);
   letter-spacing: -0.5px;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
 }
 
-/* Links */
+/* ========= Links ========= */
 .md-typeset a {
   color: var(--md-accent-fg-color);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
 }
 .md-typeset a:hover {
+  color: #ffd84d;
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.md-typeset a:focus-visible {
+  outline: 2px dashed var(--md-accent-fg-color);
+  outline-offset: 3px;
 }
 
-/* Navigation bar */
+/* ========= Navigation Bar ========= */
 .md-header {
   background-color: var(--md-primary-fg-color);
   color: white;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
 }
 
-/* Sidebar */
+/* ========= Sidebar ========= */
 .md-nav {
   background-color: #fafafa;
+  border-right: 1px solid #eee;
 }
 .md-nav__title {
   font-weight: 700;
   color: var(--md-primary-fg-color);
 }
+.md-nav__link:hover {
+  color: var(--md-accent-fg-color);
+}
 
-/* Buttons / accents */
+/* ========= Buttons ========= */
 .md-button {
-  background-color: var(--md-primary-fg-color);
+  background: var(--button-bg-gradient);
   color: white;
   border-radius: 6px;
   padding: 6px 14px;
   font-weight: 600;
-  transition: background 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
 }
 .md-button:hover {
-  background-color: #360061; /* darker purple */
+  background: linear-gradient(90deg, #360061, #4b0082);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.md-button:focus-visible {
+  outline: 2px dashed var(--md-accent-fg-color);
+  outline-offset: 3px;
 }
 
-/* Tables */
+/* ========= Tables ========= */
 .md-typeset table {
   border: 1px solid #ddd;
   border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
 }
 .md-typeset th {
-  background: var(--md-primary-fg-color);
+  background: var(--table-header-gradient);
   color: white;
-  padding: 6px;
+  padding: 8px;
+  font-weight: 600;
+  text-align: left;
 }
 .md-typeset td {
-  padding: 6px;
+  padding: 8px;
   border: 1px solid #ddd;
 }
+.md-typeset tr:nth-child(even) td {
+  background: #f9f9f9;
+}
 
-/* Footer */
+/* ========= Search Bar ========= */
+.md-search__input {
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  background: #fff;
+  transition: all 0.25s ease-in-out;
+}
+.md-search__input:focus {
+  border: 1px solid var(--md-accent-fg-color);
+  box-shadow: 0 0 6px rgba(240,196,32,0.6);
+  outline: none;
+}
+.md-search__icon {
+  color: var(--md-primary-fg-color);
+}
+.md-search__input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* ========= Footer ========= */
 .md-footer {
-  background-color: #2e004f;
+  background: var(--footer-bg-gradient);
   color: white;
   font-size: 0.85rem;
+  text-align: center;
+  padding: 12px 0;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.25);
 }
 .md-footer a {
   color: var(--md-accent-fg-color);
+  font-weight: 500;
+}
+.md-footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ========= Back to Top Button ========= */
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--button-bg-gradient);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+  z-index: 9999;
+}
+#back-to-top:hover {
+  background: linear-gradient(90deg, #360061, #4b0082);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+}
+
+/* ========= Responsive Enhancements ========= */
+@media (max-width: 768px) {
+  .md-typeset {
+    padding: 0 0.5rem;
+  }
+  .md-header::before {
+    font-size: 0.7rem;
+    padding: 3px 0;
+  }
+  .md-button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
 }
