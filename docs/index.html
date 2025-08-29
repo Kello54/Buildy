@@ -8,11 +8,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 body { font-family: Arial, sans-serif; margin: 20px; background: #f7f7f7; color: #333; }
-h1 { text-align: center; color: #4b0082; }
-.form-container, .filter-container, .export-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px; }
-input, button, select { padding: 8px; font-size: 1rem; }
-button { background: #4b0082; color: white; border: none; cursor: pointer; }
-button:hover { background: #6a0dad; }
+header { background:#4b0082; color:white; padding:10px; text-align:center; font-size:1.2rem; border-radius:5px; margin-bottom:20px; }
+.card { background:white; padding:15px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:20px; }
+.form-container, .filter-container, .export-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+input, button, select { padding: 8px; font-size: 1rem; border-radius:5px; border:1px solid #ccc; }
+input:focus, select:focus { outline: 2px solid #4b0082; }
+button { background: #4b0082; color: white; border: none; cursor: pointer; border-radius:5px; transition:0.2s; }
+button:hover { background:#6a0dad; transform: scale(1.03); }
 table { width: 100%; border-collapse: collapse; background: white; overflow-x: auto; display: block; }
 th, td { padding: 10px; text-align: center; border: 1px solid #ccc; min-width: 100px; }
 th { background: #4b0082; color: white; cursor: pointer; }
@@ -26,9 +28,9 @@ canvas { max-width: 100%; margin-top: 30px; }
 </head>
 <body>
 
-<h1>Buildy - Real-Time Price Comparison</h1>
+<header>Buildy - Smart Price Comparison for Building Materials</header>
 
-<div class="form-container">
+<div class="card form-container">
   <input type="text" id="materialName" placeholder="Material Name">
   <input type="text" id="supplierName" placeholder="Supplier Name">
   <input type="number" id="price" placeholder="Price" step="0.01">
@@ -36,17 +38,18 @@ canvas { max-width: 100%; margin-top: 30px; }
   <button onclick="fetchWPM33Data()">Fetch Market Prices</button>
 </div>
 
-<div class="filter-container">
+<div class="card filter-container">
   <input type="text" id="filterMaterial" placeholder="Filter by Material" oninput="renderTable(); renderChart();">
   <select id="filterSupplier" onchange="renderTable(); renderChart();">
     <option value="">All Suppliers</option>
   </select>
 </div>
 
-<div class="export-container">
+<div class="card export-container">
   <button onclick="exportToExcel()">Export to Excel</button>
 </div>
 
+<div class="card">
 <table id="priceTable">
   <thead>
     <tr id="tableHeader">
@@ -59,6 +62,7 @@ canvas { max-width: 100%; margin-top: 30px; }
     <tr id="totalRow"></tr>
   </tfoot>
 </table>
+</div>
 
 <canvas id="priceChart" height="250"></canvas>
 
@@ -155,7 +159,13 @@ function renderTable() {
       row.appendChild(cell);
     });
 
-    const cheapestCell = document.createElement('td'); cheapestCell.textContent = cheapestSupplier || '-'; if (cheapestSupplier) cheapestCell.classList.add('cheapest'); row.appendChild(cheapestCell);
+    const cheapestCell = document.createElement('td'); 
+    cheapestCell.textContent = cheapestSupplier || '-'; 
+    if (cheapestSupplier) { 
+      cheapestCell.classList.add('cheapest'); 
+      cheapestCell.title = `Cheapest Supplier: ${cheapestSupplier}`; 
+    }
+    row.appendChild(cheapestCell);
     tbody.appendChild(row);
   });
 
@@ -187,15 +197,11 @@ function renderChart() {
   if (filteredMaterials.length === 0) { if (chart) chart.destroy(); return; }
 
   let suppliers = new Set();
-  filteredMaterials.forEach(mat => {
-    mat.prices.forEach(p => { if (!filterSup || p.supplier === filterSup) suppliers.add(p.supplier); });
-  });
+  filteredMaterials.forEach(mat => { mat.prices.forEach(p => { if (!filterSup || p.supplier === filterSup) suppliers.add(p.supplier); }); });
   suppliers = Array.from(suppliers);
 
   let allDates = [];
-  filteredMaterials.forEach(mat => {
-    mat.history.forEach(h => { if (!filterSup || h.supplier === filterSup) { if (!allDates.includes(h.date)) allDates.push(h.date); } });
-  });
+  filteredMaterials.forEach(mat => { mat.history.forEach(h => { if (!filterSup || h.supplier === filterSup) { if (!allDates.includes(h.date)) allDates.push(h.date); } }); });
   allDates.sort((a,b) => new Date(a)-new Date(b));
 
   const datasets = suppliers.map((s, idx) => {
@@ -208,26 +214,53 @@ function renderChart() {
       return priceEntry ? priceEntry.price : null;
     });
 
-    // Determine cheapest supplier per date
     const borderWidths = data.map((price, i) => {
-      if (price === null) return 2;
+      if (price===null) return 2;
       let pricesOnDate = suppliers.map(supp => {
         let pEntry = null;
         for (let mat of filteredMaterials) {
-          const e = mat.history.filter(h => h.supplier === supp && h.date === allDates[i]);
+          const e = mat.history.filter(h => h.supplier===supp && h.date===allDates[i]);
           if (e.length) pEntry = e[e.length-1];
         }
-        return pEntry ? pEntry.price : Infinity;
+        return pEntry?pEntry.price:Infinity;
       });
-      return (price === Math.min(...pricesOnDate)) ? 5 : 2;
+      return (price===Math.min(...pricesOnDate))?5:2;
     });
 
     const colors = data.map((price, i) => {
-      if (price === null) return `hsl(${idx*60},70%,50%)`;
+      if (price===null) return `hsl(${idx*60},70%,50%)`;
       let pricesOnDate = suppliers.map(supp => {
-        let pEntry = null;
-        for (let mat of filteredMaterials) {
-          const e = mat.history.filter(h => h.supplier === supp && h.date === allDates[i]);
-          if (e.length) pEntry = e[e.length-1];
+        let pEntry=null;
+        for (let mat of filteredMaterials){
+          const e=mat.history.filter(h=>h.supplier===supp&&h.date===allDates[i]);
+          if(e.length)pEntry=e[e.length-1];
         }
-        return pEntry ? p
+        return pEntry?pEntry.price:Infinity;
+      });
+      return (price===Math.min(...pricesOnDate))?`hsl(${idx*60},100%,35%)`:`hsl(${idx*60},70%,50%)`;
+    });
+
+    return {
+      label:s,
+      data,
+      borderColor:colors,
+      backgroundColor:colors.map(c=>c.replace('hsl','hsla').replace(')',',0.2)')),
+      tension:0.2,
+      fill:true,
+      borderWidth:borderWidths,
+      pointRadius:data.map((p,i)=>p===Math.min(...suppliers.map(supp=>{
+        let pE=null;for(let mat of filteredMaterials){const e=mat.history.filter(h=>h.supplier===supp&&h.date===allDates[i]);if(e.length)pE=e[e.length-1];}return pE?pE.price:Infinity;} )?6:3)
+    };
+  });
+
+  if(chart) chart.destroy();
+  chart = new Chart(ctx,{
+    type:'line',
+    data:{ labels: allDates, datasets },
+    options:{ responsive:true, plugins:{ legend:{position:'top'} }, scales:{y:{beginAtZero:true}} }
+  });
+}
+</script>
+
+</body>
+</html>
