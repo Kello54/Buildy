@@ -92,7 +92,3 @@ window.addEventListener("scroll", () => {
       navItems.forEach(link => link.classList.remove("active"));
       const currentLink = document.querySelector(`.nav-links a[href="#${sectionIds[idx]}"]`);
       if(currentLink) currentLink.classList.add("active");
-    }
-  });
-});
- 
