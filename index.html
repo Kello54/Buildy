@@ -9,7 +9,7 @@
 <style>
 /* ===== GLOBAL & RESET ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; line-height: 1.6; background: #f9f9f9; color: #111; transition: background 0.3s, color 0.3s; scroll-behavior: smooth; }
+body { font-family: 'Arial', sans-serif; line-height: 1.6; background: #f9f9f9; color: #111; transition: background 0.3s, color 0.3s; scroll-behavior: smooth; }
 a { text-decoration: none; }
 
 /* ===== NAVBAR ===== */
@@ -32,29 +32,28 @@ a { text-decoration: none; }
 }
 
 /* ===== HERO ===== */
-#hero { padding:6rem 2rem 4rem; text-align:center; overflow:hidden; position:relative;}
-#hero h1, #hero p { opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease;}
-#hero h1 { font-size:clamp(2.25rem,5vw,4rem); font-weight:800; text-shadow:1px 1px 6px rgba(0,0,0,0.3); margin-bottom:1rem;}
-#hero p { font-size:clamp(1rem,2.5vw,1.25rem); max-width:600px; margin:0 auto 2rem;}
-#hero a.cta { font-size:1.125rem; padding:0.75rem 2rem; background:#7c3aed; color:#fff; border-radius:0.5rem; box-shadow:0 4px 15px rgba(124,58,237,0.4); transition:transform 0.3s, box-shadow 0.3s;}
-#hero a.cta:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 8px 25px rgba(124,58,237,0.5); }
-
-/* HERO PARALLAX */
-#hero h1.parallax { transform:translateY(0); transition: transform 0.2s ease-out;}
-#hero p.parallax { transform:translateY(0); transition: transform 0.2s ease-out;}
+#hero { padding:6rem 2rem 4rem; text-align:center; overflow:hidden; position:relative; border-radius:0.5rem; color:#fff;
+background: linear-gradient(135deg, rgba(124,58,237,0.7), rgba(67,56,202,0.7)), url('https://images.unsplash.com/photo-1581090700227-1fc1b54f9403?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+transition: background 0.5s ease;}
+#hero h1, #hero p, #hero a.cta { opacity:0; transform:translateY(20px); transition:opacity 1s ease, transform 1s ease;}
+#hero h1 { font-size:clamp(2.25rem,5vw,4rem); font-weight:800; margin-bottom:1rem; text-shadow:2px 2px 8px rgba(0,0,0,0.5);}
+#hero p { font-size:clamp(1rem,2.5vw,1.25rem); max-width:600px; margin:0 auto 2rem; text-shadow:1px 1px 6px rgba(0,0,0,0.5);}
+#hero a.cta { font-size:1.125rem; padding:0.75rem 2rem; background:#fff; color:#7c3aed; border-radius:0.5rem; box-shadow:0 4px 15px rgba(124,58,237,0.4); transition:transform 0.3s, box-shadow 0.3s, background 0.3s;}
+#hero a.cta:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 8px 25px rgba(124,58,237,0.5); background:linear-gradient(45deg, #7c3aed, #a855f7); color:#fff; }
 
 /* ===== FEATURES ===== */
 .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; padding:4rem 2rem;}
 .card { background:#fff; padding:2rem; border-radius:0.5rem; text-align:center; transition:transform 0.4s ease, box-shadow 0.4s ease; position:relative; z-index:0; opacity:0; transform:translateY(20px);}
-.card:hover { transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,0.15); z-index:1;}
+.card:hover { transform:translateY(-10px) scale(1.03); box-shadow:0 25px 45px rgba(0,0,0,0.2); z-index:1;}
 .feature-icon { font-size:3rem; margin-bottom:1rem;}
-.feature-icon svg { width:60px; height:60px; fill:#7c3aed; margin-bottom:1rem; }
+.feature-icon img { width:60px; height:60px; object-fit:contain; margin-bottom:1rem; transition:transform 0.3s;}
+.card:hover .feature-icon img { transform:scale(1.15); }
 
 /* ===== TABS ===== */
 .tabs { display:flex; justify-content:center; margin-top:2rem; flex-wrap:wrap; gap:0.5rem;}
 .tabs button { padding:0.75rem 1.25rem; font-size:1.125rem; border-radius:0.5rem 0.5rem 0 0; border:none; cursor:pointer; transition:background 0.3s, color 0.3s;}
 .tabs button.active { background-color:#4b0082; color:white; font-weight:600;}
-.tab-content { padding:1.5rem; border-radius:0 0 0.5rem 0.5rem; border:1px solid #ddd; background-color:#fafafa; opacity:0; transform:translateY(10px); transition:opacity 0.4s ease, transform 0.4s ease;}
+.tab-content { padding:1.5rem; border-radius:0 0 0.5rem 0.5rem; border:1px solid #ddd; background-color:#fafafa; opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease;}
 .tab-content.active { opacity:1; transform:translateY(0);}
 
 /* ===== MULTI-TOOL TABLE ===== */
@@ -63,11 +62,10 @@ a { text-decoration: none; }
 #multi-tool thead { position: sticky; top:0; background:#f3f3f3; z-index:1; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
 #multi-tool table tr { transition:all 0.3s ease;}
 #multi-tool table tr:hover { background-color:rgba(124,58,237,0.05); transform:translateY(-2px) scale(1.01);}
-#multi-tool table tr:hover.dark-hover { background-color:rgba(124,58,237,0.15);}
-#multi-tool table th, #multi-tool table td { padding:0.75rem 1rem; text-align:center;}
+#multi-tool table th, #multi-tool table td { padding:0.75rem 1rem; text-align:center; vertical-align:middle;}
 .quantity-input { text-align:center;}
-#multi-tool table::-webkit-scrollbar { height:8px;}
-#multi-tool table::-webkit-scrollbar-thumb { background:#ccc; border-radius:4px;}
+.tool-icon { width:24px; height:24px; margin-right:0.5rem; vertical-align:middle; transition:transform 0.3s;}
+#multi-tool table tr:hover .tool-icon { transform:scale(1.1); }
 
 /* ===== FOOTER ===== */
 footer { padding:3rem 2rem; background:#111; color:#eee; text-align:center;}
@@ -80,7 +78,7 @@ footer a:hover { color:#c084fc;}
 
 /* ===== DARK MODE ===== */
 body.dark { background:#0d0d0d; color:#e5e5e5;}
-body.dark #hero h1, body.dark #hero p { color:#fff;}
+body.dark #hero a.cta { background:#7c3aed; color:#fff;}
 body.dark .card { background:#1a1a1a; color:#e5e5e5; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
 body.dark .tab-content { background:#222; border-color:#333; color:#ddd;}
 body.dark #multi-tool table { background:#1a1a1a;}
@@ -119,24 +117,21 @@ body.dark footer a:hover { color:#e9d5ff;}
 <section id="features" class="features">
   <div class="card">
     <div class="feature-icon">
-      <!-- Dashboard SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M8 8h48v48H8z"/></svg>
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Dashboard">
     </div>
     <h3>All-in-One Dashboard</h3>
     <p>Track every tool, every project, in one intuitive dashboard.</p>
   </div>
   <div class="card">
     <div class="feature-icon">
-      <!-- Analytics SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 48h8V24h-8zm16 0h8V12h-8zm16 0h8V32h-8z"/></svg>
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910815.png" alt="Analytics">
     </div>
     <h3>Analytics</h3>
     <p>Analyze usage trends and optimize resource allocation.</p>
   </div>
   <div class="card">
     <div class="feature-icon">
-      <!-- Quick Actions SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 8l8 48-16 0z"/></svg>
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910837.png" alt="Quick Actions">
     </div>
     <h3>Quick Actions</h3>
     <p>Perform bulk actions quickly with powerful tools.</p>
@@ -160,9 +155,21 @@ body.dark footer a:hover { color:#e9d5ff;}
       <tr><th>Tool</th><th>Quantity</th><th>Status</th></tr>
     </thead>
     <tbody>
-      <tr><td>Hammer</td><td class="quantity-input">5</td><td>Available</td></tr>
-      <tr><td>Screwdriver</td><td class="quantity-input">12</td><td>In Use</td></tr>
-      <tr><td>Wrench</td><td class="quantity-input">7</td><td>Available</td></tr>
+      <tr>
+        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910792.png" alt="Hammer">Hammer</td>
+        <td class="quantity-input">5</td>
+        <td>Available</td>
+      </tr>
+      <tr>
+        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910827.png" alt="Screwdriver">Screwdriver</td>
+        <td class="quantity-input">12</td>
+        <td>In Use</td>
+      </tr>
+      <tr>
+        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910812.png" alt="Wrench">Wrench</td>
+        <td class="quantity-input">7</td>
+        <td>Available</td>
+      </tr>
     </tbody>
   </table>
 </section>
