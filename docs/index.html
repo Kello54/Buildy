@@ -3,155 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - Smart Tool Management</title>
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
-
-<!-- SEO Meta Tags -->
-<meta name="description" content="Buildy - Manage, track, and optimize all your tools.">
-<meta name="keywords" content="Buildy, Tools, Management, Dashboard, Analytics">
-<meta name="author" content="Kello54">
-
-<!-- Google Analytics (replace UA-XXXXXX with your ID if desired) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-XXXXXX');
-</script>
-
+<title>Buildy - Building Material Price Comparison</title>
 <style>
-/* ==== Inline CSS (minified & optimized) ==== */
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:Segoe UI,Tahoma,sans-serif;line-height:1.6;transition:background .3s,color .3s}body.dark{background:#121212;color:#f1f1f1}header{position:sticky;top:0;z-index:1000;background:#4b0082;color:#fff}.navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem}.logo{font-size:1.5rem;font-weight:bold}.nav-links{display:flex;gap:1rem;list-style:none}.nav-links li a{text-decoration:none;color:white;transition:color .3s}.nav-links li a:hover,.nav-links li a.active{color:#ffcc00}#darkToggle{background:none;border:none;cursor:pointer;font-size:1.2rem;color:white}.hamburger{display:none;font-size:1.5rem;background:none;border:none;cursor:pointer;color:white}@media(max-width:768px){.nav-links{display:none;flex-direction:column;background:#4b0082;width:100%;padding:1rem}.nav-links.show{display:flex}.hamburger{display:block}}#hero{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,#4b0082,#8a2be2);color:#fff}#hero h1{font-size:2.5rem;margin-bottom:1rem}#hero p{max-width:600px;margin:0 auto 1.5rem}.cta{background:#ffcc00;color:#000;padding:.8rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:background .3s}.cta:hover{background:#e6b800}.features{display:flex;gap:2rem;justify-content:center;padding:3rem 1rem;flex-wrap:wrap}.card{background:#fff;color:#000;padding:1.5rem;border-radius:12px;text-align:center;flex:1 1 250px;transition:transform .3s,box-shadow .3s}body.dark .card{background:#1e1e1e;color:#f1f1f1}.card:hover{transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,.2)}.feature-icon img{width:60px;margin-bottom:1rem}.tabs{display:flex;justify-content:center;margin:2rem 0}.tab-btn{background:#eee;border:none;padding:.8rem 1.5rem;margin:0 .5rem;cursor:pointer;border-radius:6px;transition:background .3s}.tab-btn.active,.tab-btn:hover{background:#4b0082;color:white}.tab-content{display:none;max-width:800px;margin:0 auto;text-align:center}.tab-content.active{display:block}#multi-tool{padding:3rem 1rem}table{width:90%;margin:0 auto;border-collapse:collapse}thead{background:#4b0082;color:white}th,td{padding:1rem;text-align:left;border-bottom:1px solid #ddd}tbody tr:nth-child(even){background:#f9f9f9}body.dark tbody tr:nth-child(even){background:#2a2a2a}.tool-icon{width:24px;margin-right:8px;vertical-align:middle}footer{text-align:center;padding:1.5rem;background:#4b0082;color:white;margin-top:3rem}#backTop{position:fixed;bottom:20px;right:20px;display:none;background:#4b0082;color:white;border:none;padding:.8rem 1rem;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:background .3s}#backTop:hover{background:#6a0dad}#preloader{position:fixed;top:0;left:0;width:100%;height:100%;background:#4b0082;color:white;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:2000}.loader{border:6px solid #f3f3f3;border-top:6px solid #ffcc00;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:1rem}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f7f7f7;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    color: #4b0082;
+  }
+  .form-container, .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  input, button, select {
+    padding: 8px;
+    font-size: 1rem;
+  }
+  button {
+    background: #4b0082;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #6a0dad;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    overflow-x: auto;
+    display: block;
+  }
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    min-width: 100px;
+  }
+  th {
+    background: #4b0082;
+    color: white;
+    cursor: pointer;
+  }
+  td.cheapest {
+    background: #c6f5c6;
+    font-weight: bold;
+  }
+  td.total {
+    font-weight: bold;
+    background: #e6e6fa;
+  }
+  @media(max-width: 600px) {
+    th, td {
+      font-size: 0.85rem;
+      min-width: 80px;
+    }
+    .form-container, .filter-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Preloader -->
-<div id="preloader">
-  <div class="loader"></div>
-  <p>Loading Buildy...</p>
+<h1>Buildy - Building Material Price Comparison</h1>
+
+<div class="form-container">
+  <input type="text" id="materialName" placeholder="Material Name">
+  <input type="text" id="supplierName" placeholder="Supplier Name">
+  <input type="number" id="price" placeholder="Price" step="0.01">
+  <button onclick="addPrice()">Add Price</button>
 </div>
 
-<!-- NAVBAR -->
-<header>
-  <nav class="navbar">
-    <div class="logo">Buildy</div>
-    <button class="hamburger" id="hamburger" aria-label="Toggle Menu">☰</button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#hero" class="active">Home</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#multi-tool">Tools</a></li>
-      <li><a href="#tabs">Overview</a></li>
-      <li><button id="darkToggle">🌙</button></li>
-    </ul>
-  </nav>
-</header>
+<div class="filter-container">
+  <input type="text" id="filterMaterial" placeholder="Filter by Material" oninput="renderTable()">
+  <select id="filterSupplier" onchange="renderTable()">
+    <option value="">All Suppliers</option>
+  </select>
+</div>
 
-<!-- HERO SECTION -->
-<section id="hero">
-  <h1>Buildy - Smart Tool Management</h1>
-  <p>Manage, track, and optimize all your tools with ease and precision. The future of tool management is here.</p>
-  <a href="#features" class="cta">Get Started</a>
-</section>
+<table id="priceTable">
+  <thead>
+    <tr id="tableHeader">
+      <th onclick="sortBy('material')">Material 🔽</th>
+      <!-- Supplier columns generated dynamically -->
+      <th>Cheapest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Rows generated dynamically -->
+  </tbody>
+  <tfoot>
+    <tr id="totalRow">
+      <!-- Total row generated dynamically -->
+    </tr>
+  </tfoot>
+</table>
 
-<!-- FEATURES SECTION -->
-<section id="features" class="features">
-  <div class="card">
-    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Dashboard"></div>
-    <h3>All-in-One Dashboard</h3>
-    <p>Track every tool, every project, in one intuitive dashboard.</p>
-  </div>
-  <div class="card">
-    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910815.png" alt="Analytics"></div>
-    <h3>Analytics</h3>
-    <p>Analyze usage trends and optimize resource allocation.</p>
-  </div>
-  <div class="card">
-    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910837.png" alt="Quick Actions"></div>
-    <h3>Quick Actions</h3>
-    <p>Perform bulk actions quickly with powerful tools.</p>
-  </div>
-</section>
-
-<!-- TABS SECTION -->
-<section id="tabs">
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="tab1">Overview</button>
-    <button class="tab-btn" data-tab="tab2">Stats</button>
-  </div>
-  <div id="tab1" class="tab-content active">
-    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow with Buildy.</p>
-  </div>
-  <div id="tab2" class="tab-content">
-    <p>Stats content goes here. See detailed usage metrics and trends for your tools and teams.</p>
-  </div>
-</section>
-
-<!-- MULTI-TOOL TABLE SECTION -->
-<section id="multi-tool">
-  <table>
-    <thead>
-      <tr><th>Tool</th><th>Quantity</th><th>Status</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910792.png" alt="Hammer"> Hammer</td><td>5</td><td>Available</td></tr>
-      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910827.png" alt="Screwdriver"> Screwdriver</td><td>12</td><td>In Use</td></tr>
-      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910812.png" alt="Wrench"> Wrench</td><td>7</td><td>Available</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>&copy; 2025 Buildy. All rights reserved.</p>
-</footer>
-
-<!-- BACK TO TOP BUTTON -->
-<button id="backTop" aria-label="Back to top">↑</button>
-
-<!-- INLINE JS -->
 <script>
-window.addEventListener('load',()=>{document.getElementById('preloader').style.display='none'});
+let materials = [];
+let suppliersSet = new Set();
+let sortDirection = { material: 'asc' };
 
-/* Dark Mode Toggle */
-const darkToggle=document.getElementById('darkToggle');
-if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-darkToggle.addEventListener('click',()=>{
-  document.body.classList.toggle('dark');
-  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
-});
+function addPrice() {
+  const material = document.getElementById('materialName').value.trim();
+  const supplier = document.getElementById('supplierName').value.trim();
+  const price = parseFloat(document.getElementById('price').value);
 
-/* Tabs */
-const tabBtns=document.querySelectorAll('.tab-btn');
-const tabContents=document.querySelectorAll('.tab-content');
-tabBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    tabBtns.forEach(b=>b.classList.remove('active'));
-    tabContents.forEach(c=>c.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
+  if (!material || !supplier || isNaN(price)) {
+    alert("Please fill all fields correctly!");
+    return;
+  }
+
+  suppliersSet.add(supplier);
+  updateSupplierFilter();
+
+  let mat = materials.find(m => m.name.toLowerCase() === material.toLowerCase());
+  if (!mat) {
+    mat = { name: material, prices: [] };
+    materials.push(mat);
+  }
+
+  const existingPrice = mat.prices.find(p => p.supplier.toLowerCase() === supplier.toLowerCase());
+  if (existingPrice) {
+    existingPrice.price = price;
+  } else {
+    mat.prices.push({ supplier, price });
+  }
+
+  document.getElementById('materialName').value = '';
+  document.getElementById('supplierName').value = '';
+  document.getElementById('price').value = '';
+
+  renderTable();
+}
+
+function updateSupplierFilter() {
+  const select = document.getElementById('filterSupplier');
+  const currentOptions = Array.from(select.options).map(opt => opt.value);
+  suppliersSet.forEach(s => {
+    if (!currentOptions.includes(s)) {
+      const option = document.createElement('option');
+      option.value = s;
+      option.textContent = s;
+      select.appendChild(option);
+    }
   });
-});
+}
 
-/* Hamburger Menu */
-const hamburger=document.getElementById('hamburger');
-const navLinks=document.getElementById('navLinks');
-hamburger.addEventListener('click',()=>navLinks.classList.toggle('show'));
+function renderTable() {
+  const tbody = document.querySelector('#priceTable tbody');
+  tbody.innerHTML = '';
 
-/* Back to Top */
-const backTop=document.getElementById('backTop');
-window.addEventListener('scroll',()=>backTop.style.display=window.scrollY>300?'block':'none');
-backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  const filterMat = document.getElementById('filterMaterial').value.toLowerCase();
+  const filterSup = document.getElementById('filterSupplier').value;
 
-/* Smooth scroll for anchor links */
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-  anchor.addEventListener('click',function(e){
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  const headerRow = document.getElementById('tableHeader');
+  headerRow.innerHTML = '<th onclick="sortBy(\'material\')">Material 🔽</th>';
+
+  const suppliers = Array.from(suppliersSet);
+  suppliers.forEach(s => {
+    const th = document.createElement('th');
+    th.textContent = s;
+    headerRow.appendChild(th);
   });
-});
+  const cheapestTh = document.createElement('th');
+  cheapestTh.textContent = 'Cheapest';
+  headerRow.appendChild(cheapestTh);
+
+  let filteredMaterials = materials.filter(m => m.name.toLowerCase().includes(filterMat));
+
+  filteredMaterials.forEach(mat => {
+    const row = document.createElement('tr');
+    const nameCell = document.createElement('td');
+    nameCell.textContent = mat.name;
+    row.appendChild(nameCell);
+
+    let cheapestPrice = Infinity;
+    let cheapestSupplier = '';
+    let totalPrice = 0;
+
+    suppliers.forEach(s => {
+      const cell = document.createElement('td');
+      const priceObj = mat.prices.find(p => p.supplier.toLowerCase() === s.toLowerCase());
+      if (priceObj) {
+        if (!filterSup || filterSup === s) cell.textContent = `€${priceObj.price.toFixed(2)}`;
+        if (priceObj.price < cheapestPrice) {
+          cheapestPrice = priceObj.price;
+          cheapestSupplier = s;
+        }
+        totalPrice += priceObj.price;
+      } else {
+        if (!filterSup || filterSup === s) cell.textContent = '-';
+      }
+      row.appendChild(cell);
+    });
+
+    const cheapestCell = document.createElement('td');
+    cheapestCell.textContent = cheapestSupplier || '-';
+    if (cheapestSupplier) cheapestCell.classList.add('cheapest');
+    row.appendChild(cheapestCell);
+
+    tbody.appendChild(row);
+  });
+
+  renderTotals(filteredMaterials, suppliers);
+}
+
+function renderTotals(materialsList, suppliers) {
+  const tfoot = document.getElementById('totalRow');
+  tfoot.innerHTML = '';
+
+  const totalLabel = document.createElement('td');
+  totalLabel.textContent = 'Total';
+  totalLabel.classList.add('total');
+  tfoot.appendChild(totalLabel);
+
+  suppliers.forEach(s => {
+    const totalCell = document.createElement('td');
+    let sum = 0;
+    materialsList.forEach(m => {
+      const priceObj = m.prices.find(p => p.supplier.toLowerCase() === s.toLowerCase());
+      if (priceObj) sum += priceObj.price;
+    });
+    totalCell.textContent = `€${sum.toFixed(2)}`;
+    totalCell.classList.add('total');
+    tfoot.appendChild(totalCell);
+  });
+
+  const emptyCell = document.createElement('td');
+  emptyCell.textContent = '-';
+  emptyCell.classList.add('total');
+  tfoot.appendChild(emptyCell);
+}
+
+function sortBy(column) {
+  if (column === 'material') {
+    materials.sort((a, b) => {
+      if (sortDirection.material === 'asc') {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+    sortDirection.material = sortDirection.material === 'asc' ? 'desc' : 'asc';
+    renderTable();
+  }
+}
+
 </script>
+
 </body>
 </html>
-
