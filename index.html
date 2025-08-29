@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - Smart Tool Management</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <style>
 /* ===== GLOBAL & RESET ===== */
@@ -71,6 +72,10 @@ a { text-decoration: none; }
 footer { padding:3rem 2rem; background:#111; color:#eee; text-align:center;}
 footer a { color:#a855f7; transition: color 0.3s;}
 footer a:hover { color:#c084fc;}
+
+/* ===== BACK TO TOP BUTTON ===== */
+#backTop { position:fixed; bottom:30px; right:30px; padding:0.5rem 0.75rem; font-size:1.25rem; background:#7c3aed; color:#fff; border:none; border-radius:50%; cursor:pointer; display:none; z-index:999; transition:transform 0.3s;}
+#backTop:hover { transform:scale(1.1); }
 
 /* ===== DARK MODE ===== */
 body.dark { background:#0d0d0d; color:#e5e5e5;}
@@ -145,6 +150,9 @@ body.dark footer a:hover { color:#e9d5ff;}
   <p>&copy; 2025 Buildy. All rights reserved.</p>
 </footer>
 
+<!-- BACK TO TOP BUTTON -->
+<button id="backTop" aria-label="Back to top">↑</button>
+
 <!-- JAVASCRIPT -->
 <script>
 // DARK MODE
@@ -152,6 +160,7 @@ const darkToggle = document.getElementById("darkToggle");
 const navbar = document.querySelector(".navbar");
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
+const backTop = document.getElementById("backTop");
 
 if(localStorage.getItem("theme")==="dark"){document.body.classList.add("dark"); darkToggle.textContent="☀️";}
 else{darkToggle.textContent="🌙";}
@@ -162,7 +171,10 @@ darkToggle.addEventListener("click",()=>{
 });
 
 // NAVBAR SHRINK
-window.addEventListener("scroll",()=>{if(window.scrollY>50)navbar.classList.add("shrink");else navbar.classList.remove("shrink");});
+window.addEventListener("scroll",()=>{
+  if(window.scrollY>50) navbar.classList.add("shrink"); else navbar.classList.remove("shrink");
+  backTop.style.display = window.scrollY>300 ? "block" : "none";
+});
 
 // MOBILE MENU
 hamburger.addEventListener("click",()=>navLinks.classList.toggle("open"));
@@ -171,4 +183,41 @@ navLinks.querySelectorAll("a").forEach(link=>{link.addEventListener("click",()=>
 // TABS
 const tabButtons=document.querySelectorAll(".tab-btn");
 const tabContents=document.querySelectorAll(".tab-content");
-tabButtons.forEach(btn=>{btn.addEventListener
+tabButtons.forEach(btn=>{btn.addEventListener("click",()=>{
+  tabButtons.forEach(b=>b.classList.remove("active"));
+  tabContents.forEach(c=>c.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+});});
+
+// FADE-IN ON SCROLL
+const faders=document.querySelectorAll("#hero h1,#hero p,.card,#multi-tool table");
+const appearOptions={threshold:0.2};
+const appearOnScroll=new IntersectionObserver((entries,observer)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.classList.add("visible"); observer.unobserve(entry);}
+  });
+},appearOptions);
+faders.forEach(fader=>appearOnScroll.observe(fader));
+
+// ACTIVE NAV LINK HIGHLIGHT (SCROLLSPY)
+const sectionIds=["hero","features","multi-tool","tabs"];
+const sections = sectionIds.map(id => document.getElementById(id));
+const navItems = document.querySelectorAll(".nav-links a");
+window.addEventListener("scroll", () => {
+  let scrollPosition = window.scrollY + 100;
+  sections.forEach((section, idx)=>{
+    if(section.offsetTop <= scrollPosition && (section.offsetTop + section.offsetHeight) > scrollPosition){
+      navItems.forEach(link=>link.classList.remove("active"));
+      const currentLink = document.querySelector(`.nav-links a[href="#${sectionIds[idx]}"]`);
+      if(currentLink) currentLink.classList.add("active");
+    }
+  });
+});
+
+// BACK TO TOP
+backTop.addEventListener("click",()=>{window.scrollTo({top:0, behavior:"smooth"});});
+</script>
+
+</body>
+</html>
