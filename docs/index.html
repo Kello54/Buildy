@@ -15,7 +15,7 @@
   <div class="logo">Buildy</div>
   <button class="hamburger" id="hamburger" aria-label="Toggle Menu">☰</button>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#hero">Home</a></li>
+    <li><a href="#hero" class="active">Home</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#multi-tool">Tools</a></li>
     <li><a href="#tabs">Overview</a></li>
@@ -24,14 +24,14 @@
 </nav>
 </header>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 <section id="hero">
   <h1 class="parallax">Buildy - Smart Tool Management</h1>
   <p class="parallax">Manage, track, and optimize all your tools with ease and precision. The future of tool management is here.</p>
   <a href="#features" class="cta">Get Started</a>
 </section>
 
-<!-- FEATURES -->
+<!-- FEATURES SECTION -->
 <section id="features" class="features">
   <div class="card">
     <div class="feature-icon">
@@ -56,21 +56,29 @@
   </div>
 </section>
 
-<!-- TABS -->
+<!-- TABS SECTION -->
 <section id="tabs">
   <div class="tabs">
     <button class="tab-btn active" data-tab="tab1">Overview</button>
     <button class="tab-btn" data-tab="tab2">Stats</button>
   </div>
-  <div id="tab1" class="tab-content active"><p>Overview content goes here...</p></div>
-  <div id="tab2" class="tab-content"><p>Stats content goes here...</p></div>
+  <div id="tab1" class="tab-content active">
+    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow with Buildy.</p>
+  </div>
+  <div id="tab2" class="tab-content">
+    <p>Stats content goes here. See detailed usage metrics and trends for your tools and teams.</p>
+  </div>
 </section>
 
-<!-- MULTI-TOOL TABLE -->
+<!-- MULTI-TOOL TABLE SECTION -->
 <section id="multi-tool">
   <table>
     <thead>
-      <tr><th>Tool</th><th>Quantity</th><th>Status</th></tr>
+      <tr>
+        <th>Tool</th>
+        <th>Quantity</th>
+        <th>Status</th>
+      </tr>
     </thead>
     <tbody>
       <tr>
@@ -100,6 +108,7 @@
 <!-- BACK TO TOP BUTTON -->
 <button id="backTop" aria-label="Back to top">↑</button>
 
+<!-- MAIN JAVASCRIPT -->
 <script src="scripts/main.js"></script>
 </body>
 </html>
