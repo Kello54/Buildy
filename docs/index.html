@@ -6,10 +6,85 @@
   <title>Buildy - Smart Tool Management</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="stylesheets/extra.css">
-  <link rel="stylesheet" href="stylesheets/api.css">
-  <link rel="stylesheet" href="stylesheets/custom.css">
+  <style>
+  /* =============================
+     INLINE CSS for Buildy
+     ============================= */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark { background: #121212; color: #f1f1f1; }
+
+  /* ==== Navbar ==== */
+  header { position: sticky; top: 0; z-index: 1000; background: #4b0082; color: white; }
+  .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
+  .logo { font-size: 1.5rem; font-weight: bold; }
+  .nav-links { display: flex; gap: 1rem; list-style: none; }
+  .nav-links li a { text-decoration: none; color: white; transition: color 0.3s; }
+  .nav-links li a:hover, .nav-links li a.active { color: #ffcc00; }
+  #darkToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: white; }
+
+  /* ==== Mobile Nav ==== */
+  .hamburger { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: white; }
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; background: #4b0082; width: 100%; padding: 1rem; }
+    .nav-links.show { display: flex; }
+    .hamburger { display: block; }
+  }
+
+  /* ==== Hero Section ==== */
+  #hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #4b0082, #8a2be2); color: white; }
+  #hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+  #hero p { max-width: 600px; margin: 0 auto 1.5rem; }
+  .cta {
+    background: #ffcc00; color: #000; padding: 0.8rem 1.5rem;
+    border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s;
+  }
+  .cta:hover { background: #e6b800; }
+
+  /* ==== Features Section ==== */
+  .features { display: flex; gap: 2rem; justify-content: center; padding: 3rem 1rem; flex-wrap: wrap; }
+  .card {
+    background: #fff; color: #000; padding: 1.5rem; border-radius: 12px;
+    text-align: center; flex: 1 1 250px; transition: transform 0.3s, box-shadow 0.3s;
+  }
+  body.dark .card { background: #1e1e1e; color: #f1f1f1; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+  .feature-icon img { width: 60px; margin-bottom: 1rem; }
+
+  /* ==== Tabs Section ==== */
+  .tabs { display: flex; justify-content: center; margin: 2rem 0; }
+  .tab-btn {
+    background: #eee; border: none; padding: 0.8rem 1.5rem; margin: 0 0.5rem;
+    cursor: pointer; border-radius: 6px; transition: background 0.3s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: #4b0082; color: white; }
+  .tab-content { display: none; max-width: 800px; margin: 0 auto; text-align: center; }
+  .tab-content.active { display: block; }
+
+  /* ==== Multi-Tool Table ==== */
+  #multi-tool { padding: 3rem 1rem; }
+  table { width: 90%; margin: 0 auto; border-collapse: collapse; }
+  thead { background: #4b0082; color: white; }
+  th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #ddd; }
+  tbody tr:nth-child(even) { background: #f9f9f9; }
+  body.dark tbody tr:nth-child(even) { background: #2a2a2a; }
+  .tool-icon { width: 24px; margin-right: 8px; vertical-align: middle; }
+
+  /* ==== Footer ==== */
+  footer { text-align: center; padding: 1.5rem; background: #4b0082; color: white; margin-top: 3rem; }
+
+  /* ==== Back to Top Button ==== */
+  #backTop {
+    position: fixed; bottom: 20px; right: 20px; display: none;
+    background: #4b0082; color: white; border: none; padding: 0.8rem 1rem;
+    border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: background 0.3s;
+  }
+  #backTop:hover { background: #6a0dad; }
+  </style>
 </head>
 <body>
 
@@ -30,8 +105,8 @@
 
 <!-- HERO SECTION -->
 <section id="hero">
-  <h1 class="parallax">Buildy - Smart Tool Management</h1>
-  <p class="parallax">Manage, track, and optimize all your tools with ease and precision. The future of tool management is here.</p>
+  <h1>Buildy - Smart Tool Management</h1>
+  <p>Manage, track, and optimize all your tools with ease and precision. The future of tool management is here.</p>
   <a href="#features" class="cta">Get Started</a>
 </section>
 
@@ -67,52 +142,4 @@
     <button class="tab-btn" data-tab="tab2">Stats</button>
   </div>
   <div id="tab1" class="tab-content active">
-    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow with Buildy.</p>
-  </div>
-  <div id="tab2" class="tab-content">
-    <p>Stats content goes here. See detailed usage metrics and trends for your tools and teams.</p>
-  </div>
-</section>
-
-<!-- MULTI-TOOL TABLE SECTION -->
-<section id="multi-tool">
-  <table>
-    <thead>
-      <tr>
-        <th>Tool</th>
-        <th>Quantity</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910792.png" alt="Hammer"> Hammer</td>
-        <td class="quantity-input">5</td>
-        <td>Available</td>
-      </tr>
-      <tr>
-        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910827.png" alt="Screwdriver"> Screwdriver</td>
-        <td class="quantity-input">12</td>
-        <td>In Use</td>
-      </tr>
-      <tr>
-        <td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910812.png" alt="Wrench"> Wrench</td>
-        <td class="quantity-input">7</td>
-        <td>Available</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>&copy; 2025 Buildy. All rights reserved.</p>
-</footer>
-
-<!-- BACK TO TOP BUTTON -->
-<button id="backTop" aria-label="Back to top">↑</button>
-
-<!-- MAIN JAVASCRIPT -->
-<script src="scripts/main.js"></script>
-</body>
-</html>
+    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow
