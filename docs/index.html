@@ -7,28 +7,22 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root {
-  --bg:#f9f9fb; --text:#222; --muted:#666; --card:#fff; --brand:#4b0082; --brand-2:#6a0dad;
-  --table-head:#4b0082; --table-head-text:#fff; --border:#e5e7eb; --cheapest:#d4edda; --expensive:#f5d0d0; --mid:#fff6cf;
-}
-body.dark{
-  --bg:#141414; --text:#f2f2f2; --muted:#bdbdbd; --card:#1e1e1e; --brand:#8d5bd6; --brand-2:#a67bf0;
-  --table-head:#222; --table-head-text:#f2f2f2; --border:#2a2a2a; --cheapest:#285f2a; --expensive:#643333; --mid:#4b4426;
-}
+:root{--bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand-2:#6a0dad;--table-head:#4b0082;--table-head-text:#fff;--border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;}
+body.dark{--bg:#141414;--text:#f2f2f2;--muted:#bdbdbd;--card:#1e1e1e;--brand:#8d5bd6;--brand-2:#a67bf0;--table-head:#222;--table-head-text:#f2f2f2;--border:#2a2a2a;--cheapest:#285f2a;--expensive:#643333;--mid:#4b4426;}
 *{box-sizing:border-box}
-body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
-header{position:sticky;top:0;z-index:5;background:var(--brand);color:#fff;padding:12px 16px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-header .actions{display:flex;gap:8px;align-items:center}
+body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s;}
+header{position:sticky;top:0;z-index:5;background:var(--brand);color:#fff;padding:12px 16px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+header .actions{display:flex;gap:8px;align-items:center;}
 .icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
 .icon-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);}
 .container{max-width:1100px;margin:0 auto;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
-.card h2{margin:0 0 8px 0;color:var(--brand)}
+.card h2{margin:0 0 8px 0;color:var(--brand);}
 .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
 input,select,button{font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);}
 input:focus,select:focus{outline:2px solid var(--brand);border-color:transparent;}
-button.primary{background:var(--brand);color:#fff;border:none}
-button.primary:hover{background:var(--brand-2)}
+button.primary{background:var(--brand);color:#fff;border:none;}
+button.primary:hover{background:var(--brand-2);}
 button.ghost{background:transparent;}
 .muted{color:var(--muted);font-size:12px;}
 details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,var(--brand),transparent) border-box;border:1px solid var(--border);color:var(--text);font-weight:600;}
@@ -57,8 +51,8 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
 </div>
 </header>
-<main class="container">
 
+<main class="container">
 <section class="card">
 <details open>
 <summary>➕ Add Material Price</summary>
@@ -114,14 +108,12 @@ let materials=[]; let chart; const LS_KEY='buildy_materials_v3';
 const darkToggle=$('darkToggle'),materialInput=$('materialInput'),supplierInput=$('supplierInput'),unitInput=$('unitInput'),quantityInput=$('quantityInput'),priceInput=$('priceInput'),vatInput=$('vatInput'),deliveryInput=$('deliveryInput');
 const addBtn=$('addBtn'),filterMaterial=$('filterMaterial'),filterSupplier=$('filterSupplier'),exportExcelBtn=$('exportExcelBtn');
 const downloadJsonBtn=$('downloadJsonBtn'),uploadJsonInput=$('uploadJsonInput'),clearAllBtn=$('clearAllBtn');
-
 function $(id){return document.getElementById(id);}
 function load(){const s=localStorage.getItem(LS_KEY); if(s)materials=JSON.parse(s);}
 function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
 function refreshAll(){updateSuppliers(); renderTable(); renderChart(); save();}
 function updateSuppliers(){const all=[...new Set(materials.flatMap(m=>m.prices.map(p=>p.supplier)))].sort(); const cur=filterSupplier.value; filterSupplier.innerHTML='<option value="">All Suppliers</option>'+all.map(s=>`<option ${s===cur?'selected':''}>${s}</option>`).join('');}
 darkToggle.addEventListener('click',()=>{document.body.classList.toggle('dark'); darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; renderChart();});
-
 addBtn.addEventListener('click',()=>{
 const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
 const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
@@ -135,37 +127,10 @@ mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,date:today});
 materialInput.value=''; supplierInput.value=''; unitInput.value=''; quantityInput.value=''; priceInput.value=''; vatInput.value=''; deliveryInput.value='';
 refreshAll();
 });
-
 filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
 filterSupplier.addEventListener('change',refreshAll);
-
 exportExcelBtn.addEventListener('click',()=>{
 const wb=XLSX.utils.book_new(); const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
-materials.forEach(m=>{m.history.forEach(h=>{
-const total=(h.price*h.quantity)+h.delivery+(h.price*h.quantity*h.vat/100);
-ws_data.push([m.name,h.supplier,h.unit,h.quantity,h.price,h.vat,h.delivery,total]);
-})});
+materials.forEach(m=>{m.history.forEach(h=>{const total=(h.price*h.quantity)+h.delivery+(h.price*h.quantity*h.vat/100);ws_data.push([m.name,h.supplier,h.unit,h.quantity,h.price,h.vat,h.delivery,total]);})});
 const ws=XLSX.utils.aoa_to_sheet(ws_data); XLSX.utils.book_append_sheet(wb,ws,"Prices"); XLSX.writeFile(wb,"Buildy_Prices.xlsx");
 });
-
-downloadJsonBtn.addEventListener('click',()=>{
-const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
-});
-uploadJsonInput.addEventListener('change',async(e)=>{const f=e.target.files[0]; if(!f)return; try{const t=await f.text(); const p=JSON.parse(t); if(!Array.isArray(p))throw'Invalid'; materials=p; refreshAll(); alert('Imported');}catch(err){alert('Failed to import JSON');} finally{uploadJsonInput.value='';}});
-clearAllBtn.addEventListener('click',()=>{if(confirm('Remove all data?')){materials=[];refreshAll();}});
-
-function renderTable(){
-const tbody=document.querySelector('#priceTable tbody'); const tfoot=$('totalRow'); tbody.innerHTML=''; tfoot.innerHTML='';
-const suppliers=[...new Set(materials.flatMap(m=>m.prices.map(p=>p.supplier)))].sort();
-let header='<th>Material</th><th>Unit</th><th>Quantity</th><th>Price (€)</th><th>VAT %</th><th>Delivery (€)</th><th>Total (€)</th><th>Supplier</th>'; $('tableHeader').innerHTML=header;
-const fMat=filterMaterial.value.toLowerCase(); const fSup=filterSupplier.value;
-materials.filter(m=>m.name.toLowerCase().includes(fMat)).forEach(mat=>{mat.prices.filter(p=>!fSup||p.supplier===fSup).forEach(p=>{
-const row=document.createElement('tr');
-const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-row.innerHTML=`<td>${mat.name}</td><td>${p.unit}</td><td>${p.quantity}</td><td>${p.price.toFixed(2)}</td><td>${p.vat}</td><td>${p.delivery}</td><td>${total.toFixed(2)}</td><td>${p.supplier}</td>`;
-tbody.appendChild(row);
-});});
-}
-
-function renderChart(){
-const ctx=$('priceChart
