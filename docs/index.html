@@ -1,92 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buildy - Smart Tool Management</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy - Smart Tool Management</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 
-  <style>
-  /* =============================
-     INLINE CSS for Buildy
-     ============================= */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
-  }
-  body.dark { background: #121212; color: #f1f1f1; }
+<style>
+/* =============================
+   INLINE CSS (extra.css + api.css)
+   ============================= */
 
-  /* ==== Navbar ==== */
-  header { position: sticky; top: 0; z-index: 1000; background: #4b0082; color: white; }
-  .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
-  .logo { font-size: 1.5rem; font-weight: bold; }
-  .nav-links { display: flex; gap: 1rem; list-style: none; }
-  .nav-links li a { text-decoration: none; color: white; transition: color 0.3s; }
-  .nav-links li a:hover, .nav-links li a.active { color: #ffcc00; }
-  #darkToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: white; }
+/* ===== Global Reset ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Segoe UI", Tahoma, sans-serif; line-height: 1.6; transition: background 0.3s, color 0.3s; }
+body.dark { background: #121212; color: #f1f1f1; }
 
-  /* ==== Mobile Nav ==== */
-  .hamburger { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: white; }
-  @media (max-width: 768px) {
-    .nav-links { display: none; flex-direction: column; background: #4b0082; width: 100%; padding: 1rem; }
-    .nav-links.show { display: flex; }
-    .hamburger { display: block; }
-  }
+/* ==== Navbar ==== */
+header { position: sticky; top: 0; z-index: 1000; background: #4b0082; color: white; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
+.logo { font-size: 1.5rem; font-weight: bold; }
+.nav-links { display: flex; gap: 1rem; list-style: none; }
+.nav-links li a { text-decoration: none; color: white; transition: color 0.3s; }
+.nav-links li a:hover, .nav-links li a.active { color: #ffcc00; }
+#darkToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: white; }
 
-  /* ==== Hero Section ==== */
-  #hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #4b0082, #8a2be2); color: white; }
-  #hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-  #hero p { max-width: 600px; margin: 0 auto 1.5rem; }
-  .cta {
-    background: #ffcc00; color: #000; padding: 0.8rem 1.5rem;
-    border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s;
-  }
-  .cta:hover { background: #e6b800; }
+/* ==== Mobile Nav ==== */
+.hamburger { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: white; }
+@media (max-width: 768px) {
+  .nav-links { display: none; flex-direction: column; background: #4b0082; width: 100%; padding: 1rem; }
+  .nav-links.show { display: flex; }
+  .hamburger { display: block; }
+}
 
-  /* ==== Features Section ==== */
-  .features { display: flex; gap: 2rem; justify-content: center; padding: 3rem 1rem; flex-wrap: wrap; }
-  .card {
-    background: #fff; color: #000; padding: 1.5rem; border-radius: 12px;
-    text-align: center; flex: 1 1 250px; transition: transform 0.3s, box-shadow 0.3s;
-  }
-  body.dark .card { background: #1e1e1e; color: #f1f1f1; }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-  .feature-icon img { width: 60px; margin-bottom: 1rem; }
+/* ==== Hero Section ==== */
+#hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #4b0082, #8a2be2); color: white; }
+#hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+#hero p { max-width: 600px; margin: 0 auto 1.5rem; }
+.cta { background: #ffcc00; color: #000; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+.cta:hover { background: #e6b800; }
 
-  /* ==== Tabs Section ==== */
-  .tabs { display: flex; justify-content: center; margin: 2rem 0; }
-  .tab-btn {
-    background: #eee; border: none; padding: 0.8rem 1.5rem; margin: 0 0.5rem;
-    cursor: pointer; border-radius: 6px; transition: background 0.3s;
-  }
-  .tab-btn.active, .tab-btn:hover { background: #4b0082; color: white; }
-  .tab-content { display: none; max-width: 800px; margin: 0 auto; text-align: center; }
-  .tab-content.active { display: block; }
+/* ==== Features Section ==== */
+.features { display: flex; gap: 2rem; justify-content: center; padding: 3rem 1rem; flex-wrap: wrap; }
+.card { background: #fff; color: #000; padding: 1.5rem; border-radius: 12px; text-align: center; flex: 1 1 250px; transition: transform 0.3s, box-shadow 0.3s; }
+body.dark .card { background: #1e1e1e; color: #f1f1f1; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.feature-icon img { width: 60px; margin-bottom: 1rem; }
 
-  /* ==== Multi-Tool Table ==== */
-  #multi-tool { padding: 3rem 1rem; }
-  table { width: 90%; margin: 0 auto; border-collapse: collapse; }
-  thead { background: #4b0082; color: white; }
-  th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #ddd; }
-  tbody tr:nth-child(even) { background: #f9f9f9; }
-  body.dark tbody tr:nth-child(even) { background: #2a2a2a; }
-  .tool-icon { width: 24px; margin-right: 8px; vertical-align: middle; }
+/* ==== Tabs Section ==== */
+.tabs { display: flex; justify-content: center; margin: 2rem 0; }
+.tab-btn { background: #eee; border: none; padding: 0.8rem 1.5rem; margin: 0 0.5rem; cursor: pointer; border-radius: 6px; transition: background 0.3s; }
+.tab-btn.active, .tab-btn:hover { background: #4b0082; color: white; }
+.tab-content { display: none; max-width: 800px; margin: 0 auto; text-align: center; }
+.tab-content.active { display: block; }
 
-  /* ==== Footer ==== */
-  footer { text-align: center; padding: 1.5rem; background: #4b0082; color: white; margin-top: 3rem; }
+/* ==== Multi-Tool Table ==== */
+#multi-tool { padding: 3rem 1rem; }
+table { width: 90%; margin: 0 auto; border-collapse: collapse; }
+thead { background: #4b0082; color: white; }
+th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #ddd; }
+tbody tr:nth-child(even) { background: #f9f9f9; }
+body.dark tbody tr:nth-child(even) { background: #2a2a2a; }
+.tool-icon { width: 24px; margin-right: 8px; vertical-align: middle; }
 
-  /* ==== Back to Top Button ==== */
-  #backTop {
-    position: fixed; bottom: 20px; right: 20px; display: none;
-    background: #4b0082; color: white; border: none; padding: 0.8rem 1rem;
-    border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: background 0.3s;
-  }
-  #backTop:hover { background: #6a0dad; }
-  </style>
+/* ==== Footer ==== */
+footer { text-align: center; padding: 1.5rem; background: #4b0082; color: white; margin-top: 3rem; }
+
+/* ==== Back to Top Button ==== */
+#backTop { position: fixed; bottom: 20px; right: 20px; display: none; background: #4b0082; color: white; border: none; padding: 0.8rem 1rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: background 0.3s; }
+#backTop:hover { background: #6a0dad; }
+
+/* ==== Preloader ==== */
+#preloader { position: fixed; top:0; left:0; width:100%; height:100%; background:#4b0082; color:white; display:flex; justify-content:center; align-items:center; flex-direction:column; z-index:2000; }
+.loader { border:6px solid #f3f3f3; border-top:6px solid #ffcc00; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; margin-bottom:1rem; }
+@keyframes spin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+</style>
 </head>
 <body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="loader"></div>
+  <p>Loading Buildy...</p>
+</div>
 
 <!-- NAVBAR -->
 <header>
@@ -113,23 +109,17 @@
 <!-- FEATURES SECTION -->
 <section id="features" class="features">
   <div class="card">
-    <div class="feature-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Dashboard">
-    </div>
+    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Dashboard"></div>
     <h3>All-in-One Dashboard</h3>
     <p>Track every tool, every project, in one intuitive dashboard.</p>
   </div>
   <div class="card">
-    <div class="feature-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910815.png" alt="Analytics">
-    </div>
+    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910815.png" alt="Analytics"></div>
     <h3>Analytics</h3>
     <p>Analyze usage trends and optimize resource allocation.</p>
   </div>
   <div class="card">
-    <div class="feature-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910837.png" alt="Quick Actions">
-    </div>
+    <div class="feature-icon"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910837.png" alt="Quick Actions"></div>
     <h3>Quick Actions</h3>
     <p>Perform bulk actions quickly with powerful tools.</p>
   </div>
@@ -142,4 +132,78 @@
     <button class="tab-btn" data-tab="tab2">Stats</button>
   </div>
   <div id="tab1" class="tab-content active">
-    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow
+    <p>Overview content goes here. Track your tools, manage projects, and streamline your workflow with Buildy.</p>
+  </div>
+  <div id="tab2" class="tab-content">
+    <p>Stats content goes here. See detailed usage metrics and trends for your tools and teams.</p>
+  </div>
+</section>
+
+<!-- MULTI-TOOL TABLE SECTION -->
+<section id="multi-tool">
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Quantity</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910792.png" alt="Hammer"> Hammer</td><td>5</td><td>Available</td></tr>
+      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910827.png" alt="Screwdriver"> Screwdriver</td><td>12</td><td>In Use</td></tr>
+      <tr><td><img class="tool-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910812.png" alt="Wrench"> Wrench</td><td>7</td><td>Available</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 Buildy. All rights reserved.</p>
+</footer>
+
+<!-- BACK TO TOP BUTTON -->
+<button id="backTop" aria-label="Back to top">↑</button>
+
+<script>
+/* ============================
+   INLINE JS
+   ============================ */
+
+/* Preloader */
+window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+  preloader.style.opacity = "0";
+  setTimeout(() => preloader.style.display = "none", 500);
+});
+
+/* Dark Mode */
+const darkToggle = document.getElementById("darkToggle");
+if(localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+});
+
+/* Tabs */
+const tabBtns = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+tabBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    tabBtns.forEach(b => b.classList.remove("active"));
+    tabContents.forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+/* Hamburger */
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
+hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
+
+/* Back to Top */
+const backTop = document.getElementById("backTop");
+window.addEventListener("scroll", () => backTop.style.display = window.scrollY > 300 ? "block" : "none");
+backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
+
