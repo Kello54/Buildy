@@ -56,14 +56,16 @@ a { text-decoration: none; }
 .tab-content.active { opacity:1; transform:translateY(0);}
 
 /* ===== MULTI-TOOL TABLE ===== */
-#multi-tool { padding:4rem 2rem;}
-#multi-tool table { border-radius:0.5rem; overflow-x:auto; display:block; border-collapse:collapse; width:100%; background:#fff; opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease;}
+#multi-tool { padding:4rem 2rem; overflow-x:auto;}
+#multi-tool table { border-radius:0.5rem; border-collapse:collapse; width:100%; background:#fff; opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease;}
+#multi-tool thead { position: sticky; top:0; background:#f3f3f3; z-index:1; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
 #multi-tool table tr { transition:all 0.3s ease;}
 #multi-tool table tr:hover { background-color:rgba(124,58,237,0.05); transform:translateY(-2px) scale(1.01);}
 #multi-tool table tr:hover.dark-hover { background-color:rgba(124,58,237,0.15);}
+#multi-tool table th, #multi-tool table td { padding:0.75rem 1rem; text-align:center;}
+.quantity-input { text-align:center;}
 #multi-tool table::-webkit-scrollbar { height:8px;}
 #multi-tool table::-webkit-scrollbar-thumb { background:#ccc; border-radius:4px;}
-.quantity-input { text-align:center;}
 
 /* ===== FOOTER ===== */
 footer { padding:3rem 2rem; background:#111; color:#eee; text-align:center;}
@@ -76,6 +78,7 @@ body.dark #hero h1, body.dark #hero p { color:#fff;}
 body.dark .card { background:#1a1a1a; color:#e5e5e5; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
 body.dark .tab-content { background:#222; border-color:#333; color:#ddd;}
 body.dark #multi-tool table { background:#1a1a1a;}
+body.dark #multi-tool thead { background:#222;}
 body.dark #multi-tool table tr:hover { background-color:rgba(124,58,237,0.15);}
 body.dark footer { background:#000; color:#aaa;}
 body.dark footer a { color:#c084fc;}
@@ -168,38 +171,4 @@ navLinks.querySelectorAll("a").forEach(link=>{link.addEventListener("click",()=>
 // TABS
 const tabButtons=document.querySelectorAll(".tab-btn");
 const tabContents=document.querySelectorAll(".tab-content");
-tabButtons.forEach(btn=>{btn.addEventListener("click",()=>{
-  tabButtons.forEach(b=>b.classList.remove("active"));
-  tabContents.forEach(c=>c.classList.remove("active"));
-  btn.classList.add("active");
-  document.getElementById(btn.dataset.tab).classList.add("active");
-});});
-
-// FADE-IN ON SCROLL
-const faders=document.querySelectorAll("#hero h1,#hero p,.card,#multi-tool table");
-const appearOptions={threshold:0.2};
-const appearOnScroll=new IntersectionObserver((entries,observer)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){entry.classList.add("visible"); observer.unobserve(entry);}
-  });
-},appearOptions);
-faders.forEach(fader=>appearOnScroll.observe(fader));
-
-// ACTIVE NAV LINK HIGHLIGHT (SCROLLSPY)
-const sectionIds=["hero","features","multi-tool","tabs"];
-const sections = sectionIds.map(id => document.getElementById(id));
-const navItems = document.querySelectorAll(".nav-links a");
-window.addEventListener("scroll", () => {
-  let scrollPosition = window.scrollY + 100;
-  sections.forEach((section, idx)=>{
-    if(section.offsetTop <= scrollPosition && (section.offsetTop + section.offsetHeight) > scrollPosition){
-      navItems.forEach(link=>link.classList.remove("active"));
-      const currentLink = document.querySelector(`.nav-links a[href="#${sectionIds[idx]}"]`);
-      if(currentLink) currentLink.classList.add("active");
-    }
-  });
-});
-</script>
-
-</body>
-</html>
+tabButtons.forEach(btn=>{btn.addEventListener
