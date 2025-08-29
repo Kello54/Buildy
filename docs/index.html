@@ -6,74 +6,23 @@
 <title>Buildy - Smart Tool Management</title>
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 
+<!-- SEO Meta Tags -->
+<meta name="description" content="Buildy - Manage, track, and optimize all your tools.">
+<meta name="keywords" content="Buildy, Tools, Management, Dashboard, Analytics">
+<meta name="author" content="Kello54">
+
+<!-- Google Analytics (replace UA-XXXXXX with your ID if desired) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-XXXXXX');
+</script>
+
 <style>
-/* =============================
-   INLINE CSS (extra.css + api.css)
-   ============================= */
-
-/* ===== Global Reset ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Segoe UI", Tahoma, sans-serif; line-height: 1.6; transition: background 0.3s, color 0.3s; }
-body.dark { background: #121212; color: #f1f1f1; }
-
-/* ==== Navbar ==== */
-header { position: sticky; top: 0; z-index: 1000; background: #4b0082; color: white; }
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
-.logo { font-size: 1.5rem; font-weight: bold; }
-.nav-links { display: flex; gap: 1rem; list-style: none; }
-.nav-links li a { text-decoration: none; color: white; transition: color 0.3s; }
-.nav-links li a:hover, .nav-links li a.active { color: #ffcc00; }
-#darkToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: white; }
-
-/* ==== Mobile Nav ==== */
-.hamburger { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: white; }
-@media (max-width: 768px) {
-  .nav-links { display: none; flex-direction: column; background: #4b0082; width: 100%; padding: 1rem; }
-  .nav-links.show { display: flex; }
-  .hamburger { display: block; }
-}
-
-/* ==== Hero Section ==== */
-#hero { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #4b0082, #8a2be2); color: white; }
-#hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-#hero p { max-width: 600px; margin: 0 auto 1.5rem; }
-.cta { background: #ffcc00; color: #000; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
-.cta:hover { background: #e6b800; }
-
-/* ==== Features Section ==== */
-.features { display: flex; gap: 2rem; justify-content: center; padding: 3rem 1rem; flex-wrap: wrap; }
-.card { background: #fff; color: #000; padding: 1.5rem; border-radius: 12px; text-align: center; flex: 1 1 250px; transition: transform 0.3s, box-shadow 0.3s; }
-body.dark .card { background: #1e1e1e; color: #f1f1f1; }
-.card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-.feature-icon img { width: 60px; margin-bottom: 1rem; }
-
-/* ==== Tabs Section ==== */
-.tabs { display: flex; justify-content: center; margin: 2rem 0; }
-.tab-btn { background: #eee; border: none; padding: 0.8rem 1.5rem; margin: 0 0.5rem; cursor: pointer; border-radius: 6px; transition: background 0.3s; }
-.tab-btn.active, .tab-btn:hover { background: #4b0082; color: white; }
-.tab-content { display: none; max-width: 800px; margin: 0 auto; text-align: center; }
-.tab-content.active { display: block; }
-
-/* ==== Multi-Tool Table ==== */
-#multi-tool { padding: 3rem 1rem; }
-table { width: 90%; margin: 0 auto; border-collapse: collapse; }
-thead { background: #4b0082; color: white; }
-th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #ddd; }
-tbody tr:nth-child(even) { background: #f9f9f9; }
-body.dark tbody tr:nth-child(even) { background: #2a2a2a; }
-.tool-icon { width: 24px; margin-right: 8px; vertical-align: middle; }
-
-/* ==== Footer ==== */
-footer { text-align: center; padding: 1.5rem; background: #4b0082; color: white; margin-top: 3rem; }
-
-/* ==== Back to Top Button ==== */
-#backTop { position: fixed; bottom: 20px; right: 20px; display: none; background: #4b0082; color: white; border: none; padding: 0.8rem 1rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: background 0.3s; }
-#backTop:hover { background: #6a0dad; }
-
-/* ==== Preloader ==== */
-#preloader { position: fixed; top:0; left:0; width:100%; height:100%; background:#4b0082; color:white; display:flex; justify-content:center; align-items:center; flex-direction:column; z-index:2000; }
-.loader { border:6px solid #f3f3f3; border-top:6px solid #ffcc00; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; margin-bottom:1rem; }
-@keyframes spin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+/* ==== Inline CSS (minified & optimized) ==== */
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Segoe UI,Tahoma,sans-serif;line-height:1.6;transition:background .3s,color .3s}body.dark{background:#121212;color:#f1f1f1}header{position:sticky;top:0;z-index:1000;background:#4b0082;color:#fff}.navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem}.logo{font-size:1.5rem;font-weight:bold}.nav-links{display:flex;gap:1rem;list-style:none}.nav-links li a{text-decoration:none;color:white;transition:color .3s}.nav-links li a:hover,.nav-links li a.active{color:#ffcc00}#darkToggle{background:none;border:none;cursor:pointer;font-size:1.2rem;color:white}.hamburger{display:none;font-size:1.5rem;background:none;border:none;cursor:pointer;color:white}@media(max-width:768px){.nav-links{display:none;flex-direction:column;background:#4b0082;width:100%;padding:1rem}.nav-links.show{display:flex}.hamburger{display:block}}#hero{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,#4b0082,#8a2be2);color:#fff}#hero h1{font-size:2.5rem;margin-bottom:1rem}#hero p{max-width:600px;margin:0 auto 1.5rem}.cta{background:#ffcc00;color:#000;padding:.8rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:background .3s}.cta:hover{background:#e6b800}.features{display:flex;gap:2rem;justify-content:center;padding:3rem 1rem;flex-wrap:wrap}.card{background:#fff;color:#000;padding:1.5rem;border-radius:12px;text-align:center;flex:1 1 250px;transition:transform .3s,box-shadow .3s}body.dark .card{background:#1e1e1e;color:#f1f1f1}.card:hover{transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,.2)}.feature-icon img{width:60px;margin-bottom:1rem}.tabs{display:flex;justify-content:center;margin:2rem 0}.tab-btn{background:#eee;border:none;padding:.8rem 1.5rem;margin:0 .5rem;cursor:pointer;border-radius:6px;transition:background .3s}.tab-btn.active,.tab-btn:hover{background:#4b0082;color:white}.tab-content{display:none;max-width:800px;margin:0 auto;text-align:center}.tab-content.active{display:block}#multi-tool{padding:3rem 1rem}table{width:90%;margin:0 auto;border-collapse:collapse}thead{background:#4b0082;color:white}th,td{padding:1rem;text-align:left;border-bottom:1px solid #ddd}tbody tr:nth-child(even){background:#f9f9f9}body.dark tbody tr:nth-child(even){background:#2a2a2a}.tool-icon{width:24px;margin-right:8px;vertical-align:middle}footer{text-align:center;padding:1.5rem;background:#4b0082;color:white;margin-top:3rem}#backTop{position:fixed;bottom:20px;right:20px;display:none;background:#4b0082;color:white;border:none;padding:.8rem 1rem;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:background .3s}#backTop:hover{background:#6a0dad}#preloader{position:fixed;top:0;left:0;width:100%;height:100%;background:#4b0082;color:white;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:2000}.loader{border:6px solid #f3f3f3;border-top:6px solid #ffcc00;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:1rem}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -161,49 +110,48 @@ footer { text-align: center; padding: 1.5rem; background: #4b0082; color: white;
 <!-- BACK TO TOP BUTTON -->
 <button id="backTop" aria-label="Back to top">↑</button>
 
+<!-- INLINE JS -->
 <script>
-/* ============================
-   INLINE JS
-   ============================ */
+window.addEventListener('load',()=>{document.getElementById('preloader').style.display='none'});
 
-/* Preloader */
-window.addEventListener("load", () => {
-  const preloader = document.getElementById("preloader");
-  preloader.style.opacity = "0";
-  setTimeout(() => preloader.style.display = "none", 500);
-});
-
-/* Dark Mode */
-const darkToggle = document.getElementById("darkToggle");
-if(localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
-darkToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+/* Dark Mode Toggle */
+const darkToggle=document.getElementById('darkToggle');
+if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+darkToggle.addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
 });
 
 /* Tabs */
-const tabBtns = document.querySelectorAll(".tab-btn");
-const tabContents = document.querySelectorAll(".tab-content");
-tabBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    tabBtns.forEach(b => b.classList.remove("active"));
-    tabContents.forEach(c => c.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).classList.add("active");
+const tabBtns=document.querySelectorAll('.tab-btn');
+const tabContents=document.querySelectorAll('.tab-content');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    tabContents.forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
   });
 });
 
-/* Hamburger */
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
-hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
+/* Hamburger Menu */
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>navLinks.classList.toggle('show'));
 
 /* Back to Top */
-const backTop = document.getElementById("backTop");
-window.addEventListener("scroll", () => backTop.style.display = window.scrollY > 300 ? "block" : "none");
-backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-</script>
+const backTop=document.getElementById('backTop');
+window.addEventListener('scroll',()=>backTop.style.display=window.scrollY>300?'block':'none');
+backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
+/* Smooth scroll for anchor links */
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click',function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
 </body>
 </html>
 
