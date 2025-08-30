@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand-2:#6a0dad;--border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;}
+:root{--bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand-2:#6a0dad;--border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;--amber:#ffbf00;}
 body.dark{--bg:#141414;--text:#f2f2f2;--muted:#bdbdbd;--card:#1e1e1e;--brand:#8d5bd6;--brand-2:#a67bf0;--border:#2a2a2a;--cheapest:#285f2a;--expensive:#643333;--mid:#4b4426;}
 *{box-sizing:border-box}
 body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s;}
@@ -35,12 +35,16 @@ td.cheapest{background:var(--cheapest);font-weight:700;}
 td.expensive{background:var(--expensive);}
 td.medium{background:var(--mid);}
 .canvas-mini{height:60px;max-width:150px;}
-.toast{position:fixed;bottom:20px;right:20px;background:#4b0082;color:#fff;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--brand);color:var(--amber);padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;}
 .spacer{flex:1;}
 footer{margin:24px 0;text-align:center;color:var(--muted);font-size:12px;}
 .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);}
 canvas{width:100%;height:320px;max-height:60vh;}
+.badge {padding:4px 8px;border-radius:6px;font-weight:700;font-size:12px;display:inline-block;margin-left:6px;}
+.badge-down{background:var(--brand);color:#fff;}
+.badge-up{background:var(--amber);color:#000;}
+.badge-stable{background:#888;color:#fff;}
 </style>
 </head>
 <body>
@@ -50,6 +54,7 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <button id="darkToggle" class="icon-btn">🌙</button>
 <button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
 <label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
+<button id="exportExcelBtnTop" class="icon-btn">📄 XLSX</button>
 <button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
 </div>
 </header>
@@ -93,7 +98,7 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <thead>
 <tr id="tableHeader"></tr>
 </thead>
-<tbody></tbody>
+<tbody id="tableBody"></tbody>
 </table>
 </div>
 </section>
@@ -107,20 +112,470 @@ canvas{width:100%;height:320px;max-height:60vh;}
 </main>
 
 <script>
-// The full JS logic for v5 is extensive: 
-// 1. Per-line calculations and total 
-// 2. Cheapest supplier highlight in table & chart
-// 3. Summary rows with Cheapest, Average, Total
-// 4. Dynamic main chart updates
-// 5. Mini historical charts for each supplier per material
-// 6. Toast notifications for new cheapest
-// 7. Filters, JSON import/export, Excel export
-// 8. Dark/light mode and localStorage persistence
-// 9. Automatic color coding (green/yellow/red) 
-// 10. Collapsible material rows with mini charts
-// 11. Mobile-friendly responsiveness
-// 12. Small animations on update
-// All logic follows same patterns as previous builds but integrates all above features
+/* ===== Buildy v5 - Integrated Supplier Trend System =====
+   Data model (saved to localStorage 'buildyData'):
+   {
+     materials: {
+       "Material A": {
+         suppliers: {
+           "Supplier X": {
+             unit: "m",
+             quantity: 1,
+             vat: 20,
+             delivery: 5,
+             history: [{date:'2025-08-01', price: 120}, ...]
+           }, ...
+         }
+       }, ...
+     }
+   }
+*/
+
+// Utilities
+const LS_KEY = 'buildyData_v5';
+const THEME_KEY = 'buildyTheme_v5';
+const toastEl = document.getElementById('toast');
+const priceChartCtx = document.getElementById('priceChart').getContext('2d');
+let priceChart = null;
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return {materials:{}};
+    return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to parse storage', e);
+    return {materials:{}};
+  }
+}
+function saveData(data) {
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+}
+function showToast(msg, ms = 3200) {
+  toastEl.textContent = msg;
+  toastEl.style.opacity = '1';
+  setTimeout(()=>{ toastEl.style.opacity = '0'; }, ms);
+}
+
+// Initial state
+let data = loadData();
+
+// Dark toggle from storage
+const darkToggle = document.getElementById('darkToggle');
+function applyTheme() {
+  const t = localStorage.getItem(THEME_KEY) || 'light';
+  if (t === 'dark') document.body.classList.add('dark');
+  else document.body.classList.remove('dark');
+  darkToggle.textContent = (t === 'dark') ? '☀️' : '🌙';
+}
+darkToggle.addEventListener('click', () => {
+  const t = document.body.classList.toggle('dark') ? 'dark' : 'light';
+  localStorage.setItem(THEME_KEY, t);
+  applyTheme();
+});
+applyTheme();
+
+// DOM refs
+const materialInput = document.getElementById('materialInput');
+const supplierInput = document.getElementById('supplierInput');
+const unitInput = document.getElementById('unitInput');
+const quantityInput = document.getElementById('quantityInput');
+const priceInput = document.getElementById('priceInput');
+const vatInput = document.getElementById('vatInput');
+const deliveryInput = document.getElementById('deliveryInput');
+const addBtn = document.getElementById('addBtn');
+const filterMaterial = document.getElementById('filterMaterial');
+const filterSupplier = document.getElementById('filterSupplier');
+const tableHeader = document.getElementById('tableHeader');
+const tableBody = document.getElementById('tableBody');
+const downloadJsonBtn = document.getElementById('downloadJsonBtn');
+const uploadJsonInput = document.getElementById('uploadJsonInput');
+const clearAllBtn = document.getElementById('clearAllBtn');
+const exportExcelBtnTop = document.getElementById('exportExcelBtnTop');
+const exportExcelBtn = document.getElementById('exportExcelBtn');
+
+// Helpers for data model
+function ensureMaterial(mat) {
+  if (!data.materials[mat]) data.materials[mat] = { suppliers: {} };
+}
+function ensureSupplier(mat, sup) {
+  ensureMaterial(mat);
+  if (!data.materials[mat].suppliers[sup]) {
+    data.materials[mat].suppliers[sup] = { unit:'', quantity:0, vat:0, delivery:0, history: [] };
+  }
+}
+function getAllSuppliers() {
+  const set = new Set();
+  Object.values(data.materials).forEach(mat => {
+    Object.keys(mat.suppliers).forEach(s => set.add(s));
+  });
+  return Array.from(set).sort();
+}
+
+// Trend detection across a supplier's history (simple percent change from first to last)
+function getPriceTrend(history) {
+  if (!history || history.length < 2) return 'stable';
+  const first = history[0].price;
+  const last = history[history.length-1].price;
+  const change = ((last - first) / first) * 100;
+  if (change <= -5) return 'down';
+  if (change >= 5) return 'up';
+  return 'stable';
+}
+
+// Add/Update handler
+addBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const material = (materialInput.value || '').trim();
+  const supplier = (supplierInput.value || '').trim();
+  const unit = (unitInput.value || '').trim();
+  const quantity = parseFloat(quantityInput.value) || 0;
+  const price = parseFloat(priceInput.value);
+  const vat = parseFloat(vatInput.value) || 0;
+  const delivery = parseFloat(deliveryInput.value) || 0;
+
+  if (!material || !supplier || isNaN(price)) {
+    showToast('Please enter Material, Supplier and Price.');
+    return;
+  }
+
+  ensureSupplier(material, supplier);
+  const supObj = data.materials[material].suppliers[supplier];
+  // update metadata
+  supObj.unit = unit || supObj.unit;
+  supObj.quantity = quantity || supObj.quantity;
+  supObj.vat = vat || supObj.vat;
+  supObj.delivery = delivery || supObj.delivery;
+
+  // push new price entry
+  const today = new Date().toISOString().split('T')[0];
+  supObj.history.push({date: today, price: price});
+
+  // sort history by date (in case)
+  supObj.history.sort((a,b)=> a.date.localeCompare(b.date));
+
+  // check if this created a new cheapest for material
+  const prevCheapest = getCheapestSupplier(material);
+  saveData(data);
+  renderAll();
+
+  const newCheapest = getCheapestSupplier(material);
+  if (newCheapest && prevCheapest && newCheapest.supplier !== prevCheapest.supplier) {
+    showToast(`🎉 ${newCheapest.supplier} is now cheapest for ${material} at €${newCheapest.price}`);
+  } else {
+    // show trend-specific toast for that supplier
+    const trend = getPriceTrend(supObj.history);
+    if (trend === 'down') showToast(`📉 ${supplier} has dropped prices for ${material}.`);
+    else if (trend === 'up') showToast(`📈 ${supplier} prices are rising for ${material}.`);
+  }
+
+  // clear form
+  materialInput.value = '';
+  supplierInput.value = '';
+  unitInput.value = '';
+  quantityInput.value = '';
+  priceInput.value = '';
+  vatInput.value = '';
+  deliveryInput.value = '';
+});
+
+// Get cheapest supplier for a material (latest price)
+function getCheapestSupplier(material) {
+  const mat = data.materials[material];
+  if (!mat) return null;
+  let cheapest = null;
+  for (const [s, obj] of Object.entries(mat.suppliers)) {
+    if (!obj.history || obj.history.length === 0) continue;
+    const latest = obj.history[obj.history.length-1].price;
+    if (!cheapest || latest < cheapest.price) cheapest = {supplier: s, price: latest};
+  }
+  return cheapest;
+}
+
+// Render header (unique suppliers)
+function renderHeader() {
+  const suppliers = getAllSuppliers();
+  tableHeader.innerHTML = '';
+  const thMaterial = document.createElement('th');
+  thMaterial.textContent = 'Material';
+  tableHeader.appendChild(thMaterial);
+
+  suppliers.forEach(s => {
+    const th = document.createElement('th');
+    th.textContent = s;
+    // compute aggregated trend for that supplier across all materials (optional)
+    const allHist = [];
+    Object.values(data.materials).forEach(mat => {
+      if (mat.suppliers[s] && mat.suppliers[s].history) {
+        allHist.push(...mat.suppliers[s].history);
+      }
+    });
+    const trend = getPriceTrend(allHist.sort((a,b)=>a.date.localeCompare(b.date)));
+    if (trend === 'down') th.innerHTML += ' <span class="badge badge-down">Cheaper</span>';
+    else if (trend === 'up') th.innerHTML += ' <span class="badge badge-up">Rising</span>';
+    else th.innerHTML += ' <span class="badge badge-stable">Stable</span>';
+    tableHeader.appendChild(th);
+  });
+
+  const thSummary = document.createElement('th');
+  thSummary.textContent = 'Summary';
+  tableHeader.appendChild(thSummary);
+}
+
+// Render table body
+function renderBody() {
+  tableBody.innerHTML = '';
+  const suppliers = getAllSuppliers();
+  const matFilter = (filterMaterial.value || '').toLowerCase();
+  const supFilter = filterSupplier.value;
+
+  Object.keys(data.materials).sort().forEach(material => {
+    if (matFilter && !material.toLowerCase().includes(matFilter)) return;
+    const tr = document.createElement('tr');
+    // material cell clickable to show chart
+    const tdMat = document.createElement('td');
+    tdMat.style.cursor = 'pointer';
+    tdMat.style.textAlign = 'left';
+    tdMat.textContent = material;
+    tdMat.addEventListener('click', ()=> renderChartForMaterial(material));
+    tr.appendChild(tdMat);
+
+    // get per-material min/max for coloring
+    const pricesForMaterial = suppliers.map(s => {
+      const supObj = data.materials[material].suppliers[s];
+      if (!supObj || !supObj.history || supObj.history.length === 0) return null;
+      return supObj.history[supObj.history.length-1].price;
+    }).filter(v=>v!==null);
+    const min = pricesForMaterial.length ? Math.min(...pricesForMaterial) : null;
+    const max = pricesForMaterial.length ? Math.max(...pricesForMaterial) : null;
+
+    suppliers.forEach(s => {
+      // respect supplier filter
+      if (supFilter && supFilter !== '' && supFilter !== s) {
+        const td = document.createElement('td');
+        td.textContent = '-';
+        tr.appendChild(td);
+        return;
+      }
+      const td = document.createElement('td');
+      const supObj = data.materials[material].suppliers[s];
+      if (!supObj || !supObj.history || supObj.history.length === 0) {
+        td.textContent = '-';
+      } else {
+        const latest = supObj.history[supObj.history.length-1].price;
+        td.textContent = `€${latest.toFixed(2)}`;
+
+        if (min !== null) {
+          if (latest === min) td.classList.add('cheapest');
+          else if (latest === max) td.classList.add('expensive');
+          else td.classList.add('medium');
+        }
+      }
+      tr.appendChild(td);
+    });
+
+    // Summary cell (cheapest & avg)
+    const summaryTd = document.createElement('td');
+    const cheapest = getCheapestSupplier(material);
+    if (cheapest) {
+      summaryTd.innerHTML = `Cheapest: <strong>${cheapest.supplier}</strong> (€${cheapest.price.toFixed(2)})`;
+    } else summaryTd.textContent = '-';
+    tr.appendChild(summaryTd);
+
+    tableBody.appendChild(tr);
+  });
+}
+
+// Render supplier filter options
+function renderSupplierFilter() {
+  const all = getAllSuppliers();
+  filterSupplier.innerHTML = '<option value="">All Suppliers</option>';
+  all.forEach(s=> {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    filterSupplier.appendChild(opt);
+  });
+}
+
+// Render everything
+function renderAll() {
+  renderHeader();
+  renderBody();
+  renderSupplierFilter();
+}
+
+// Charting: show price history for a specific material
+function renderChartForMaterial(material) {
+  const mat = data.materials[material];
+  if (!mat) {
+    if (priceChart) priceChart.destroy();
+    return;
+  }
+  const labels = new Set();
+  const datasets = [];
+
+  for (const [supplier, supObj] of Object.entries(mat.suppliers)) {
+    if (!supObj.history || supObj.history.length === 0) continue;
+    // collect unique dates
+    supObj.history.forEach(h => labels.add(h.date));
+  }
+  const sortedLabels = Array.from(labels).sort();
+
+  for (const [supplier, supObj] of Object.entries(mat.suppliers)) {
+    if (!supObj.history || supObj.history.length === 0) continue;
+    const priceByDate = {};
+    supObj.history.forEach(h => priceByDate[h.date] = h.price);
+    const dataPoints = sortedLabels.map(d => priceByDate[d] !== undefined ? priceByDate[d] : null);
+    // choose color per supplier (basic palette)
+    const color = stringToColor(supplier);
+    datasets.push({
+      label: supplier,
+      data: dataPoints,
+      spanGaps: true,
+      borderColor: color,
+      backgroundColor: hexToRGBA(color, 0.15),
+      tension: 0.2,
+      fill: false,
+      pointRadius: 3
+    });
+  }
+
+  if (priceChart) priceChart.destroy();
+  priceChart = new Chart(priceChartCtx, {
+    type: 'line',
+    data: { labels: sortedLabels, datasets },
+    options: {
+      plugins: { legend: { position: 'top' } },
+      scales: {
+        y: { beginAtZero: false, title: { display: true, text: 'Price (€)' } },
+        x: { title: { display: true, text: 'Date' } }
+      },
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// small color helpers
+function stringToColor(str) {
+  // deterministic pastel-ish color from string
+  let hash = 0;
+  for (let i=0;i<str.length;i++) hash = str.charCodeAt(i) + ((hash<<5)-hash);
+  const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+  return '#' + '00000'.substring(0, 6 - c.length) + c;
+}
+function hexToRGBA(hex, alpha=0.2) {
+  hex = hex.replace('#','');
+  const r = parseInt(hex.substring(0,2),16);
+  const g = parseInt(hex.substring(2,4),16);
+  const b = parseInt(hex.substring(4,6),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// JSON export/import
+downloadJsonBtn.addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `buildy-data-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+uploadJsonInput.addEventListener('change', (ev) => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed && typeof parsed === 'object') {
+        data = parsed;
+        saveData(data);
+        renderAll();
+        showToast('✅ JSON imported.');
+      } else {
+        showToast('Invalid JSON file.');
+      }
+    } catch (err) {
+      showToast('Failed to parse JSON.');
+    }
+  };
+  reader.readAsText(f);
+});
+
+// Clear all
+clearAllBtn.addEventListener('click', ()=> {
+  if (!confirm('Clear all data? This cannot be undone.')) return;
+  data = {materials:{}};
+  saveData(data);
+  renderAll();
+  showToast('All data cleared.');
+});
+
+// Excel export (simple): rows: Material | Supplier | LatestPrice | Date | Unit | Qty | VAT | Delivery
+function exportToXLSX() {
+  const rows = [['Material','Supplier','Latest Price (€)','Date','Unit','Quantity','VAT %','Delivery (€)']];
+  for (const [material, mat] of Object.entries(data.materials)) {
+    for (const [supplier, supObj] of Object.entries(mat.suppliers)) {
+      if (!supObj.history || supObj.history.length === 0) {
+        rows.push([material, supplier, '', '', supObj.unit || '', supObj.quantity || '', supObj.vat || '', supObj.delivery || '']);
+      } else {
+        const latest = supObj.history[supObj.history.length-1];
+        rows.push([material, supplier, latest.price, latest.date, supObj.unit || '', supObj.quantity || '', supObj.vat || '', supObj.delivery || '']);
+      }
+    }
+  }
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'BuildyExport');
+  XLSX.writeFile(wb, `buildy-export-${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+exportExcelBtnTop.addEventListener('click', exportToXLSX);
+if (exportExcelBtn) exportExcelBtn.addEventListener('click', exportToXLSX);
+
+// Filters
+filterMaterial.addEventListener('input', renderAll);
+filterSupplier.addEventListener('change', renderAll);
+
+// initial rendering
+renderAll();
+
+// If there is no data, seed a small example for first-time users
+if (Object.keys(data.materials).length === 0) {
+  data = {
+    materials: {
+      "Cement": {
+        suppliers: {
+          "Supplier A": { unit:'bag', quantity:1, vat:20, delivery:0, history: [{date:'2025-08-01',price:10.00},{date:'2025-08-15',price:9.00}] },
+          "Supplier B": { unit:'bag', quantity:1, vat:20, delivery:0, history: [{date:'2025-08-01',price:11.50},{date:'2025-08-15',price:11.20}] }
+        }
+      },
+      "Timber 2x4": {
+        suppliers: {
+          "Supplier A": { unit:'m', quantity:2, vat:20, delivery:5, history: [{date:'2025-08-01',price:3.50},{date:'2025-08-15',price:3.20}] },
+          "Supplier C": { unit:'m', quantity:2, vat:20, delivery:5, history: [{date:'2025-08-01',price:3.80},{date:'2025-08-15',price:3.80}] }
+        }
+      }
+    }
+  };
+  saveData(data);
+  renderAll();
+}
+
+// Optional: click on table header to toggle sorting by supplier (simple UX improvement)
+tableHeader.addEventListener('click', (ev) => {
+  // not implemented complex sorting here — could add later
+});
+
+// Accessibility: make toast accessible to screen readers briefly
+const observer = new MutationObserver(()=> {
+  if (toastEl.style.opacity === '1') {
+    toastEl.setAttribute('aria-live','polite');
+  } else {
+    toastEl.removeAttribute('aria-live');
+  }
+});
+observer.observe(toastEl, {attributes:true,attributeFilter:['style']});
 </script>
 </body>
 </html>
