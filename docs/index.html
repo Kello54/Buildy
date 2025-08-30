@@ -1,275 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Buildy v5 — Ultimate Price Advisor</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy - Compare Building Materials</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 <style>
-/* ===== FULL CSS - Buildy v5 Upgraded ===== */
+  /* --- Reset & Global --- */
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+  body { background:#f8f9fa; color:#333; line-height:1.6; }
 
-/* Global Reset */
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:"Segoe UI", Tahoma, sans-serif; line-height:1.6; background:#f9f9fb; color:#222; transition:background 0.3s,color 0.3s; }
-body.dark { background:#121212; color:#f1f1f1; }
+  /* --- Header --- */
+  header { background:#fff; padding:20px 40px; box-shadow:0 2px 4px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; }
+  header .logo { font-weight:bold; font-size:1.5em; color:#007bff; }
+  nav a { margin-left:20px; text-decoration:none; color:#333; font-weight:500; }
+  nav a:hover { color:#007bff; }
 
-/* Header/Navbar */
-header { position:sticky; top:0; z-index:1000; background:#4b0082; color:white; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:8px; }
-header .actions { display:flex; gap:8px; }
-.icon-btn { background:transparent; color:inherit; border:1px solid rgba(255,255,255,.35); padding:6px 10px; border-radius:6px; cursor:pointer; font-size:14px; transition:transform .15s ease, background .2s ease, border-color .2s ease; }
-.icon-btn:hover { transform:translateY(-1px); background:rgba(255,255,255,.12); }
-.visually-hidden { position:absolute!important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); }
+  /* --- Hero Section --- */
+  .hero { text-align:center; padding:80px 20px; background:#e9ecef; }
+  .hero h1 { font-size:2.2em; margin-bottom:20px; color:#007bff; }
+  .hero p { font-size:1.1em; margin-bottom:30px; }
+  .hero input, .hero button { padding:10px 15px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc; }
+  .hero button { background:#007bff; color:#fff; border:none; cursor:pointer; }
+  .hero button:hover { background:#0056b3; }
 
-/* Toast */
-.toast { position:fixed; bottom:20px; right:20px; background:#4b0082; color:#fff; padding:12px 20px; border-radius:8px; opacity:0; transition:opacity .3s; }
+  /* --- Comparison Table --- */
+  .comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  th, td { padding:15px; text-align:center; border-bottom:1px solid #ddd; }
+  th { background:#007bff; color:#fff; }
+  tr:hover { background:#f1f1f1; }
+  .cheapest { background:#d4edda; color:#155724; font-weight:bold; }
 
-/* Container & Cards */
-.container{max-width:1200px;margin:0 auto;padding:16px;}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
-body.dark .card{background:#1e1e1e;color:#f1f1f1;}
-.card h2{margin:0 0 8px 0;color:#4b0082;}
-.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
-input,select,button{font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#222;}
-input:focus,select:focus{outline:2px solid #4b0082;border-color:transparent;}
-button.primary{background:#4b0082;color:#fff;border:none;}
-button.primary:hover{background:#6a0dad;}
-button.ghost{background:transparent;}
-.muted{color:#666;font-size:12px;}
+  /* --- Features Section --- */
+  .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:50px 20px; text-align:center; }
+  .feature { background:#fff; padding:30px 20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); width:250px; }
+  .feature h3 { margin-bottom:15px; color:#007bff; }
+  .feature p { font-size:0.95em; }
 
-/* Details */
-details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,#4b0082,transparent) border-box;border:1px solid #e5e7eb;color:#222;font-weight:600;}
-details[open]>summary{border-color:transparent;background:linear-gradient(90deg,#4b0082,#6a0dad);color:#fff;}
-
-/* Table */
-table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto;}
-thead th{position:sticky;top:0;background:#4b0082;color:white;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;}
-thead th:last-child{border-right:none;}
-tbody td{border-top:1px solid #e5e7eb;text-align:center;padding:10px;}
-td.cheapest{background:#d4edda;font-weight:700;}
-td.expensive{background:#f5d0d0;}
-td.medium{background:#fff6cf;}
-canvas.canvas-mini{height:60px;max-width:150px;}
-
-/* Trend Arrows */
-.trend-arrow{margin-left:5px;font-size:0.9em;}
-.trend-up{color:#d9534f;}
-.trend-down{color:#5cb85c;}
-
-/* Footer */
-footer{margin:24px 0;text-align:center;color:#666;font-size:12px;}
-
-/* Responsive */
-@media(max-width:768px){.row{flex-direction:column;}}
+  /* --- Footer --- */
+  footer { background:#343a40; color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
 </style>
 </head>
 <body>
+
+<!-- Header -->
 <header>
-<div>🏗️ Buildy v5 — Ultimate Price Advisor</div>
-<div class="actions">
-<button id="darkToggle" class="icon-btn">🌙</button>
-<button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
-<label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
-<button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
-</div>
+  <div class="logo">Buildy</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Compare Materials</a>
+    <a href="#">Suppliers</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
 </header>
 
-<div id="toast" class="toast"></div>
-
-<main class="container">
-<section class="card">
-<details open>
-<summary>➕ Add Material Price</summary>
-<div class="row">
-<input id="materialInput" placeholder="Material"/>
-<input id="supplierInput" placeholder="Supplier"/>
-<input id="unitInput" placeholder="Unit"/>
-<input id="quantityInput" type="number" step="0.01" placeholder="Quantity"/>
-<input id="priceInput" type="number" step="0.01" placeholder="Price (€)"/>
-<input id="vatInput" type="number" step="0.01" placeholder="VAT %"/>
-<input id="deliveryInput" type="number" step="0.01" placeholder="Delivery (€)"/>
-<button id="addBtn" class="primary">Add/Update</button>
-</div>
-<div class="muted">Tip: Adding an existing supplier updates price and history.</div>
-</details>
+<!-- Hero -->
+<section class="hero">
+  <h1>Compare Building Materials Instantly</h1>
+  <p>Find the cheapest prices from 1–5 suppliers at a glance</p>
+  <input type="text" placeholder="Enter material...">
+  <button>Compare</button>
 </section>
 
-<section class="card">
-<details open>
-<summary>🔎 Filter & Export</summary>
-<div class="row">
-<input id="filterMaterial" placeholder="Filter by material"/>
-<select id="filterSupplier"><option value="">All Suppliers</option></select>
-<div style="flex:1"></div>
-<button id="exportExcelBtn" class="ghost">Export Excel</button>
-</div>
-</details>
+<!-- Comparison Table -->
+<section class="comparison">
+  <table>
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Supplier 1</th>
+        <th>Supplier 2</th>
+        <th>Supplier 3</th>
+        <th>Supplier 4</th>
+        <th>Supplier 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cement (50kg)</td>
+        <td class="cheapest">€7.50</td>
+        <td>€8.00</td>
+        <td>€7.80</td>
+        <td>€8.20</td>
+        <td>€7.90</td>
+      </tr>
+      <tr>
+        <td>Lumber (2x4)</td>
+        <td>€3.50</td>
+        <td class="cheapest">€3.20</td>
+        <td>€3.40</td>
+        <td>€3.60</td>
+        <td>€3.55</td>
+      </tr>
+      <tr>
+        <td>Bricks (per 100)</td>
+        <td>€25.00</td>
+        <td>€24.50</td>
+        <td class="cheapest">€24.00</td>
+        <td>€24.80</td>
+        <td>€25.20</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
-<section class="card">
-<h2>Price Comparison</h2>
-<div style="overflow:auto">
-<table id="priceTable">
-<thead>
-<tr id="tableHeader"></tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
+<!-- Features -->
+<section class="features">
+  <div class="feature">
+    <h3>Select Material</h3>
+    <p>Search or browse materials you need to purchase.</p>
+  </div>
+  <div class="feature">
+    <h3>Compare Prices</h3>
+    <p>See prices from multiple suppliers at a glance.</p>
+  </div>
+  <div class="feature">
+    <h3>Choose Supplier</h3>
+    <p>Select the cheapest or most convenient supplier for your order.</p>
+  </div>
 </section>
 
-<section class="card">
-<h2>Price Trends</h2>
-<canvas id="priceChart"></canvas>
-</section>
+<!-- Footer -->
+<footer>
+  &copy; 2025 Buildy | Compare building materials quickly and easily
+</footer>
 
-<footer>Buildy v5 • Full Smart Advisor • © You</footer>
-</main>
-
-<script>
-// ---------- Utility ----------
-function $(id){return document.getElementById(id);}
-let materials=[], chart;
-const LS_KEY='buildy_v5_materials';
-
-// ---------- Load/Save ----------
-function load(){const s=localStorage.getItem(LS_KEY); if(s) materials=JSON.parse(s);}
-function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
-
-// ---------- Toast ----------
-function showToast(msg){const t=$('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,3000);}
-
-// ---------- Elements ----------
-const materialInput=$('materialInput'),supplierInput=$('supplierInput'),unitInput=$('unitInput'),
-quantityInput=$('quantityInput'),priceInput=$('priceInput'),vatInput=$('vatInput'),deliveryInput=$('deliveryInput');
-const addBtn=$('addBtn'),filterMaterial=$('filterMaterial'),filterSupplier=$('filterSupplier'),exportExcelBtn=$('exportExcelBtn');
-const downloadJsonBtn=$('downloadJsonBtn'),uploadJsonInput=$('uploadJsonInput'),clearAllBtn=$('clearAllBtn'),darkToggle=$('darkToggle');
-
-// ---------- Initialize ----------
-load(); refreshAll();
-
-// ---------- Dark Mode ----------
-darkToggle.addEventListener('click',()=>{
-    document.body.classList.toggle('dark'); 
-    darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; 
-    renderMainChart();
-});
-
-// ---------- Add/Update Material with Trend Check ----------
-addBtn.addEventListener('click',()=>{
-    const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
-    const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
-    if(!name||!sup||!unit||isNaN(quantity)||isNaN(price)){alert('Fill required fields'); return;}
-    let mat=materials.find(m=>m.name.toLowerCase()===name.toLowerCase());
-    if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
-    const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
-    const today=new Date().toISOString().split('T')[0];
-    let trend='';
-    if(existing){trend=(price<existing.price)?'down':(price>existing.price?'up':''); existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery;}
-    else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery}); trend='down';}
-    mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,date:today});
-    if(trend==='down') showToast(`📉 ${sup} cheaper for ${name}`);
-    if(trend==='up') showToast(`📈 ${sup} more expensive for ${name}`);
-    materialInput.value=supplierInput.value=unitInput.value=quantityInput.value=priceInput.value=vatInput.value=deliveryInput.value='';
-    refreshAll();
-});
-
-// ---------- Filters ----------
-filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
-filterSupplier.addEventListener('change',refreshAll);
-
-// ---------- Excel Export ----------
-exportExcelBtn.addEventListener('click',()=>{
-    const wb=XLSX.utils.book_new(); 
-    const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
-    materials.forEach(m=>{m.prices.forEach(p=>{
-        const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-        ws_data.push([m.name,p.supplier,p.unit,p.quantity,p.price,p.vat,p.delivery,total]);
-    });});
-    const ws=XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb,ws,"Prices");
-    XLSX.writeFile(wb,"Buildy_Prices.xlsx");
-});
-
-// ---------- JSON Save/Load ----------
-downloadJsonBtn.addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
-});
-uploadJsonInput.addEventListener('change',async(e)=>{
-    const f=e.target.files[0]; if(!f)return;
-    try{
-        const t=await f.text();
-        const p=JSON.parse(t); if(!Array.isArray(p)) throw 'Invalid';
-        materials=p; refreshAll(); showToast('JSON Imported');
-    }catch(err){alert('Invalid JSON');}
-});
-clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[]; refreshAll(); showToast('All cleared');}});
-
-// ---------- Refresh ----------
-function refreshAll(){save(); renderFilterOptions(); renderTable(); renderMainChart();}
-
-// ---------- Filter Options ----------
-function renderFilterOptions(){
-    const suppliers=new Set();
-    materials.forEach(m=>m.prices.forEach(p=>suppliers.add(p.supplier)));
-    filterSupplier.innerHTML='<option value="">All Suppliers</option>';
-    Array.from(suppliers).sort().forEach(s=>{const o=document.createElement('option'); o.value=s; o.textContent=s; filterSupplier.appendChild(o);});
-}
-
-// ---------- Table Rendering with Trends & Mini Charts ----------
-function renderTable(){
-    const tbody=$('priceTable').querySelector('tbody');
-    tbody.innerHTML='';
-    const headerTr=$('tableHeader'); headerTr.innerHTML='';
-    ['Material','Supplier','Unit','Qty','Price (€)','VAT %','Delivery (€)','Total (€)','Trend','History'].forEach(h=>{
-        const th=document.createElement('th'); th.textContent=h; headerTr.appendChild(th);
-    });
-    const filterMat=filterMaterial.value.toLowerCase();
-    const filterSup=filterSupplier.value;
-    materials.forEach(m=>{
-        if(filterMat && !m.name.toLowerCase().includes(filterMat)) return;
-        m.prices.forEach(p=>{
-            if(filterSup && p.supplier!==filterSup) return;
-            const tr=document.createElement('tr');
-            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-            const totals=m.prices.map(pp=>(pp.price*pp.quantity)+pp.delivery+(pp.price*pp.quantity*pp.vat/100));
-            const minTotal=Math.min(...totals);
-            const maxTotal=Math.max(...totals);
-            const tdMaker=(val,cls)=>{const td=document.createElement('td'); td.textContent=val; if(cls)td.className=cls; return td;};
-            tr.appendChild(tdMaker(m.name));
-            tr.appendChild(tdMaker(p.supplier));
-            tr.appendChild(tdMaker(p.unit));
-            tr.appendChild(tdMaker(p.quantity));
-            tr.appendChild(tdMaker(p.price));
-            tr.appendChild(tdMaker(p.vat));
-            tr.appendChild(tdMaker(p.delivery));
-            let cls='medium';
-            if(total===minTotal) cls='cheapest';
-            else if(total===maxTotal) cls='expensive';
-            tr.appendChild(tdMaker(total.toFixed(2),cls));
-            // Trend
-            const hist=p.history||m.history.filter(h=>h.supplier===p.supplier);
-            let trendTd=document.createElement('td'); trendTd.innerHTML='';
-            if(hist.length>1){
-                const prev=hist[hist.length-2];
-                if(prev){
-                    if(p.price<prev.price) trendTd.innerHTML='⬇️'; 
-                    else if(p.price>prev.price) trendTd.innerHTML='⬆️';
-                }
-            }
-            tr.appendChild(trendTd);
-            // Mini chart
-            const tdChart=document.createElement('td');
-            const canvas=document.createElement('canvas'); canvas.className='canvas-mini';
-            tdChart.appendChild(canvas); tr.appendChild(tdChart);
-            tbody.appendChild(tr);
-            renderMiniChart(m, p.supplier, canvas);
-        });
-    });
-}
-
-// Mini Chart
-function renderMiniChart(material, supplier, canvas){
-    const data=material.history.filter(h=>h.supplier===supplier).map(h=>({x:h.date,y:h.price}));
-    new Chart(canvas,{type:'line',data:{datasets:[{label:supplier,data:data,border
+</body>
+</html>
