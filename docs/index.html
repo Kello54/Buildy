@@ -156,6 +156,27 @@
     background-color: #f8f5ff; /* alternating light background */
   }
 
+  /* tagline under Home */
+  .tagline {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #4b0082;
+    margin: 10px 0 20px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .tagline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background-color: gold;
+    border-radius: 2px;
+  }
+
   /* ===== FOOTER ===== */
   footer {
     background-color: #f5f0ff;
@@ -240,6 +261,7 @@
   <main>
     <section id="home">
       <h1>Home</h1>
+      <h2 class="tagline">The No.1 Building Material Price Comparison Site</h2>
       <p>Welcome to Buildy! Your smart tool management platform.</p>
     </section>
 
