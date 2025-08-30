@@ -6,64 +6,136 @@
 <title>Buildy - Compare Building Materials</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 <style>
-body { font-family: Arial, sans-serif; background:#f8f9fa; color:#333; margin:0; }
+/* --- Premium Color Scheme --- */
+:root {
+  --primary-color: #4b3c7a;      /* deep purple */
+  --secondary-color: #6f5abf;    /* lighter accent */
+  --accent-color: #f5c359;       /* gold accent */
+  --bg-color: #f8f7fa;           /* light background */
+  --text-color: #222;            /* dark text */
+  --button-hover: #362b5c;       /* deep hover */
+}
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); margin:0; }
+
 /* --- Header --- */
-header { background:#fff; padding:15px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; }
-header .logo { height:40px; margin-right:10px; }
-.brand-name { font-size:1.5em; font-weight:bold; color:#4b3c7a; }
+header { 
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  padding:15px 40px; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+header .logo { height:45px; margin-right:12px; }
+
+.brand-name { 
+  font-size:1.7em; 
+  font-weight:700; 
+  color:#fff; 
+}
+
 .header-left { display:flex; align-items:center; }
-.header-right .login-btn { background:#4b3c7a; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; transition:background 0.3s; }
-.header-right .login-btn:hover { background:#362b5c; }
+
+.header-right .login-btn { 
+  background: var(--accent-color); 
+  color:#fff; 
+  border:none; 
+  padding:10px 18px; 
+  border-radius:8px; 
+  font-weight:600;
+  cursor:pointer; 
+  transition: all 0.3s ease; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-right .login-btn:hover { 
+  background: #d4a950; 
+  transform: translateY(-2px); 
+}
 
 /* --- Sub-header --- */
-.sub-header { background:#f7f7f7; display:flex; justify-content:center; gap:40px; padding:12px 0; border-bottom:1px solid #eee; }
-.sub-header a { text-decoration:none; color:#4b3c7a; font-weight:500; font-size:1.05em; }
-.sub-header a:hover { color:#362b5c; }
+.sub-header { 
+  background:#fff; 
+  display:flex; 
+  justify-content:center; 
+  gap:40px; 
+  padding:12px 0; 
+  border-bottom:1px solid #eee; 
+  font-weight:500;
+}
+.sub-header a { 
+  text-decoration:none; 
+  color: var(--primary-color); 
+  font-size:1.05em; 
+  transition: color 0.3s; 
+}
+.sub-header a:hover { color: var(--secondary-color); }
 
-/* --- Hero --- */
-.hero { text-align:center; padding:100px 20px; background:#faf7ff; }
-.hero h1 { font-size:2.2em; margin-bottom:20px; color:#4b3c7a; }
-.hero p { font-size:1.1em; margin-bottom:25px; }
-.hero input, .hero button { padding:10px 15px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc; }
-.hero button { background:#4b3c7a; color:#fff; border:none; cursor:pointer; }
-.hero button:hover { background:#362b5c; }
+/* --- Hero Section --- */
+.hero { 
+  text-align:center; 
+  padding:120px 20px; 
+  background: linear-gradient(180deg, #faf7ff, #f3f1fa); 
+  border-bottom:1px solid #eee;
+}
+
+.hero h1 { 
+  font-size:2.4em; 
+  margin-bottom:20px; 
+  color: var(--primary-color); 
+  font-weight:700;
+}
+.hero p { font-size:1.15em; color: var(--text-color); }
+.hero input, .hero button { 
+  padding:12px 18px; font-size:1.05em; margin:5px; border-radius:6px; border:1px solid #ccc; 
+}
+.hero button { 
+  background: var(--primary-color); 
+  color:#fff; 
+  border:none; 
+  cursor:pointer; 
+  font-weight:600;
+}
+.hero button:hover { background: var(--secondary-color); }
 
 /* --- Comparison Table --- */
 .comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); min-width:800px; }
 th, td { padding:18px; text-align:center; border-bottom:1px solid #ddd; }
-th { background:#e6e0f3; color:#4b3c7a; cursor:pointer; }
+th { background: #e6e0f3; color: var(--primary-color); cursor:pointer; }
 tr:hover { background:#f1f1f1; }
 .cheapest { background:#d4edda; color:#155724; font-weight:bold; }
-.overall-cheapest { border:2px solid #4b3c7a; }
-tr.category-header td { text-align:left; font-weight:bold; background:#f0ebf9; color:#4b3c7a; padding-top:20px; padding-bottom:20px; }
+.overall-cheapest { border:2px solid var(--primary-color); }
+tr.category-header td { text-align:left; font-weight:bold; background:#f0ebf9; color: var(--primary-color); padding-top:20px; padding-bottom:20px; }
 
 /* --- Features --- */
 .features { display:flex; flex-wrap:wrap; justify-content:center; gap:40px; padding:60px 20px; text-align:center; }
 .feature { background:#fff; padding:35px 25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; transition:transform 0.3s; }
 .feature:hover { transform:translateY(-5px); }
-.feature h3 { margin-bottom:15px; color:#4b3c7a; }
+.feature h3 { margin-bottom:15px; color: var(--primary-color); }
 .feature p { font-size:0.95em; }
 
 /* --- Footer --- */
-footer { background:#4b3c7a; color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
+footer { background: var(--primary-color); color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
 footer a { color:#fff; margin-right:15px; text-decoration:none; }
 footer a:hover { text-decoration:underline; }
 
 /* --- Login Modal --- */
 .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; }
 .modal-content { background:#fff; padding:30px; border-radius:8px; width:300px; text-align:center; position:relative; }
-.modal-content h2 { margin-bottom:20px; color:#4b3c7a; }
+.modal-content h2 { margin-bottom:20px; color: var(--primary-color); }
 .modal-content input { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
-.modal-content button { background:#4b3c7a; color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; margin-top:10px; }
-.modal-content button:hover { background:#362b5c; }
+.modal-content button { background: var(--primary-color); color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; margin-top:10px; }
+.modal-content button:hover { background: var(--secondary-color); }
 .close { position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; color:#333; }
 
 /* --- Dashboard Section --- */
 #dashboard { display:none; padding:50px 20px; }
 .dashboard-cards { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
 .card { background:#fff; padding:25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; text-align:center; }
-.card h3 { margin-bottom:15px; color:#4b3c7a; }
+.card h3 { margin-bottom:15px; color: var(--primary-color); }
 
 /* --- Map --- */
 #map { width:90%; height:400px; margin:50px auto; border:1px solid #ccc; border-radius:12px; }
@@ -116,14 +188,14 @@ footer a:hover { text-decoration:underline; }
 </section>
 
 <section id="dashboard">
-  <h2 style="text-align:center; color:#4b3c7a;">Dashboard</h2>
+  <h2 style="text-align:center; color: var(--primary-color);">Dashboard</h2>
   <div class="dashboard-cards">
     <div class="card" id="welcomeCard"><h3>Welcome!</h3><p>Hello, user!</p></div>
     <div class="card" id="recentSearchesCard"><h3>Recent Searches</h3><ul id="recentSearches"></ul></div>
     <div class="card" id="savedComparisonsCard"><h3>Saved Comparisons</h3><ul id="savedComparisons"></ul></div>
     <div class="card" id="statsCard"><h3>Stats</h3><p id="statsContent">No comparisons yet</p></div>
     <div class="card"><h3>Export</h3><button id="exportDashboard">Download CSV</button></div>
-    <div class="card"><h3>Navigation</h3><button id="backToCompare" style="background:#4b3c7a;color:#fff;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;">Back to Comparison</button></div>
+    <div class="card"><h3>Navigation</h3><button id="backToCompare" style="background: var(--primary-color);color:#fff;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;">Back to Comparison</button></div>
   </div>
 </section>
 
@@ -199,93 +271,95 @@ function createHeader(){
   let th = document.createElement("th"); th.textContent = "Material"; tableHeader.appendChild(th);
   suppliers.forEach(s => { let th = document.createElement("th"); th.textContent = s.name; tableHeader.appendChild(th); });
 }
-
 function generateTable(filteredMaterials){
-  tableBody.innerHTML = "";
-  let currentCategory = "";
+  tableBody.innerHTML=""; let currentCategory="";
   filteredMaterials.forEach(m => {
     if(m.category !== currentCategory){ currentCategory = m.category;
-      let catRow=document.createElement("tr"); catRow.classList.add("category-header");
-      let td=document.createElement("td"); td.colSpan=suppliers.length+1; td.textContent=currentCategory;
+      let catRow = document.createElement("tr"); catRow.classList.add("category-header");
+      let td = document.createElement("td"); td.colSpan = suppliers.length + 1; td.textContent = currentCategory;
       catRow.appendChild(td); tableBody.appendChild(catRow);
     }
-    let row=document.createElement("tr"); let td=document.createElement("td"); td.textContent=m.name; row.appendChild(td);
-    m.prices.forEach(p=>{ let td=document.createElement("td"); td.textContent=p.toFixed(2); row.appendChild(td); });
+    let row = document.createElement("tr"); let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
+    m.prices.forEach(p => { let td = document.createElement("td"); td.textContent = p.toFixed(2); row.appendChild(td); });
     tableBody.appendChild(row); highlightCheapest(row,m.prices);
   });
   highlightOverallCheapest(filteredMaterials);
 }
-
-function highlightCheapest(row, prices){ let minPrice=Math.min(...prices);
-  Array.from(row.cells).forEach((cell,i)=>{ if(i>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest"); });
+function highlightCheapest(row, prices){
+  let minPrice = Math.min(...prices);
+  Array.from(row.cells).forEach((cell,i)=>{
+    if(i>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
+  });
 }
-
-function highlightOverallCheapest(filteredMaterials){ 
-  if(filteredMaterials.length===0) return;
-  const totals = suppliers.map((_,i)=>filteredMaterials.reduce((sum,m)=>sum+m.prices[i],0));
-  const minTotal = Math.min(...totals);
-  const cheapestIndex = totals.indexOf(minTotal);
-  Array.from(tableBody.rows).forEach(r=>{ if(!r.classList.contains("category-header")) r.cells[cheapestIndex+1].classList.add("overall-cheapest"); });
+function highlightOverallCheapest(filteredMaterials){
+  let totals = suppliers.map((_,i) => filteredMaterials.reduce((sum,m) => sum + m.prices[i],0));
+  let minTotal = Math.min(...totals);
+  let cheapestIndex = totals.indexOf(minTotal);
+  Array.from(tableBody.rows).forEach(r => { if(!r.classList.contains("category-header")) r.cells[cheapestIndex+1].classList.add("overall-cheapest"); });
 }
-
-function filterTable(){
-  const val = searchInput.value.toLowerCase();
-  const filtered = materials.filter(m => m.name.toLowerCase().includes(val));
-  generateTable(filtered);
-  if(val){
-    if(!recentSearches.includes(val)){ recentSearches.unshift(val); if(recentSearches.length>5) recentSearches.pop(); }
-    filtered.forEach(m=>{ if(!savedComparisons.includes(m)) savedComparisons.push(m); });
-    updateDashboard();
-  }
+function filterTable(){ 
+  let val = searchInput.value.toLowerCase(); 
+  let filtered = materials.filter(m => m.name.toLowerCase().includes(val)); 
+  generateTable(filtered); 
+  if(val && !recentSearches.includes(val)){ recentSearches.unshift(val); if(recentSearches.length>5) recentSearches.pop(); updateDashboard(); } 
 }
+searchInput.addEventListener("input",filterTable);
+createHeader(); generateTable(materials);
 
 function updateDashboard(){
-  recentList.innerHTML = ""; savedList.innerHTML = "";
+  recentList.innerHTML=""; savedList.innerHTML="";
   recentSearches.forEach(s=>{ let li=document.createElement("li"); li.textContent=s; recentList.appendChild(li); });
-  savedComparisons.forEach(m=>{ let li=document.createElement("li"); li.textContent=m.name; savedList.appendChild(li); });
-  statsContent.textContent = `Total comparisons: ${savedComparisons.length}`;
+  materials.forEach(m=>{ if(recentSearches.includes(m.name.toLowerCase())){ let li=document.createElement("li"); li.textContent=m.name; savedList.appendChild(li); } });
+  statsContent.textContent=`Total comparisons: ${savedList.children.length}`;
 }
 
-// --- Login Modal ---
-const loginBtn = document.getElementById("loginBtn");
-const modal = document.getElementById("loginModal");
-const closeBtn = document.querySelector(".close");
-const submitLogin = document.getElementById("submitLogin");
+// --- Login & Dashboard ---
+const loginBtn=document.getElementById("loginBtn");
+const modal=document.getElementById("loginModal");
+const closeBtn=document.querySelector(".close");
+const submitLogin=document.getElementById("submitLogin");
 
-loginBtn.onclick = ()=>modal.style.display="flex";
-closeBtn.onclick = ()=>{
-  modal.style.display="none";
-  document.getElementById("username").value="";
-  document.getElementById("password").value="";
-};
-window.onclick = (e)=>{ if(e.target==modal) closeBtn.onclick(); };
-submitLogin.onclick=()=>{
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value.trim();
+loginBtn.onclick = ()=> modal.style.display = "flex";
+closeBtn.onclick = ()=> modal.style.display = "none";
+window.onclick = (e)=> { if(e.target==modal) modal.style.display="none"; };
+submitLogin.onclick = ()=>{
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
   if(username && password){
-    modal.style.display="none";
+    modal.style.display = "none";
     document.querySelector(".hero").style.display="none";
     document.querySelector(".comparison").style.display="none";
-    dashboard.style.display="block";
-    welcomeCard.textContent=`Hello, ${username}!`;
+    dashboard.style.display = "block";
+    welcomeCard.textContent = `Hello, ${username}!`;
   } else { alert("Please enter username and password"); }
 };
 
-// --- CSV Export ---
-document.getElementById("exportDashboard").onclick=()=>{
-  let csv="Material,"+suppliers.map(s=>s.name).join(",")+"\n";
-  savedComparisons.forEach(m=>csv+=m.name+","+m.prices.join(",")+"\n");
-  const blob=new Blob([csv],{type:"text/csv"});
-  const url=URL.createObjectURL(blob); let a=document.createElement("a"); a.href=url; a.download="dashboard.csv"; a.click(); URL.revokeObjectURL(url);
+document.getElementById("exportDashboard").onclick = ()=>{
+  let csv = "Material," + suppliers.map(s=>s.name).join(",") + "\n";
+  materials.forEach(m => { csv += m.name + "," + m.prices.join(",") + "\n"; });
+  const blob = new Blob([csv], {type:"text/csv"});
+  const url = URL.createObjectURL(blob); let a=document.createElement("a"); a.href=url; a.download="dashboard.csv"; a.click(); URL.revokeObjectURL(url);
 };
 
-// --- Back to Comparison ---
-const backBtn=document.getElementById("backToCompare");
-backBtn.onclick=()=>{
+document.getElementById("backToCompare").onclick = ()=>{
   dashboard.style.display="none";
   document.querySelector(".hero").style.display="block";
   document.querySelector(".comparison").style.display="block";
 };
 
-// --- Filter Input ---
-searc
+// --- Google Map ---
+function initMap(){
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: {lat:52.336, lng:-6.465}
+  });
+  suppliers.forEach(s => {
+    const marker = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map, title:s.name });
+    const info = new google.maps.InfoWindow({ content:`<strong>${s.name}</strong>` });
+    marker.addListener("click", ()=> info.open(map, marker));
+  });
+}
+window.onload = initMap;
+</script>
+</body>
+</html>
