@@ -3,32 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Buildy v5 — Ultimate Price Advisor</title>
+<title>Buildy v5 — Ultimate Smart Price Advisor</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 /* =============================
-   FULL CSS for Buildy v5
+   Buildy v5 Ultimate CSS
    ============================= */
-
-/* ==== Global Reset ==== */
-* {margin:0;padding:0;box-sizing:border-box;}
-body {font-family:"Segoe UI",Tahoma,sans-serif;line-height:1.6;transition:background 0.3s,color 0.3s;}
-body.dark {background:#121212;color:#f1f1f1;}
-
-/* ==== Header/Nav ==== */
-header {position:sticky;top:0;z-index:1000;background:#4b0082;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:16px;}
-.icon-btn {background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Segoe UI",Tahoma,sans-serif;line-height:1.6;transition:background .3s,color .3s;}
+body.dark{background:#121212;color:#f1f1f1;}
+header{position:sticky;top:0;z-index:1000;background:#4b0082;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:16px;}
+.icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
 .icon-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);}
 .container{max-width:1200px;margin:0 auto;}
-.card{background:#fff;color:#000;padding:1.5rem;border-radius:12px;text-align:center;flex:1 1 250px;transition:transform .3s,box-shadow .3s;}
+.card{background:#fff;color:#000;padding:1.5rem;border-radius:12px;text-align:center;flex:1 1 250px;transition:transform .3s,box-shadow .3s;margin-bottom:16px;}
 body.dark .card{background:#1e1e1e;color:#f1f1f1;}
 .card:hover{transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,0.2);}
 canvas{width:100%;height:320px;max-height:60vh;}
 .toast{position:fixed;bottom:20px;right:20px;background:#4b0082;color:#ffcc00;padding:12px 18px;border-radius:6px;font-size:14px;font-weight:bold;box-shadow:0 4px 8px rgba(0,0,0,0.2);opacity:0.95;z-index:1000;animation:fadeIn .3s ease;}
 @keyframes fadeIn{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:0.95;}}
-
-/* ==== Tables ==== */
 table{width:90%;margin:1rem auto;border-collapse:collapse;}
 th,td{padding:1rem;text-align:left;border:1px solid #ddd;}
 thead{background:#4b0082;color:white;}
@@ -38,95 +32,87 @@ td.cheapest{background:#d4edda;font-weight:700;}
 td.expensive{background:#f5d0d0;}
 td.medium{background:#fff6cf;}
 .canvas-mini{height:60px;max-width:150px;}
-
-/* ==== Supplier Trends Section ==== */
-#supplier-trends{padding:3rem 1rem;}
-#supplierForm{margin:15px 0;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-#supplierForm input,#supplierForm button{padding:0.6rem 1rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;}
-#supplierForm button{background:#4b0082;color:#ffcc00;font-weight:bold;cursor:pointer;border:none;}
-#supplierForm button:hover{background:#6a0dad;color:#fff;}
-.badge{padding:4px 10px;border-radius:6px;font-size:0.85rem;font-weight:bold;color:white;display:inline-block;}
+footer{text-align:center;padding:1.5rem;background:#4b0082;color:white;margin-top:3rem;}
+#backTop{position:fixed;bottom:20px;right:20px;display:none;background:#4b0082;color:white;border:none;padding:0.8rem 1rem;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:background 0.3s;}
+#backTop:hover{background:#6a0dad;}
+.badge{padding:4px 10px;border-radius:6px;font-size:0.85rem;font-weight:bold;color:white;display:inline-block;margin:2px;}
 .badge-down{background-color:#4b0082;}
 .badge-up{background-color:#ffcc00;color:black;}
 .badge-stable{background-color:#666;}
-
-/* ==== Footer ==== */
-footer{text-align:center;padding:1.5rem;background:#4b0082;color:white;margin-top:3rem;}
-
-/* ==== Back to Top ==== */
-#backTop{position:fixed;bottom:20px;right:20px;display:none;background:#4b0082;color:white;border:none;padding:0.8rem 1rem;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:background 0.3s;}
-#backTop:hover{background:#6a0dad;}
+.trend-up{background:#f5d0d0 !important;}
+.trend-down{background:#d4edda !important;}
+.trend-stable{background:#fff6cf !important;}
 </style>
 </head>
 <body>
 <header>
-  <div>🏗️ Buildy v5 — Ultimate Price Advisor</div>
-  <div class="actions">
-    <button id="darkToggle" class="icon-btn">🌙</button>
-    <button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
-    <label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
-    <button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
-  </div>
+<div>🏗️ Buildy v5 — Ultimate Smart Price Advisor</div>
+<div class="actions">
+<button id="darkToggle" class="icon-btn">🌙</button>
+<button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
+<label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
+<button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
+</div>
 </header>
 
 <div id="toast" class="toast"></div>
 
 <main class="container">
-  <section class="card">
-    <details open>
-      <summary>➕ Add Material Price</summary>
-      <div class="row">
-        <input id="materialInput" placeholder="Material"/>
-        <input id="supplierInput" placeholder="Supplier"/>
-        <input id="unitInput" placeholder="Unit"/>
-        <input id="quantityInput" type="number" step="0.01" placeholder="Quantity"/>
-        <input id="priceInput" type="number" step="0.01" placeholder="Price (€)"/>
-        <input id="vatInput" type="number" step="0.01" placeholder="VAT %"/>
-        <input id="deliveryInput" type="number" step="0.01" placeholder="Delivery (€)"/>
-        <button id="addBtn" class="primary">Add/Update</button>
-      </div>
-      <div class="muted">Tip: Adding an existing supplier updates price and history.</div>
-    </details>
-  </section>
+<section class="card">
+<details open>
+<summary>➕ Add Material Price</summary>
+<div class="row">
+<input id="materialInput" placeholder="Material"/>
+<input id="supplierInput" placeholder="Supplier"/>
+<input id="unitInput" placeholder="Unit"/>
+<input id="quantityInput" type="number" step="0.01" placeholder="Quantity"/>
+<input id="priceInput" type="number" step="0.01" placeholder="Price (€)"/>
+<input id="vatInput" type="number" step="0.01" placeholder="VAT %"/>
+<input id="deliveryInput" type="number" step="0.01" placeholder="Delivery (€)"/>
+<button id="addBtn" class="primary">Add/Update</button>
+</div>
+<div class="muted">Tip: Adding an existing supplier updates price and history.</div>
+</details>
+</section>
 
-  <section class="card">
-    <details open>
-      <summary>🔎 Filter & Export</summary>
-      <div class="toolbar">
-        <input id="filterMaterial" placeholder="Filter by material"/>
-        <select id="filterSupplier"><option value="">All Suppliers</option></select>
-        <div class="spacer"></div>
-        <button id="exportExcelBtn" class="ghost">Export Excel</button>
-      </div>
-    </details>
-  </section>
+<section class="card">
+<details open>
+<summary>🔎 Filter & Export</summary>
+<div class="toolbar">
+<input id="filterMaterial" placeholder="Filter by material"/>
+<select id="filterSupplier"><option value="">All Suppliers</option></select>
+<div class="spacer"></div>
+<button id="exportExcelBtn" class="ghost">Export Excel</button>
+</div>
+</details>
+</section>
 
-  <section class="card">
-    <h2>Price Comparison</h2>
-    <div style="overflow:auto">
-      <table id="priceTable">
-        <thead><tr id="tableHeader"></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
+<section class="card">
+<h2>Price Comparison</h2>
+<div style="overflow:auto">
+<table id="priceTable">
+<thead><tr id="tableHeader"></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+</section>
 
-  <section class="card">
-    <h2>Price Trends</h2>
-    <canvas id="priceChart"></canvas>
-  </section>
+<section class="card">
+<h2>Price Trends</h2>
+<canvas id="priceChart"></canvas>
+</section>
 
-  <section class="card" id="supplier-trends">
-    <h2>Supplier Trend Alerts</h2>
-    <form id="supplierForm">
-      <input id="trendMaterial" placeholder="Material"/>
-      <input id="trendSupplier" placeholder="Supplier"/>
-      <button type="button" id="checkTrendBtn">Check Trend</button>
-    </form>
-    <div id="trendResults"></div>
-  </section>
+<section class="card">
+<h2>Supplier Trend Alerts</h2>
+<form id="supplierForm">
+<input id="trendMaterial" placeholder="Material"/>
+<input id="trendSupplier" placeholder="Supplier"/>
+<button type="button" id="checkTrendBtn">Check Trend</button>
+</form>
+<div id="trendResults"></div>
+</section>
 
-  <footer>Buildy v5 • Full Smart Advisor • © You</footer>
+<footer>Buildy v5 • Ultimate Smart Advisor • © You</footer>
 </main>
 
 <script>
@@ -167,4 +153,110 @@ addBtn.addEventListener('click', () => {
     else { mat.prices.push({ supplier: sup, unit, price, quantity, vat, delivery }); }
     mat.history.push({ supplier: sup, unit, price, quantity, vat, delivery, date: today });
     showToast(`${sup} updated for ${name}`);
-    materialInput.value = supplierInput
+    materialInput.value = supplierInput.value = unitInput.value = quantityInput.value = priceInput.value = vatInput.value = deliveryInput.value = '';
+    refreshAll();
+});
+
+// ------------------ Filters ------------------
+filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
+filterSupplier.addEventListener('change',refreshAll);
+
+// ------------------ Export Excel ------------------
+exportExcelBtn.addEventListener('click',()=>{
+    const wb=XLSX.utils.book_new(); 
+    const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
+    materials.forEach(m=>{m.prices.forEach(p=>{
+        const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
+        ws_data.push([m.name,p.supplier,p.unit,p.quantity,p.price,p.vat,p.delivery,total]);
+    });});
+    const ws=XLSX.utils.aoa_to_sheet(ws_data);
+    XLSX.utils.book_append_sheet(wb,ws,"Prices");
+    XLSX.writeFile(wb,"Buildy_Prices.xlsx");
+});
+
+// ------------------ JSON Save/Load ------------------
+downloadJsonBtn.addEventListener('click',()=>{
+    const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+uploadJsonInput.addEventListener('change',async(e)=>{
+    const f=e.target.files[0]; if(!f)return;
+    try{
+        const t=await f.text();
+        const p=JSON.parse(t); if(!Array.isArray(p)) throw 'Invalid';
+        materials=p; refreshAll(); showToast('JSON Imported');
+    }catch(err){alert('Invalid JSON');}
+});
+clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[]; refreshAll(); showToast('All cleared');}});
+
+// ------------------ Refresh ------------------
+function refreshAll(){save(); renderFilterOptions(); renderTable(); renderMainChart(); applyTrendColors(); renderTableWithTrends(); checkCheapestAlerts();}
+
+// ------------------ Filter Options ------------------
+function renderFilterOptions(){
+    const suppliers=new Set();
+    materials.forEach(m=>m.prices.forEach(p=>suppliers.add(p.supplier)));
+    filterSupplier.innerHTML='<option value="">All Suppliers</option>';
+    Array.from(suppliers).sort().forEach(s=>{const o=document.createElement('option'); o.value=s; o.textContent=s; filterSupplier.appendChild(o);});
+}
+
+// ------------------ Table Rendering ------------------
+function renderTable(){
+    const tbody=$('priceTable').querySelector('tbody');
+    tbody.innerHTML='';
+    const headerTr=document.getElementById('tableHeader');
+    headerTr.innerHTML='';
+    ['Material','Supplier','Unit','Qty','Price (€)','VAT %','Delivery (€)','Total (€)','History'].forEach(h=>{
+        const th=document.createElement('th'); th.textContent=h; headerTr.appendChild(th);
+    });
+    const filterMat=filterMaterial.value.toLowerCase();
+    const filterSup=filterSupplier.value;
+    materials.forEach(m=>{
+        if(filterMat && !m.name.toLowerCase().includes(filterMat)) return;
+        m.prices.forEach(p=>{
+            if(filterSup && p.supplier!==filterSup) return;
+            const tr=document.createElement('tr');
+            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
+            const totals=m.prices.map(pp=>(pp.price*pp.quantity)+pp.delivery+(pp.price*pp.quantity*pp.vat/100));
+            const minTotal=Math.min(...totals);
+            const maxTotal=Math.max(...totals);
+            const tdMaker=(val,cls)=>{const td=document.createElement('td'); td.textContent=val; if(cls)td.className=cls; return td;};
+            tr.appendChild(tdMaker(m.name));
+            tr.appendChild(tdMaker(p.supplier));
+            tr.appendChild(tdMaker(p.unit));
+            tr.appendChild(tdMaker(p.quantity));
+            tr.appendChild(tdMaker(p.price));
+            tr.appendChild(tdMaker(p.vat));
+            tr.appendChild(tdMaker(p.delivery));
+            let cls='medium';
+            if(total===minTotal) cls='cheapest';
+            else if(total===maxTotal) cls='expensive';
+            tr.appendChild(tdMaker(total.toFixed(2),cls));
+            const tdChart=document.createElement('td');
+            const canvas=document.createElement('canvas'); canvas.className='canvas-mini';
+            tdChart.appendChild(canvas); tr.appendChild(tdChart);
+            tbody.appendChild(tr);
+            renderMiniChart(m,p.supplier,canvas);
+        });
+    });
+}
+
+// ------------------ Mini Charts ------------------
+function renderMiniChart(material, supplier, canvas){
+    const data=material.history.filter(h=>h.supplier===supplier).map(h=>({x:h.date,y:h.price}));
+    new Chart(canvas,{type:'line',data:{datasets:[{label:supplier,data:data,borderColor:'#4b0082',backgroundColor:'rgba(75,0,130,0.2)',fill:true,lineTension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}});
+}
+
+// ------------------ Main Chart ------------------
+function renderMainChart(){
+    if(chart) chart.destroy();
+    const labels=materials.map(m=>m.name);
+    const datasets=[];
+    const colors=['#4b0082','#6a0dad','#a67bf0','#8d5bd6','#c299ff'];
+    let colorIndex=0;
+    const filterSup=filterSupplier.value;
+    materials.forEach(m=>{
+        m.prices.forEach(p=>{
+            if(filterSup && p.supplier!==filterSup) return;
+            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
+            datasets.push({label:`${p.supplier} (${m.name})`,data:[total],backgroundColor
