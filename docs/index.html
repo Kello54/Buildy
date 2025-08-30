@@ -165,13 +165,15 @@ footer a:hover { text-decoration:underline; }
   <a href="#">Suppliers</a>
 </nav>
 
+<!-- Hero Section -->
 <section class="hero">
-  <h1>Compare Building Materials Instantly</h1>
+  <h1>No.1 building material price comparison website</h1>
   <p>Quickly find the cheapest prices across multiple suppliers</p>
   <input type="text" id="searchInput" placeholder="Enter material...">
   <button id="downloadCSV">Download CSV</button>
 </section>
 
+<!-- Supplier Comparison Table in Middle -->
 <section class="comparison">
   <table id="materialsTable">
     <thead><tr id="tableHeader"></tr></thead>
@@ -179,14 +181,17 @@ footer a:hover { text-decoration:underline; }
   </table>
 </section>
 
+<!-- Map of Suppliers -->
 <section id="map"></section>
 
+<!-- Features Section -->
 <section class="features">
   <div class="feature"><h3>Select Material</h3><p>Search or browse materials you need to purchase.</p></div>
   <div class="feature"><h3>Compare Prices</h3><p>See prices from multiple suppliers at a glance.</p></div>
   <div class="feature"><h3>Choose Supplier</h3><p>Select the cheapest or most convenient supplier for your order.</p></div>
 </section>
 
+<!-- Dashboard Section -->
 <section id="dashboard">
   <h2 style="text-align:center; color: var(--primary-color);">Dashboard</h2>
   <div class="dashboard-cards">
@@ -207,6 +212,7 @@ footer a:hover { text-decoration:underline; }
   </div>
 </footer>
 
+<!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -217,9 +223,10 @@ footer a:hover { text-decoration:underline; }
   </div>
 </div>
 
+<!-- Scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 <script>
-// --- Suppliers with coordinates ---
+// Suppliers with coordinates
 const suppliers = [
   { name: "Woodie's", lat: 52.336, lng: -6.465 },
   { name: "TJ O'Mahony", lat: 52.340, lng: -6.456 },
@@ -233,133 +240,7 @@ const suppliers = [
   { name: "Screwfix Wexford", lat: 52.337, lng: -6.494 }
 ];
 
-// --- Materials ---
+// Materials & prices
 const materials = [
   { category: "Cement", name: "Cement (50kg)" },
-  { category: "Cement", name: "Cement (25kg)" },
-  { category: "Lumber", name: "Lumber (2x4)" },
-  { category: "Lumber", name: "Lumber (4x4)" },
-  { category: "Bricks", name: "Bricks (per 100)" }
-];
-
-// Add random prices for each material per supplier
-materials.forEach(mat => {
-  mat.prices = suppliers.map(() => {
-    let base = 0;
-    if(mat.name.includes("Cement")) base = Math.random() * 4 + 4;
-    if(mat.name.includes("Lumber")) base = Math.random() * 2 + 3;
-    if(mat.name.includes("Bricks")) base = Math.random() * 5 + 20;
-    return parseFloat(base.toFixed(2));
-  });
-});
-
-// --- Table & Dashboard Elements ---
-const tableHeader = document.getElementById("tableHeader");
-const tableBody = document.getElementById("tableBody");
-const searchInput = document.getElementById("searchInput");
-let recentSearches = [];
-let savedComparisons = [];
-const dashboard = document.getElementById("dashboard");
-const welcomeCard = document.querySelector("#welcomeCard p");
-const recentList = document.getElementById("recentSearches");
-const savedList = document.getElementById("savedComparisons");
-const statsContent = document.getElementById("statsContent");
-
-// --- Functions ---
-function createHeader(){
-  tableHeader.innerHTML = "";
-  let th = document.createElement("th"); th.textContent = "Material"; tableHeader.appendChild(th);
-  suppliers.forEach(s => { let th = document.createElement("th"); th.textContent = s.name; tableHeader.appendChild(th); });
-}
-function generateTable(filteredMaterials){
-  tableBody.innerHTML=""; let currentCategory="";
-  filteredMaterials.forEach(m => {
-    if(m.category !== currentCategory){ currentCategory = m.category;
-      let catRow = document.createElement("tr"); catRow.classList.add("category-header");
-      let td = document.createElement("td"); td.colSpan = suppliers.length + 1; td.textContent = currentCategory;
-      catRow.appendChild(td); tableBody.appendChild(catRow);
-    }
-    let row = document.createElement("tr"); let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
-    m.prices.forEach(p => { let td = document.createElement("td"); td.textContent = p.toFixed(2); row.appendChild(td); });
-    tableBody.appendChild(row); highlightCheapest(row,m.prices);
-  });
-  highlightOverallCheapest(filteredMaterials);
-}
-function highlightCheapest(row, prices){
-  let minPrice = Math.min(...prices);
-  Array.from(row.cells).forEach((cell,i)=>{
-    if(i>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
-  });
-}
-function highlightOverallCheapest(filteredMaterials){
-  let totals = suppliers.map((_,i) => filteredMaterials.reduce((sum,m) => sum + m.prices[i],0));
-  let minTotal = Math.min(...totals);
-  let cheapestIndex = totals.indexOf(minTotal);
-  Array.from(tableBody.rows).forEach(r => { if(!r.classList.contains("category-header")) r.cells[cheapestIndex+1].classList.add("overall-cheapest"); });
-}
-function filterTable(){ 
-  let val = searchInput.value.toLowerCase(); 
-  let filtered = materials.filter(m => m.name.toLowerCase().includes(val)); 
-  generateTable(filtered); 
-  if(val && !recentSearches.includes(val)){ recentSearches.unshift(val); if(recentSearches.length>5) recentSearches.pop(); updateDashboard(); } 
-}
-searchInput.addEventListener("input",filterTable);
-createHeader(); generateTable(materials);
-
-function updateDashboard(){
-  recentList.innerHTML=""; savedList.innerHTML="";
-  recentSearches.forEach(s=>{ let li=document.createElement("li"); li.textContent=s; recentList.appendChild(li); });
-  materials.forEach(m=>{ if(recentSearches.includes(m.name.toLowerCase())){ let li=document.createElement("li"); li.textContent=m.name; savedList.appendChild(li); } });
-  statsContent.textContent=`Total comparisons: ${savedList.children.length}`;
-}
-
-// --- Login & Dashboard ---
-const loginBtn=document.getElementById("loginBtn");
-const modal=document.getElementById("loginModal");
-const closeBtn=document.querySelector(".close");
-const submitLogin=document.getElementById("submitLogin");
-
-loginBtn.onclick = ()=> modal.style.display = "flex";
-closeBtn.onclick = ()=> modal.style.display = "none";
-window.onclick = (e)=> { if(e.target==modal) modal.style.display="none"; };
-submitLogin.onclick = ()=>{
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  if(username && password){
-    modal.style.display = "none";
-    document.querySelector(".hero").style.display="none";
-    document.querySelector(".comparison").style.display="none";
-    dashboard.style.display = "block";
-    welcomeCard.textContent = `Hello, ${username}!`;
-  } else { alert("Please enter username and password"); }
-};
-
-document.getElementById("exportDashboard").onclick = ()=>{
-  let csv = "Material," + suppliers.map(s=>s.name).join(",") + "\n";
-  materials.forEach(m => { csv += m.name + "," + m.prices.join(",") + "\n"; });
-  const blob = new Blob([csv], {type:"text/csv"});
-  const url = URL.createObjectURL(blob); let a=document.createElement("a"); a.href=url; a.download="dashboard.csv"; a.click(); URL.revokeObjectURL(url);
-};
-
-document.getElementById("backToCompare").onclick = ()=>{
-  dashboard.style.display="none";
-  document.querySelector(".hero").style.display="block";
-  document.querySelector(".comparison").style.display="block";
-};
-
-// --- Google Map ---
-function initMap(){
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
-    center: {lat:52.336, lng:-6.465}
-  });
-  suppliers.forEach(s => {
-    const marker = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map, title:s.name });
-    const info = new google.maps.InfoWindow({ content:`<strong>${s.name}</strong>` });
-    marker.addListener("click", ()=> info.open(map, marker));
-  });
-}
-window.onload = initMap;
-</script>
-</body>
-</html>
+  { category: "Cement", name:
