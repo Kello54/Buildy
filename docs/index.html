@@ -5,78 +5,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - Compare Building Materials</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
-<style>
-body { font-family: Arial, sans-serif; background:#f8f9fa; color:#333; margin:0; }
 
-/* --- Main Header --- */
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+body { font-family: 'Roboto', sans-serif; background:#f8f9fa; color:#333; margin:0; }
+
+/* ===== Header ===== */
 header {
+  position: sticky;
+  top:0;
   background:#7d4bba;
-  padding:20px 40px;
-  text-align:center;
-  color:#f0c330;
-  font-size:2em;
-  font-weight:bold;
+  padding:15px 30px;
   display:flex;
   justify-content:center;
   align-items:center;
-  box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  color:#f0c330;
+  font-size:1.8em;
+  font-weight:bold;
+  z-index:1000;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
-header .logo img { height:50px; margin-right:15px; }
+header .logo img { height:40px; margin-right:12px; }
 
-/* --- Sub-header navigation --- */
+/* ===== Sub-header navigation ===== */
 .sub-header {
   background:#faf7ff;
   display:flex;
   justify-content:center;
-  gap:40px;
-  padding:15px 0;
+  gap:30px;
+  padding:12px 0;
+  overflow-x:auto;
 }
 .sub-header a {
   text-decoration:none;
   color:#7d4bba;
   font-weight:500;
-  font-size:1.1em;
+  font-size:1em;
+  padding:5px 8px;
+  border-radius:5px;
+  transition:0.3s;
 }
-.sub-header a:hover { color:#673099; }
+.sub-header a:hover { background:#e6d9f7; color:#673099; }
 
-/* --- Hero Section --- */
-.hero { text-align:center; padding:100px 20px; background:#faf7ff; }
-.hero h1 { font-size:2.2em; margin-bottom:20px; color:#7d4bba; }
-.hero p { font-size:1.1em; margin-bottom:25px; }
-.hero input, .hero button { padding:10px 15px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc; }
-.hero button { background:#7d4bba; color:#f0c330; border:none; cursor:pointer; }
+/* ===== Hero Section ===== */
+.hero { text-align:center; padding:60px 20px; background:#faf7ff; }
+.hero h1 { font-size:2em; margin-bottom:15px; color:#7d4bba; }
+.hero p { font-size:1em; margin-bottom:20px; }
+.hero input, .hero select, .hero button {
+  padding:10px 12px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc;
+}
+.hero button {
+  background:#7d4bba; color:#f0c330; border:none; cursor:pointer; transition:0.3s;
+}
 .hero button:hover { background:#673099; }
 
-/* --- Comparison Table --- */
-.comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
+/* ===== Filters Section ===== */
+.filters { text-align:center; margin-bottom:20px; }
+
+/* ===== Materials Table ===== */
+.comparison { width:90%; max-width:1200px; margin:20px auto; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
-th, td { padding:18px; text-align:center; border-bottom:1px solid #ddd; }
+th, td { padding:14px; text-align:center; border-bottom:1px solid #ddd; }
 th { background:#b99de6; color:#f0c330; cursor:pointer; }
 tr:hover { background:#f1f1f1; }
 .cheapest { background:#d4edda; color:#155724; font-weight:bold; }
-.category-cheapest { background:#fff3cd; color:#856404; font-weight:bold; }
 .overall-cheapest { border:2px solid #673099; }
-tr.category-header td { text-align:left; font-weight:bold; background:#e6d9f7; color:#7d4bba; padding-top:20px; padding-bottom:20px; }
+tr.category-header td { text-align:left; font-weight:bold; background:#e6d9f7; color:#7d4bba; padding:15px; }
 
-/* --- Features Section --- */
-.features { display:flex; flex-wrap:wrap; justify-content:center; gap:40px; padding:60px 20px; text-align:center; }
-.feature { background:#fff; padding:35px 25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; transition:transform 0.3s; }
+/* ===== Material Cards for mobile ===== */
+.material-cards { display:none; padding:20px; gap:15px; flex-wrap:wrap; justify-content:center; }
+.material-card {
+  background:#fff; padding:15px; border-radius:10px; box-shadow:0 3px 12px rgba(0,0,0,0.08);
+  width:250px; transition:0.3s; display:flex; flex-direction:column; align-items:center;
+}
+.material-card:hover { transform:translateY(-5px); }
+.material-card h3 { margin:10px 0 5px; color:#7d4bba; font-size:1.1em; }
+.material-card p { font-size:0.9em; margin:3px 0; }
+.material-card .price { font-weight:700; color:#4CAF50; }
+.material-card button {
+  margin-top:10px; padding:8px 12px; border:none; background:#7d4bba; color:#f0c330; border-radius:5px; cursor:pointer; transition:0.3s;
+}
+.material-card button:hover { background:#673099; }
+
+/* ===== Features Section ===== */
+.features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:40px 20px; text-align:center; }
+.feature { background:#fff; padding:25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:220px; transition:0.3s; }
 .feature:hover { transform:translateY(-5px); }
-.feature h3 { margin-bottom:15px; color:#7d4bba; }
-.feature p { font-size:0.95em; }
+.feature h3 { margin-bottom:12px; color:#7d4bba; }
 
-/* --- Footer --- */
-footer { background:#673099; color:#f0c330; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
-footer a { color:#f0c330; margin-right:15px; text-decoration:none; }
+/* ===== Footer ===== */
+footer { background:#673099; color:#f0c330; text-align:center; padding:20px; font-size:0.9em; }
+footer a { color:#f0c330; margin-right:12px; text-decoration:none; }
 footer a:hover { text-decoration:underline; }
 
-/* --- Table responsive scrolling --- */
+/* ===== Responsive ===== */
 @media(max-width:768px){
-  table, thead, tbody, th, td, tr { display:block; }
-  th { text-align:left; }
-  tr { margin-bottom:15px; }
-  td { text-align:left; padding-left:50%; position:relative; }
-  td::before { position:absolute; left:15px; top:15px; white-space:nowrap; font-weight:bold; content: attr(data-label); }
+  table, thead, tbody, th, td, tr { display:none; }
+  .material-cards { display:flex; }
 }
 </style>
 </head>
@@ -84,8 +111,7 @@ footer a:hover { text-decoration:underline; }
 
 <header>
   <div class="logo">
-    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo">
-    Buildy
+    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo"> Buildy
   </div>
 </header>
 
@@ -99,6 +125,12 @@ footer a:hover { text-decoration:underline; }
   <h1>Compare Building Materials Instantly</h1>
   <p>Quickly find the cheapest prices across multiple suppliers</p>
   <input type="text" id="searchInput" placeholder="Enter material...">
+  <select id="categoryFilter">
+    <option value="">All Categories</option>
+    <option value="Cement">Cement</option>
+    <option value="Lumber">Lumber</option>
+    <option value="Bricks">Bricks</option>
+  </select>
   <button id="downloadCSV">Download CSV</button>
 </section>
 
@@ -109,6 +141,7 @@ footer a:hover { text-decoration:underline; }
     </thead>
     <tbody id="tableBody"></tbody>
   </table>
+  <div class="material-cards" id="materialCards"></div>
 </section>
 
 <section class="features">
@@ -135,6 +168,7 @@ footer a:hover { text-decoration:underline; }
 </footer>
 
 <script>
+// Data
 const suppliers = ["Supplier 1","Supplier 2","Supplier 3","Supplier 4","Supplier 5"];
 const materials = [
   { category: "Cement", name: "Cement (50kg)", prices: [7.50, 8.00, 7.80, 8.20, 7.90] },
@@ -144,56 +178,82 @@ const materials = [
   { category: "Bricks", name: "Bricks (per 100)", prices: [25.00, 24.50, 24.00, 24.80, 25.20] }
 ];
 
+// Table Elements
 const tableHeader = document.getElementById("tableHeader");
 const tableBody = document.getElementById("tableBody");
+const materialCards = document.getElementById("materialCards");
 const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
 
 function createHeader() {
   tableHeader.innerHTML = "";
   const thMaterial = document.createElement("th");
   thMaterial.textContent = "Material";
-  thMaterial.addEventListener("click", () => sortTable("name"));
+  thMaterial.addEventListener("click", ()=>sortTable("name"));
   tableHeader.appendChild(thMaterial);
-
   suppliers.forEach((s,index)=>{
     const th = document.createElement("th");
     th.textContent = s;
-    th.addEventListener("click",()=>sortTable(index));
+    th.addEventListener("click", ()=>sortTable(index));
     tableHeader.appendChild(th);
   });
 }
 
+// Sorting
 let sortOrder = {};
 function sortTable(column){
-  let filtered = materials.filter(m => m.name.toLowerCase().includes(searchInput.value.toLowerCase()));
-  if(column === "name"){
-    sortOrder[column] = sortOrder[column]==="asc" ? "desc":"asc";
-    filtered.sort((a,b)=>sortOrder[column]==="asc" ? a.name.localeCompare(b.name):b.name.localeCompare(a.name));
+  let filtered = getFilteredMaterials();
+  if(column==="name"){
+    sortOrder[column] = sortOrder[column]==="asc"?"desc":"asc";
+    filtered.sort((a,b)=>sortOrder[column]==="asc"?a.name.localeCompare(b.name):b.name.localeCompare(a.name));
   } else {
-    sortOrder[column] = sortOrder[column]==="asc" ? "desc":"asc";
-    filtered.sort((a,b)=>sortOrder[column]==="asc"? a.prices[column]-b.prices[column]: b.prices[column]-a.prices[column]);
+    sortOrder[column] = sortOrder[column]==="asc"?"desc":"asc";
+    filtered.sort((a,b)=>sortOrder[column]==="asc"?a.prices[column]-b.prices[column]:b.prices[column]-a.prices[column]);
   }
   generateTable(filtered);
 }
 
-function highlightCheapest(row, prices){
-  let minPrice = Math.min(...prices);
-  Array.from(row.cells).forEach((cell,index)=>{
-    cell.classList.remove("cheapest","category-cheapest","overall-cheapest");
-    if(index>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
-  });
+// Filter Materials
+function getFilteredMaterials(){
+  const search = searchInput.value.toLowerCase();
+  const category = categoryFilter.value;
+  return materials.filter(m=>m.name.toLowerCase().includes(search) && (category==="" || m.category===category));
 }
 
-function highlightOverallCheapest(filteredMaterials){
-  let supplierTotals = suppliers.map((_,i)=> filteredMaterials.reduce((sum,m)=>sum+m.prices[i],0));
-  let minTotal = Math.min(...supplierTotals);
-  let cheapestIndex = supplierTotals.indexOf(minTotal);
-  Array.from(tableBody.rows).forEach(row=>{
-    if(!row.classList.contains("category-header"))
-      row.cells[cheapestIndex+1].classList.add("overall-cheapest");
-  });
-}
-
-function generateTable(filteredMaterials){
+// Generate Table
+function generateTable(filtered){
   tableBody.innerHTML="";
-  const categories = [...new
+  materialCards.innerHTML="";
+  filtered.forEach(m=>{
+    // Table Row
+    const tr = document.createElement("tr");
+    const tdName = document.createElement("td");
+    tdName.textContent = m.name;
+    tr.appendChild(tdName);
+    m.prices.forEach(p=>{
+      const td = document.createElement("td");
+      td.textContent = p.toFixed(2);
+      tr.appendChild(td);
+    });
+    tableBody.appendChild(tr);
+    // Card View
+    const card = document.createElement("div");
+    card.className="material-card";
+    card.innerHTML=`<h3>${m.name}</h3>
+      <p>Category: ${m.category}</p>
+      ${m.prices.map((p,i)=>`<p>${suppliers[i]}: €${p.toFixed(2)}</p>`).join('')}
+      <button>Compare Prices</button>`;
+    materialCards.appendChild(card);
+  });
+}
+
+// Event Listeners
+searchInput.addEventListener("input", ()=>generateTable(getFilteredMaterials()));
+categoryFilter.addEventListener("change", ()=>generateTable(getFilteredMaterials()));
+
+// Initial Render
+createHeader();
+generateTable(materials);
+</script>
+</body>
+</html>
