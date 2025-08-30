@@ -87,9 +87,11 @@
     background-color: #ffffff;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 14px 0;
     border-bottom: 3px solid;
     border-image: linear-gradient(to right, #4b0082, #6a0dad) 1;
+    white-space: nowrap; /* force all items on one line */
   }
 
   .sub-header-container a {
@@ -187,8 +189,8 @@
 
   @media(max-width:768px){
     .sub-header-container {
-      flex-wrap: wrap;
-      gap: 12px;
+      justify-content: center;
+      overflow-x: auto;
     }
     .sub-header-container a::after,
     footer a::after {
