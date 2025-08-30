@@ -30,6 +30,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 3px solid gold; /* subtle gold underline */
   }
 
   .logo {
@@ -79,16 +80,16 @@
     position: relative;
   }
 
-  /* subtle gold vertical separator */
+  /* visible gold vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 1px;
+    width: 2px;          /* make it more visible */
     height: 60%;
-    background-color: gold;
+    background-color: gold; /* bright gold color */
   }
 
   /* ===== RESPONSIVE ===== */
