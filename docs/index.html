@@ -3,276 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - Smart Tool Management</title>
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
+<title>Buildy - Price Comparison</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
-    color: #333;
+    margin: 0;
+    padding: 0 20px;
   }
 
-  /* ===== HEADER ===== */
-  header {
-    background-color: #f8f5ff;
+  h2 {
+    text-align: center;
     color: #4b0082;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    border-bottom: 3px solid #4b0082;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    border-radius: 0 0 10px 10px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .logo img {
-    width: 45px;
-    height: 45px;
-  }
-
-  .main-title {
+    margin-top: 40px;
     font-size: 2rem;
-    font-weight: bold;
   }
 
-  .login-btn {
-    background-color: #ffffff;
-    color: #4b0082;
-    padding: 10px 22px;
-    border: 2px solid #4b0082;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .login-btn::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 0%;
-    height: 2px;
-    background-color: gold;
-    transition: width 0.3s ease;
-  }
-
-  .login-btn:hover::after {
-    width: 100%;
-  }
-
-  /* ===== SUB-HEADER ===== */
-  .sub-header-container {
-    background-color: #ffffff;
+  /* Filters */
+  .filters {
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 3px solid #4b0082;
-    gap: 10px;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
   }
 
-  .sub-header-container a {
-    color: #4b0082;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 20px;
+  .filters input, .filters select {
+    padding: 8px 12px;
+    border-radius: 6px;
     border: 1.5px solid gold;
-    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
     transition: all 0.3s ease;
-    display: inline-block;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 rgba(0,0,0,0);
   }
 
-  .sub-header-container a:hover {
-    background-color: #f8f5ff;
-    color: #6a0dad;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    transform: translateY(-2px);
+  .filters input:focus, .filters select:focus {
+    border-color: #4b0082;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
 
-  /* ===== HERO SECTION ===== */
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 90vh;
-    padding: 40px 20px;
-    background: linear-gradient(to bottom, #f8f5ff, #ffffff);
+  /* Table container */
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 60px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+
+  th, td {
+    padding: 12px 15px;
     text-align: center;
   }
 
-  .hero-content {
-    max-width: 800px;
-  }
-
-  .tagline {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #4b0082;
-    margin: 0 0 10px;
-  }
-
-  .gold-divider {
-    width: 80px;
-    height: 4px;
-    background-color: gold;
-    margin: 10px auto 20px;
-    border-radius: 2px;
-  }
-
-  .hero-text {
-    font-size: 1.2rem;
-    color: #333;
-    line-height: 1.6;
-  }
-
-  /* Hero CTA */
-  .cta-button {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 12px 28px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #4b0082;
-    background-color: gold;
-    border: 2px solid gold;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  }
-
-  .cta-button:hover {
+  thead th {
+    position: sticky;
+    top: 0;
     background-color: #4b0082;
     color: #fff;
-    border-color: #4b0082;
+    cursor: pointer;
+    z-index: 1;
   }
 
-  /* ===== SECTIONS ===== */
-  section {
-    padding: 80px 40px;
-    background-color: #ffffff;
-    margin: 20px auto;
-    border-radius: 10px;
-    max-width: 1200px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-
-  section:nth-child(even) {
+  tbody tr:nth-child(even) {
     background-color: #f8f5ff;
   }
 
-  /* ===== FOOTER ===== */
-  footer {
-    background-color: #f5f0ff;
-    border-top: 3px solid #4b0082;
-    padding: 30px 40px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+  tbody tr:hover {
+    background-color: #f0e6ff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
   }
 
-  footer a {
+  .best-price {
+    background-color: gold;
     color: #4b0082;
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-    padding: 0 5px;
+    font-weight: bold;
+    border-radius: 4px;
   }
 
-  footer a:not(:last-child) {
-    border-right: 2px solid gold;
-    padding-right: 15px;
-    margin-right: 15px;
+  td.total-price {
+    position: sticky;
+    right: 0;
+    background-color: inherit;
   }
 
-  footer a:hover {
-    text-decoration: underline;
-    text-decoration-color: gold;
-    text-decoration-thickness: 2px;
-  }
-
-  /* ===== RESPONSIVE ===== */
   @media(max-width:768px){
-    .sub-header-container {
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .sub-header-container a {
-      padding: 6px 14px;
-      margin: 4px 2px;
-    }
-    footer {
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+    table {
+      min-width: 600px;
     }
   }
 </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
-      <div class="main-title">Buildy</div>
-    </div>
-    <button class="login-btn">Login</button>
-  </header>
+<h2>Buildy Price Comparison</h2>
 
-  <!-- SUB-HEADER -->
-  <div class="sub-header-container">
-    <a href="#home">Home</a>
-    <a href="#suppliers">Suppliers</a>
-    <a href="#products">Products</a>
-  </div>
+<div class="filters">
+  <input type="text" id="productFilter" placeholder="Filter by product" onkeyup="filterTable()">
+  <input type="text" id="supplierFilter" placeholder="Filter by supplier" onkeyup="filterTable()">
+</div>
 
-  <!-- HERO SECTION -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h2 class="tagline">The No.1 Building Material Price Comparison Site</h2>
-      <div class="gold-divider"></div>
-      <p class="hero-text">Explore suppliers, compare prices, and find the best deals with ease.</p>
-      <a href="#suppliers" class="cta-button">Compare Prices Now</a>
-    </div>
-  </section>
+<div class="table-container">
+  <table id="priceTable">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Supplier ▲▼</th>
+        <th onclick="sortTable(1)">Product ▲▼</th>
+        <th onclick="sortTable(2)">Unit Price ▲▼</th>
+        <th onclick="sortTable(3)">VAT ▲▼</th>
+        <th onclick="sortTable(4)">Delivery Fee ▲▼</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Supplier A</td>
+        <td>Cement 50kg</td>
+        <td>7.50</td>
+        <td>1.50</td>
+        <td>2.00</td>
+        <td class="total-price"></td>
+      </tr>
+      <tr>
+        <td>Supplier B</td>
+        <td>Cement 50kg</td>
+        <td>7.80</td>
+        <td>1.56</td>
+        <td>1.50</td>
+        <td class="total-price"></td>
+      </tr>
+      <tr>
+        <td>Supplier C</td>
+        <td>Cement 50kg</td>
+        <td>7.20</td>
+        <td>1.44</td>
+        <td>2.50</td>
+        <td class="total-price"></td>
+      </tr>
+      <tr>
+        <td>Supplier A</td>
+        <td>Bricks Pack</td>
+        <td>3.50</td>
+        <td>0.70</td>
+        <td>1.00</td>
+        <td class="total-price"></td>
+      </tr>
+      <tr>
+        <td>Supplier B</td>
+        <td>Bricks Pack</td>
+        <td>3.60</td>
+        <td>0.72</td>
+        <td>0.90</td>
+        <td class="total-price"></td>
+      </tr>
+      <tr>
+        <td>Supplier C</td>
+        <td>Bricks Pack</td>
+        <td>3.50</td>
+        <td>0.70</td>
+        <td>1.20</td>
+        <td class="total-price"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <!-- OTHER SECTIONS -->
-  <section id="suppliers">
-    <h1>Suppliers</h1>
-    <p>Browse and manage your trusted suppliers efficiently.</p>
-  </section>
+<script>
+// Calculate totals and highlight best prices
+function calculateTotals() {
+  const table = document.getElementById('priceTable');
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+  const products = {};
 
-  <section id="products">
-    <h1>Products</h1>
-    <p>Explore the best products and manage orders seamlessly.</p>
-  </section>
+  rows.forEach(row => {
+    const unit = parseFloat(row.cells[2].textContent);
+    const vat = parseFloat(row.cells[3].textContent);
+    const delivery = parseFloat(row.cells[4].textContent);
+    const total = parseFloat((unit + vat + delivery).toFixed(2));
+    row.cells[5].textContent = total.toFixed(2);
+    row.cells[5].classList.remove('best-price');
 
-  <!-- FOOTER -->
-  <footer>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-  </footer>
+    const productName = row.cells[1].textContent;
+    if (!products[productName]) products[productName] = [];
+    products[productName].push({ row, total });
+  });
+
+  // Highlight best prices, including ties
+  Object.values(products).forEach(productRows => {
+    const min = Math.min(...productRows.map(r => r.total));
+    productRows.forEach(r => {
+      if (r.total === min) r.row.cells[5].classList.add('best-price');
+    });
+  });
+}
+
+// Sort table columns
+function sortTable(n) {
+  const table = document.getElementById('priceTable');
+  const tbody = table.tBodies[0];
+  let rows = Array.from(tbody.rows);
+  const asc = table.getAttribute('data-sort-' + n) !== 'asc';
+  rows.sort((a,b) => {
+    let valA = a.cells[n].textContent;
+    let valB = b.cells[n].textContent;
+    if (!isNaN(valA) && !isNaN(valB)) {
+      valA = parseFloat(valA); valB = parseFloat(valB);
+    }
+    return (valA > valB ? 1 : -1) * (asc ? 1 : -1);
+  });
+  rows.forEach(r => tbody.appendChild(r));
+  table.setAttribute('data-sort-' + n, asc ? 'asc' : 'desc');
+  calculateTotals();
+}
+
+// Filter table by supplier/product
+function filterTable() {
+  const supplierFilter = document.getElementById('supplierFilter').value.toLowerCase();
+  const productFilter = document.getElementById('productFilter').value.toLowerCase();
+  const tbody = document.getElementById('priceTable').tBodies[0];
+  Array.from(tbody.rows).forEach(row => {
+    const supplier = row.cells[0].textContent.toLowerCase();
+    const product = row.cells[1].textContent.toLowerCase();
+    row.style.display = (supplier.includes(supplierFilter) && product.includes(productFilter)) ? '' : 'none';
+  });
+  calculateTotals();
+}
+
+// Initialize
+calculateTotals();
+</script>
 
 </body>
 </html>
+    
+    
