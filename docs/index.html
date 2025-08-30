@@ -20,15 +20,16 @@
 
   /* ===== HEADER ===== */
   header {
-    background-color: #ffffff;
-    color: #4b0082;
+    background-color: #ffffff; /* white */
+    color: #4b0082; /* purple text */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
     position: sticky;
     top: 0;
-    border-bottom: 2px solid gold;
+    border-bottom: 2px solid #4b0082; /* purple line */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
     z-index: 100;
   }
 
@@ -49,10 +50,10 @@
   }
 
   .login-btn {
-    background-color: #ffffff;
-    color: #FFD700;
+    background-color: #ffffff; /* white */
+    color: #4b0082; /* purple text */
     padding: 10px 22px;
-    border: 2px solid #FFD700;
+    border: 2px solid #4b0082; /* purple border */
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
@@ -60,21 +61,20 @@
   }
 
   .login-btn:hover {
-    background-color: #fff5b1; /* subtle gold background */
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); /* subtle glow */
+    background-color: #f3e5f5; /* subtle purple background on hover */
   }
 
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
-    background-color: #ffffff;
+    background-color: #ffffff; /* white background */
     display: flex;
     justify-content: center;
     padding: 14px 0;
-    border-bottom: 2px solid gold;
+    border-bottom: 2px solid #4b0082; /* purple line */
   }
 
   .sub-header-container a {
-    color: #4b0082;
+    color: #4b0082; /* purple text */
     text-decoration: none;
     font-weight: 500;
     padding: 0 30px;
@@ -83,7 +83,7 @@
     transition: color 0.3s ease;
   }
 
-  /* gold vertical separators */
+  /* purple vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
@@ -91,10 +91,10 @@
     top: 15%;
     width: 1.5px;
     height: 70%;
-    background-color: gold;
+    background-color: #4b0082; 
   }
 
-  /* hover effect: gold underline */
+  /* hover effect: subtle purple underline */
   .sub-header-container a::before {
     content: '';
     position: absolute;
@@ -102,16 +102,12 @@
     bottom: -3px;
     width: 0%;
     height: 2px;
-    background-color: gold;
+    background-color: #4b0082;
     transition: width 0.3s ease;
   }
 
   .sub-header-container a:hover::before {
     width: 100%;
-  }
-
-  .sub-header-container a:hover {
-    color: #4b0082;
   }
 
   /* ===== RESPONSIVE ===== */
@@ -121,7 +117,7 @@
       gap: 12px;
     }
     .sub-header-container a::after {
-      display: none;
+      display: none; /* remove separator on small screens */
     }
   }
 
