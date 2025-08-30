@@ -7,26 +7,24 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* =============================
-   FULL CSS for Buildy v5
-   ============================= */
+/* ===== FULL CSS - Buildy v5 Upgraded ===== */
 
-/* ==== Global Reset ==== */
+/* Global Reset */
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:"Segoe UI", Tahoma, sans-serif; line-height:1.6; transition:background 0.3s,color 0.3s; background:#f9f9fb; color:#222; }
+body { font-family:"Segoe UI", Tahoma, sans-serif; line-height:1.6; background:#f9f9fb; color:#222; transition:background 0.3s,color 0.3s; }
 body.dark { background:#121212; color:#f1f1f1; }
 
-/* ==== Header/Navbar ==== */
+/* Header/Navbar */
 header { position:sticky; top:0; z-index:1000; background:#4b0082; color:white; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:8px; }
 header .actions { display:flex; gap:8px; }
 .icon-btn { background:transparent; color:inherit; border:1px solid rgba(255,255,255,.35); padding:6px 10px; border-radius:6px; cursor:pointer; font-size:14px; transition:transform .15s ease, background .2s ease, border-color .2s ease; }
 .icon-btn:hover { transform:translateY(-1px); background:rgba(255,255,255,.12); }
 .visually-hidden { position:absolute!important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); }
 
-/* ==== Toast ==== */
+/* Toast */
 .toast { position:fixed; bottom:20px; right:20px; background:#4b0082; color:#fff; padding:12px 20px; border-radius:8px; opacity:0; transition:opacity .3s; }
 
-/* ==== Container & Cards ==== */
+/* Container & Cards */
 .container{max-width:1200px;margin:0 auto;padding:16px;}
 .card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
 body.dark .card{background:#1e1e1e;color:#f1f1f1;}
@@ -39,13 +37,13 @@ button.primary:hover{background:#6a0dad;}
 button.ghost{background:transparent;}
 .muted{color:#666;font-size:12px;}
 
-/* ==== Details ==== */
+/* Details */
 details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,#4b0082,transparent) border-box;border:1px solid #e5e7eb;color:#222;font-weight:600;}
 details[open]>summary{border-color:transparent;background:linear-gradient(90deg,#4b0082,#6a0dad);color:#fff;}
 
-/* ==== Table ==== */
+/* Table */
 table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto;}
-thead th{position:sticky;top:0;background:#4b0082;color:white;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);}
+thead th{position:sticky;top:0;background:#4b0082;color:white;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;}
 thead th:last-child{border-right:none;}
 tbody td{border-top:1px solid #e5e7eb;text-align:center;padding:10px;}
 td.cheapest{background:#d4edda;font-weight:700;}
@@ -53,15 +51,15 @@ td.expensive{background:#f5d0d0;}
 td.medium{background:#fff6cf;}
 canvas.canvas-mini{height:60px;max-width:150px;}
 
-/* ==== Chart Trend Arrows ==== */
+/* Trend Arrows */
 .trend-arrow{margin-left:5px;font-size:0.9em;}
 .trend-up{color:#d9534f;}
 .trend-down{color:#5cb85c;}
 
-/* ==== Footer ==== */
+/* Footer */
 footer{margin:24px 0;text-align:center;color:#666;font-size:12px;}
 
-/* ==== Responsive ==== */
+/* Responsive */
 @media(max-width:768px){.row{flex-direction:column;}}
 </style>
 </head>
@@ -157,7 +155,7 @@ darkToggle.addEventListener('click',()=>{
     renderMainChart();
 });
 
-// ---------- Add/Update Material ----------
+// ---------- Add/Update Material with Trend Check ----------
 addBtn.addEventListener('click',()=>{
     const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
     const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
@@ -166,10 +164,12 @@ addBtn.addEventListener('click',()=>{
     if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
     const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
     const today=new Date().toISOString().split('T')[0];
-    if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery;}
-    else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery});}
+    let trend='';
+    if(existing){trend=(price<existing.price)?'down':(price>existing.price?'up':''); existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery;}
+    else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery}); trend='down';}
     mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,date:today});
-    showToast(`${sup} updated for ${name}`);
+    if(trend==='down') showToast(`📉 ${sup} cheaper for ${name}`);
+    if(trend==='up') showToast(`📈 ${sup} more expensive for ${name}`);
     materialInput.value=supplierInput.value=unitInput.value=quantityInput.value=priceInput.value=vatInput.value=deliveryInput.value='';
     refreshAll();
 });
@@ -178,7 +178,7 @@ addBtn.addEventListener('click',()=>{
 filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
 filterSupplier.addEventListener('change',refreshAll);
 
-// ---------- Export Excel ----------
+// ---------- Excel Export ----------
 exportExcelBtn.addEventListener('click',()=>{
     const wb=XLSX.utils.book_new(); 
     const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
@@ -197,3 +197,79 @@ downloadJsonBtn.addEventListener('click',()=>{
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
 });
 uploadJsonInput.addEventListener('change',async(e)=>{
+    const f=e.target.files[0]; if(!f)return;
+    try{
+        const t=await f.text();
+        const p=JSON.parse(t); if(!Array.isArray(p)) throw 'Invalid';
+        materials=p; refreshAll(); showToast('JSON Imported');
+    }catch(err){alert('Invalid JSON');}
+});
+clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[]; refreshAll(); showToast('All cleared');}});
+
+// ---------- Refresh ----------
+function refreshAll(){save(); renderFilterOptions(); renderTable(); renderMainChart();}
+
+// ---------- Filter Options ----------
+function renderFilterOptions(){
+    const suppliers=new Set();
+    materials.forEach(m=>m.prices.forEach(p=>suppliers.add(p.supplier)));
+    filterSupplier.innerHTML='<option value="">All Suppliers</option>';
+    Array.from(suppliers).sort().forEach(s=>{const o=document.createElement('option'); o.value=s; o.textContent=s; filterSupplier.appendChild(o);});
+}
+
+// ---------- Table Rendering with Trends & Mini Charts ----------
+function renderTable(){
+    const tbody=$('priceTable').querySelector('tbody');
+    tbody.innerHTML='';
+    const headerTr=$('tableHeader'); headerTr.innerHTML='';
+    ['Material','Supplier','Unit','Qty','Price (€)','VAT %','Delivery (€)','Total (€)','Trend','History'].forEach(h=>{
+        const th=document.createElement('th'); th.textContent=h; headerTr.appendChild(th);
+    });
+    const filterMat=filterMaterial.value.toLowerCase();
+    const filterSup=filterSupplier.value;
+    materials.forEach(m=>{
+        if(filterMat && !m.name.toLowerCase().includes(filterMat)) return;
+        m.prices.forEach(p=>{
+            if(filterSup && p.supplier!==filterSup) return;
+            const tr=document.createElement('tr');
+            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
+            const totals=m.prices.map(pp=>(pp.price*pp.quantity)+pp.delivery+(pp.price*pp.quantity*pp.vat/100));
+            const minTotal=Math.min(...totals);
+            const maxTotal=Math.max(...totals);
+            const tdMaker=(val,cls)=>{const td=document.createElement('td'); td.textContent=val; if(cls)td.className=cls; return td;};
+            tr.appendChild(tdMaker(m.name));
+            tr.appendChild(tdMaker(p.supplier));
+            tr.appendChild(tdMaker(p.unit));
+            tr.appendChild(tdMaker(p.quantity));
+            tr.appendChild(tdMaker(p.price));
+            tr.appendChild(tdMaker(p.vat));
+            tr.appendChild(tdMaker(p.delivery));
+            let cls='medium';
+            if(total===minTotal) cls='cheapest';
+            else if(total===maxTotal) cls='expensive';
+            tr.appendChild(tdMaker(total.toFixed(2),cls));
+            // Trend
+            const hist=p.history||m.history.filter(h=>h.supplier===p.supplier);
+            let trendTd=document.createElement('td'); trendTd.innerHTML='';
+            if(hist.length>1){
+                const prev=hist[hist.length-2];
+                if(prev){
+                    if(p.price<prev.price) trendTd.innerHTML='⬇️'; 
+                    else if(p.price>prev.price) trendTd.innerHTML='⬆️';
+                }
+            }
+            tr.appendChild(trendTd);
+            // Mini chart
+            const tdChart=document.createElement('td');
+            const canvas=document.createElement('canvas'); canvas.className='canvas-mini';
+            tdChart.appendChild(canvas); tr.appendChild(tdChart);
+            tbody.appendChild(tr);
+            renderMiniChart(m, p.supplier, canvas);
+        });
+    });
+}
+
+// Mini Chart
+function renderMiniChart(material, supplier, canvas){
+    const data=material.history.filter(h=>h.supplier===supplier).map(h=>({x:h.date,y:h.price}));
+    new Chart(canvas,{type:'line',data:{datasets:[{label:supplier,data:data,border
