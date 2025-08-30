@@ -51,12 +51,6 @@
     font-weight: bold;
   }
 
-  .header-buttons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-
   .login-btn {
     background-color: #ffffff;
     color: #4b0082;
@@ -84,23 +78,6 @@
     width: 100%;
   }
 
-  /* Header CTA (smaller) */
-  .header-cta {
-    background-color: #ffffff;
-    color: #4b0082;
-    border: 2px solid #4b0082;
-    padding: 8px 18px;
-    font-weight: bold;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-
-  .header-cta:hover {
-    background-color: #4b0082;
-    color: #fff;
-  }
-
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
     background-color: #ffffff;
@@ -109,25 +86,23 @@
     align-items: center;
     padding: 14px 0;
     border-bottom: 3px solid #4b0082;
+    gap: 10px;
   }
 
   .sub-header-container a {
     color: #4b0082;
     text-decoration: none;
     font-weight: 500;
-    padding: 0 20px;
-    position: relative;
-    transition: color 0.3s ease;
-  }
-
-  .sub-header-container a:not(:last-child) {
-    border-right: 2px solid gold;
+    padding: 8px 20px;
+    border: 1.5px solid gold; /* premium gold border */
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
   }
 
   .sub-header-container a:hover {
-    text-decoration: underline;
-    text-decoration-color: gold;
-    text-decoration-thickness: 2px;
+    background-color: #f8f5ff;
+    color: #6a0dad;
   }
 
   /* ===== HERO SECTION ===== */
@@ -236,14 +211,11 @@
   @media(max-width:768px){
     .sub-header-container {
       flex-wrap: wrap;
+      gap: 6px;
     }
     .sub-header-container a {
-      border: none !important;
-      margin: 5px 10px;
-    }
-    .header-buttons {
-      flex-direction: column;
-      gap: 8px;
+      padding: 6px 14px;
+      margin: 4px 2px;
     }
     footer {
       flex-direction: column;
@@ -261,10 +233,7 @@
       <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
       <div class="main-title">Buildy</div>
     </div>
-    <div class="header-buttons">
-      <button class="login-btn">Login</button>
-      <a href="#suppliers" class="header-cta">Compare Prices</a>
-    </div>
+    <button class="login-btn">Login</button>
   </header>
 
   <!-- SUB-HEADER -->
