@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy v5+ — Price Comparison</title>
+<title>Buildy — No.1 Building Material Price Comparison Site</title>
 
 <!-- Leaflet & Chart.js -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -38,7 +38,7 @@ header{
 .sidebar button{display:block;width:100%;margin-bottom:6px;padding:8px;background:var(--brand);color:#fff;border:none;border-radius:6px;cursor:pointer;}
 .sidebar button:hover{background:var(--brand2);}
 .main-content{margin-left:210px;padding:20px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
 .card h2{margin-top:0;color:var(--brand);}
 .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
 input,select,button{font-size:14px;padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);}
@@ -55,6 +55,7 @@ td.medium{background:var(--mid);}
 #map{height:400px;width:100%;border-radius:10px;margin-top:10px;}
 .toast{position:fixed;bottom:20px;right:20px;background:var(--brand);color:#fff;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
 .highlight-row{background:#ffe599;}
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);}
 </style>
 </head>
 <body>
@@ -63,7 +64,7 @@ td.medium{background:var(--mid);}
   <div class="header-main">
     <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
     <div>
-      <h1>Buildy — Price Comparison Tool</h1>
+      <h1>Buildy — No.1 Building Material Price Comparison Site</h1>
       <p>Compare local Wexford suppliers instantly</p>
     </div>
   </div>
@@ -84,7 +85,7 @@ td.medium{background:var(--mid);}
 <div class="main-content">
   <div id="toast" class="toast"></div>
 
-  <!-- Materials Table Card -->
+  <!-- Materials Card -->
   <section id="materials" class="card">
     <h2>Price Comparison</h2>
     <div class="row">
@@ -101,7 +102,12 @@ td.medium{background:var(--mid);}
       <button id="addBtn" class="primary">Add/Update</button>
     </div>
     <table id="priceTable">
-      <thead><tr id="tableHeader"></tr></thead>
+      <thead>
+        <tr>
+          <th>Material</th><th>Supplier</th><th>Unit</th><th>Qty</th><th>Price</th>
+          <th>VAT</th><th>Delivery</th><th>Total</th><th>Lat</th><th>Lng</th>
+        </tr>
+      </thead>
       <tbody></tbody>
     </table>
   </section>
@@ -124,17 +130,19 @@ Buildy v5+ • Interactive Map & Price Comparison • © You
 </footer>
 
 <script>
-// ---------- Utility ----------
+// --- Utility ---
 function $(id){return document.getElementById(id);}
-let materials = [], chart;
+let materials=[], chart;
 const LS_KEY='buildy_v5_materials';
+
+// --- Load/Save ---
 function load(){const s=localStorage.getItem(LS_KEY); if(s) materials=JSON.parse(s);}
 function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
 
-// ---------- Toast ----------
+// --- Toast ---
 function showToast(msg){const t=$('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,3000);}
 
-// ---------- Tabs ----------
+// --- Tabs ---
 document.querySelectorAll('.sidebar button').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const tab = btn.dataset.tab;
@@ -146,13 +154,13 @@ document.querySelectorAll('.sidebar button').forEach(btn=>{
 });
 $('materials').style.display='block'; $('charts').style.display='none'; $('mapTab').style.display='none';
 
-// ---------- Dark Mode ----------
+// --- Dark Mode ---
 $('darkToggle').addEventListener('click',()=>{
   document.body.classList.toggle('dark');
   $('darkToggle').textContent = document.body.classList.contains('dark')?'☀️':'🌙';
 });
 
-// ---------- Add / Update ----------
+// --- Add / Update Functionality ---
 const addBtn = $('addBtn');
 addBtn.addEventListener('click', async ()=>{
   const name=$('materialInput').value.trim(),sup=$('supplierInput').value.trim(),unit=$('unitInput').value.trim();
@@ -171,12 +179,12 @@ addBtn.addEventListener('click', async ()=>{
   if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery; existing.lat=lat; existing.lng=lng;}
   else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng});}
   mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng,date:today});
-  checkCheapestAlerts(mat); showToast(`${sup} updated for ${name}`);
+  showToast(`${sup} updated for ${name}`);
   $('materialInput').value=$('supplierInput').value=$('unitInput').value=$('quantityInput').value=$('priceInput').value=$('vatInput').value=$('deliveryInput').value=$('latInput').value=$('lngInput').value=$('addressInput').value='';
   refreshAll();
 });
 
-// ---------- Geocode ----------
+// --- Geocode ---
 async function geocodeAddress(address){
   const url=`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
   const res=await fetch(url); const data=await res.json();
@@ -184,21 +192,10 @@ async function geocodeAddress(address){
   return null;
 }
 
-// ---------- Cheapest Alerts ----------
-function checkCheapestAlerts(material){
-  const totals = material.prices.map(p=>(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery);
-  const minTotal = Math.min(...totals);
-  material.prices.forEach(p=>{
-    const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
-    if(total===minTotal) showToast(`🌟 ${p.supplier} is now the cheapest for ${material.name}!`);
-  });
-}
-
-// ---------- Refresh Table & Chart ----------
+// --- Refresh ---
 function refreshAll(){renderTable();renderChart();updateMap();save();}
 function renderTable(){
   const tbody=$('priceTable').querySelector('tbody'); tbody.innerHTML='';
-  const thead=$('tableHeader'); thead.innerHTML='<th>Material</th><th>Supplier</th><th>Unit</th><th>Qty</th><th>Price</th><th>VAT</th><th>Delivery</th><th>Total</th><th>Lat</th><th>Lng</th>';
   materials.forEach(m=>{ m.prices.forEach(p=>{
     const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
     const totals=m.prices.map(x=>(x.price*x.quantity)+(x.price*x.quantity*x.vat/100)+x.delivery);
@@ -210,7 +207,7 @@ function renderTable(){
   });});
 }
 
-// ---------- Chart ----------
+// --- Chart ---
 const ctx=$('priceChart').getContext('2d');
 function renderChart(){
   if(chart) chart.destroy();
@@ -219,12 +216,9 @@ function renderChart(){
   chart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'Lowest Total (€)',data,backgroundColor:labels.map(()=>document.body.classList.contains('dark')?'#8d5bd6':'#4b0082')}]},options:{responsive:true,plugins:{legend:{display:false}}}});
 }
 
-// ---------- Map ----------
-let map=L.map('map').setView([52.3382,-6.4589],12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-let markers=[];
-function updateMap(){
-  markers.forEach(m=>map.removeLayer(m)); markers=[];
-  materials.forEach(m=>{m.prices.forEach(p=>{if(!p.lat||!p.lng) return;
-    const marker=L.marker([p.lat,p.lng]).addTo(map);
-    marker.bindPopup(`<b>${p.supplier}</b
+// --- Initialize ---
+load();refreshAll();
+</script>
+
+</body>
+</html>
