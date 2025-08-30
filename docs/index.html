@@ -4,63 +4,68 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Buildy v5 — Ultimate Price Advisor</title>
-
-<!-- Chart.js & XLSX -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
 <style>
 /* =============================
-   Buildy v5 CSS
+   FULL CSS for Buildy v5
    ============================= */
-:root{
-  --bg:#f9f9fb; --text:#222; --muted:#666; --card:#fff; --brand:#4b0082; --brand-2:#6a0dad; --border:#e5e7eb; --cheapest:#d4edda; --expensive:#f5d0d0; --mid:#fff6cf;
-}
-body.dark{
-  --bg:#141414; --text:#f2f2f2; --muted:#bdbdbd; --card:#1e1e1e; --brand:#8d5bd6; --brand-2:#a67bf0; --border:#2a2a2a; --cheapest:#285f2a; --expensive:#643333; --mid:#4b4426;
-}
-*{box-sizing:border-box;}
-body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s;}
-header{position:sticky;top:0;z-index:5;background:var(--brand);color:#fff;padding:12px 16px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-header .actions{display:flex;gap:8px;align-items:center;}
-.icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
-.icon-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);}
-.container{max-width:1200px;margin:0 auto;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
-.card h2{margin:0 0 8px 0;color:var(--brand);}
-.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
-input,select,button{font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);}
-input:focus,select:focus{outline:2px solid var(--brand);border-color:transparent;}
-button.primary{background:var(--brand);color:#fff;border:none;}
-button.primary:hover{background:var(--brand-2);}
-button.ghost{background:transparent;}
-.muted{color:var(--muted);font-size:12px;}
-details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,var(--brand),transparent) border-box;border:1px solid var(--border);color:var(--text);font-weight:600;}
-details[open]>summary{border-color:transparent;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;}
-table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto;}
-thead th{position:sticky;top:0;background:var(--brand);color:#fff;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;}
-thead th:last-child{border-right:none;}
-tbody td{border-top:1px solid var(--border);text-align:center;padding:10px;}
-td.cheapest{background:var(--cheapest);font-weight:700;}
-td.expensive{background:var(--expensive);}
-td.medium{background:var(--mid);}
-.canvas-mini{height:60px;max-width:150px;}
-.toast{position:fixed;bottom:20px;right:20px;background:#4b0082;color:#fff;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;}
-.spacer{flex:1;}
-footer{margin:24px 0;text-align:center;color:var(--muted);font-size:12px;}
-.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);}
-canvas{width:100%;height:320px;max-height:60vh;}
-.trend-badge{padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;color:#fff;margin:0 0.4rem 0.4rem 0;display:inline-block;opacity:0;transform:translateY(-10px);animation:fadeInUp 0.5s forwards;}
-.trend-up{background:#d9534f;}
-.trend-down{background:#5cb85c;}
-.trend-stable{background:#f0ad4e;}
-@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
-</style>
 
+/* ==== Global Reset ==== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Segoe UI", Tahoma, sans-serif; line-height:1.6; transition:background 0.3s,color 0.3s; background:#f9f9fb; color:#222; }
+body.dark { background:#121212; color:#f1f1f1; }
+
+/* ==== Header/Navbar ==== */
+header { position:sticky; top:0; z-index:1000; background:#4b0082; color:white; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:8px; }
+header .actions { display:flex; gap:8px; }
+.icon-btn { background:transparent; color:inherit; border:1px solid rgba(255,255,255,.35); padding:6px 10px; border-radius:6px; cursor:pointer; font-size:14px; transition:transform .15s ease, background .2s ease, border-color .2s ease; }
+.icon-btn:hover { transform:translateY(-1px); background:rgba(255,255,255,.12); }
+.visually-hidden { position:absolute!important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); }
+
+/* ==== Toast ==== */
+.toast { position:fixed; bottom:20px; right:20px; background:#4b0082; color:#fff; padding:12px 20px; border-radius:8px; opacity:0; transition:opacity .3s; }
+
+/* ==== Container & Cards ==== */
+.container{max-width:1200px;margin:0 auto;padding:16px;}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
+body.dark .card{background:#1e1e1e;color:#f1f1f1;}
+.card h2{margin:0 0 8px 0;color:#4b0082;}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+input,select,button{font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#222;}
+input:focus,select:focus{outline:2px solid #4b0082;border-color:transparent;}
+button.primary{background:#4b0082;color:#fff;border:none;}
+button.primary:hover{background:#6a0dad;}
+button.ghost{background:transparent;}
+.muted{color:#666;font-size:12px;}
+
+/* ==== Details ==== */
+details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,#4b0082,transparent) border-box;border:1px solid #e5e7eb;color:#222;font-weight:600;}
+details[open]>summary{border-color:transparent;background:linear-gradient(90deg,#4b0082,#6a0dad);color:#fff;}
+
+/* ==== Table ==== */
+table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto;}
+thead th{position:sticky;top:0;background:#4b0082;color:white;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);}
+thead th:last-child{border-right:none;}
+tbody td{border-top:1px solid #e5e7eb;text-align:center;padding:10px;}
+td.cheapest{background:#d4edda;font-weight:700;}
+td.expensive{background:#f5d0d0;}
+td.medium{background:#fff6cf;}
+canvas.canvas-mini{height:60px;max-width:150px;}
+
+/* ==== Chart Trend Arrows ==== */
+.trend-arrow{margin-left:5px;font-size:0.9em;}
+.trend-up{color:#d9534f;}
+.trend-down{color:#5cb85c;}
+
+/* ==== Footer ==== */
+footer{margin:24px 0;text-align:center;color:#666;font-size:12px;}
+
+/* ==== Responsive ==== */
+@media(max-width:768px){.row{flex-direction:column;}}
+</style>
 </head>
 <body>
-
 <header>
 <div>🏗️ Buildy v5 — Ultimate Price Advisor</div>
 <div class="actions">
@@ -74,7 +79,6 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <div id="toast" class="toast"></div>
 
 <main class="container">
-
 <section class="card">
 <details open>
 <summary>➕ Add Material Price</summary>
@@ -95,10 +99,10 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <section class="card">
 <details open>
 <summary>🔎 Filter & Export</summary>
-<div class="toolbar">
+<div class="row">
 <input id="filterMaterial" placeholder="Filter by material"/>
 <select id="filterSupplier"><option value="">All Suppliers</option></select>
-<div class="spacer"></div>
+<div style="flex:1"></div>
 <button id="exportExcelBtn" class="ghost">Export Excel</button>
 </div>
 </details>
@@ -121,182 +125,75 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <canvas id="priceChart"></canvas>
 </section>
 
-<section class="card">
-<h2>Supplier Trend Alerts</h2>
-<div id="trendResults" class="toolbar"></div>
-</section>
-
 <footer>Buildy v5 • Full Smart Advisor • © You</footer>
+</main>
 
 <script>
-// ====== Utility ======
+// ---------- Utility ----------
 function $(id){return document.getElementById(id);}
-let materials=[], chart; const LS_KEY='buildy_v5_materials';
+let materials=[], chart;
+const LS_KEY='buildy_v5_materials';
+
+// ---------- Load/Save ----------
 function load(){const s=localStorage.getItem(LS_KEY); if(s) materials=JSON.parse(s);}
 function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
+
+// ---------- Toast ----------
 function showToast(msg){const t=$('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,3000);}
 
-// ====== Elements ======
+// ---------- Elements ----------
 const materialInput=$('materialInput'),supplierInput=$('supplierInput'),unitInput=$('unitInput'),
 quantityInput=$('quantityInput'),priceInput=$('priceInput'),vatInput=$('vatInput'),deliveryInput=$('deliveryInput');
 const addBtn=$('addBtn'),filterMaterial=$('filterMaterial'),filterSupplier=$('filterSupplier'),exportExcelBtn=$('exportExcelBtn');
 const downloadJsonBtn=$('downloadJsonBtn'),uploadJsonInput=$('uploadJsonInput'),clearAllBtn=$('clearAllBtn'),darkToggle=$('darkToggle');
-const trendResults=$('trendResults');
 
-// ====== Init ======
+// ---------- Initialize ----------
 load(); refreshAll();
 
-// ====== Dark Mode ======
+// ---------- Dark Mode ----------
 darkToggle.addEventListener('click',()=>{
-  document.body.classList.toggle('dark');
-  darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
-  renderMainChart();
+    document.body.classList.toggle('dark'); 
+    darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; 
+    renderMainChart();
 });
 
-// ====== Add/Update ======
+// ---------- Add/Update Material ----------
 addBtn.addEventListener('click',()=>{
-  const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
-  const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
-  if(!name||!sup||!unit||isNaN(quantity)||isNaN(price)){alert('Fill required fields'); return;}
-  let mat=materials.find(m=>m.name.toLowerCase()===name.toLowerCase());
-  if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
-  const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
-  const today=new Date().toISOString().split('T')[0];
-  if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery;}
-  else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery});}
-  mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,date:today});
-  showToast(`${sup} updated for ${name}`);
-  materialInput.value=supplierInput.value=unitInput.value=quantityInput.value=priceInput.value=vatInput.value=deliveryInput.value='';
-  refreshAll();
+    const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
+    const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
+    if(!name||!sup||!unit||isNaN(quantity)||isNaN(price)){alert('Fill required fields'); return;}
+    let mat=materials.find(m=>m.name.toLowerCase()===name.toLowerCase());
+    if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
+    const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
+    const today=new Date().toISOString().split('T')[0];
+    if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery;}
+    else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery});}
+    mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,date:today});
+    showToast(`${sup} updated for ${name}`);
+    materialInput.value=supplierInput.value=unitInput.value=quantityInput.value=priceInput.value=vatInput.value=deliveryInput.value='';
+    refreshAll();
 });
 
-// ====== Filters ======
+// ---------- Filters ----------
 filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
 filterSupplier.addEventListener('change',refreshAll);
 
-// ====== Export Excel ======
+// ---------- Export Excel ----------
 exportExcelBtn.addEventListener('click',()=>{
-  const wb=XLSX.utils.book_new();
-  const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
-  materials.forEach(m=>{m.prices.forEach(p=>{
-    const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-    ws_data.push([m.name,p.supplier,p.unit,p.quantity,p.price,p.vat,p.delivery,total]);
-  });});
-  const ws=XLSX.utils.aoa_to_sheet(ws_data);
-  XLSX.utils.book_append_sheet(wb,ws,"Prices");
-  XLSX.writeFile(wb,"Buildy_Prices.xlsx");
+    const wb=XLSX.utils.book_new(); 
+    const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
+    materials.forEach(m=>{m.prices.forEach(p=>{
+        const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
+        ws_data.push([m.name,p.supplier,p.unit,p.quantity,p.price,p.vat,p.delivery,total]);
+    });});
+    const ws=XLSX.utils.aoa_to_sheet(ws_data);
+    XLSX.utils.book_append_sheet(wb,ws,"Prices");
+    XLSX.writeFile(wb,"Buildy_Prices.xlsx");
 });
 
-// ====== JSON Save/Load ======
+// ---------- JSON Save/Load ----------
 downloadJsonBtn.addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
+    const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
 });
 uploadJsonInput.addEventListener('change',async(e)=>{
-  const f=e.target.files[0]; if(!f)return;
-  try{
-    const t=await f.text();
-    const p=JSON.parse(t); if(!Array.isArray(p)) throw 'Invalid';
-    materials=p; refreshAll(); showToast('JSON Imported');
-  }catch(err){alert('Invalid JSON');}
-});
-clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[]; refreshAll(); showToast('All cleared');}});
-
-// ====== Refresh ======
-function refreshAll(){ save(); renderFilterOptions(); renderTable(); renderMainChart(); renderTrends(); }
-function renderFilterOptions(){
-  const suppliers=new Set();
-  materials.forEach(m=>m.prices.forEach(p=>suppliers.add(p.supplier)));
-  filterSupplier.innerHTML='<option value="">All Suppliers</option>';
-  Array.from(suppliers).sort().forEach(s=>{const o=document.createElement('option'); o.value=s; o.textContent=s; filterSupplier.appendChild(o);});
-}
-
-// ====== Render Table ======
-function renderTable(){
-  const tbody=$('priceTable').querySelector('tbody');
-  tbody.innerHTML='';
-  const headerTr=document.getElementById('tableHeader');
-  headerTr.innerHTML='';
-  ['Material','Supplier','Unit','Qty','Price (€)','VAT %','Delivery (€)','Total (€)','History'].forEach(h=>{
-    const th=document.createElement('th'); th.textContent=h; headerTr.appendChild(th);
-  });
-  const filterMat=filterMaterial.value.toLowerCase();
-  const filterSup=filterSupplier.value;
-  materials.forEach(m=>{
-    if(filterMat && !m.name.toLowerCase().includes(filterMat)) return;
-    m.prices.forEach(p=>{
-      if(filterSup && p.supplier!==filterSup) return;
-      const tr=document.createElement('tr');
-      const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-      const totals=m.prices.map(pp=>(pp.price*pp.quantity)+pp.delivery+(pp.price*pp.quantity*pp.vat/100));
-      const minTotal=Math.min(...totals);
-      const maxTotal=Math.max(...totals);
-      const tdMaker=(val,cls)=>{const td=document.createElement('td'); td.textContent=val; if(cls)td.className=cls; return td;};
-      tr.appendChild(tdMaker(m.name));
-      tr.appendChild(tdMaker(p.supplier));
-      tr.appendChild(tdMaker(p.unit));
-      tr.appendChild(tdMaker(p.quantity));
-      tr.appendChild(tdMaker(p.price));
-      tr.appendChild(tdMaker(p.vat));
-      tr.appendChild(tdMaker(p.delivery));
-      let cls='medium';
-      if(total===minTotal) cls='cheapest';
-      else if(total===maxTotal) cls='expensive';
-      tr.appendChild(tdMaker(total.toFixed(2),cls));
-      const tdChart=document.createElement('td');
-      const canvas=document.createElement('canvas'); canvas.className='canvas-mini';
-      tdChart.appendChild(canvas); tr.appendChild(tdChart);
-      tbody.appendChild(tr);
-      renderMiniChart(m, p.supplier, canvas);
-    });
-  });
-}
-
-// ====== Mini Chart ======
-function renderMiniChart(material, supplier, canvas){
-  const data=material.history.filter(h=>h.supplier===supplier).map(h=>({x:h.date, y:h.price}));
-  new Chart(canvas,{type:'line',data:{datasets:[{label:supplier,data:data,borderColor:'#4b0082',backgroundColor:'rgba(75,0,130,0.2)',fill:true,lineTension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}});
-}
-
-// ====== Main Chart ======
-function renderMainChart(){
-  if(chart) chart.destroy();
-  const labels=materials.map(m=>m.name);
-  const datasets=[];
-  const colors=['#4b0082','#6a0dad','#a67bf0','#8d5bd6','#c299ff'];
-  let colorIndex=0;
-  const filterSup=filterSupplier.value;
-  materials.forEach(m=>{
-    m.prices.forEach(p=>{
-      if(filterSup && p.supplier!==filterSup) return;
-      const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-      datasets.push({label:`${p.supplier} (${m.name})`,data:[total],backgroundColor:colors[colorIndex%colors.length],borderColor:colors[colorIndex%colors.length]});
-      colorIndex++;
-    });
-  });
-  const ctx=$('priceChart').getContext('2d');
-  chart=new Chart(ctx,{type:'bar',data:{labels:['Total per Material'],datasets:datasets},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}});
-}
-
-// ====== Trend Alerts ======
-function renderTrends(){
-  trendResults.innerHTML='';
-  materials.forEach(m=>{
-    m.prices.forEach(p=>{
-      const hist= m.history.filter(h=>h.supplier===p.supplier);
-      if(hist.length<2) return;
-      const last=hist[hist.length-1].price, prev=hist[hist.length-2].price;
-      let cls='trend-stable',text='Stable';
-      if(last<prev){cls='trend-down'; text='Falling';}
-      else if(last>prev){cls='trend-up'; text='Rising';}
-      const span=document.createElement('span');
-      span.className=`trend-badge ${cls}`;
-      span.textContent=`${p.supplier} (${m.name}): ${text}`;
-      trendResults.appendChild(span);
-    });
-  });
-}
-</script>
-
-</body>
-</html>
