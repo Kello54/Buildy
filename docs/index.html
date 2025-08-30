@@ -3,126 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - Compare Building Materials</title>
+<title>Buildy - No.1 Building Material Price Comparison</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* --- Premium Color Scheme --- */
 :root {
-  --primary-color: #4b3c7a;      /* deep purple */
-  --secondary-color: #6f5abf;    /* lighter accent */
-  --accent-color: #f5c359;       /* gold accent */
-  --bg-color: #f8f7fa;           /* light background */
-  --text-color: #222;            /* dark text */
-  --button-hover: #362b5c;       /* deep hover */
+  --primary-color: #4b3c7a;
+  --secondary-color: #6f5abf;
+  --accent-color: #f5c359;
+  --bg-color: #f8f7fa;
+  --text-color: #222;
+  --button-hover: #362b5c;
+  --hero-overlay: rgba(0,0,0,0.3);
 }
-
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); margin:0; }
-
-/* --- Header --- */
-header { 
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  padding:15px 40px; 
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
+body { font-family: 'Montserrat', sans-serif; margin:0; background:var(--bg-color); color:var(--text-color); }
+header { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); padding:15px 40px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.15); position:sticky; top:0; z-index:100; }
 header .logo { height:45px; margin-right:12px; }
-
-.brand-name { 
-  font-size:1.7em; 
-  font-weight:700; 
-  color:#fff; 
-}
-
+.brand-name { font-size:1.8em; font-weight:700; color:#fff; }
 .header-left { display:flex; align-items:center; }
-
-.header-right .login-btn { 
-  background: var(--accent-color); 
-  color:#fff; 
-  border:none; 
-  padding:10px 18px; 
-  border-radius:8px; 
-  font-weight:600;
-  cursor:pointer; 
-  transition: all 0.3s ease; 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.header-right .login-btn:hover { 
-  background: #d4a950; 
-  transform: translateY(-2px); 
-}
-
-/* --- Sub-header --- */
-.sub-header { 
-  background:#fff; 
-  display:flex; 
-  justify-content:center; 
-  gap:40px; 
-  padding:12px 0; 
-  border-bottom:1px solid #eee; 
-  font-weight:500;
-}
-.sub-header a { 
-  text-decoration:none; 
-  color: var(--primary-color); 
-  font-size:1.05em; 
-  transition: color 0.3s; 
-}
+.header-right .login-btn { background: var(--accent-color); color:#fff; border:none; padding:10px 18px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:all 0.3s; }
+.header-right .login-btn:hover { background:#d4a950; transform:translateY(-2px); }
+.sub-header { background:#fff; display:flex; justify-content:center; gap:40px; padding:12px 0; border-bottom:1px solid #eee; font-weight:500; }
+.sub-header a { text-decoration:none; color: var(--primary-color); font-size:1.05em; transition:color 0.3s; }
 .sub-header a:hover { color: var(--secondary-color); }
 
-/* --- Hero Section --- */
-.hero { 
-  text-align:center; 
-  padding:120px 20px; 
-  background: linear-gradient(180deg, #faf7ff, #f3f1fa); 
-  border-bottom:1px solid #eee;
-}
+.hero { position:relative; text-align:center; padding:140px 20px; color:#fff; background: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat; }
+.hero::before { content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:var(--hero-overlay); z-index:0; }
+.hero h1, .hero p, .hero button, .hero input { opacity:0; transform:translateY(20px); transition: all 0.8s ease-out; }
+.hero.loaded h1, .hero.loaded p, .hero.loaded button, .hero.loaded input { opacity:1; transform:translateY(0); }
+.hero h1 { font-size:2.8em; margin-bottom:20px; font-weight:700; position:relative; z-index:1; }
+.hero p { font-size:1.2em; margin-bottom:25px; position:relative; z-index:1; }
+.hero input, .hero button { padding:12px 18px; font-size:1.05em; margin:5px; border-radius:6px; border:none; position:relative; z-index:1; }
+.hero input { width:250px; }
+.hero button { background: var(--accent-color); color:#fff; font-weight:700; cursor:pointer; transition:0.3s; }
+.hero button:hover { background:#d4a950; transform:translateY(-2px); }
 
-.hero h1 { 
-  font-size:2.4em; 
-  margin-bottom:20px; 
-  color: var(--primary-color); 
-  font-weight:700;
-}
-.hero p { font-size:1.15em; color: var(--text-color); }
-.hero input, .hero button { 
-  padding:12px 18px; font-size:1.05em; margin:5px; border-radius:6px; border:1px solid #ccc; 
-}
-.hero button { 
-  background: var(--primary-color); 
-  color:#fff; 
-  border:none; 
-  cursor:pointer; 
-  font-weight:600;
-}
-.hero button:hover { background: var(--secondary-color); }
-
-/* --- Comparison Table --- */
 .comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
-table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); min-width:800px; }
-th, td { padding:18px; text-align:center; border-bottom:1px solid #ddd; }
-th { background: #e6e0f3; color: var(--primary-color); cursor:pointer; }
-tr:hover { background:#f1f1f1; }
-.cheapest { background:#d4edda; color:#155724; font-weight:bold; }
-.overall-cheapest { border:2px solid var(--primary-color); }
-tr.category-header td { text-align:left; font-weight:bold; background:#f0ebf9; color: var(--primary-color); padding-top:20px; padding-bottom:20px; }
+table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); min-width:800px; border-radius:8px; overflow:hidden; }
+th, td { padding:16px; text-align:center; }
+th { background: var(--primary-color); color:#fff; cursor:pointer; }
+tbody tr { opacity:0; transform: translateY(10px); transition: all 0.4s ease; }
+tbody tr.visible { opacity:1; transform: translateY(0); }
+tbody tr:nth-child(even) { background:#f8f7fa; }
+tbody tr:hover { box-shadow:0 4px 12px rgba(0,0,0,0.15); transform:scale(1.02); }
+.cheapest { animation: pulse 1s infinite alternate; font-weight:bold; }
+@keyframes pulse { 0% { background-color:#d4edda; } 100% { background-color:#c3e6cb; } }
+.overall-cheapest { border:2px solid var(--accent-color); }
+tr.category-header td { text-align:left; font-weight:bold; background:#e6e0f3; color: var(--primary-color); padding:15px 10px; }
 
-/* --- Features --- */
+#map { width:90%; height:400px; margin:50px auto; border:1px solid #ccc; border-radius:12px; }
+
 .features { display:flex; flex-wrap:wrap; justify-content:center; gap:40px; padding:60px 20px; text-align:center; }
-.feature { background:#fff; padding:35px 25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; transition:transform 0.3s; }
+.feature { background:#fff; padding:30px 25px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); width:260px; transition:transform 0.3s; }
 .feature:hover { transform:translateY(-5px); }
-.feature h3 { margin-bottom:15px; color: var(--primary-color); }
+.feature h3 { margin-bottom:15px; color: var(--primary-color); font-weight:700; }
 .feature p { font-size:0.95em; }
 
-/* --- Footer --- */
-footer { background: var(--primary-color); color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
+footer { background: var(--primary-color); color:#fff; text-align:center; padding:20px; font-size:0.9em; }
 footer a { color:#fff; margin-right:15px; text-decoration:none; }
 footer a:hover { text-decoration:underline; }
 
-/* --- Login Modal --- */
 .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; }
 .modal-content { background:#fff; padding:30px; border-radius:8px; width:300px; text-align:center; position:relative; }
 .modal-content h2 { margin-bottom:20px; color: var(--primary-color); }
@@ -131,20 +71,12 @@ footer a:hover { text-decoration:underline; }
 .modal-content button:hover { background: var(--secondary-color); }
 .close { position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; color:#333; }
 
-/* --- Dashboard Section --- */
 #dashboard { display:none; padding:50px 20px; }
 .dashboard-cards { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
 .card { background:#fff; padding:25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; text-align:center; }
-.card h3 { margin-bottom:15px; color: var(--primary-color); }
+.card h3 { margin-bottom:15px; color: var(--primary-color); font-weight:700; }
 
-/* --- Map --- */
-#map { width:90%; height:400px; margin:50px auto; border:1px solid #ccc; border-radius:12px; }
-
-/* --- Responsive --- */
-@media(max-width:768px){ 
-  .features, .dashboard-cards { flex-direction:column; align-items:center; } 
-  header { flex-direction:column; gap:10px; } 
-}
+@media(max-width:768px){ .features, .dashboard-cards { flex-direction:column; align-items:center; } header { flex-direction:column; gap:10px; } }
 </style>
 </head>
 <body>
@@ -165,15 +97,13 @@ footer a:hover { text-decoration:underline; }
   <a href="#">Suppliers</a>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero">
   <h1>No.1 building material price comparison website</h1>
   <p>Quickly find the cheapest prices across multiple suppliers</p>
   <input type="text" id="searchInput" placeholder="Enter material...">
-  <button id="downloadCSV">Download CSV</button>
+  <button id="downloadCSV">Start Comparing</button>
 </section>
 
-<!-- Supplier Comparison Table in Middle -->
 <section class="comparison">
   <table id="materialsTable">
     <thead><tr id="tableHeader"></tr></thead>
@@ -181,17 +111,14 @@ footer a:hover { text-decoration:underline; }
   </table>
 </section>
 
-<!-- Map of Suppliers -->
 <section id="map"></section>
 
-<!-- Features Section -->
 <section class="features">
   <div class="feature"><h3>Select Material</h3><p>Search or browse materials you need to purchase.</p></div>
   <div class="feature"><h3>Compare Prices</h3><p>See prices from multiple suppliers at a glance.</p></div>
   <div class="feature"><h3>Choose Supplier</h3><p>Select the cheapest or most convenient supplier for your order.</p></div>
 </section>
 
-<!-- Dashboard Section -->
 <section id="dashboard">
   <h2 style="text-align:center; color: var(--primary-color);">Dashboard</h2>
   <div class="dashboard-cards">
@@ -200,7 +127,7 @@ footer a:hover { text-decoration:underline; }
     <div class="card" id="savedComparisonsCard"><h3>Saved Comparisons</h3><ul id="savedComparisons"></ul></div>
     <div class="card" id="statsCard"><h3>Stats</h3><p id="statsContent">No comparisons yet</p></div>
     <div class="card"><h3>Export</h3><button id="exportDashboard">Download CSV</button></div>
-    <div class="card"><h3>Navigation</h3><button id="backToCompare" style="background: var(--primary-color);color:#fff;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;">Back to Comparison</button></div>
+    <div class="card"><h3>Navigation</h3><button id="backToCompare" style="background:var(--primary-color);color:#fff;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;">Back to Comparison</button></div>
   </div>
 </section>
 
@@ -212,7 +139,6 @@ footer a:hover { text-decoration:underline; }
   </div>
 </footer>
 
-<!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -223,38 +149,40 @@ footer a:hover { text-decoration:underline; }
   </div>
 </div>
 
-<!-- Scripts -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 <script>
-// Suppliers with coordinates
+// Hero animation
+window.addEventListener('load', ()=>{
+  document.querySelector('.hero').classList.add('loaded');
+});
+
+// Suppliers & Materials
 const suppliers = [
-  { name: "Woodie's", lat: 52.336, lng: -6.465 },
-  { name: "TJ O'Mahony", lat: 52.340, lng: -6.456 },
-  { name: "McMahon's DIY", lat: 52.337, lng: -6.457 },
-  { name: "Chadwicks", lat: 52.319, lng: -6.513 },
-  { name: "Traynors", lat: 52.334, lng: -6.467 },
-  { name: "C&C Builders Providers Ltd", lat: 52.337, lng: -6.504 },
-  { name: "South East Providers", lat: 52.338, lng: -6.510 },
-  { name: "DPL Bathroom World", lat: 52.336, lng: -6.464 },
-  { name: "J.J Bolgers Topline Hardware", lat: 52.339, lng: -6.639 },
-  { name: "Screwfix Wexford", lat: 52.337, lng: -6.494 }
+  {name:"Woodie's", lat:52.336,lng:-6.465},
+  {name:"TJ O'Mahony", lat:52.342,lng:-6.462},
+  {name:"McMahon's DIY", lat:52.337,lng:-6.460},
+  {name:"Chadwicks", lat:52.339,lng:-6.470},
+  {name:"Traynors", lat:52.338,lng:-6.468},
+  {name:"C&C Builders", lat:52.340,lng:-6.463},
+  {name:"South East Providers", lat:52.335,lng:-6.467},
+  {name:"DPL Bathroom World", lat:52.341,lng:-6.466},
+  {name:"J.J Bolgers", lat:52.334,lng:-6.464},
+  {name:"Screwfix", lat:52.336,lng:-6.469}
 ];
 
-// Materials & prices
 const materials = [
-  { category: "Cement", name: "Cement (50kg)" },
-  { category: "Cement", name: "Cement (25kg)" },
-  { category: "Lumber", name: "Lumber (2x4)" },
-  { category: "Lumber", name: "Lumber (4x4)" },
-  { category: "Bricks", name: "Bricks (per 100)" }
+  {category:"Cement", name:"Cement (50kg)"},
+  {category:"Cement", name:"Cement (25kg)"},
+  {category:"Lumber", name:"Lumber (2x4)"},
+  {category:"Lumber", name:"Lumber (4x4)"},
+  {category:"Bricks", name:"Bricks (per 100)"}
 ];
-materials.forEach(m => m.prices = suppliers.map(()=> (Math.random()*10+3).toFixed(2))); // random prices
+materials.forEach(m => m.prices = suppliers.map(()=> parseFloat((Math.random()*10+3).toFixed(2))));
 
 // Table functions
 const tableHeader=document.getElementById("tableHeader");
 const tableBody=document.getElementById("tableBody");
 const searchInput=document.getElementById("searchInput");
-let recentSearches=[]; let savedComparisons=[];
+let recentSearches=[];
 
 function createHeader(){
   tableHeader.innerHTML="";
@@ -264,15 +192,17 @@ function createHeader(){
 
 function generateTable(filteredMaterials){
   tableBody.innerHTML=""; let currentCategory="";
-  filteredMaterials.forEach(m => {
+  filteredMaterials.forEach((m,index) => {
     if(m.category !== currentCategory){ currentCategory = m.category;
-      let catRow = document.createElement("tr"); catRow.classList.add("category-header");
+      let catRow = document.createElement("tr"); catRow.classList.add("category-header", "visible");
       let td = document.createElement("td"); td.colSpan = suppliers.length + 1; td.textContent = currentCategory;
       catRow.appendChild(td); tableBody.appendChild(catRow);
     }
-    let row = document.createElement("tr"); let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
+    let row = document.createElement("tr");
+    let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
     m.prices.forEach(p => { let td = document.createElement("td"); td.textContent = p; row.appendChild(td); });
     tableBody.appendChild(row); highlightCheapest(row,m.prices);
+    setTimeout(()=>row.classList.add('visible'), index*50);
   });
 }
 
@@ -292,7 +222,7 @@ function filterTable(){
 searchInput.addEventListener("input",filterTable);
 createHeader(); generateTable(materials);
 
-// Dashboard & Login
+// Login & Dashboard
 const loginBtn=document.getElementById("loginBtn");
 const modal=document.getElementById("loginModal");
 const closeBtn=document.querySelector(".close");
@@ -345,13 +275,20 @@ function initMap(){
     zoom: 12,
     center: {lat:52.336, lng:-6.465}
   });
-  suppliers.forEach(s => {
-    const marker = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map, title:s.name });
+  suppliers.forEach((s,index) => {
+    const marker = new google.maps.Marker({
+      position:{lat:s.lat,lng:s.lng},
+      map,
+      title:s.name,
+      animation: google.maps.Animation.DROP,
+      icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+    });
     const info = new google.maps.InfoWindow({ content:`<strong>${s.name}</strong>` });
     marker.addListener("click", ()=> info.open(map, marker));
+    setTimeout(()=>marker.setMap(map), index*200);
   });
 }
-window.onload = initMap;
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>
