@@ -20,17 +20,19 @@
 
   /* ===== HEADER ===== */
   header {
-    background-color: #ffffff; /* white */
-    color: #4b0082; /* purple text */
+    background-color: #ffffff;
+    color: #4b0082;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
     position: sticky;
     top: 0;
-    border-bottom: 2px solid #4b0082; /* purple line */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
     z-index: 100;
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, #4b0082, #6a0dad) 1;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* subtle floating shadow */
+    border-radius: 0 0 10px 10px; /* slight rounded bottom for floating effect */
   }
 
   .logo {
@@ -61,7 +63,6 @@
     transition: all 0.3s ease;
   }
 
-  /* Gold underline on hover */
   .login-btn::after {
     content: '';
     position: absolute;
@@ -78,7 +79,7 @@
   }
 
   .login-btn:hover {
-    background-color: #f3e5f5; /* subtle purple background */
+    background-color: #f3e5f5;
   }
 
   /* ===== SUB-HEADER ===== */
@@ -87,11 +88,12 @@
     display: flex;
     justify-content: center;
     padding: 14px 0;
-    border-bottom: 2px solid #4b0082; /* purple line */
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, #4b0082, #6a0dad) 1;
   }
 
   .sub-header-container a {
-    color: #4b0082; /* purple text */
+    color: #4b0082;
     text-decoration: none;
     font-weight: 500;
     padding: 0 30px;
@@ -100,7 +102,7 @@
     transition: color 0.3s ease;
   }
 
-  /* Gold vertical separators */
+  /* gold vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
@@ -111,7 +113,7 @@
     background-color: gold;
   }
 
-  /* Gold underline on hover */
+  /* gold underline on hover */
   .sub-header-container a::before {
     content: '';
     position: absolute;
@@ -127,17 +129,70 @@
     width: 100%;
   }
 
-  /* ===== RESPONSIVE ===== */
-  @media(max-width: 768px){
+  /* ===== MAIN CONTENT ===== */
+  main {
+    padding: 60px 40px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background-color: #ffffff;
+    border-top: 3px solid #4b0082;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  footer a {
+    color: #4b0082;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0 5px;
+  }
+
+  footer a:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5px;
+    height: 70%;
+    background-color: gold;
+  }
+
+  footer a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    background-color: gold;
+    transition: width 0.3s ease;
+  }
+
+  footer a:hover::before {
+    width: 100%;
+  }
+
+  @media(max-width:768px){
     .sub-header-container {
       flex-wrap: wrap;
       gap: 12px;
     }
-    .sub-header-container a::after {
-      display: none; /* remove separator on small screens */
+    .sub-header-container a::after,
+    footer a::after {
+      display: none;
+    }
+    footer {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
   }
-
 </style>
 </head>
 <body>
@@ -156,15 +211,19 @@
     <a href="#">Home</a>
     <a href="#">Suppliers</a>
     <a href="#">Products</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
   </div>
 
   <!-- PAGE CONTENT -->
-  <main style="padding: 40px;">
+  <main>
     <h1>Welcome to Buildy!</h1>
     <p>This is your smart tool management platform. Explore suppliers, products, and manage your orders efficiently.</p>
   </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </footer>
 
 </body>
 </html>
