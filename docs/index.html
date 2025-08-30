@@ -20,15 +20,16 @@
 
   /* ===== HEADER ===== */
   header {
-    background-color: #9c27b0; /* lighter purple */
-    color: #fff;
+    background-color: #ffffff; /* white background */
+    color: #4b0082; /* deep purple text */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
     position: sticky;
     top: 0;
-    border-bottom: 3px solid gold; /* subtle gold underline */
+    border-bottom: 2px solid #e0e0e0; /* subtle gray line for separation */
+    z-index: 100;
   }
 
   .logo {
@@ -48,10 +49,10 @@
   }
 
   .login-btn {
-    background-color: #ffd700; /* softer gold */
-    color: #4b0082; /* dark purple text */
+    background-color: #4b0082; /* purple background */
+    color: #fff; /* white text */
     padding: 8px 18px;
-    border: 2px solid gold;
+    border: 2px solid #4b0082;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -59,20 +60,20 @@
   }
 
   .login-btn:hover {
-    background-color: #fff5b1; /* light gold on hover */
-    border-color: #e6c200;
+    background-color: #6a0dad; /* lighter purple on hover */
+    border-color: #6a0dad;
   }
 
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
-    background-color: #ba68c8; /* lighter purple than header */
+    background-color: #6a0dad; /* purple sub-header */
     display: flex;
     justify-content: center;
     padding: 12px 0;
   }
 
   .sub-header-container a {
-    color: #fff;
+    color: #FFD700; /* gold text */
     text-decoration: none;
     font-weight: 500;
     padding: 0 25px;
@@ -88,7 +89,7 @@
     top: 10%;
     width: 2px;
     height: 80%;
-    background-color: gold;
+    background-color: #FFD700; 
   }
 
   /* ===== RESPONSIVE ===== */
@@ -98,7 +99,7 @@
       gap: 10px;
     }
     .sub-header-container a::after {
-      display: none;
+      display: none; /* remove separator on small screens */
     }
   }
 
@@ -106,6 +107,7 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="logo">
       <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
@@ -114,6 +116,7 @@
     <button class="login-btn">Login</button>
   </header>
 
+  <!-- SUB-HEADER -->
   <div class="sub-header-container">
     <a href="#">Home</a>
     <a href="#">Suppliers</a>
@@ -122,6 +125,7 @@
     <a href="#">Contact</a>
   </div>
 
+  <!-- PAGE CONTENT -->
   <main style="padding: 40px;">
     <h1>Welcome to Buildy!</h1>
     <p>This is your smart tool management platform. Explore suppliers, products, and manage your orders efficiently.</p>
