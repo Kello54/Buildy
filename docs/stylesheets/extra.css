@@ -1,5 +1,5 @@
 /* =============================
-   EXTRA.CSS for Buildy
+   EXTRA.CSS for Buildy v5
    ============================= */
 
 /* ==== Global Reset ==== */
@@ -200,6 +200,98 @@ body.dark tbody tr:nth-child(even) {
   vertical-align: middle;
 }
 
+/* ==== Supplier Trends Section ==== */
+#supplier-trends {
+  padding: 3rem 1rem;
+}
+#supplierForm {
+  margin: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+#supplierForm input, 
+#supplierForm button {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+#supplierForm button {
+  background: #4b0082;
+  color: #ffcc00;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+#supplierForm button:hover {
+  background: #6a0dad;
+  color: #fff;
+}
+#supplier-trends table {
+  width: 90%;
+  margin: 1rem auto;
+  border-collapse: collapse;
+}
+#supplier-trends th, 
+#supplier-trends td {
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+#supplier-trends th {
+  background: #4b0082;
+  color: #fff;
+}
+#supplier-trends tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+body.dark #supplier-trends tbody tr:nth-child(even) {
+  background: #2a2a2a;
+}
+
+/* Badges for Supplier Trends */
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+}
+.badge-down {
+  background-color: #4b0082;
+}
+.badge-up {
+  background-color: #ffcc00;
+  color: black;
+}
+.badge-stable {
+  background-color: #666;
+}
+
+/* ==== Toast Alerts ==== */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4b0082;
+  color: #ffcc00;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0.95;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 0.95; }
+}
+
 /* ==== Footer ==== */
 footer {
   text-align: center;
@@ -227,4 +319,3 @@ footer {
 #backTop:hover {
   background: #6a0dad;
 }
-
