@@ -20,86 +20,108 @@
 
   /* ===== HEADER ===== */
   header {
-    background-color: #ffffff; /* white background */
-    color: #4b0082; /* deep purple text */
+    background-color: #ffffff;
+    color: #4b0082;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
+    padding: 20px 40px;
     position: sticky;
     top: 0;
-    border-bottom: 2px solid #e0e0e0; /* subtle gray line for separation */
+    border-bottom: 2px solid gold;
     z-index: 100;
   }
 
   .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
 
   .logo img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
   }
 
   .main-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 
   .login-btn {
-    background-color: #4b0082; /* purple background */
-    color: #fff; /* white text */
-    padding: 8px 18px;
-    border: 2px solid #4b0082;
-    border-radius: 4px;
+    background-color: #ffffff;
+    color: #FFD700;
+    padding: 10px 22px;
+    border: 2px solid #FFD700;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s ease;
   }
 
   .login-btn:hover {
-    background-color: #6a0dad; /* lighter purple on hover */
-    border-color: #6a0dad;
+    background-color: #fff5b1; /* subtle gold background */
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); /* subtle glow */
   }
 
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
-    background-color: #6a0dad; /* purple sub-header */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
-    padding: 12px 0;
+    padding: 14px 0;
+    border-bottom: 2px solid gold;
   }
 
   .sub-header-container a {
-    color: #FFD700; /* gold text */
+    color: #4b0082;
     text-decoration: none;
     font-weight: 500;
-    padding: 0 25px;
+    padding: 0 30px;
     position: relative;
     display: inline-block;
+    transition: color 0.3s ease;
   }
 
-  /* visible gold vertical separators */
+  /* gold vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
     right: 0;
-    top: 10%;
-    width: 2px;
-    height: 80%;
-    background-color: #FFD700; 
+    top: 15%;
+    width: 1.5px;
+    height: 70%;
+    background-color: gold;
+  }
+
+  /* hover effect: gold underline */
+  .sub-header-container a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    background-color: gold;
+    transition: width 0.3s ease;
+  }
+
+  .sub-header-container a:hover::before {
+    width: 100%;
+  }
+
+  .sub-header-container a:hover {
+    color: #4b0082;
   }
 
   /* ===== RESPONSIVE ===== */
   @media(max-width: 768px){
     .sub-header-container {
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
     .sub-header-container a::after {
-      display: none; /* remove separator on small screens */
+      display: none;
     }
   }
 
