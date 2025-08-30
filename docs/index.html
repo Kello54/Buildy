@@ -6,7 +6,6 @@
 <title>Buildy - Compare Building Materials</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -50,41 +49,70 @@ header .logo img { height:40px; margin-right:12px; }
 .sub-header a:hover { background:#d6eaf8; color:#1c5980; }
 
 /* ===== Hero Section ===== */
-.hero { text-align:center; padding:60px 20px; background:#ecf0f1; }
-.hero h1 { font-size:2em; margin-bottom:15px; color:#2c3e50; }
-.hero p { font-size:1em; margin-bottom:20px; }
-.hero input, .hero select, .hero button {
-  padding:10px 12px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc;
+.hero {
+  text-align:center; 
+  padding:80px 20px; 
+  background: linear-gradient(135deg, #f0f4f8, #e4ebf2);
+  border-radius:12px;
+  margin:20px auto;
+  max-width:1000px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+.hero h1 { font-size:2.2em; margin-bottom:15px; color:#2c3e50; }
+.hero p { font-size:1.1em; margin-bottom:20px; }
+.hero input, .hero select {
+  padding:10px 12px; font-size:1em; margin:5px; border-radius:8px; border:1px solid #ccc;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .hero button {
-  background:#2980b9; color:#ffffff; border:none; cursor:pointer; transition:0.3s;
+  background: linear-gradient(135deg, #2980b9, #1c5980);
+  color:#ffffff; border:none; border-radius:8px; padding:10px 16px; cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  margin:5px;
 }
-.hero button:hover { background:#1c5980; }
+.hero button:hover {
+  transform: translateY(-2px);
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
 
 /* ===== Materials Table ===== */
 .comparison { width:90%; max-width:1200px; margin:20px auto; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; background:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
 th, td { padding:14px; text-align:center; border-bottom:1px solid #ddd; }
-th { background:#2980b9; color:#ffffff; cursor:pointer; }
-tr:hover { background:#f1f1f1; }
-.cheapest { background:#d4efdf; color:#155724; font-weight:bold; }
+th {
+  background: linear-gradient(135deg, #2980b9, #1c5980);
+  color:#ffffff; cursor:pointer;
+  transition: background 0.3s ease;
+}
+tr:hover { background-color: #f1f1f1; transition: background-color 0.3s ease; }
+.cheapest { background-color:#d4efdf; color:#155724; font-weight:bold; animation: highlightPrice 0.6s ease; }
 .overall-cheapest { border:2px solid #1c5980; }
 tr.category-header td { text-align:left; font-weight:bold; background:#d6eaf8; color:#2980b9; padding:15px; }
+
+@keyframes highlightPrice {
+  0% { background-color: #ffffff; }
+  50% { background-color: #d4efdf; }
+  100% { background-color: #d4efdf; }
+}
 
 /* ===== Material Cards ===== */
 .material-cards { display:none; padding:20px; gap:15px; flex-wrap:wrap; justify-content:center; }
 .material-card {
-  background:#ffffff; padding:15px; border-radius:10px; box-shadow:0 3px 12px rgba(0,0,0,0.08);
-  width:250px; transition:0.3s; display:flex; flex-direction:column; align-items:center;
+  background:#ffffff; padding:20px; border-radius:12px; box-shadow:0 4px 18px rgba(0,0,0,0.08);
+  width:260px; display:flex; flex-direction:column; align-items:center; transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.material-card:hover { transform:translateY(-5px); }
+.material-card:hover { transform:scale(1.03); box-shadow:0 8px 25px rgba(0,0,0,0.18); }
 .material-card h3 { margin:10px 0 5px; color:#2980b9; font-size:1.1em; }
 .material-card p { font-size:0.9em; margin:3px 0; }
 .material-card .price { font-weight:700; color:#27ae60; }
 .material-card button {
-  margin-top:10px; padding:8px 12px; border:none; background:#2980b9; color:#ffffff; border-radius:5px; cursor:pointer; transition:0.3s;
+  background: linear-gradient(135deg, #2980b9, #1c5980);
+  color:#ffffff; border:none; border-radius:8px; padding:8px 12px; cursor:pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top:10px;
 }
-.material-card button:hover { background:#1c5980; }
+.material-card button:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(0,0,0,0.2); }
 
 /* ===== Features Section ===== */
 .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:40px 20px; text-align:center; }
@@ -228,7 +256,7 @@ function getFilteredMaterials(){
 function generateTable(filtered){
   tableBody.innerHTML="";
   materialCards.innerHTML="";
-  filtered.forEach(m=>{
+  filtered.forEach((m,i)=>{
     // Table Row
     const tr = document.createElement("tr");
     const tdName = document.createElement("td");
@@ -239,56 +267,4 @@ function generateTable(filtered){
       td.textContent = p.toFixed(2);
       tr.appendChild(td);
     });
-    tableBody.appendChild(tr);
-    // Card View
-    const card = document.createElement("div");
-    card.className="material-card";
-    card.innerHTML=`<h3>${m.name}</h3>
-      <p>Category: ${m.category}</p>
-      ${m.prices.map((p,i)=>`<p>${suppliers[i]}: €${p.toFixed(2)}</p>`).join('')}
-      <button>Compare Prices</button>`;
-    materialCards.appendChild(card);
-  });
-}
-
-// CSV Export
-document.getElementById("downloadCSV").addEventListener("click", () => {
-  const filtered = getFilteredMaterials();
-  let csvContent = "Material,Category," + suppliers.join(",") + "\n";
-  filtered.forEach(m => {
-    csvContent += [m.name, m.category, ...m.prices.map(p => p.toFixed(2))].join(",") + "\n";
-  });
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "buildy_materials.csv";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-});
-
-// Event Listeners
-searchInput.addEventListener("input", ()=>generateTable(getFilteredMaterials()));
-categoryFilter.addEventListener("change", ()=>generateTable(getFilteredMaterials()));
-
-// Toggle Table/Card View
-let isCardView = false;
-toggleButton.addEventListener("click", () => {
-  isCardView = !isCardView;
-  if(isCardView){
-    materialsTable.classList.add("table-view-hidden");
-    materialCards.style.display = "flex";
-    toggleButton.textContent = "Switch to Table View";
-  } else {
-    materialsTable.classList.remove("table-view-hidden");
-    materialCards.style.display = "none";
-    toggleButton.textContent = "Switch to Cards View";
-  }
-});
-
-// Initial Render
-createHeader();
-generateTable(materials);
-</script>
-</body>
-</html>
+   
