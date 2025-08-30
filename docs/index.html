@@ -6,7 +6,6 @@
 <title>Buildy - Smart Tool Management</title>
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 <style>
-  /* ===== GLOBAL RESET ===== */
   * {
     margin: 0;
     padding: 0;
@@ -29,7 +28,6 @@
     padding: 15px 30px;
     position: sticky;
     top: 0;
-    z-index: 100;
     border-bottom: 3px solid gold; /* gold underline */
   }
 
@@ -66,7 +64,7 @@
 
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
-    background-color: #7b1fa2; /* slightly lighter than header */
+    background-color: #7b1fa2; /* slightly lighter */
     display: flex;
     justify-content: center;
     padding: 12px 0;
@@ -78,34 +76,27 @@
     font-weight: 500;
     padding: 0 25px;
     position: relative;
-    display: flex;
-    align-items: center;
+    display: inline-block; /* key fix */
   }
 
-  /* visible gold vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;          /* thicker for visibility */
-    height: 70%;         /* taller line */
-    background-color: gold; 
+    top: 10%; /* from top */
+    width: 2px;
+    height: 80%; /* tall enough */
+    background-color: gold;
   }
 
   /* ===== RESPONSIVE ===== */
   @media(max-width: 768px){
-    header {
-      flex-direction: row;
-      justify-content: space-between;
-    }
     .sub-header-container {
       flex-wrap: wrap;
       gap: 10px;
     }
     .sub-header-container a::after {
-      display: none; /* remove separator on small screens */
+      display: none;
     }
   }
 
@@ -113,17 +104,14 @@
 </head>
 <body>
 
-  <!-- MAIN HEADER -->
   <header>
     <div class="logo">
       <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
       <div class="main-title">Buildy</div>
     </div>
-
     <button class="login-btn">Login</button>
   </header>
 
-  <!-- SUB-HEADER -->
   <div class="sub-header-container">
     <a href="#">Home</a>
     <a href="#">Suppliers</a>
@@ -132,7 +120,6 @@
     <a href="#">Contact</a>
   </div>
 
-  <!-- PAGE CONTENT -->
   <main style="padding: 40px;">
     <h1>Welcome to Buildy!</h1>
     <p>This is your smart tool management platform. Explore suppliers, products, and manage your orders efficiently.</p>
