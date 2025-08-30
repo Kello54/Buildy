@@ -6,45 +6,34 @@
 <title>Buildy - Compare Building Materials</title>
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
 <style>
-  /* --- Reset & Global --- */
-  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
-  body { background:#f8f9fa; color:#333; line-height:1.6; }
-
-  /* --- Header --- */
+  body { font-family: Arial, sans-serif; background:#f8f9fa; color:#333; margin:0; }
   header { background:#fff; padding:20px 40px; box-shadow:0 2px 4px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; }
   header .logo { font-weight:bold; font-size:1.5em; color:#007bff; }
   nav a { margin-left:20px; text-decoration:none; color:#333; font-weight:500; }
   nav a:hover { color:#007bff; }
-
-  /* --- Hero Section --- */
   .hero { text-align:center; padding:80px 20px; background:#e9ecef; }
   .hero h1 { font-size:2.2em; margin-bottom:20px; color:#007bff; }
-  .hero p { font-size:1.1em; margin-bottom:30px; }
   .hero input, .hero button { padding:10px 15px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc; }
   .hero button { background:#007bff; color:#fff; border:none; cursor:pointer; }
   .hero button:hover { background:#0056b3; }
-
-  /* --- Comparison Table --- */
   .comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
   table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
   th, td { padding:15px; text-align:center; border-bottom:1px solid #ddd; }
-  th { background:#007bff; color:#fff; }
+  th { background:#007bff; color:#fff; cursor:pointer; }
   tr:hover { background:#f1f1f1; }
   .cheapest { background:#d4edda; color:#155724; font-weight:bold; }
-
-  /* --- Features Section --- */
+  .category-cheapest { background:#fff3cd; color:#856404; font-weight:bold; }
+  .overall-cheapest { border:2px solid #155724; }
   .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:50px 20px; text-align:center; }
   .feature { background:#fff; padding:30px 20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); width:250px; }
   .feature h3 { margin-bottom:15px; color:#007bff; }
   .feature p { font-size:0.95em; }
-
-  /* --- Footer --- */
   footer { background:#343a40; color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
+  tr.category-header td { text-align:left; font-weight:bold; background:#f1f1f1; }
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="logo">Buildy</div>
   <nav>
@@ -56,57 +45,22 @@
   </nav>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <h1>Compare Building Materials Instantly</h1>
-  <p>Find the cheapest prices from 1–5 suppliers at a glance</p>
-  <input type="text" placeholder="Enter material...">
-  <button>Compare</button>
+  <p>Find the cheapest prices from multiple suppliers at a glance</p>
+  <input type="text" id="searchInput" placeholder="Enter material...">
+  <button id="downloadCSV">Download CSV</button>
 </section>
 
-<!-- Comparison Table -->
 <section class="comparison">
-  <table>
+  <table id="materialsTable">
     <thead>
-      <tr>
-        <th>Material</th>
-        <th>Supplier 1</th>
-        <th>Supplier 2</th>
-        <th>Supplier 3</th>
-        <th>Supplier 4</th>
-        <th>Supplier 5</th>
-      </tr>
+      <tr id="tableHeader"></tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>Cement (50kg)</td>
-        <td class="cheapest">€7.50</td>
-        <td>€8.00</td>
-        <td>€7.80</td>
-        <td>€8.20</td>
-        <td>€7.90</td>
-      </tr>
-      <tr>
-        <td>Lumber (2x4)</td>
-        <td>€3.50</td>
-        <td class="cheapest">€3.20</td>
-        <td>€3.40</td>
-        <td>€3.60</td>
-        <td>€3.55</td>
-      </tr>
-      <tr>
-        <td>Bricks (per 100)</td>
-        <td>€25.00</td>
-        <td>€24.50</td>
-        <td class="cheapest">€24.00</td>
-        <td>€24.80</td>
-        <td>€25.20</td>
-      </tr>
-    </tbody>
+    <tbody id="tableBody"></tbody>
   </table>
 </section>
 
-<!-- Features -->
 <section class="features">
   <div class="feature">
     <h3>Select Material</h3>
@@ -122,10 +76,110 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   &copy; 2025 Buildy | Compare building materials quickly and easily
 </footer>
 
-</body>
-</html>
+<script>
+const suppliers = ["Supplier 1","Supplier 2","Supplier 3","Supplier 4","Supplier 5"];
+const materials = [
+  { category: "Cement", name: "Cement (50kg)", prices: [7.50, 8.00, 7.80, 8.20, 7.90] },
+  { category: "Cement", name: "Cement (25kg)", prices: [4.00, 4.10, 4.05, 4.20, 4.15] },
+  { category: "Lumber", name: "Lumber (2x4)", prices: [3.50, 3.20, 3.40, 3.60, 3.55] },
+  { category: "Lumber", name: "Lumber (4x4)", prices: [5.00, 4.80, 5.10, 5.20, 4.90] },
+  { category: "Bricks", name: "Bricks (per 100)", prices: [25.00, 24.50, 24.00, 24.80, 25.20] }
+];
+
+const tableHeader = document.getElementById("tableHeader");
+const tableBody = document.getElementById("tableBody");
+const searchInput = document.getElementById("searchInput");
+
+// --- Generate table header with sorting ---
+function createHeader() {
+  tableHeader.innerHTML = "";
+  const thMaterial = document.createElement("th");
+  thMaterial.textContent = "Material";
+  thMaterial.addEventListener("click", () => sortTable("name"));
+  tableHeader.appendChild(thMaterial);
+
+  suppliers.forEach((s,index)=>{
+    const th = document.createElement("th");
+    th.textContent = s;
+    th.addEventListener("click",()=>sortTable(index));
+    tableHeader.appendChild(th);
+  });
+}
+
+let sortOrder = {}; // track asc/desc
+
+function sortTable(column){
+  let filtered = materials.filter(m => m.name.toLowerCase().includes(searchInput.value.toLowerCase()));
+
+  if(column === "name"){
+    sortOrder[column] = sortOrder[column]==="asc" ? "desc":"asc";
+    filtered.sort((a,b)=>sortOrder[column]==="asc" ? a.name.localeCompare(b.name):b.name.localeCompare(a.name));
+  } else {
+    sortOrder[column] = sortOrder[column]==="asc" ? "desc":"asc";
+    filtered.sort((a,b)=>sortOrder[column]==="asc"? a.prices[column]-b.prices[column]: b.prices[column]-a.prices[column]);
+  }
+
+  generateTable(filtered);
+}
+
+function highlightCheapest(row, prices){
+  let minPrice = Math.min(...prices);
+  Array.from(row.cells).forEach((cell,index)=>{
+    cell.classList.remove("cheapest","category-cheapest","overall-cheapest");
+    if(index>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
+  });
+}
+
+function highlightOverallCheapest(filteredMaterials){
+  let supplierTotals = suppliers.map((_,i)=> filteredMaterials.reduce((sum,m)=>sum+m.prices[i],0));
+  let minTotal = Math.min(...supplierTotals);
+  let cheapestIndex = supplierTotals.indexOf(minTotal);
+  Array.from(tableBody.rows).forEach(row=>{
+    if(!row.classList.contains("category-header"))
+      row.cells[cheapestIndex+1].classList.add("overall-cheapest");
+  });
+}
+
+function generateTable(filteredMaterials){
+  tableBody.innerHTML="";
+  const categories = [...new Set(filteredMaterials.map(m=>m.category))];
+
+  categories.forEach(cat=>{
+    const catRow = document.createElement("tr");
+    catRow.classList.add("category-header");
+    catRow.innerHTML=`<td colspan="${suppliers.length+1}">${cat}</td>`;
+    tableBody.appendChild(catRow);
+
+    const catMaterials = filteredMaterials.filter(m=>m.category===cat);
+    const categoryCheapest = suppliers.map((_,i)=>Math.min(...catMaterials.map(m=>m.prices[i])));
+
+    catMaterials.forEach(material=>{
+      const row=document.createElement("tr");
+      row.innerHTML=`<td>${material.name}</td>`+material.prices.map(p=>`<td>${p.toFixed(2)}</td>`).join("");
+      tableBody.appendChild(row);
+      highlightCheapest(row,material.prices);
+      Array.from(row.cells).forEach((cell,index)=>{
+        if(index>0 && parseFloat(cell.textContent)===categoryCheapest[index-1]) cell.classList.add("category-cheapest");
+      });
+    });
+  });
+
+  if(filteredMaterials.length) highlightOverallCheapest(filteredMaterials);
+}
+
+// --- Search filter ---
+searchInput.addEventListener("input",()=>{
+  const filtered = materials.filter(m => m.name.toLowerCase().includes(searchInput.value.toLowerCase()));
+  generateTable(filtered);
+});
+
+// --- Download CSV with row & overall cheapest markers ---
+document.getElementById("downloadCSV").addEventListener("click", function() {
+  let rows = [];
+  rows.push(["Category","Material",...suppliers]);
+
+ 
