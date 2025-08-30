@@ -39,8 +39,8 @@ footer{text-align:center;padding:1.5rem;background:#4b0082;color:white;margin-to
 .badge-down{background-color:#4b0082;}
 .badge-up{background-color:#ffcc00;color:black;}
 .badge-stable{background-color:#666;}
-.trend-up{background:#f5d0d0 !important;}
-.trend-down{background:#d4edda !important;}
+.trend-up{background:#d4edda !important;}
+.trend-down{background:#f5d0d0 !important;}
 .trend-stable{background:#fff6cf !important;}
 </style>
 </head>
@@ -162,101 +162,4 @@ filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
 filterSupplier.addEventListener('change',refreshAll);
 
 // ------------------ Export Excel ------------------
-exportExcelBtn.addEventListener('click',()=>{
-    const wb=XLSX.utils.book_new(); 
-    const ws_data=[["Material","Supplier","Unit","Quantity","Price (€)","VAT %","Delivery (€)","Total (€)"]];
-    materials.forEach(m=>{m.prices.forEach(p=>{
-        const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-        ws_data.push([m.name,p.supplier,p.unit,p.quantity,p.price,p.vat,p.delivery,total]);
-    });});
-    const ws=XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb,ws,"Prices");
-    XLSX.writeFile(wb,"Buildy_Prices.xlsx");
-});
-
-// ------------------ JSON Save/Load ------------------
-downloadJsonBtn.addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify(materials,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='buildy_data.json'; a.click(); URL.revokeObjectURL(a.href);
-});
-uploadJsonInput.addEventListener('change',async(e)=>{
-    const f=e.target.files[0]; if(!f)return;
-    try{
-        const t=await f.text();
-        const p=JSON.parse(t); if(!Array.isArray(p)) throw 'Invalid';
-        materials=p; refreshAll(); showToast('JSON Imported');
-    }catch(err){alert('Invalid JSON');}
-});
-clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[]; refreshAll(); showToast('All cleared');}});
-
-// ------------------ Refresh ------------------
-function refreshAll(){save(); renderFilterOptions(); renderTable(); renderMainChart(); applyTrendColors(); renderTableWithTrends(); checkCheapestAlerts();}
-
-// ------------------ Filter Options ------------------
-function renderFilterOptions(){
-    const suppliers=new Set();
-    materials.forEach(m=>m.prices.forEach(p=>suppliers.add(p.supplier)));
-    filterSupplier.innerHTML='<option value="">All Suppliers</option>';
-    Array.from(suppliers).sort().forEach(s=>{const o=document.createElement('option'); o.value=s; o.textContent=s; filterSupplier.appendChild(o);});
-}
-
-// ------------------ Table Rendering ------------------
-function renderTable(){
-    const tbody=$('priceTable').querySelector('tbody');
-    tbody.innerHTML='';
-    const headerTr=document.getElementById('tableHeader');
-    headerTr.innerHTML='';
-    ['Material','Supplier','Unit','Qty','Price (€)','VAT %','Delivery (€)','Total (€)','History'].forEach(h=>{
-        const th=document.createElement('th'); th.textContent=h; headerTr.appendChild(th);
-    });
-    const filterMat=filterMaterial.value.toLowerCase();
-    const filterSup=filterSupplier.value;
-    materials.forEach(m=>{
-        if(filterMat && !m.name.toLowerCase().includes(filterMat)) return;
-        m.prices.forEach(p=>{
-            if(filterSup && p.supplier!==filterSup) return;
-            const tr=document.createElement('tr');
-            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-            const totals=m.prices.map(pp=>(pp.price*pp.quantity)+pp.delivery+(pp.price*pp.quantity*pp.vat/100));
-            const minTotal=Math.min(...totals);
-            const maxTotal=Math.max(...totals);
-            const tdMaker=(val,cls)=>{const td=document.createElement('td'); td.textContent=val; if(cls)td.className=cls; return td;};
-            tr.appendChild(tdMaker(m.name));
-            tr.appendChild(tdMaker(p.supplier));
-            tr.appendChild(tdMaker(p.unit));
-            tr.appendChild(tdMaker(p.quantity));
-            tr.appendChild(tdMaker(p.price));
-            tr.appendChild(tdMaker(p.vat));
-            tr.appendChild(tdMaker(p.delivery));
-            let cls='medium';
-            if(total===minTotal) cls='cheapest';
-            else if(total===maxTotal) cls='expensive';
-            tr.appendChild(tdMaker(total.toFixed(2),cls));
-            const tdChart=document.createElement('td');
-            const canvas=document.createElement('canvas'); canvas.className='canvas-mini';
-            tdChart.appendChild(canvas); tr.appendChild(tdChart);
-            tbody.appendChild(tr);
-            renderMiniChart(m,p.supplier,canvas);
-        });
-    });
-}
-
-// ------------------ Mini Charts ------------------
-function renderMiniChart(material, supplier, canvas){
-    const data=material.history.filter(h=>h.supplier===supplier).map(h=>({x:h.date,y:h.price}));
-    new Chart(canvas,{type:'line',data:{datasets:[{label:supplier,data:data,borderColor:'#4b0082',backgroundColor:'rgba(75,0,130,0.2)',fill:true,lineTension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}});
-}
-
-// ------------------ Main Chart ------------------
-function renderMainChart(){
-    if(chart) chart.destroy();
-    const labels=materials.map(m=>m.name);
-    const datasets=[];
-    const colors=['#4b0082','#6a0dad','#a67bf0','#8d5bd6','#c299ff'];
-    let colorIndex=0;
-    const filterSup=filterSupplier.value;
-    materials.forEach(m=>{
-        m.prices.forEach(p=>{
-            if(filterSup && p.supplier!==filterSup) return;
-            const total=(p.price*p.quantity)+p.delivery+(p.price*p.quantity*p.vat/100);
-            datasets.push({label:`${p.supplier} (${m.name})`,data:[total],backgroundColor
+exportExcelBtn.addEventListener('click',
