@@ -19,7 +19,7 @@
     color: #333;
   }
 
-  /* ===== HEADER STYLES ===== */
+  /* ===== HEADER ===== */
   header {
     background-color: #4b0082; /* deep purple */
     color: #fff;
@@ -48,25 +48,6 @@
     font-weight: bold;
   }
 
-  nav.sub-header {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-    font-size: 1rem;
-  }
-
-  nav.sub-header a {
-    color: #fff;
-    text-decoration: none;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-  }
-
-  nav.sub-header a:hover {
-    border-bottom: 2px solid gold;
-  }
-
   .login-btn {
     background-color: gold;
     color: #4b0082;
@@ -82,49 +63,46 @@
     background-color: #ffd700cc;
   }
 
-  /* ===== SUB-HEADER SEPARATION ===== */
+  /* ===== SUB-HEADER ===== */
   .sub-header-container {
     background-color: #6a0dad; /* slightly lighter purple */
     display: flex;
     justify-content: center;
-    padding: 8px 0;
-    gap: 30px;
+    padding: 10px 0;
   }
 
   .sub-header-container a {
     color: #fff;
     text-decoration: none;
     font-weight: 500;
+    padding: 0 15px;
     position: relative;
-    padding-bottom: 3px;
   }
 
-  .sub-header-container a::after {
+  /* subtle gold vertical separator */
+  .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background: gold;
-    transition: 0.3s;
-  }
-
-  .sub-header-container a:hover::after {
-    width: 100%;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+    background-color: gold;
   }
 
   /* ===== RESPONSIVE ===== */
   @media(max-width: 768px){
     header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
+      flex-direction: row;
+      justify-content: space-between;
     }
     .sub-header-container {
       flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 15px;
+      gap: 10px;
+    }
+    .sub-header-container a::after {
+      display: none; /* remove separator on small screens */
     }
   }
 
@@ -139,22 +117,16 @@
       <div class="main-title">Buildy</div>
     </div>
 
-    <nav class="sub-header">
-      <a href="#">Home</a>
-      <a href="#">Suppliers</a>
-      <a href="#">Products</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-
     <button class="login-btn">Login</button>
   </header>
 
   <!-- SUB-HEADER -->
   <div class="sub-header-container">
-    <a href="#">Unit Quantity</a>
-    <a href="#">VAT</a>
-    <a href="#">Delivery Fee</a>
+    <a href="#">Home</a>
+    <a href="#">Suppliers</a>
+    <a href="#">Products</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
   </div>
 
   <!-- PAGE CONTENT -->
