@@ -15,8 +15,21 @@
 :root{--bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand-2:#6a0dad;--border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;}
 body.dark{--bg:#141414;--text:#f2f2f2;--muted:#bdbdbd;--card:#1e1e1e;--brand:#8d5bd6;--brand-2:#a67bf0;--border:#2a2a2a;--cheapest:#285f2a;--expensive:#643333;--mid:#4b4426;}
 body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s;}
-header{position:sticky;top:0;z-index:5;background:var(--brand);color:#fff;padding:12px 16px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-header .actions{display:flex;gap:8px;align-items:center;}
+header{
+  position:sticky; top:0; z-index:10;
+  background:linear-gradient(90deg,#4b0082,#6a0dad);
+  color:#fff;
+  padding:12px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-radius:8px;
+  flex-wrap:wrap;
+}
+.header-main{display:flex;align-items:center;gap:10px;}
+.header-main h1{margin:0;font-weight:700;font-size:1.6em;}
+.header-main p{margin:0;font-weight:400;opacity:0.85;font-size:0.9em;}
+.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
 .icon-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);}
 .container{max-width:1200px;margin:0 auto;}
@@ -52,18 +65,26 @@ canvas{width:100%;height:320px;max-height:60vh;}
 <body>
 
 <header>
-<div>🏗️ Buildy v5+ — Wexford Suppliers</div>
-<div class="actions">
-<button id="darkToggle" class="icon-btn">🌙</button>
-<button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
-<label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
-<button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
-</div>
+  <div class="header-main">
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo" style="height:40px; margin-right:10px;">
+    <div>
+      <h1>Buildy — Price Comparison Tool</h1>
+      <p>Compare local Wexford suppliers instantly</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button id="darkToggle" class="icon-btn">🌙</button>
+    <button id="downloadJsonBtn" class="icon-btn">⬇️ JSON</button>
+    <label class="icon-btn">⬆️ JSON <input id="uploadJsonInput" class="visually-hidden" type="file" accept="application/json"></label>
+    <button id="clearAllBtn" class="icon-btn" style="border-color:#b00020;color:#b00020">🗑️ Clear</button>
+  </div>
 </header>
 
 <div id="toast" class="toast"></div>
 
 <main class="container">
+
+<!-- Add Material Section -->
 <section class="card">
 <details open>
 <summary>➕ Add Material Price</summary>
@@ -84,6 +105,7 @@ canvas{width:100%;height:320px;max-height:60vh;}
 </details>
 </section>
 
+<!-- Filter & Export -->
 <section class="card">
 <details open>
 <summary>🔎 Filter & Export</summary>
@@ -96,6 +118,7 @@ canvas{width:100%;height:320px;max-height:60vh;}
 </details>
 </section>
 
+<!-- Price Table -->
 <section class="card">
 <h2>Price Comparison</h2>
 <div style="overflow:auto">
@@ -108,11 +131,13 @@ canvas{width:100%;height:320px;max-height:60vh;}
 </div>
 </section>
 
+<!-- Price Trends Chart -->
 <section class="card">
 <h2>Price Trends</h2>
 <canvas id="priceChart"></canvas>
 </section>
 
+<!-- Supplier Map -->
 <section class="card">
 <h2>Supplier Map — Wexford</h2>
 <div id="map"></div>
@@ -135,136 +160,4 @@ function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
 function showToast(msg){const t=$('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,3000);}
 
 // ---------- Elements ----------
-const materialInput=$('materialInput'),supplierInput=$('supplierInput'),unitInput=$('unitInput'),
-quantityInput=$('quantityInput'),priceInput=$('priceInput'),vatInput=$('vatInput'),deliveryInput=$('deliveryInput'),
-latInput=$('latInput'),lngInput=$('lngInput'),addressInput=$('addressInput');
-const addBtn=$('addBtn'),filterMaterial=$('filterMaterial'),filterSupplier=$('filterSupplier'),exportExcelBtn=$('exportExcelBtn');
-const downloadJsonBtn=$('downloadJsonBtn'),uploadJsonInput=$('uploadJsonInput'),clearAllBtn=$('clearAllBtn'),darkToggle=$('darkToggle');
-
-// ---------- Initialize ----------
-load();
-refreshAll();
-
-// ---------- Dark Mode ----------
-darkToggle.addEventListener('click',()=>{document.body.classList.toggle('dark'); darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; renderMainChart(); updateMap();});
-
-// ---------- Add/Update Material ----------
-addBtn.addEventListener('click', async ()=>{
-    const name=materialInput.value.trim(),sup=supplierInput.value.trim(),unit=unitInput.value.trim();
-    const quantity=parseFloat(quantityInput.value),price=parseFloat(priceInput.value),vat=parseFloat(vatInput.value)||0,delivery=parseFloat(deliveryInput.value)||0;
-    let lat=parseFloat(latInput.value)||null,lng=parseFloat(lngInput.value)||null;
-    const addr=addressInput.value.trim();
-    if(!name||!sup||!unit||isNaN(quantity)||isNaN(price)){alert('Fill required fields'); return;}
-
-    // Optional geocoding
-    if((!lat||!lng) && addr){
-        try{
-            const geo=await geocodeAddress(addr);
-            if(geo){lat=geo.lat; lng=geo.lng;}
-        }catch(e){console.log(e);}
-    }
-
-    let mat=materials.find(m=>m.name.toLowerCase()===name.toLowerCase());
-    if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
-    const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
-    const today=new Date().toISOString().split('T')[0];
-    if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery; existing.lat=lat; existing.lng=lng;}
-    else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng});}
-    mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng,date:today});
-    checkCheapestAlerts(mat);
-    showToast(`${sup} updated for ${name}`);
-    materialInput.value=supplierInput.value=unitInput.value=quantityInput.value=priceInput.value=vatInput.value=deliveryInput.value=latInput.value=lngInput.value=addressInput.value='';
-    refreshAll();
-});
-
-// ---------- Geocode Function ----------
-async function geocodeAddress(address){
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    if(data && data[0]) return {lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon)};
-    return null;
-}
-
-// ---------- Cheapest Alerts ----------
-function checkCheapestAlerts(material){
-    const totals = material.prices.map(p=>(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery);
-    const minTotal = Math.min(...totals);
-    material.prices.forEach(p=>{
-        const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
-        if(total===minTotal) showToast(`🌟 ${p.supplier} is now the cheapest for ${material.name}!`);
-    });
-}
-
-// ---------- Filters ----------
-filterMaterial.addEventListener('input',()=>{setTimeout(refreshAll,150);});
-filterSupplier.addEventListener('change',refreshAll);
-
-// ---------- Clear ----------
-clearAllBtn.addEventListener('click',()=>{if(confirm('Clear all data?')){materials=[];save();refreshAll();}});
-
-// ---------- Main Functions ----------
-function refreshAll(){renderFilterOptions();renderTable();renderMainChart();updateMap();save();}
-
-// ---------- Filter Options ----------
-function renderFilterOptions(){
-    const suppliers=[...new Set(materials.flatMap(m=>m.prices.map(p=>p.supplier)))];
-    filterSupplier.innerHTML='<option value="">All Suppliers</option>';
-    suppliers.forEach(s=>filterSupplier.innerHTML+=`<option>${s}</option>`);
-}
-
-// ---------- Table ----------
-function renderTable(){
-    const tbody=$('priceTable').querySelector('tbody');
-    const thead=$('tableHeader'); thead.innerHTML='<th>Material</th><th>Supplier</th><th>Unit</th><th>Qty</th><th>Price</th><th>VAT</th><th>Delivery</th><th>Total</th><th>Lat</th><th>Lng</th>';
-    tbody.innerHTML='';
-    const fMat=filterMaterial.value.toLowerCase(),fSup=filterSupplier.value;
-    materials.forEach(m=>{
-        m.prices.forEach(p=>{
-            if(fMat && !m.name.toLowerCase().includes(fMat)) return;
-            if(fSup && p.supplier!==fSup) return;
-            const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
-            const tr=document.createElement('tr');
-            // Highlight cheapest
-            const totals = m.prices.map(x=>(x.price*x.quantity)+(x.price*x.quantity*x.vat/100)+x.delivery);
-            const minTotal = Math.min(...totals), maxTotal=Math.max(...totals);
-            let cls='medium';
-            if(total===minTotal) cls='cheapest';
-            else if(total===maxTotal) cls='expensive';
-            tr.innerHTML=`<td>${m.name}</td><td>${p.supplier}</td><td>${p.unit}</td><td>${p.quantity}</td><td>${p.price}</td><td>${p.vat}</td><td>${p.delivery}</td><td class="${cls}">${total.toFixed(2)}</td><td>${p.lat||''}</td><td>${p.lng||''}</td>`;
-            tbody.appendChild(tr);
-        });
-    });
-}
-
-// ---------- Main Chart ----------
-function renderMainChart(){
-    const ctx=$('priceChart').getContext('2d');
-    if(chart) chart.destroy();
-    const labels=materials.map(m=>m.name);
-    const data=materials.map(m=>Math.min(...m.prices.map(p=>(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery)));
-    chart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'Lowest Total (€)',data,backgroundColor:labels.map(()=>document.body.classList.contains('dark')?'#8d5bd6':'#4b0082')}]},options:{responsive:true,plugins:{legend:{display:false}}}});
-}
-
-// ---------- Map ----------
-let map = L.map('map').setView([52.3382, -6.4589], 12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-let markers=[];
-function updateMap(){
-    markers.forEach(m=>map.removeLayer(m)); markers=[];
-    materials.forEach(m=>{
-        m.prices.forEach(p=>{
-            if(!p.lat||!p.lng) return;
-            const marker=L.marker([p.lat,p.lng]).addTo(map);
-            marker.bindPopup(`<b>${p.supplier}</b><br>${m.name}<br>Total: €${((p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery).toFixed(2)}`);
-            marker.on('click',()=>{
-                document.querySelectorAll('tbody tr').forEach(tr=>tr.classList.remove('highlight-row'));
-                document.querySelectorAll('tbody tr').forEach(tr=>{
-                    if(tr.children[1].textContent===p.supplier) tr.classList.add('highlight-row');
-                });
-            });
-            markers.push(marker);
-        });
-    });
-
-    // Distance from user
+const materialInput=$('materialInput'),
