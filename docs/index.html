@@ -50,23 +50,40 @@
   }
 
   .login-btn {
-    background-color: #ffffff; /* white */
-    color: #4b0082; /* purple text */
+    background-color: #ffffff;
+    color: #4b0082;
     padding: 10px 22px;
-    border: 2px solid #4b0082; /* purple border */
+    border: 2px solid #4b0082;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    position: relative;
     transition: all 0.3s ease;
   }
 
+  /* Gold underline on hover */
+  .login-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    background-color: gold;
+    transition: width 0.3s ease;
+  }
+
+  .login-btn:hover::after {
+    width: 100%;
+  }
+
   .login-btn:hover {
-    background-color: #f3e5f5; /* subtle purple background on hover */
+    background-color: #f3e5f5; /* subtle purple background */
   }
 
   /* ===== SUB-HEADER ===== */
   .sub-header-container {
-    background-color: #ffffff; /* white background */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     padding: 14px 0;
@@ -83,7 +100,7 @@
     transition: color 0.3s ease;
   }
 
-  /* purple vertical separators */
+  /* Gold vertical separators */
   .sub-header-container a:not(:last-child)::after {
     content: '';
     position: absolute;
@@ -91,10 +108,10 @@
     top: 15%;
     width: 1.5px;
     height: 70%;
-    background-color: #4b0082; 
+    background-color: gold;
   }
 
-  /* hover effect: subtle purple underline */
+  /* Gold underline on hover */
   .sub-header-container a::before {
     content: '';
     position: absolute;
@@ -102,7 +119,7 @@
     bottom: -3px;
     width: 0%;
     height: 2px;
-    background-color: #4b0082;
+    background-color: gold;
     transition: width 0.3s ease;
   }
 
