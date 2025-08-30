@@ -4,38 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - Compare Building Materials</title>
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" type="image/x-icon">
+<!-- Favicon -->
+<link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 <style>
+  /* --- Base layout --- */
   body { font-family: Arial, sans-serif; background:#f8f9fa; color:#333; margin:0; }
-  header { background:#fff; padding:20px 40px; box-shadow:0 2px 4px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; }
-  header .logo { font-weight:bold; font-size:1.5em; color:#007bff; }
-  nav a { margin-left:20px; text-decoration:none; color:#333; font-weight:500; }
-  nav a:hover { color:#007bff; }
-  .hero { text-align:center; padding:80px 20px; background:#e9ecef; }
-  .hero h1 { font-size:2.2em; margin-bottom:20px; color:#007bff; }
+  
+  /* --- Header --- */
+  header { background:#5e2ca5; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+  header .logo { display:flex; align-items:center; font-weight:bold; font-size:1.5em; color:#f0c330; }
+  header .logo img { height:40px; margin-right:10px; }
+  nav a { margin-left:20px; text-decoration:none; color:#f0c330; font-weight:500; }
+  nav a:hover { color:#fff; }
+
+  /* --- Hero Section --- */
+  .hero { text-align:center; padding:80px 20px; background:#f3e8ff; }
+  .hero h1 { font-size:2.2em; margin-bottom:20px; color:#5e2ca5; }
   .hero input, .hero button { padding:10px 15px; font-size:1em; margin:5px; border-radius:5px; border:1px solid #ccc; }
-  .hero button { background:#007bff; color:#fff; border:none; cursor:pointer; }
-  .hero button:hover { background:#0056b3; }
+  .hero button { background:#5e2ca5; color:#f0c330; border:none; cursor:pointer; }
+  .hero button:hover { background:#3a0c7d; }
+
+  /* --- Comparison Table --- */
   .comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
   table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
   th, td { padding:15px; text-align:center; border-bottom:1px solid #ddd; }
-  th { background:#007bff; color:#fff; cursor:pointer; }
+  th { background:#5e2ca5; color:#f0c330; cursor:pointer; }
   tr:hover { background:#f1f1f1; }
   .cheapest { background:#d4edda; color:#155724; font-weight:bold; }
   .category-cheapest { background:#fff3cd; color:#856404; font-weight:bold; }
-  .overall-cheapest { border:2px solid #155724; }
+  .overall-cheapest { border:2px solid #3a0c7d; }
+  tr.category-header td { text-align:left; font-weight:bold; background:#f0e5ff; color:#5e2ca5; }
+
+  /* --- Features Section --- */
   .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; padding:50px 20px; text-align:center; }
   .feature { background:#fff; padding:30px 20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); width:250px; }
-  .feature h3 { margin-bottom:15px; color:#007bff; }
+  .feature h3 { margin-bottom:15px; color:#5e2ca5; }
   .feature p { font-size:0.95em; }
-  footer { background:#343a40; color:#fff; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
-  tr.category-header td { text-align:left; font-weight:bold; background:#f1f1f1; }
+
+  /* --- Footer --- */
+  footer { background:#3a0c7d; color:#f0c330; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; }
+
+  /* --- Table responsive scrolling --- */
+  @media(max-width:768px){
+    table, thead, tbody, th, td, tr { display:block; }
+    th { text-align:left; }
+    tr { margin-bottom:15px; }
+    td { text-align:left; padding-left:50%; position:relative; }
+    td::before { position:absolute; left:15px; top:15px; white-space:nowrap; font-weight:bold; content: attr(data-label); }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Buildy</div>
+  <div class="logo">
+    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo">
+    Buildy
+  </div>
   <nav>
     <a href="#">Home</a>
     <a href="#">Compare Materials</a>
@@ -94,7 +119,6 @@ const tableHeader = document.getElementById("tableHeader");
 const tableBody = document.getElementById("tableBody");
 const searchInput = document.getElementById("searchInput");
 
-// --- Generate table header with sorting ---
 function createHeader() {
   tableHeader.innerHTML = "";
   const thMaterial = document.createElement("th");
@@ -110,8 +134,7 @@ function createHeader() {
   });
 }
 
-let sortOrder = {}; // track asc/desc
-
+let sortOrder = {};
 function sortTable(column){
   let filtered = materials.filter(m => m.name.toLowerCase().includes(searchInput.value.toLowerCase()));
 
@@ -171,15 +194,40 @@ function generateTable(filteredMaterials){
   if(filteredMaterials.length) highlightOverallCheapest(filteredMaterials);
 }
 
-// --- Search filter ---
 searchInput.addEventListener("input",()=>{
   const filtered = materials.filter(m => m.name.toLowerCase().includes(searchInput.value.toLowerCase()));
   generateTable(filtered);
 });
 
-// --- Download CSV with row & overall cheapest markers ---
 document.getElementById("downloadCSV").addEventListener("click", function() {
   let rows = [];
   rows.push(["Category","Material",...suppliers]);
 
+  const filteredRows = Array.from(tableBody.rows).filter(row => !row.classList.contains("category-header"));
+  let supplierTotals = suppliers.map((_, i) => filteredRows.reduce((sum, row) => sum + parseFloat(row.cells[i+1].textContent), 0));
+  let overallMinTotal = Math.min(...supplierTotals);
+  let overallCheapestIndex = supplierTotals.indexOf(overallMinTotal);
+
+  filteredRows.forEach(row => {
+    let rowData = [];
+    let categoryRow = row.previousElementSibling;
+    while(categoryRow && !categoryRow.classList.contains("category-header")) categoryRow = categoryRow.previousElementSibling;
+    let category = categoryRow ? categoryRow.cells[0].textContent : "";
+    rowData.push(category);
+    rowData.push(row.cells[0].textContent);
+    let prices = Array.from(row.cells).slice(1).map(cell=>parseFloat(cell.textContent));
+    let minPrice = Math.min(...prices);
+    Array.from(row.cells).slice(1).forEach((cell,i)=>{
+      let value = cell.textContent;
+      if(prices[i] === minPrice) value += " *";
+      if(i === overallCheapestIndex) value += " **";
+      rowData.push(value);
+    });
+    rows.push(rowData);
+  });
+
+  let csvContent = rows.map(e => e.join(",")).join("\n");
+  let blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob
  
