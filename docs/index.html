@@ -243,4 +243,115 @@ const suppliers = [
 // Materials & prices
 const materials = [
   { category: "Cement", name: "Cement (50kg)" },
-  { category: "Cement", name:
+  { category: "Cement", name: "Cement (25kg)" },
+  { category: "Lumber", name: "Lumber (2x4)" },
+  { category: "Lumber", name: "Lumber (4x4)" },
+  { category: "Bricks", name: "Bricks (per 100)" }
+];
+materials.forEach(m => m.prices = suppliers.map(()=> (Math.random()*10+3).toFixed(2))); // random prices
+
+// Table functions
+const tableHeader=document.getElementById("tableHeader");
+const tableBody=document.getElementById("tableBody");
+const searchInput=document.getElementById("searchInput");
+let recentSearches=[]; let savedComparisons=[];
+
+function createHeader(){
+  tableHeader.innerHTML="";
+  let th=document.createElement("th"); th.textContent="Material"; tableHeader.appendChild(th);
+  suppliers.forEach(s => { let th = document.createElement("th"); th.textContent = s.name; tableHeader.appendChild(th); });
+}
+
+function generateTable(filteredMaterials){
+  tableBody.innerHTML=""; let currentCategory="";
+  filteredMaterials.forEach(m => {
+    if(m.category !== currentCategory){ currentCategory = m.category;
+      let catRow = document.createElement("tr"); catRow.classList.add("category-header");
+      let td = document.createElement("td"); td.colSpan = suppliers.length + 1; td.textContent = currentCategory;
+      catRow.appendChild(td); tableBody.appendChild(catRow);
+    }
+    let row = document.createElement("tr"); let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
+    m.prices.forEach(p => { let td = document.createElement("td"); td.textContent = p; row.appendChild(td); });
+    tableBody.appendChild(row); highlightCheapest(row,m.prices);
+  });
+}
+
+function highlightCheapest(row, prices){
+  let minPrice = Math.min(...prices);
+  Array.from(row.cells).forEach((cell,i)=>{
+    if(i>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
+  });
+}
+
+function filterTable(){ 
+  let val = searchInput.value.toLowerCase(); 
+  let filtered = materials.filter(m => m.name.toLowerCase().includes(val)); 
+  generateTable(filtered); 
+  if(val && !recentSearches.includes(val)){ recentSearches.unshift(val); if(recentSearches.length>5) recentSearches.pop(); updateDashboard(); } 
+}
+searchInput.addEventListener("input",filterTable);
+createHeader(); generateTable(materials);
+
+// Dashboard & Login
+const loginBtn=document.getElementById("loginBtn");
+const modal=document.getElementById("loginModal");
+const closeBtn=document.querySelector(".close");
+const submitLogin=document.getElementById("submitLogin");
+const dashboard=document.getElementById("dashboard");
+const welcomeCard=document.querySelector("#welcomeCard p");
+const recentList=document.getElementById("recentSearches");
+const savedList=document.getElementById("savedComparisons");
+const statsContent=document.getElementById("statsContent");
+
+loginBtn.onclick=()=>modal.style.display="flex";
+closeBtn.onclick=()=>modal.style.display="none";
+window.onclick=(e)=>{ if(e.target==modal) modal.style.display="none"; };
+
+submitLogin.onclick=()=>{
+  const username=document.getElementById("username").value.trim();
+  const password=document.getElementById("password").value.trim();
+  if(username && password){
+    modal.style.display="none";
+    document.querySelector(".hero").style.display="none";
+    document.querySelector(".comparison").style.display="none";
+    dashboard.style.display="block";
+    welcomeCard.textContent=`Hello, ${username}!`;
+  } else { alert("Please enter username and password"); }
+};
+
+function updateDashboard(){
+  recentList.innerHTML=""; savedList.innerHTML="";
+  recentSearches.forEach(s=>{ let li=document.createElement("li"); li.textContent=s; recentList.appendChild(li); });
+  materials.forEach(m=>{ if(recentSearches.includes(m.name.toLowerCase())){ let li=document.createElement("li"); li.textContent=m.name; savedList.appendChild(li); } });
+  statsContent.textContent=`Total comparisons: ${savedList.children.length}`;
+}
+
+document.getElementById("exportDashboard").onclick=()=>{
+  let csv="Material,"+suppliers.map(s=>s.name).join(",")+"\n";
+  materials.forEach(m=>csv+=m.name+","+m.prices.join(",")+"\n");
+  const blob=new Blob([csv],{type:"text/csv"});
+  const url=URL.createObjectURL(blob); let a=document.createElement("a"); a.href=url; a.download="dashboard.csv"; a.click(); URL.revokeObjectURL(url);
+};
+
+document.getElementById("backToCompare").onclick=()=>{
+  dashboard.style.display="none";
+  document.querySelector(".hero").style.display="block";
+  document.querySelector(".comparison").style.display="block";
+};
+
+// Google Maps
+function initMap(){
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: {lat:52.336, lng:-6.465}
+  });
+  suppliers.forEach(s => {
+    const marker = new google.maps.Marker({ position:{lat:s.lat,lng:s.lng}, map, title:s.name });
+    const info = new google.maps.InfoWindow({ content:`<strong>${s.name}</strong>` });
+    marker.addListener("click", ()=> info.open(map, marker));
+  });
+}
+window.onload = initMap;
+</script>
+</body>
+</html>
