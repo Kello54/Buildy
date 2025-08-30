@@ -1,64 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Buildy v5+ — Wexford Suppliers</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy v5+ — Price Comparison</title>
 
-<!-- CSS & Leaflet -->
+<!-- Leaflet & Chart.js -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <style>
-:root{--bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand-2:#6a0dad;--border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;}
-body.dark{--bg:#141414;--text:#f2f2f2;--muted:#bdbdbd;--card:#1e1e1e;--brand:#8d5bd6;--brand-2:#a67bf0;--border:#2a2a2a;--cheapest:#285f2a;--expensive:#643333;--mid:#4b4426;}
-body{margin:0;padding:16px;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s;}
+:root{
+  --bg:#f9f9fb;--text:#222;--muted:#666;--card:#fff;--brand:#4b0082;--brand2:#6a0dad;
+  --border:#e5e7eb;--cheapest:#d4edda;--expensive:#f5d0d0;--mid:#fff6cf;
+}
+body.dark{
+  --bg:#141414;--text:#f2f2f2;--muted:#bdbdbd;--card:#1e1e1e;
+  --brand:#8d5bd6;--brand2:#a67bf0;--border:#2a2a2a;--cheapest:#285f2a;
+  --expensive:#643333;--mid:#4b4426;
+}
+body{margin:0;padding:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);}
 header{
-  position:sticky; top:0; z-index:10;
-  background:linear-gradient(90deg,#4b0082,#6a0dad);
-  color:#fff;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-radius:8px;
-  flex-wrap:wrap;
+  position:sticky;top:0;z-index:10;padding:12px 20px;
+  background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
 }
 .header-main{display:flex;align-items:center;gap:10px;}
-.header-main h1{margin:0;font-weight:700;font-size:1.6em;}
-.header-main p{margin:0;font-weight:400;opacity:0.85;font-size:0.9em;}
-.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s ease, background .2s ease, border-color .2s ease;}
-.icon-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);}
-.container{max-width:1200px;margin:0 auto;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:16px;margin-bottom:16px;transition:background .25s ease,border-color .25s ease;}
-.card h2{margin:0 0 8px 0;color:var(--brand);}
+.header-main img{height:40px;}
+.header-main h1{margin:0;font-size:1.6em;}
+.header-main p{margin:0;font-size:0.9em;opacity:0.85;}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.icon-btn{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:6px;cursor:pointer;transition:0.2s;}
+.icon-btn:hover{background:rgba(255,255,255,.12);}
+.sidebar{position:fixed;top:72px;left:0;width:200px;background:var(--card);height:calc(100%-72px);border-right:1px solid var(--border);padding:10px;box-sizing:border-box;}
+.sidebar button{display:block;width:100%;margin-bottom:6px;padding:8px;background:var(--brand);color:#fff;border:none;border-radius:6px;cursor:pointer;}
+.sidebar button:hover{background:var(--brand2);}
+.main-content{margin-left:210px;padding:20px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
+.card h2{margin-top:0;color:var(--brand);}
 .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
-input,select,button{font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);}
-input:focus,select:focus{outline:2px solid var(--brand);border-color:transparent;}
+input,select,button{font-size:14px;padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);}
+input:focus,select:focus{outline:2px solid var(--brand);}
 button.primary{background:var(--brand);color:#fff;border:none;}
-button.primary:hover{background:var(--brand-2);}
+button.primary:hover{background:var(--brand2);}
 button.ghost{background:transparent;}
-.muted{color:var(--muted);font-size:12px;}
-details>summary{cursor:pointer;padding:8px 12px;margin:-8px -12px 12px;border-radius:8px;background:linear-gradient(0deg,transparent,transparent) padding-box, linear-gradient(90deg,var(--brand),transparent) border-box;border:1px solid var(--border);color:var(--text);font-weight:600;}
-details[open]>summary{border-color:transparent;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;}
 table{width:100%;border-collapse:separate;border-spacing:0;overflow:auto;}
-thead th{position:sticky;top:0;background:var(--brand);color:#fff;text-align:center;padding:10px;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;}
-thead th:last-child{border-right:none;}
-tbody td{border-top:1px solid var(--border);text-align:center;padding:10px;}
+thead th{position:sticky;top:0;background:var(--brand);color:#fff;padding:8px;}
+tbody td{padding:6px;text-align:center;border-top:1px solid var(--border);}
 td.cheapest{background:var(--cheapest);font-weight:700;}
 td.expensive{background:var(--expensive);}
 td.medium{background:var(--mid);}
-.canvas-mini{height:60px;max-width:150px;}
-.toast{position:fixed;bottom:20px;right:20px;background:#4b0082;color:#fff;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;}
-.spacer{flex:1;}
-#map{height:400px;width:100%;border-radius:10px;}
-footer{margin:24px 0;text-align:center;color:var(--muted);font-size:12px;}
-.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);}
-canvas{width:100%;height:320px;max-height:60vh;}
+#map{height:400px;width:100%;border-radius:10px;margin-top:10px;}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--brand);color:#fff;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity .3s;}
 .highlight-row{background:#ffe599;}
 </style>
 </head>
@@ -66,7 +61,7 @@ canvas{width:100%;height:320px;max-height:60vh;}
 
 <header>
   <div class="header-main">
-    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo" style="height:40px; margin-right:10px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910763.png" alt="Buildy Logo">
     <div>
       <h1>Buildy — Price Comparison Tool</h1>
       <p>Compare local Wexford suppliers instantly</p>
@@ -80,84 +75,156 @@ canvas{width:100%;height:320px;max-height:60vh;}
   </div>
 </header>
 
-<div id="toast" class="toast"></div>
-
-<main class="container">
-
-<!-- Add Material Section -->
-<section class="card">
-<details open>
-<summary>➕ Add Material Price</summary>
-<div class="row">
-<input id="materialInput" placeholder="Material"/>
-<input id="supplierInput" placeholder="Supplier"/>
-<input id="unitInput" placeholder="Unit"/>
-<input id="quantityInput" type="number" step="0.01" placeholder="Quantity"/>
-<input id="priceInput" type="number" step="0.01" placeholder="Price (€)"/>
-<input id="vatInput" type="number" step="0.01" placeholder="VAT %"/>
-<input id="deliveryInput" type="number" step="0.01" placeholder="Delivery (€)"/>
-<input id="latInput" type="number" step="0.000001" placeholder="Latitude"/>
-<input id="lngInput" type="number" step="0.000001" placeholder="Longitude"/>
-<input id="addressInput" placeholder="Address (Optional)"/>
-<button id="addBtn" class="primary">Add/Update</button>
+<div class="sidebar">
+  <button data-tab="materials">Materials</button>
+  <button data-tab="charts">Charts</button>
+  <button data-tab="map">Map</button>
 </div>
-<div class="muted">Tip: Adding an existing supplier updates price and history. You can provide address instead of lat/lng.</div>
-</details>
-</section>
 
-<!-- Filter & Export -->
-<section class="card">
-<details open>
-<summary>🔎 Filter & Export</summary>
-<div class="toolbar">
-<input id="filterMaterial" placeholder="Filter by material"/>
-<select id="filterSupplier"><option value="">All Suppliers</option></select>
-<div class="spacer"></div>
-<button id="exportExcelBtn" class="ghost">Export Excel</button>
+<div class="main-content">
+  <div id="toast" class="toast"></div>
+
+  <!-- Materials Table Card -->
+  <section id="materials" class="card">
+    <h2>Price Comparison</h2>
+    <div class="row">
+      <input id="materialInput" placeholder="Material">
+      <input id="supplierInput" placeholder="Supplier">
+      <input id="unitInput" placeholder="Unit">
+      <input id="quantityInput" type="number" step="0.01" placeholder="Quantity">
+      <input id="priceInput" type="number" step="0.01" placeholder="Price (€)">
+      <input id="vatInput" type="number" step="0.01" placeholder="VAT %">
+      <input id="deliveryInput" type="number" step="0.01" placeholder="Delivery (€)">
+      <input id="latInput" type="number" step="0.000001" placeholder="Latitude">
+      <input id="lngInput" type="number" step="0.000001" placeholder="Longitude">
+      <input id="addressInput" placeholder="Address (Optional)">
+      <button id="addBtn" class="primary">Add/Update</button>
+    </div>
+    <table id="priceTable">
+      <thead><tr id="tableHeader"></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- Charts Card -->
+  <section id="charts" class="card">
+    <h2>Price Trends</h2>
+    <canvas id="priceChart"></canvas>
+  </section>
+
+  <!-- Map Card -->
+  <section id="mapTab" class="card">
+    <h2>Supplier Map — Wexford</h2>
+    <div id="map"></div>
+  </section>
 </div>
-</details>
-</section>
 
-<!-- Price Table -->
-<section class="card">
-<h2>Price Comparison</h2>
-<div style="overflow:auto">
-<table id="priceTable">
-<thead>
-<tr id="tableHeader"></tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
-</section>
-
-<!-- Price Trends Chart -->
-<section class="card">
-<h2>Price Trends</h2>
-<canvas id="priceChart"></canvas>
-</section>
-
-<!-- Supplier Map -->
-<section class="card">
-<h2>Supplier Map — Wexford</h2>
-<div id="map"></div>
-</section>
-
-<footer>Buildy v5+ • Interactive Map & Price Comparison • © You</footer>
-</main>
+<footer style="margin-top:20px;text-align:center;color:var(--muted);font-size:12px;">
+Buildy v5+ • Interactive Map & Price Comparison • © You
+</footer>
 
 <script>
 // ---------- Utility ----------
 function $(id){return document.getElementById(id);}
-let materials=[], chart;
+let materials = [], chart;
 const LS_KEY='buildy_v5_materials';
-
-// ---------- Load/Save ----------
 function load(){const s=localStorage.getItem(LS_KEY); if(s) materials=JSON.parse(s);}
 function save(){localStorage.setItem(LS_KEY,JSON.stringify(materials));}
 
 // ---------- Toast ----------
 function showToast(msg){const t=$('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,3000);}
 
-// ---------- Elements ----------
-const materialInput=$('materialInput'),
+// ---------- Tabs ----------
+document.querySelectorAll('.sidebar button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.main-content section').forEach(s=>s.style.display='none');
+    if(tab==='materials') $('materials').style.display='block';
+    if(tab==='charts') $('charts').style.display='block';
+    if(tab==='map') $('mapTab').style.display='block';
+  });
+});
+$('materials').style.display='block'; $('charts').style.display='none'; $('mapTab').style.display='none';
+
+// ---------- Dark Mode ----------
+$('darkToggle').addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+  $('darkToggle').textContent = document.body.classList.contains('dark')?'☀️':'🌙';
+});
+
+// ---------- Add / Update ----------
+const addBtn = $('addBtn');
+addBtn.addEventListener('click', async ()=>{
+  const name=$('materialInput').value.trim(),sup=$('supplierInput').value.trim(),unit=$('unitInput').value.trim();
+  const quantity=parseFloat($('quantityInput').value),price=parseFloat($('priceInput').value);
+  const vat=parseFloat($('vatInput').value)||0,delivery=parseFloat($('deliveryInput').value)||0;
+  let lat=parseFloat($('latInput').value)||null,lng=parseFloat($('lngInput').value)||null;
+  const addr = $('addressInput').value.trim();
+  if(!name||!sup||!unit||isNaN(quantity)||isNaN(price)){alert('Fill required fields');return;}
+  if((!lat||!lng)&&addr){
+    try{const geo=await geocodeAddress(addr);if(geo){lat=geo.lat;lng=geo.lng;}}catch(e){console.log(e);}
+  }
+  let mat=materials.find(m=>m.name.toLowerCase()===name.toLowerCase());
+  if(!mat){mat={name,prices:[],history:[]}; materials.push(mat);}
+  const existing=mat.prices.find(p=>p.supplier.toLowerCase()===sup.toLowerCase()&&p.unit===unit);
+  const today=new Date().toISOString().split('T')[0];
+  if(existing){existing.price=price; existing.quantity=quantity; existing.vat=vat; existing.delivery=delivery; existing.lat=lat; existing.lng=lng;}
+  else{mat.prices.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng});}
+  mat.history.push({supplier:sup,unit,price,quantity,vat,delivery,lat,lng,date:today});
+  checkCheapestAlerts(mat); showToast(`${sup} updated for ${name}`);
+  $('materialInput').value=$('supplierInput').value=$('unitInput').value=$('quantityInput').value=$('priceInput').value=$('vatInput').value=$('deliveryInput').value=$('latInput').value=$('lngInput').value=$('addressInput').value='';
+  refreshAll();
+});
+
+// ---------- Geocode ----------
+async function geocodeAddress(address){
+  const url=`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  const res=await fetch(url); const data=await res.json();
+  if(data && data[0]) return {lat:parseFloat(data[0].lat),lng:parseFloat(data[0].lon)};
+  return null;
+}
+
+// ---------- Cheapest Alerts ----------
+function checkCheapestAlerts(material){
+  const totals = material.prices.map(p=>(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery);
+  const minTotal = Math.min(...totals);
+  material.prices.forEach(p=>{
+    const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
+    if(total===minTotal) showToast(`🌟 ${p.supplier} is now the cheapest for ${material.name}!`);
+  });
+}
+
+// ---------- Refresh Table & Chart ----------
+function refreshAll(){renderTable();renderChart();updateMap();save();}
+function renderTable(){
+  const tbody=$('priceTable').querySelector('tbody'); tbody.innerHTML='';
+  const thead=$('tableHeader'); thead.innerHTML='<th>Material</th><th>Supplier</th><th>Unit</th><th>Qty</th><th>Price</th><th>VAT</th><th>Delivery</th><th>Total</th><th>Lat</th><th>Lng</th>';
+  materials.forEach(m=>{ m.prices.forEach(p=>{
+    const total=(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery;
+    const totals=m.prices.map(x=>(x.price*x.quantity)+(x.price*x.quantity*x.vat/100)+x.delivery);
+    const minTotal=Math.min(...totals),maxTotal=Math.max(...totals);
+    let cls='medium'; if(total===minTotal) cls='cheapest'; else if(total===maxTotal) cls='expensive';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${m.name}</td><td>${p.supplier}</td><td>${p.unit}</td><td>${p.quantity}</td><td>${p.price}</td><td>${p.vat}</td><td>${p.delivery}</td><td class="${cls}">${total.toFixed(2)}</td><td>${p.lat||''}</td><td>${p.lng||''}</td>`;
+    tbody.appendChild(tr);
+  });});
+}
+
+// ---------- Chart ----------
+const ctx=$('priceChart').getContext('2d');
+function renderChart(){
+  if(chart) chart.destroy();
+  const labels=materials.map(m=>m.name);
+  const data=materials.map(m=>Math.min(...m.prices.map(p=>(p.price*p.quantity)+(p.price*p.quantity*p.vat/100)+p.delivery)));
+  chart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'Lowest Total (€)',data,backgroundColor:labels.map(()=>document.body.classList.contains('dark')?'#8d5bd6':'#4b0082')}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+}
+
+// ---------- Map ----------
+let map=L.map('map').setView([52.3382,-6.4589],12);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+let markers=[];
+function updateMap(){
+  markers.forEach(m=>map.removeLayer(m)); markers=[];
+  materials.forEach(m=>{m.prices.forEach(p=>{if(!p.lat||!p.lng) return;
+    const marker=L.marker([p.lat,p.lng]).addTo(map);
+    marker.bindPopup(`<b>${p.supplier}</b
