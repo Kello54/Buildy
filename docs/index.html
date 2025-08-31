@@ -1,290 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buildy - No.1 Building Material Price Comparison</title>
-  <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
-
-  <style>
-    /* ====== Global Reset ====== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f8fa;
-      color: #333;
-    }
-
-    /* ====== Header ====== */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #3b0066;
-      color: #fff;
-      padding: 15px 40px;
-      border-bottom: 4px solid gold;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    .login {
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .login:hover { color: gold; }
-
-    /* ====== Subheader ====== */
-    nav.subheader {
-      display: flex;
-      justify-content: center;
-      background: #4a007a;
-      border-bottom: 2px solid gold;
-    }
-
-    nav.subheader a {
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 20px;
-      position: relative;
-    }
-
-    nav.subheader a:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 25%;
-      height: 50%;
-      width: 2px;
-      background: gold;
-    }
-
-    nav.subheader a:hover { color: gold; }
-
-    /* ====== Hero Section ====== */
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-      background: url("https://images.unsplash.com/photo-1581092580331-cd1f9d7d6d57?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
-      color: #fff;
-    }
-
-    .hero h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-
-    .hero p { font-size: 1.2em; }
-
-    /* ====== Table ====== */
-    .comparison-table {
-      margin: 40px auto;
-      width: 95%;
-      border-collapse: collapse;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .comparison-table th, .comparison-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .comparison-table th {
-      background: #3b0066;
-      color: #fff;
-    }
-
-    .comparison-table td.cheapest {
-      background: #d4af37;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .category-header td {
-      background: #eee;
-      font-weight: bold;
-      text-align: left;
-      padding: 8px;
-      border-left: 4px solid gold;
-    }
-
-    /* ====== Map ====== */
-    #map {
-      height: 400px;
-      width: 95%;
-      margin: 40px auto;
-      border: 2px solid gold;
-    }
-
-    /* ====== Footer ====== */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #3b0066;
-      color: #fff;
-      margin-top: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy - No.1 Building Material Price Comparison</title>
+<link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
+<style>
+/* ===== Global Reset ===== */
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+body {
+  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+header {
+  background: #2e1a47;
+  padding: 15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:4px solid gold;
+}
+header .logo {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:bold;
+  color:#fff;
+}
+header .logo img {height:40px;}
+header .login {
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  text-decoration:none;
+}
+nav.subheader {
+  background:#3c245c;
+  display:flex;
+  justify-content:center;
+  padding:10px 0;
+  border-bottom:2px solid gold;
+}
+nav.subheader a {
+  color:#fff;
+  text-decoration:none;
+  padding:0 20px;
+  position:relative;
+  font-size:16px;
+}
+nav.subheader a:not(:last-child)::after {
+  content:"";
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:2px;
+  height:20px;
+  background:gold;
+}
+.hero {
+  text-align:center;
+  padding:80px 20px 40px;
+  background:rgba(46,26,71,0.7);
+}
+.hero h1 {font-size:36px; margin-bottom:20px;}
+.hero input {
+  padding:10px;
+  width:300px;
+  max-width:90%;
+  border-radius:5px;
+  border:1px solid gold;
+}
+.hero button {
+  padding:10px 20px;
+  margin-left:10px;
+  background:gold;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.comparison {
+  flex:1;
+  padding:40px;
+  background:rgba(0,0,0,0.7);
+}
+.comparison h2 {
+  margin-bottom:20px;
+  border-bottom:2px solid gold;
+  display:inline-block;
+  padding-bottom:5px;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  color:#000;
+}
+th, td {
+  border:1px solid #ddd;
+  padding:12px;
+  text-align:center;
+}
+th {
+  background:#2e1a47;
+  color:#fff;
+}
+tr:nth-child(even){background:#f4f4f4;}
+.highlight {background:gold; font-weight:bold;}
+footer {
+  background:#2e1a47;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+  border-top:4px solid gold;
+}
+</style>
 </head>
 <body>
 
-  <!-- ====== Header ====== -->
-  <header>
-    <div class="logo">
-      <img src="https://kello54.github.io/Buildy/docs/images/favicon.png" alt="Buildy Logo">
-      <h2>Buildy</h2>
-    </div>
-    <div class="login">Login</div>
-  </header>
+<header>
+  <div class="logo">
+    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo">
+    <span>Buildy</span>
+  </div>
+  <a href="#" class="login">Login</a>
+</header>
 
-  <!-- ====== Subheader ====== -->
-  <nav class="subheader">
-    <a href="#">Home</a>
-    <a href="#">Suppliers</a>
-    <a href="#">Materials</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-  </nav>
+<nav class="subheader">
+  <a href="#">Home</a>
+  <a href="#">Suppliers</a>
+  <a href="#">Materials</a>
+  <a href="#">Price Trends</a>
+  <a href="#">Contact</a>
+</nav>
 
-  <!-- ====== Hero ====== -->
-  <section class="hero">
-    <h1>No.1 Building Material Price Comparison Website</h1>
-    <p>Compare prices across top Irish suppliers instantly</p>
-  </section>
+<section class="hero">
+  <h1>No.1 Building Material Price Comparison Website</h1>
+  <input type="text" id="searchBox" placeholder="Search materials...">
+  <button onclick="searchMaterials()">Search</button>
+</section>
 
-  <!-- ====== Price Comparison Table ====== -->
-  <table class="comparison-table">
-    <thead id="tableHeader"></thead>
-    <tbody id="tableBody"></tbody>
+<section class="comparison">
+  <h2>Price Comparison</h2>
+  <table id="comparisonTable">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Chadwicks</th>
+        <th>TJ O'Mahony</th>
+        <th>Woodie's</th>
+        <th>Heiton Buckley</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
   </table>
+</section>
 
-  <!-- ====== Supplier Map ====== -->
-  <div id="map"></div>
+<footer>
+  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
+</footer>
 
-  <!-- ====== Footer ====== -->
-  <footer>
-    <p>&copy; 2025 Buildy. All rights reserved.</p>
-  </footer>
+<script>
+// Full materials list (250+ items)
+const materials = [
+  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},{category:"Cement", name:"Post Mix Concrete (20kg)"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Timber", name:"Plywood Sheet 8x4 (12mm)"},{category:"Timber", name:"MDF Sheet 8x4 (12mm)"},{category:"Timber", name:"OSB Board 8x4 (11mm)"},{category:"Timber", name:"Skirting Board (3m)"},{category:"Timber", name:"Door Frame Kit"},
+  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},{category:"Bricks", name:"Engineering Bricks (per 100)"},{category:"Bricks", name:"Hollow Concrete Block (per 10)"},{category:"Bricks", name:"Lightweight Thermal Block (per 10)"},
+  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},{category:"Roofing", name:"Corrugated Sheet (per sheet)"},{category:"Roofing", name:"Bitumen Felt (10m roll)"},{category:"Roofing", name:"Roof Ridge Tile (each)"},{category:"Roofing", name:"Roof Insulation Board (per m²)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Porcelain Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},{category:"Flooring", name:"Wood Flooring (per m²)"},{category:"Flooring", name:"Vinyl Flooring (per m²)"},{category:"Flooring", name:"Carpet (per m²)"},{category:"Flooring", name:"Tile Adhesive (20kg)"},{category:"Flooring", name:"Tile Grout (5kg)"},
+  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},{category:"Paint", name:"Primer (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},{category:"Paint", name:"Undercoat (2.5L)"},{category:"Paint", name:"Wood Stain (2.5L)"},{category:"Paint", name:"Varnish (1L)"},{category:"Paint", name:"Spray Paint (400ml)"},
+  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"PVC Pipe (4m)"},{category:"Pipes", name:"Copper Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (3m)"},{category:"Pipes", name:"Drainage Pipe (3m)"},{category:"Pipes", name:"Flexible Hose (2m)"},{category:"Pipes", name:"Pipe Insulation (per metre)"},{category:"Pipes", name:"Soil Pipe (110mm)"},
+  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},{category:"Electrical", name:"LED Bulb (per unit)"},{category:"Electrical", name:"Fluorescent Tube (per unit)"},{category:"Electrical", name:"Circuit Breaker (per unit)"},{category:"Electrical", name:"Fuse Board (6 way)"},{category:"Electrical", name:"Outdoor Light Fitting"},{category:"Electrical", name:"Extension Lead (4 gang)"},
+  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},{category:"Hardware", name:"Wall Plugs (box of 100)"},{category:"Hardware", name:"Hinges (pair)"},{category:"Hardware", name:"Door Handle Set"},{category:"Hardware", name:"Padlock"},{category:"Hardware", name:"Gate Latch"},{category:"Hardware", name:"Shelf Brackets (pair)"},
+  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},{category:"Insulation", name:"Foam Board (per m²)"},{category:"Insulation", name:"Pipe Insulation Sleeve (per m)"},{category:"Insulation", name:"Spray Foam Kit"},
+  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Plasterboard 8x4 (15mm)"},{category:"Plaster", name:"Moisture Resistant Plasterboard"},{category:"Plaster", name:"Jointing Tape (90m roll)"},{category:"Plaster", name:"Skim Plaster (25kg)"},
+  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},{category:"Steel", name:"Galvanised Sheet (per m²)"},{category:"Steel", name:"Mesh Reinforcement Sheet"},{category:"Steel", name:"RSJ Beam (152x89mm x 3m)"},
+  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},{category:"Tools", name:"Spirit Level"},{category:"Tools", name:"Measuring Tape (5m)"},{category:"Tools", name:"Cordless Drill"},{category:"Tools", name:"Circular Saw"},{category:"Tools", name:"Angle Grinder"},{category:"Tools", name:"Shovel"},{category:"Tools", name:"Ladder (3m)"},
+  {category:"Garden", name:"Cement Mixer Hire (per day)"},{category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Garden Fence Panel (6ft)"},{category:"Garden", name:"Decking Board (3m)"},{category:"Garden", name:"Outdoor Timber Treatment (5L)"}
+];
 
-  <script>
-    /* ====== Suppliers ====== */
-    const suppliers = [
-      {name:"Woodie's", lat:52.336,lng:-6.465, logo:"https://upload.wikimedia.org/wikipedia/commons/3/37/Woodies_logo.png"},
-      {name:"TJ O'Mahony", lat:52.342,lng:-6.462, logo:"https://via.placeholder.com/60x30?text=TJ+O'Mahony"},
-      {name:"J.J Bolgers", lat:52.334,lng:-6.464, logo:"https://via.placeholder.com/60x30?text=JJ+Bolgers"},
-      {name:"Chadwicks", lat:52.339,lng:-6.470, logo:"https://upload.wikimedia.org/wikipedia/commons/0/0b/Chadwicks_logo.png"}
-    ];
+const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
-    /* ====== Materials (sample; can extend to 250+) ====== */
-    const materials = [
-      {category:"Cement", name:"Cement (50kg)"},
-      {category:"Cement", name:"Cement (25kg)"},
-      {category:"Timber", name:"Timber (2x4)"},
-      {category:"Timber", name:"Timber (4x4)"},
-      {category:"Bricks", name:"Clay Bricks (per 100)"},
-      {category:"Bricks", name:"Concrete Blocks (per 50)"},
-      {category:"Roofing", name:"Roof Tiles (per 100)"},
-      {category:"Flooring", name:"Ceramic Tiles (per m²)"},
-      {category:"Paint", name:"Interior Paint (5L)"},
-      {category:"Pipes", name:"PVC Pipe (2m)"},
-      {category:"Electrical", name:"LED Bulb (per unit)"}
-    ];
+function generateTable(){
+  const tbody = document.querySelector("#comparisonTable tbody");
+  tbody.innerHTML = "";
+  materials.forEach(item => {
+    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice = Math.min(...prices);
+    const row = document.createElement("tr");
+    let cells = `<td>${item.name}</td>`;
+    prices.forEach((p,i)=>{
+      cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
+    });
+    row.innerHTML = cells;
+    tbody.appendChild(row);
+  });
+}
 
-    // Assign random prices for demo
-    materials.forEach(m => 
-      m.prices = suppliers.map(()=> parseFloat((Math.random()*50+3).toFixed(2)))
-    );
-
-    const tableHeader=document.getElementById("tableHeader");
-    const tableBody=document.getElementById("tableBody");
-
-    /* ====== Table Header ====== */
-    function createHeader(){
-      tableHeader.innerHTML="";
-      let th=document.createElement("tr");
-      let base=document.createElement("th"); base.textContent="Material"; th.appendChild(base);
-      suppliers.forEach(s => { 
-        let sup = document.createElement("th"); 
-        sup.innerHTML = `<img src="${s.logo}" alt="${s.name}" style="height:30px;"><br>${s.name}`;
-        th.appendChild(sup); 
-      });
-      tableHeader.appendChild(th);
-    }
-
-    /* ====== Table Rows ====== */
-    function generateTable(){
-      tableBody.innerHTML=""; let currentCategory="";
-      materials.forEach(m => {
-        if(m.category!==currentCategory){
-          currentCategory=m.category;
-          let catRow=document.createElement("tr");
-          catRow.classList.add("category-header");
-          let td=document.createElement("td");
-          td.colSpan=suppliers.length+1;
-          td.textContent=currentCategory;
-          catRow.appendChild(td);
-          tableBody.appendChild(catRow);
-        }
-        let row=document.createElement("tr");
-        let td=document.createElement("td"); td.textContent=m.name; row.appendChild(td);
-        m.prices.forEach(p=>{
-          let td=document.createElement("td"); td.textContent="€"+p.toFixed(2); row.appendChild(td);
-        });
-        tableBody.appendChild(row);
-        highlightCheapest(row,m.prices);
-      });
-    }
-
-    /* ====== Highlight Cheapest ====== */
-    function highlightCheapest(row, prices){
-      let min=Math.min(...prices);
-      Array.from(row.cells).forEach((cell,i)=>{
-        if(i>0 && parseFloat(cell.textContent.replace("€",""))===min){
-          cell.classList.add("cheapest");
-        }
-      });
-    }
-
-    createHeader();
-    generateTable();
-
-    /* ====== Google Map ====== */
-    function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 52.336, lng: -6.465 },
-        zoom: 14,
-      });
-      suppliers.forEach(supplier => {
-        const marker = new google.maps.Marker({
-          position: { lat: supplier.lat, lng: supplier.lng },
-          map,
-          title: supplier.name,
-        });
-        const infoWindow = new google.maps.InfoWindow({
-          content: `<strong>${supplier.name}</strong>`,
-        });
-        marker.addListener("click", () => {
-          infoWindow.open(map, marker);
-        });
-      });
-    }
-  </script>
-
-  <!-- Load Google Maps -->
-  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
-
-</body>
-</html>
+function searchMaterials(){
+  const query = document.getElementById("searchBox").value.toLowerCase();
+  const tbody = document.querySelector("#comparisonTable tbody");
+  tbody.innerHTML = "";
+  materials.filter(m=>m.name.toLowerCase().includes(query)).forEach(item=>{
+    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice = Math.min(...
