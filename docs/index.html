@@ -1,283 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - No.1 Building Material Price Comparison</title>
-<link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary-color: #4b3c7a;
-  --secondary-color: #6f5abf;
-  --accent-color: #f5c359;
-  --bg-color: #f8f7fa;
-  --text-color: #222;
-  --button-hover: #362b5c;
-  --hero-overlay: rgba(0,0,0,0.3);
-}
-body { font-family: 'Montserrat', sans-serif; margin:0; background:var(--bg-color); color:var(--text-color); }
-header { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); padding:15px 40px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.15); position:sticky; top:0; z-index:100; }
-header .logo { height:45px; margin-right:12px; }
-.brand-name { font-size:1.8em; font-weight:700; color:#fff; }
-.header-left { display:flex; align-items:center; }
-.header-right .login-btn { background: var(--accent-color); color:#fff; border:none; padding:10px 18px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:all 0.3s; }
-.header-right .login-btn:hover { background:#d4a950; transform:translateY(-2px); }
-.sub-header { background:#fff; display:flex; justify-content:center; gap:40px; padding:12px 0; border-bottom:1px solid #eee; font-weight:500; }
-.sub-header a { text-decoration:none; color: var(--primary-color); font-size:1.05em; transition:color 0.3s; }
-.sub-header a:hover { color: var(--secondary-color); }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buildy - No.1 Building Material Price Comparison</title>
+  <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 
-.hero { position:relative; text-align:center; padding:140px 20px; color:#fff; background: url('https://images.unsplash.com/photo-1581093458793-7f9f9823e3e1?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat; }
-.hero::before { content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:var(--hero-overlay); z-index:0; }
-.hero h1, .hero p, .hero button, .hero input { opacity:0; transform:translateY(20px); transition: all 0.8s ease-out; }
-.hero.loaded h1, .hero.loaded p, .hero.loaded button, .hero.loaded input { opacity:1; transform:translateY(0); }
-.hero h1 { font-size:2.8em; margin-bottom:20px; font-weight:700; position:relative; z-index:1; }
-.hero p { font-size:1.2em; margin-bottom:25px; position:relative; z-index:1; }
-.hero input, .hero button { padding:12px 18px; font-size:1.05em; margin:5px; border-radius:6px; border:none; position:relative; z-index:1; }
-.hero input { width:250px; }
-.hero button { background: var(--accent-color); color:#fff; font-weight:700; cursor:pointer; transition:0.3s; }
-.hero button:hover { background:#d4a950; transform:translateY(-2px); }
+  <style>
+    /* ====== Global Reset ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.comparison { width:90%; max-width:1200px; margin:50px auto; overflow-x:auto; }
-table { width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); min-width:800px; border-radius:8px; overflow:hidden; }
-th, td { padding:16px; text-align:center; }
-th { background: var(--primary-color); color:#fff; cursor:pointer; }
-tbody tr { opacity:0; transform: translateY(10px); transition: all 0.4s ease; }
-tbody tr.visible { opacity:1; transform: translateY(0); }
-tbody tr:nth-child(even) { background:#f8f7fa; }
-tbody tr:hover { box-shadow:0 4px 12px rgba(0,0,0,0.15); transform:scale(1.02); }
-.cheapest { animation: pulse 1s infinite alternate; font-weight:bold; }
-@keyframes pulse { 0% { background-color:#d4edda; } 100% { background-color:#c3e6cb; } }
-tr.category-header td { text-align:left; font-weight:bold; background:#e6e0f3; color: var(--primary-color); padding:15px 10px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8fa;
+      color: #333;
+    }
 
-#map { width:90%; height:400px; margin:50px auto; border:1px solid #ccc; border-radius:12px; }
+    /* ====== Header ====== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #3b0066;
+      color: #fff;
+      padding: 15px 40px;
+      border-bottom: 4px solid gold;
+    }
 
-.features { display:flex; flex-wrap:wrap; justify-content:center; gap:40px; padding:60px 20px; text-align:center; }
-.feature { background:#fff; padding:30px 25px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.1); width:260px; transition:transform 0.3s; }
-.feature:hover { transform:translateY(-5px); }
-.feature h3 { margin-bottom:15px; color: var(--primary-color); font-weight:700; }
-.feature p { font-size:0.95em; }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
 
-footer { background: var(--primary-color); color:#fff; text-align:center; padding:20px; font-size:0.9em; }
-footer a { color:#fff; margin-right:15px; text-decoration:none; }
-footer a:hover { text-decoration:underline; }
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
 
-.modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; }
-.modal-content { background:#fff; padding:30px; border-radius:8px; width:300px; text-align:center; position:relative; }
-.modal-content h2 { margin-bottom:20px; color: var(--primary-color); }
-.modal-content input { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
-.modal-content button { background: var(--primary-color); color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; margin-top:10px; }
-.modal-content button:hover { background: var(--secondary-color); }
-.close { position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; color:#333; }
+    .login {
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
 
-#dashboard { display:none; padding:50px 20px; }
-.dashboard-cards { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
-.card { background:#fff; padding:25px; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.08); width:260px; text-align:center; }
-.card h3 { margin-bottom:15px; color: var(--primary-color); font-weight:700; }
+    .login:hover { color: gold; }
 
-@media(max-width:768px){ .features, .dashboard-cards { flex-direction:column; align-items:center; } header { flex-direction:column; gap:10px; } }
-</style>
+    /* ====== Subheader ====== */
+    nav.subheader {
+      display: flex;
+      justify-content: center;
+      background: #4a007a;
+      border-bottom: 2px solid gold;
+    }
+
+    nav.subheader a {
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 20px;
+      position: relative;
+    }
+
+    nav.subheader a:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 2px;
+      background: gold;
+    }
+
+    nav.subheader a:hover { color: gold; }
+
+    /* ====== Hero Section ====== */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: url("https://images.unsplash.com/photo-1581092580331-cd1f9d7d6d57?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .hero p { font-size: 1.2em; }
+
+    /* ====== Table ====== */
+    .comparison-table {
+      margin: 40px auto;
+      width: 95%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .comparison-table th, .comparison-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .comparison-table th {
+      background: #3b0066;
+      color: #fff;
+    }
+
+    .comparison-table td.cheapest {
+      background: #d4af37;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .category-header td {
+      background: #eee;
+      font-weight: bold;
+      text-align: left;
+      padding: 8px;
+      border-left: 4px solid gold;
+    }
+
+    /* ====== Map ====== */
+    #map {
+      height: 400px;
+      width: 95%;
+      margin: 40px auto;
+      border: 2px solid gold;
+    }
+
+    /* ====== Footer ====== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #3b0066;
+      color: #fff;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="header-left">
-    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo" class="logo">
-    <span class="brand-name">Buildy</span>
-  </div>
-  <div class="header-right">
-    <button id="loginBtn" class="login-btn">Login</button>
-  </div>
-</header>
+  <!-- ====== Header ====== -->
+  <header>
+    <div class="logo">
+      <img src="https://kello54.github.io/Buildy/docs/images/favicon.png" alt="Buildy Logo">
+      <h2>Buildy</h2>
+    </div>
+    <div class="login">Login</div>
+  </header>
 
-<nav class="sub-header">
-  <a href="#">Home</a>
-  <a href="#">Compare Materials</a>
-  <a href="#">Suppliers</a>
-</nav>
-
-<section class="hero">
-  <h1>No.1 building material price comparison website</h1>
-  <p>Quickly find the cheapest prices across multiple suppliers</p>
-  <input type="text" id="searchInput" placeholder="Enter material...">
-  <button id="downloadCSV">Start Comparing</button>
-</section>
-
-<section class="comparison">
-  <table id="materialsTable">
-    <thead><tr id="tableHeader"></tr></thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-</section>
-
-<section id="map"></section>
-
-<section class="features">
-  <div class="feature"><h3>Select Material</h3><p>Search or browse materials you need to purchase.</p></div>
-  <div class="feature"><h3>Compare Prices</h3><p>See prices from multiple suppliers at a glance.</p></div>
-  <div class="feature"><h3>Choose Supplier</h3><p>Select the cheapest or most convenient supplier for your order.</p></div>
-</section>
-
-<section id="dashboard">
-  <h2 style="text-align:center; color: var(--primary-color);">Dashboard</h2>
-  <div class="dashboard-cards">
-    <div class="card" id="welcomeCard"><h3>Welcome!</h3><p>Hello, user!</p></div>
-    <div class="card" id="recentSearchesCard"><h3>Recent Searches</h3><ul id="recentSearches"></ul></div>
-    <div class="card" id="savedComparisonsCard"><h3>Saved Comparisons</h3><ul id="savedComparisons"></ul></div>
-    <div class="card" id="statsCard"><h3>Stats</h3><p id="statsContent">No comparisons yet</p></div>
-    <div class="card"><h3>Export</h3><button id="exportDashboard">Download CSV</button></div>
-    <div class="card"><h3>Navigation</h3><button id="backToCompare" style="background:var(--primary-color);color:#fff;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;">Back to Comparison</button></div>
-  </div>
-</section>
-
-<footer>
-  &copy; 2025 Buildy | Compare building materials quickly and easily
-  <div style="margin-top:10px;">
+  <!-- ====== Subheader ====== -->
+  <nav class="subheader">
+    <a href="#">Home</a>
+    <a href="#">Suppliers</a>
+    <a href="#">Materials</a>
     <a href="#">About</a>
     <a href="#">Contact</a>
-  </div>
-</footer>
+  </nav>
 
-<div id="loginModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button id="submitLogin">Login</button>
-  </div>
-</div>
+  <!-- ====== Hero ====== -->
+  <section class="hero">
+    <h1>No.1 Building Material Price Comparison Website</h1>
+    <p>Compare prices across top Irish suppliers instantly</p>
+  </section>
 
-<script>
-// Hero animation
-window.addEventListener('load', ()=>{
-  document.querySelector('.hero').classList.add('loaded');
-});
+  <!-- ====== Price Comparison Table ====== -->
+  <table class="comparison-table">
+    <thead id="tableHeader"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
 
-// Suppliers & Materials
-const suppliers = [
-  {name:"Woodie's", lat:52.336,lng:-6.465},
-  {name:"TJ O'Mahony", lat:52.342,lng:-6.462},
-  {name:"J.J Bolgers", lat:52.334,lng:-6.464},
-  {name:"Chadwicks", lat:52.339,lng:-6.470}
-];
+  <!-- ====== Supplier Map ====== -->
+  <div id="map"></div>
 
-// Full 250+ materials array
-const materials = [
-  {category:"Cement", name:"Cement (50kg)"},
-  {category:"Cement", name:"Cement (25kg)"},
-  {category:"Timber", name:"Timber (2x4)"},
-  {category:"Timber", name:"Timber (4x4)"},
-  {category:"Timber", name:"Timber (2x6)"},
-  {category:"Timber", name:"Timber (4x6)"},
-  {category:"Bricks", name:"Bricks (per 100)"},
-  {category:"Bricks", name:"Concrete Blocks (per 50)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},
-  {category:"Roofing", name:"Corrugated Sheet (per 10)"},
-  {category:"Flooring", name:"Floor Tiles (per m²)"},
-  {category:"Flooring", name:"Wood Flooring (per m²)"},
-  {category:"Paint", name:"Interior Paint (5L)"},
-  {category:"Paint", name:"Exterior Paint (5L)"},
-  {category:"Pipes", name:"PVC Pipe (2m)"},
-  {category:"Pipes", name:"Copper Pipe (2m)"},
-  {category:"Electrical", name:"Switch (per unit)"},
-  {category:"Electrical", name:"Socket (per unit)"},
-  // Add more to reach 250+ entries
-];
+  <!-- ====== Footer ====== -->
+  <footer>
+    <p>&copy; 2025 Buildy. All rights reserved.</p>
+  </footer>
 
-// Assign random prices
-materials.forEach(m => m.prices = suppliers.map(()=> parseFloat((Math.random()*50+3).toFixed(2))));
+  <script>
+    /* ====== Suppliers ====== */
+    const suppliers = [
+      {name:"Woodie's", lat:52.336,lng:-6.465, logo:"https://upload.wikimedia.org/wikipedia/commons/3/37/Woodies_logo.png"},
+      {name:"TJ O'Mahony", lat:52.342,lng:-6.462, logo:"https://via.placeholder.com/60x30?text=TJ+O'Mahony"},
+      {name:"J.J Bolgers", lat:52.334,lng:-6.464, logo:"https://via.placeholder.com/60x30?text=JJ+Bolgers"},
+      {name:"Chadwicks", lat:52.339,lng:-6.470, logo:"https://upload.wikimedia.org/wikipedia/commons/0/0b/Chadwicks_logo.png"}
+    ];
 
-// Table functions
-const tableHeader=document.getElementById("tableHeader");
-const tableBody=document.getElementById("tableBody");
-const searchInput=document.getElementById("searchInput");
-let recentSearches=[];
+    /* ====== Materials (sample; can extend to 250+) ====== */
+    const materials = [
+      {category:"Cement", name:"Cement (50kg)"},
+      {category:"Cement", name:"Cement (25kg)"},
+      {category:"Timber", name:"Timber (2x4)"},
+      {category:"Timber", name:"Timber (4x4)"},
+      {category:"Bricks", name:"Clay Bricks (per 100)"},
+      {category:"Bricks", name:"Concrete Blocks (per 50)"},
+      {category:"Roofing", name:"Roof Tiles (per 100)"},
+      {category:"Flooring", name:"Ceramic Tiles (per m²)"},
+      {category:"Paint", name:"Interior Paint (5L)"},
+      {category:"Pipes", name:"PVC Pipe (2m)"},
+      {category:"Electrical", name:"LED Bulb (per unit)"}
+    ];
 
-function createHeader(){
-  tableHeader.innerHTML="";
-  let th=document.createElement("th"); th.textContent="Material"; tableHeader.appendChild(th);
-  suppliers.forEach(s => { let th = document.createElement("th"); th.textContent = s.name; tableHeader.appendChild(th); });
-}
+    // Assign random prices for demo
+    materials.forEach(m => 
+      m.prices = suppliers.map(()=> parseFloat((Math.random()*50+3).toFixed(2)))
+    );
 
-function generateTable(filteredMaterials){
-  tableBody.innerHTML=""; let currentCategory="";
-  filteredMaterials.forEach((m,index) => {
-    if(m.category !== currentCategory){ currentCategory = m.category;
-      let catRow = document.createElement("tr"); catRow.classList.add("category-header", "visible");
-      let td = document.createElement("td"); td.colSpan = suppliers.length + 1; td.textContent = currentCategory;
-      catRow.appendChild(td); tableBody.appendChild(catRow);
+    const tableHeader=document.getElementById("tableHeader");
+    const tableBody=document.getElementById("tableBody");
+
+    /* ====== Table Header ====== */
+    function createHeader(){
+      tableHeader.innerHTML="";
+      let th=document.createElement("tr");
+      let base=document.createElement("th"); base.textContent="Material"; th.appendChild(base);
+      suppliers.forEach(s => { 
+        let sup = document.createElement("th"); 
+        sup.innerHTML = `<img src="${s.logo}" alt="${s.name}" style="height:30px;"><br>${s.name}`;
+        th.appendChild(sup); 
+      });
+      tableHeader.appendChild(th);
     }
-    let row = document.createElement("tr");
-    let td = document.createElement("td"); td.textContent = m.name; row.appendChild(td);
-    m.prices.forEach(p => { let td = document.createElement("td"); td.textContent = p; row.appendChild(td); });
-    tableBody.appendChild(row); highlightCheapest(row,m.prices);
-    setTimeout(()=>row.classList.add('visible'), index*10);
-  });
-}
 
-function highlightCheapest(row, prices){
-  let minPrice = Math.min(...prices);
-  Array.from(row.cells).forEach((cell,i)=>{
-    if(i>0 && parseFloat(cell.textContent)===minPrice) cell.classList.add("cheapest");
-  });
-}
+    /* ====== Table Rows ====== */
+    function generateTable(){
+      tableBody.innerHTML=""; let currentCategory="";
+      materials.forEach(m => {
+        if(m.category!==currentCategory){
+          currentCategory=m.category;
+          let catRow=document.createElement("tr");
+          catRow.classList.add("category-header");
+          let td=document.createElement("td");
+          td.colSpan=suppliers.length+1;
+          td.textContent=currentCategory;
+          catRow.appendChild(td);
+          tableBody.appendChild(catRow);
+        }
+        let row=document.createElement("tr");
+        let td=document.createElement("td"); td.textContent=m.name; row.appendChild(td);
+        m.prices.forEach(p=>{
+          let td=document.createElement("td"); td.textContent="€"+p.toFixed(2); row.appendChild(td);
+        });
+        tableBody.appendChild(row);
+        highlightCheapest(row,m.prices);
+      });
+    }
 
-function filterTable(){ 
-  let val = searchInput.value.toLowerCase(); 
-  let filtered = materials.filter(m => m.name.toLowerCase().includes(val)); 
-  generateTable(filtered); 
-  if(val && !recentSearches.includes(val)){ recentSearches.unshift(val); if(recentSearches.length>5) recentSearches.pop(); updateDashboard(); } 
-}
-searchInput.addEventListener("input",filterTable);
-createHeader(); generateTable(materials);
+    /* ====== Highlight Cheapest ====== */
+    function highlightCheapest(row, prices){
+      let min=Math.min(...prices);
+      Array.from(row.cells).forEach((cell,i)=>{
+        if(i>0 && parseFloat(cell.textContent.replace("€",""))===min){
+          cell.classList.add("cheapest");
+        }
+      });
+    }
 
-// Login & Dashboard
-const loginBtn=document.getElementById("loginBtn");
-const modal=document.getElementById("loginModal");
-const closeBtn=document.querySelector(".close");
-const submitLogin=document.getElementById("submitLogin");
-const dashboard=document.getElementById("dashboard");
-const welcomeCard=document.querySelector("#welcomeCard p");
-const recentList=document.getElementById("recentSearches");
-const savedList=document.getElementById("savedComparisons");
-const statsContent=document.getElementById("statsContent");
+    createHeader();
+    generateTable();
 
-loginBtn.onclick=()=>modal.style.display="flex";
-closeBtn.onclick=()=>modal.style.display="none";
-window.onclick=(e)=>{ if(e.target==modal) modal.style.display="none"; };
+    /* ====== Google Map ====== */
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 52.336, lng: -6.465 },
+        zoom: 14,
+      });
+      suppliers.forEach(supplier => {
+        const marker = new google.maps.Marker({
+          position: { lat: supplier.lat, lng: supplier.lng },
+          map,
+          title: supplier.name,
+        });
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<strong>${supplier.name}</strong>`,
+        });
+        marker.addListener("click", () => {
+          infoWindow.open(map, marker);
+        });
+      });
+    }
+  </script>
 
-submitLogin.onclick=()=>{
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value.trim();
-  if(username && password){
-    modal.style.display="none";
-    document.querySelector(".hero").style.display="none";
-    document.querySelector(".comparison").style.display="none";
-    dashboard.style.display="block";
-    welcomeCard.textContent=`Hello, ${username}!`;
-  } else { alert("Please enter username and password"); }
-};
+  <!-- Load Google Maps -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 
-function updateDashboard(){
-  recentList.innerHTML=""; savedList.innerHTML="";
-  recentSearches.forEach(s=>{ let li=document.createElement("li"); li.textContent=s; recentList.appendChild(li); });
-  materials.forEach(m=>{ if(recentSearches.includes(m.name.toLowerCase())){ let li=document.createElement("li"); li.textContent=m.name; savedList.appendChild(li); } });
-  statsContent.textContent=`Total comparisons: ${savedList.children.length}`;
-}
-
-document.getElementById("exportDashboard").onclick=()=>{
-  let csv="Material,"+suppliers.map(s=>s.name).join(",")+"\n";
-  materials.forEach(m=>csv+=m.name+","+m.prices.join(",")+"\n");
-  const blob=new Blob([csv],{type:"text/csv"});
-  const url=URL.createObjectURL(blob); let a=document.createElement("a"); a.href=url; a.download="dashboard.csv"; a.click(); URL.revokeObjectURL(url);
-};
-
-document.getElementById("backToCompare").onclick=()=>{
-  dashboard.style.display="none";
-  document.querySelector(".hero").style.display="block";
-  document.querySelector(".comparison").style.display="block";
-};
-
-// Google Maps
-function init
+</body>
+</html>
