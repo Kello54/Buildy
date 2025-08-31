@@ -164,11 +164,10 @@ window.addEventListener('load', ()=>document.body.classList.add('loaded'));
 // Collapsible toggle
 function toggleSection(header){
   const content = header.nextElementSibling;
-  if(content.style.display==="block"){content.style.display="none";}
-  else{content.style.display="block";}
+  content.style.display = (content.style.display==="block")?"none":"block";
 }
 
-// Materials + categories
+// Categories and materials
 const categories=["Cement","Timber","Bricks","Roofing","Flooring","Paint","Pipes","Electrical","Hardware","Insulation","Plaster","Steel","Tools","Garden"];
 const materials=[];
 for(let i=1;i<=250;i++){const cat=categories[i%categories.length];materials.push({category:cat,name:`${cat} Material ${i}`});}
@@ -193,4 +192,33 @@ function generateComparison(filteredMaterials = materials){
     const card=document.createElement("div");
     card.className="card";
     card.innerHTML=`<h3>${item.name}</h3>`+suppliers.map((s,i)=>`<div class="price-row"><span>${s}</span> <span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`).join('');
-    card.addEventListener('click',()=>window.location.href=`${suppliers[0].to
+    card.addEventListener('click',()=>window.location.href=`${suppliers[0].toLowerCase().replace(/\s/g,'-')}.html`);
+    cardWrapper.appendChild(card);
+  });
+}
+
+// Search & Filter
+function searchMaterials(){filterMaterials();}
+function filterMaterials(){
+  const query=document.getElementById("searchBox").value.toLowerCase();
+  const category=document.getElementById("categoryFilter").value;
+  const supplier=document.getElementById("supplierFilter").value;
+  let filtered=materials.filter(m=>m.name.toLowerCase().includes(query));
+  if(category) filtered=filtered.filter(m=>m.category===category);
+  generateComparison(filtered);
+}
+generateComparison();
+
+// Leaflet Map
+const map = L.map('supplierMap').setView([53.349805, -6.26031], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+const supplierLocations=[
+  {name:"Chadwicks", coords:[53.346, -6.258]},
+  {name:"TJ O'Mahony", coords:[53.347, -6.25]},
+  {name:"Woodie's", coords:[53.355, -6.265]},
+  {name:"Heiton Buckley", coords:[53.352, -6.27]}
+];
+supplierLocations.forEach(s=>L.marker(s.coords).addTo(map).bindPopup(s.name));
+</script>
+</body>
+</html>
