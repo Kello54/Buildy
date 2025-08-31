@@ -8,9 +8,17 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:url('https://kello54.github.io/Buildy/docs/images/construction-bg.jpg') center/cover no-repeat fixed;color:#fff;min-height:100vh;display:flex;flex-direction:column;position:relative;}
-body::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:0;}
-.container{max-width:1200px;margin:0 auto;padding:0 20px;position:relative; z-index:1;}
+body{
+  min-height:100vh;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  background:
+    linear-gradient(to right, rgba(46,26,71,1) 0%, rgba(46,26,71,0.85) 85%, rgba(46,26,71,0.7) 100%),
+    url('https://kello54.github.io/Buildy/docs/images/construction-bg.jpg') center/cover no-repeat fixed;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
 header{background:#2e1a47;padding:15px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid gold;position:sticky;top:0;z-index:5;}
 header .logo{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:bold;color:#fff;}
 header .logo img{height:40px;}
@@ -99,7 +107,6 @@ for(let i=1;i<=250;i++){
   const cat=categories[i%categories.length];
   materials.push({category:cat,name:`${cat} Material ${i}`});
 }
-
 const suppliers=["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 
 function generateCards(data=materials){
@@ -119,7 +126,6 @@ function generateCards(data=materials){
     grouped[cat].forEach(item=>{
       const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
       const minPrice=Math.min(...prices);
-      // Mock historical prices
       const history=suppliers.map(()=>[...(Array(7).fill(0).map(()=> (Math.random()*50+10).toFixed(2)))]);
       
       const card=document.createElement('div');
@@ -172,10 +178,12 @@ const supplierLocations=[
   {name:"Heiton Buckley",coords:[53.348,-6.265]}
 ];
 supplierLocations.forEach(s=>L.marker(s.coords).addTo(map).bindPopup(s.name));
-
-// Floating map parallax
-const floatingMap=document.querySelector('.floating-map');
-window.addEventListener('scroll',()=>{floatingMap.style.transform=`translateY(${window.scrollY*0.1}px)`;});
+const overlay=document.querySelector('.map-overlay');
+document.getElementById('supplierMap').addEventListener('mousemove',e=>{
+  const x=e.offsetX/overlay.offsetWidth;
+  const y=e.offsetY/overlay.offsetHeight;
+  overlay.style.background=`radial-gradient(circle at ${x*100}% ${y*100}%, rgba(255,215,0,0.15), rgba(255,215,0,0))`;
+});
 </script>
 </body>
 </html>
