@@ -112,6 +112,30 @@ th {
 }
 tr:nth-child(even){background:#f4f4f4;}
 .highlight {background:gold; font-weight:bold;}
+
+/* ===== Category Row Animation ===== */
+.category-row {
+  background:#2e1a47 !important;
+  color:gold;
+  font-weight:bold;
+  text-align:left;
+  font-size:18px;
+  animation: fadeSlideIn 0.8s ease;
+}
+@keyframes fadeSlideIn {
+  from {opacity:0; transform:translateX(-20px);}
+  to {opacity:1; transform:translateX(0);}
+}
+
+/* ===== Material Row Fade-In ===== */
+@keyframes rowFadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+tbody tr {
+  animation: rowFadeIn 0.5s ease;
+}
+
 footer {
   background:#2e1a47;
   color:#fff;
@@ -166,35 +190,45 @@ footer {
 </footer>
 
 <script>
-// Full materials list (250+ items)
+// Full materials list
 const materials = [
   {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},{category:"Cement", name:"Post Mix Concrete (20kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Timber", name:"Plywood Sheet 8x4 (12mm)"},{category:"Timber", name:"MDF Sheet 8x4 (12mm)"},{category:"Timber", name:"OSB Board 8x4 (11mm)"},{category:"Timber", name:"Skirting Board (3m)"},{category:"Timber", name:"Door Frame Kit"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
   {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},{category:"Bricks", name:"Engineering Bricks (per 100)"},{category:"Bricks", name:"Hollow Concrete Block (per 10)"},{category:"Bricks", name:"Lightweight Thermal Block (per 10)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},{category:"Roofing", name:"Corrugated Sheet (per sheet)"},{category:"Roofing", name:"Bitumen Felt (10m roll)"},{category:"Roofing", name:"Roof Ridge Tile (each)"},{category:"Roofing", name:"Roof Insulation Board (per m²)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Porcelain Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},{category:"Flooring", name:"Wood Flooring (per m²)"},{category:"Flooring", name:"Vinyl Flooring (per m²)"},{category:"Flooring", name:"Carpet (per m²)"},{category:"Flooring", name:"Tile Adhesive (20kg)"},{category:"Flooring", name:"Tile Grout (5kg)"},
-  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},{category:"Paint", name:"Primer (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},{category:"Paint", name:"Undercoat (2.5L)"},{category:"Paint", name:"Wood Stain (2.5L)"},{category:"Paint", name:"Varnish (1L)"},{category:"Paint", name:"Spray Paint (400ml)"},
-  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"PVC Pipe (4m)"},{category:"Pipes", name:"Copper Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (3m)"},{category:"Pipes", name:"Drainage Pipe (3m)"},{category:"Pipes", name:"Flexible Hose (2m)"},{category:"Pipes", name:"Pipe Insulation (per metre)"},{category:"Pipes", name:"Soil Pipe (110mm)"},
-  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},{category:"Electrical", name:"LED Bulb (per unit)"},{category:"Electrical", name:"Fluorescent Tube (per unit)"},{category:"Electrical", name:"Circuit Breaker (per unit)"},{category:"Electrical", name:"Fuse Board (6 way)"},{category:"Electrical", name:"Outdoor Light Fitting"},{category:"Electrical", name:"Extension Lead (4 gang)"},
-  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},{category:"Hardware", name:"Wall Plugs (box of 100)"},{category:"Hardware", name:"Hinges (pair)"},{category:"Hardware", name:"Door Handle Set"},{category:"Hardware", name:"Padlock"},{category:"Hardware", name:"Gate Latch"},{category:"Hardware", name:"Shelf Brackets (pair)"},
-  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},{category:"Insulation", name:"Foam Board (per m²)"},{category:"Insulation", name:"Pipe Insulation Sleeve (per m)"},{category:"Insulation", name:"Spray Foam Kit"},
-  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Plasterboard 8x4 (15mm)"},{category:"Plaster", name:"Moisture Resistant Plasterboard"},{category:"Plaster", name:"Jointing Tape (90m roll)"},{category:"Plaster", name:"Skim Plaster (25kg)"},
-  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},{category:"Steel", name:"Galvanised Sheet (per m²)"},{category:"Steel", name:"Mesh Reinforcement Sheet"},{category:"Steel", name:"RSJ Beam (152x89mm x 3m)"},
-  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},{category:"Tools", name:"Spirit Level"},{category:"Tools", name:"Measuring Tape (5m)"},{category:"Tools", name:"Cordless Drill"},{category:"Tools", name:"Circular Saw"},{category:"Tools", name:"Angle Grinder"},{category:"Tools", name:"Shovel"},{category:"Tools", name:"Ladder (3m)"},
-  {category:"Garden", name:"Cement Mixer Hire (per day)"},{category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Garden Fence Panel (6ft)"},{category:"Garden", name:"Decking Board (3m)"},{category:"Garden", name:"Outdoor Timber Treatment (5L)"}
+  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},{category:"Roofing", name:"Corrugated Sheet (per sheet)"},{category:"Roofing", name:"Bitumen Felt (10m roll)"},{category:"Roofing", name:"Roof Ridge Tile (each)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Porcelain Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},{category:"Flooring", name:"Wood Flooring (per m²)"},
+  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},{category:"Paint", name:"Primer (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},
+  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"PVC Pipe (4m)"},{category:"Pipes", name:"Copper Pipe (2m)"},{category:"Pipes", name:"Drainage Pipe (3m)"},
+  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},{category:"Electrical", name:"LED Bulb (per unit)"},{category:"Electrical", name:"Circuit Breaker (per unit)"},
+  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},{category:"Hardware", name:"Door Handle Set"},{category:"Hardware", name:"Padlock"},
+  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},{category:"Insulation", name:"Foam Board (per m²)"},
+  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Moisture Resistant Plasterboard"},{category:"Plaster", name:"Skim Plaster (25kg)"},
+  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},{category:"Steel", name:"RSJ Beam (152x89mm x 3m)"},
+  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Cordless Drill"},{category:"Tools", name:"Circular Saw"},{category:"Tools", name:"Ladder (3m)"},
+  {category:"Garden", name:"Cement Mixer Hire (per day)"},{category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Garden Fence Panel (6ft)"}
 ];
 
 const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
-function generateTable(){
+function generateTable(query=""){
   const tbody = document.querySelector("#comparisonTable tbody");
   tbody.innerHTML = "";
-  materials.forEach(item => {
+  let currentCategory = "";
+
+  materials.filter(m=>m.name.toLowerCase().includes(query)).forEach(item=>{
+    if(item.category !== currentCategory){
+      currentCategory = item.category;
+      const catRow = document.createElement("tr");
+      catRow.classList.add("category-row");
+      catRow.innerHTML = `<td colspan="5">${currentCategory}</td>`;
+      tbody.appendChild(catRow);
+    }
+
     const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
     const minPrice = Math.min(...prices);
     const row = document.createElement("tr");
     let cells = `<td>${item.name}</td>`;
-    prices.forEach((p,i)=>{
+    prices.forEach(p=>{
       cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
     });
     row.innerHTML = cells;
@@ -204,8 +238,12 @@ function generateTable(){
 
 function searchMaterials(){
   const query = document.getElementById("searchBox").value.toLowerCase();
-  const tbody = document.querySelector("#comparisonTable tbody");
-  tbody.innerHTML = "";
-  materials.filter(m=>m.name.toLowerCase().includes(query)).forEach(item=>{
-    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice = Math.min(...
+  generateTable(query);
+}
+
+// Initial load
+generateTable();
+</script>
+
+</body>
+</html>
