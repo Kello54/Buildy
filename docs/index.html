@@ -12,9 +12,7 @@ body {
   background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
   color:#fff; min-height:100vh; display:flex; flex-direction:column;
 }
-header {
-  background: #2e1a47; padding: 15px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid gold;
-}
+header {background: #2e1a47; padding: 15px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid gold;}
 header .logo { display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img {height:40px;}
 header .login {color:#fff; font-size:16px; cursor:pointer; text-decoration:none;}
@@ -32,14 +30,15 @@ th, td {border:1px solid #ddd; padding:12px; text-align:center;}
 th {background:#2e1a47; color:#fff;}
 tr:nth-child(even){background:#f4f4f4;}
 .highlight {background:gold; font-weight:bold;}
-.category-row td {cursor:pointer; background:#3c245c; color:gold; font-weight:bold;}
-.material-row {display:table-row;}
+.category-row td {cursor:pointer; background:#3c245c; color:gold; font-weight:bold; transition:background 0.3s;}
+.category-row:hover td {background:#4a2f7c;}
+.material-row {display:none;}
 .card-wrapper {display:flex; overflow-x:auto; gap:10px; margin-top:20px; padding-bottom:10px;}
 .card {min-width:200px; background:rgba(46,26,71,0.9); padding:15px; border-radius:10px; flex-shrink:0; transition:transform 0.3s;}
 .card:hover {transform:scale(1.05);}
-.price-row {display:flex; justify-content:space-between; margin:5px 0;}
 .collapsible-section {margin-bottom:30px;}
-.collapsible-content {display:block;}
+.collapsible-header {cursor:pointer; background:#3c245c; color:gold; padding:10px; border-radius:5px; margin-bottom:5px;}
+.collapsible-content {display:block; padding:10px; background:rgba(0,0,0,0.7); border-radius:5px;}
 footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold;}
 </style>
 </head>
@@ -126,7 +125,7 @@ document.querySelectorAll('.collapsible-header').forEach(header => {
   });
 });
 
-// Full 250+ materials list
+// Full 250+ materials
 const materials = [
 {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},{category:"Cement", name:"Post Mix Concrete (20kg)"},
 {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Timber", name:"Plywood Sheet 8x4 (12mm)"},{category:"Timber", name:"MDF Sheet 8x4 (12mm)"},{category:"Timber", name:"OSB Board 8x4 (11mm)"},{category:"Timber", name:"Skirting Board (3m)"},{category:"Timber", name:"Door Frame Kit"},
@@ -146,23 +145,39 @@ const materials = [
 
 const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
+// Generate table with collapsible categories
 function generateTable(filteredMaterials=materials){
   const tbody = document.querySelector("#comparisonTable tbody");
   tbody.innerHTML = "";
-  filteredMaterials.forEach(item => {
-    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice = Math.min(...prices);
-    const row = document.createElement("tr");
-    row.className = "material-row";
-    let cells = `<td>${item.name}</td>`;
-    prices.forEach((p,i)=>{
-      cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
+  const categories = [...new Set(filteredMaterials.map(m=>m.category))];
+  categories.forEach(cat=>{
+    const catRow = document.createElement("tr");
+    catRow.className = "category-row";
+    catRow.innerHTML = `<td colspan="5">${cat}</td>`;
+    catRow.addEventListener('click',()=>toggleCategory(cat));
+    tbody.appendChild(catRow);
+    filteredMaterials.filter(m=>m.category===cat).forEach(item=>{
+      const row = document.createElement("tr");
+      row.className = `material-row ${cat}`;
+      let cells = `<td>${item.name}</td>`;
+      const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+      const minPrice = Math.min(...prices);
+      prices.forEach((p,i)=>{ cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`; });
+      row.innerHTML = cells;
+      tbody.appendChild(row);
     });
-    row.innerHTML = cells;
-    tbody.appendChild(row);
+  });
+  document.querySelectorAll('.material-row').forEach(row=>row.style.display='none');
+}
+
+// Toggle category
+function toggleCategory(category){
+  document.querySelectorAll(`.${category}`).forEach(row=>{
+    row.style.display = row.style.display==='none' ? 'table-row' : 'none';
   });
 }
 
+// Generate cards
 function generateCards(filteredMaterials=materials){
   const wrapper = document.getElementById("cardWrapper");
   wrapper.innerHTML = "";
@@ -175,48 +190,32 @@ function generateCards(filteredMaterials=materials){
   });
 }
 
-function searchMaterials(){
+// Search and filter
+function searchMaterials(){ 
   const query = document.getElementById("searchBox").value.toLowerCase();
   const filtered = materials.filter(m=>m.name.toLowerCase().includes(query));
-  generateTable(filtered);
-  generateCards(filtered);
+  generateTable(filtered); generateCards(filtered);
 }
-
 function filterMaterials(){
-  const category = document.getElementById("categoryFilter").value;
-  const supplier = document.getElementById("supplierFilter").value;
-  let filtered = materials;
-  if(category) filtered = filtered.filter(m=>m.category===category);
-  // Supplier filter could be used for highlighting or card display
-  generateTable(filtered);
-  generateCards(filtered);
+  const cat = document.getElementById("categoryFilter").value;
+  let filtered = cat ? materials.filter(m=>m.category===cat) : materials;
+  generateTable(filtered); generateCards(filtered);
 }
 
 // Populate category filter
 const categorySelect = document.getElementById("categoryFilter");
 [...new Set(materials.map(m=>m.category))].forEach(c=>{
-  const opt = document.createElement("option");
-  opt.value = c; opt.textContent = c; categorySelect.appendChild(opt);
+  const opt = document.createElement("option"); opt.value=c; opt.textContent=c; categorySelect.appendChild(opt);
 });
 
 // Initialize
-generateTable();
-generateCards();
+generateTable(); generateCards();
 
-// Initialize Leaflet map
-const map = L.map('supplierMap').setView([53.3331,-6.2489], 10); // Dublin center
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution:'&copy; OpenStreetMap contributors'
-}).addTo(map);
-const supplierCoords = {
-  "Chadwicks":[53.338, -6.262],
-  "TJ O'Mahony":[53.345, -6.230],
-  "Woodie's":[53.329, -6.240],
-  "Heiton Buckley":[53.342, -6.250]
-};
-suppliers.forEach(s=>{
-  L.marker(supplierCoords[s]).addTo(map).bindPopup(s);
-});
+// Leaflet map
+const map = L.map('supplierMap').setView([53.3331,-6.2489], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+const supplierCoords = {"Chadwicks":[53.338,-6.262],"TJ O'Mahony":[53.345,-6.230],"Woodie's":[53.329,-6.240],"Heiton Buckley":[53.342,-6.250]};
+suppliers.forEach(s=>{L.marker(supplierCoords[s]).addTo(map).bindPopup(s);});
 </script>
 
 </body>
