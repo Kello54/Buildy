@@ -6,12 +6,12 @@
 <title>Buildy - No.1 Building Material Price Comparison</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 <style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
 body {
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
+  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
   color:#fff;
   position: relative;
 }
@@ -21,44 +21,47 @@ body::before {
   background:rgba(0,0,0,0.6);
   z-index:0;
 }
-.container {
-  max-width:1200px; margin:0 auto; padding:0 20px;
-  z-index:1; position:relative;
-}
+.container {max-width:1200px; margin:0 auto; padding:0 20px; z-index:1; position:relative;}
 header {
   background:#2e1a47; padding:15px 40px; display:flex; justify-content:space-between; align-items:center;
   border-bottom:4px solid gold; position:sticky; top:0; z-index:5; box-shadow:0 4px 10px rgba(0,0,0,0.4);
+  transition:0.3s;
 }
+header:hover {background:#3c245c;}
 header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img {height:40px;}
-header .login {color:#fff; font-size:16px; cursor:pointer; text-decoration:none;}
+header .login {color:#fff; font-size:16px; cursor:pointer; text-decoration:none; transition:0.3s;}
+header .login:hover {color:gold;}
 nav.subheader {
   background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;
   position:sticky; top:64px; z-index:4; box-shadow:0 2px 6px rgba(0,0,0,0.4);
 }
-nav.subheader a {color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative;}
+nav.subheader a {color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative; transition:0.3s;}
+nav.subheader a:hover {color:gold;}
 nav.subheader a:not(:last-child)::after {
   content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:2px; height:20px; background:gold;
 }
 .hero {
-  text-align:center; padding:80px 20px 40px; background:rgba(46,26,71,0.7); border-radius:10px; margin:20px 0;
+  text-align:center; padding:80px 20px 40px; background:rgba(46,26,71,0.8); border-radius:10px; margin:20px 0;
+  box-shadow:0 0 20px rgba(255,215,0,0.4);
 }
-.hero h1 {font-size:36px; margin-bottom:20px;}
-.hero input, .hero select {padding:10px; max-width:200px; margin:5px; border-radius:5px; border:1px solid gold;}
-.hero button {padding:10px 20px; margin-left:10px; background:gold; border:none; border-radius:5px; cursor:pointer; font-weight:bold; transition:0.3s;}
-.hero button:hover {background:#ffd700;}
+.hero h1 {font-size:36px; margin-bottom:20px; text-shadow: 2px 2px 8px #000;}
+.hero input, .hero select {padding:10px; max-width:200px; margin:5px; border-radius:5px; border:1px solid gold; transition:0.3s;}
+.hero input:focus, .hero select:focus {outline:none; border-color:#ffd700; box-shadow:0 0 10px gold;}
+.hero button {padding:10px 20px; margin-left:10px; background:gold; border:none; border-radius:5px; cursor:pointer; font-weight:bold; transition:0.3s; box-shadow:0 0 8px rgba(255,215,0,0.7);}
+.hero button:hover {background:#ffd700; transform:scale(1.05);}
 .comparison {
   flex:1; padding:40px 20px; background:rgba(0,0,0,0.7); border-radius:10px; overflow-x:auto;
   box-shadow:0 4px 15px rgba(0,0,0,0.5);
 }
-.comparison h2 {margin-bottom:20px; border-bottom:2px solid gold; display:inline-block; padding-bottom:5px;}
+.comparison h2 {margin-bottom:20px; border-bottom:2px solid gold; display:inline-block; padding-bottom:5px; text-shadow:1px 1px 5px #000;}
 table {width:100%; border-collapse:collapse; background:#fff; color:#000; min-width:900px;}
-th, td {border:1px solid #ddd; padding:12px; text-align:center;}
+th, td {border:1px solid #ddd; padding:12px; text-align:center; transition:0.3s;}
 th {background:#2e1a47; color:#fff; cursor:pointer; position:sticky; top:0; z-index:3; box-shadow:0 2px 5px rgba(0,0,0,0.4);}
 tbody tr:nth-child(even){background:#f4f4f4;}
-.highlight {background:gold; font-weight:bold;}
-tbody tr:hover {background: rgba(255,215,0,0.15); transition:0.3s;}
-.category-row td {background:#2e1a47; color:gold; font-weight:bold; text-align:left; font-size:18px; animation: fadeSlideIn 0.6s ease forwards;}
+.highlight {background:gold; font-weight:bold; box-shadow:0 0 8px rgba(255,215,0,0.7);}
+tbody tr:hover {background: rgba(255,215,0,0.15); transform:scale(1.01);}
+.category-row td {background:#2e1a47; color:gold; font-weight:bold; text-align:left; font-size:18px; animation: fadeSlideIn 0.6s ease forwards; text-shadow:1px 1px 5px #000;}
 @keyframes fadeSlideIn {from {opacity:0; transform:translateX(-20px);} to {opacity:1; transform:translateX(0);}}
 tbody tr {opacity:0; animation: rowFadeIn 0.5s forwards;}
 @keyframes rowFadeIn {from {opacity:0;} to {opacity:1;}}
@@ -70,7 +73,7 @@ td:first-child, th:first-child {position: sticky; left:0; background:#fff; z-ind
   td {text-align:left; padding:5px; border:none; display:flex; justify-content:space-between;}
   td:first-child {font-weight:bold;}
 }
-footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold; margin-top:20px;}
+footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold; margin-top:20px; text-shadow:1px 1px 5px #000;}
 </style>
 </head>
 <body>
@@ -111,6 +114,7 @@ footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-
     <option value="Tools">Tools</option>
     <option value="Garden">Garden</option>
   </select>
+  <button onclick="searchMaterials()">Search</button>
 </section>
 
 <section class="comparison">
@@ -135,78 +139,60 @@ footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-
 </div>
 
 <script>
-// 250+ Materials array
 const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},{category:"Cement", name:"Post Mix Concrete (20kg)"},{category:"Cement", name:"Rapid Set Cement (20kg)"},{category:"Cement", name:"Hydraulic Cement (25kg)"},{category:"Cement", name:"Repair Mortar (25kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Timber", name:"Plywood Sheet 8x4 (12mm)"},{category:"Timber", name:"MDF Sheet 8x4 (12mm)"},{category:"Timber", name:"OSB Board 8x4 (11mm)"},{category:"Timber", name:"Skirting Board (3m)"},{category:"Timber", name:"Door Frame Kit"},{category:"Timber", name:"Roof Joist 50x150 (3m)"},{category:"Timber", name:"Fencing Timber 100x50 (2m)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},{category:"Bricks", name:"Engineering Bricks (per 100)"},{category:"Bricks", name:"Hollow Concrete Block (per 10)"},{category:"Bricks", name:"Lightweight Thermal Block (per 10)"},{category:"Bricks", name:"Facing Bricks (per 100)"},{category:"Bricks", name:"Fire Bricks (per 50)"},{category:"Bricks", name:"Paving Bricks (per 100)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},{category:"Roofing", name:"Corrugated Sheet (per sheet)"},{category:"Roofing", name:"Bitumen Felt (10m roll)"},{category:"Roofing", name:"Roof Ridge Tile (each)"},{category:"Roofing", name:"Roof Insulation Board (per m²)"},{category:"Roofing", name:"Felt Underlay (per roll)"},{category:"Roofing", name:"Lead Flashing (per metre)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Porcelain Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},{category:"Flooring", name:"Wood Flooring (per m²)"},{category:"Flooring", name:"Vinyl Flooring (per m²)"},{category:"Flooring", name:"Carpet (per m²)"},{category:"Flooring", name:"Tile Adhesive (20kg)"},{category:"Flooring", name:"Tile Grout (5kg)"},{category:"Flooring", name:"Underlay (per m²)"},{category:"Flooring", name:"Floor Screed (25kg)"},
-  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},{category:"Paint", name:"Primer (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},{category:"Paint", name:"Undercoat (2.5L)"},{category:"Paint", name:"Wood Stain (2.5L)"},{category:"Paint", name:"Varnish (1L)"},{category:"Paint", name:"Spray Paint (400ml)"},{category:"Paint", name:"Anti-Mould Paint (5L)"},{category:"Paint", name:"Metal Paint (2.5L)"},
-  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"PVC Pipe (4m)"},{category:"Pipes", name:"Copper Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (3m)"},{category:"Pipes", name:"Drainage Pipe (3m)"},{category:"Pipes", name:"Flexible Hose (2m)"},{category:"Pipes", name:"Pipe Insulation (per metre)"},{category:"Pipes", name:"Soil Pipe (110mm)"},{category:"Pipes", name:"HDPE Pipe (per m)"},{category:"Pipes", name:"Gas Pipe (per m)"},
-  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},{category:"Electrical", name:"LED Bulb (per unit)"},{category:"Electrical", name:"Fluorescent Tube (per unit)"},{category:"Electrical", name:"Circuit Breaker (per unit)"},{category:"Electrical", name:"Fuse Board (6 way)"},{category:"Electrical", name:"Outdoor Light Fitting"},{category:"Electrical", name:"Extension Lead (4 gang)"},{category:"Electrical", name:"Dimmer Switch"},{category:"Electrical", name:"Electrical Cable (per metre)"},
-  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},{category:"Hardware", name:"Wall Plugs (box of 100)"},{category:"Hardware", name:"Hinges (pair)"},{category:"Hardware", name:"Door Handle Set"},{category:"Hardware", name:"Padlock"},{category:"Hardware", name:"Gate Latch"},{category:"Hardware", name:"Shelf Brackets (pair)"},{category:"Hardware", name:"Bolts (box of 50)"},{category:"Hardware", name:"Washers (box of 50)"},
-  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},{category:"Insulation", name:"Foam Board (per m²)"},{category:"Insulation", name:"Pipe Insulation Sleeve (per m)"},{category:"Insulation", name:"Spray Foam Kit"},{category:"Insulation", name:"Reflective Foil Insulation (per m²)"},{category:"Insulation", name:"Acoustic Insulation (per m²)"},{category:"Insulation", name:"Cavity Wall Insulation (per m²)"},
-  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Plasterboard 8x4 (15mm)"},{category:"Plaster", name:"Moisture Resistant Plasterboard"},{category:"Plaster", name:"Jointing Tape (90m roll)"},{category:"Plaster", name:"Skim Plaster (25kg)"},{category:"Plaster", name:"Ready Mix Plaster (20kg)"},{category:"Plaster", name:"Decorative Plaster (per m²)"},
-  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},{category:"Steel", name:"Galvanised Sheet (per m²)"},{category:"Steel", name:"Mesh Reinforcement Sheet"},{category:"Steel", name:"RSJ Beam (152x89mm x 3m)"},{category:"Steel", name:"Steel Rod (per m)"},{category:"Steel", name:"Steel Plate (per m²)"},{category:"Steel", name:"Steel Tube (per m)"},
-  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},{category:"Tools", name:"Spirit Level"},{category:"Tools", name:"Measuring Tape (5m)"},{category:"Tools", name:"Cordless Drill"},{category:"Tools", name:"Circular Saw"},{category:"Tools", name:"Angle Grinder"},{category:"Tools", name:"Shovel"},{category:"Tools", name:"Ladder (3m)"},{category:"Tools", name:"Hand Saw"},{category:"Tools", name:"Chisel Set"},{category:"Tools", name:"Trowel"},
-  {category:"Garden", name:"Cement Mixer Hire (per day)"},{category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Garden Fence Panel (6ft)"},{category:"Garden", name:"Decking Board (3m)"},{category:"Garden", name:"Outdoor Timber Treatment (5L)"},{category:"Garden", name:"Garden Shed Kit"},{category:"Garden", name:"Patio Paving Slabs (per m²)"},{category:"Garden", name:"Grass Seed (per kg)"}
+  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
+  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},
+  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},
+  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},
+  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (2m)"},
+  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},
+  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},
+  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},
+  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Skim Plaster (25kg)"},
+  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},
+  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},
+  {category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Decking Board (3m)"}
 ];
 
-const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
-let sortDirections = [true,true,true,true,true];
+const suppliers = ["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 
-function generateTable(query="", category=""){
+function generateTable(data = materials){
   const tbody = document.querySelector("#comparisonTable tbody");
   tbody.innerHTML = "";
-  let currentCategory = "";
-  let delay = 0;
-
-  const filtered = materials.filter(m=>{
-    const matchQuery = m.name.toLowerCase().includes(query.toLowerCase());
-    const matchCategory = category === "" || m.category === category;
-    return matchQuery && matchCategory;
-  });
-
-  filtered.forEach(item=>{
-    if(item.category !== currentCategory){
-      currentCategory = item.category;
-      const catRow = document.createElement("tr");
-      catRow.classList.add("category-row");
-      catRow.innerHTML = `<td colspan="5">${currentCategory}</td>`;
-      tbody.appendChild(catRow);
-    }
+  data.forEach(item => {
     const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
     const minPrice = Math.min(...prices);
     const row = document.createElement("tr");
-    row.style.animationDelay = `${delay}s`; delay+=0.05;
     let cells = `<td>${item.name}</td>`;
-    prices.forEach(p=>{ cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`; });
+    prices.forEach((p,i)=>{
+      cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
+    });
     row.innerHTML = cells;
     tbody.appendChild(row);
   });
 }
-
 function searchMaterials(){
-  const query = document.getElementById("searchBox").value;
+  const query = document.getElementById("searchBox").value.toLowerCase();
   const category = document.getElementById("categoryFilter").value;
-  generateTable(query, category);
-}
-
-function sortColumn(index){
-  const tbody = document.querySelector("#comparisonTable tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr")).filter(r=>!r.classList.contains("category-row"));
-  const direction = sortDirections[index];
-  rows.sort((a,b)=>{
-    const aVal = index===0 ? a.children[index].innerText : parseFloat(a.children[index].innerText.replace("€",""));
-    const bVal = index===0 ? b.children[index].innerText : parseFloat(b.children[index].innerText.replace("€",""));
-    return direction ? (aVal > bVal ? 1 : -1) : (aVal < bVal ? 1 : -1);
+  const filtered = materials.filter(m=>{
+    return m.name.toLowerCase().includes(query) && (category=="" || m.category==category);
   });
-  sortDirections[index] = !direction;
-  rows.forEach(r=>tbody.appendChild(r));
+  generateTable(filtered);
 }
-
-generateTable();
+function sortColumn(colIndex){
+  const table = document.getElementById("comparisonTable");
+  let rows = Array.from(table.rows).slice(1);
+  let asc = table.asc = !(table.asc);
+  rows.sort((a,b)=>{
+    let x = colIndex==0 ? a.cells[colIndex].innerText.toLowerCase() : parseFloat(a.cells[colIndex].innerText.replace('€',''));
+    let y = colIndex==0 ? b.cells[colIndex].innerText.toLowerCase() : parseFloat(b.cells[colIndex].innerText.replace('€',''));
+    return asc ? x-y : y-x;
+  });
+  rows.forEach(r=>table.tBodies[0].appendChild(r));
+}
+window.onload = ()=>{generateTable();}
 </script>
 </body>
 </html>
