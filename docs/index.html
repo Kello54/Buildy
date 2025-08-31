@@ -6,197 +6,93 @@
 <title>Buildy - No.1 Building Material Price Comparison</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 
-<!-- Leaflet CSS for map -->
+<!-- Leaflet CSS for Map -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
 /* ===== Global Reset ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
-body {
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  color:#fff;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
-  background-size: cover;
-}
+body {min-height:100vh; display:flex; flex-direction:column; color:#fff; background:#2e1a47;}
+a {text-decoration:none; color:inherit;}
+
+/* Header */
 header {
   background: #2e1a47;
   padding: 15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display:flex; justify-content:space-between; align-items:center;
   border-bottom:4px solid gold;
 }
-header .logo {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:24px;
-  font-weight:bold;
-  color:#fff;
-}
+header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img {height:40px;}
-header .login {
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-  text-decoration:none;
-}
+header .login {color:#fff; font-size:16px; cursor:pointer;}
 
+/* Subheader */
 nav.subheader {
-  background:#3c245c;
-  display:flex;
-  justify-content:center;
-  padding:10px 0;
-  border-bottom:2px solid gold;
+  background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;
 }
 nav.subheader a {
-  color:#fff;
-  text-decoration:none;
-  padding:0 20px;
-  position:relative;
-  font-size:16px;
+  color:#fff; padding:0 20px; position:relative; font-size:16px;
 }
 nav.subheader a:not(:last-child)::after {
-  content:"";
-  position:absolute;
-  right:0;
-  top:50%;
-  transform:translateY(-50%);
-  width:2px;
-  height:20px;
-  background:gold;
+  content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:2px; height:20px; background:gold;
 }
 
-/* ===== Hero ===== */
+/* Hero */
 .hero {
-  text-align:center;
-  padding:80px 20px 60px;
-  background: rgba(46,26,71,0.7);
+  text-align:center; padding:80px 20px 60px;
+  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
+  background-size: cover; position: relative; color: #fff;
 }
-.hero h1 {font-size:36px; margin-bottom:20px;}
-.hero input {
-  padding:10px;
-  width:300px;
-  max-width:90%;
-  border-radius:5px;
-  border:1px solid gold;
+.hero h1 {
+  font-size:36px; margin-bottom:20px; animation: fadeInDown 1.2s ease-out;
 }
-.hero button {
-  padding:10px 20px;
-  margin-left:10px;
-  background:gold;
-  border:none;
-  border-radius:5px;
-  cursor:pointer;
-  font-weight:bold;
-}
-#heroCTA {
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 25px;
-  background:gold;
-  color:#2e1a47;
-  font-weight:bold;
-  border-radius:5px;
-  cursor:pointer;
-  text-decoration:none;
-}
+@keyframes fadeInDown {0%{opacity:0; transform:translateY(-30px);}100%{opacity:1; transform:translateY(0);}}
+.hero input {padding:10px; width:300px; max-width:90%; border-radius:5px; border:1px solid gold;}
+.hero button, #heroCTA {padding:10px 20px; margin-left:10px; background:gold; border:none; border-radius:5px; cursor:pointer; font-weight:bold; color:#2e1a47;}
+#heroCTA {display:inline-block; margin-top:15px; transition: background 0.3s;}
+#heroCTA:hover {background:#e6c200;}
+#categoryFilter {margin-top:15px; padding:8px; border-radius:5px; border:1px solid gold;}
 
-/* ===== Comparison Table ===== */
-.comparison {
-  flex:1;
-  padding:40px;
-  background:rgba(0,0,0,0.7);
-}
-.comparison h2 {
-  margin-bottom:20px;
-  border-bottom:2px solid gold;
-  display:inline-block;
-  padding-bottom:5px;
-}
-#comparisonTable {
-  width: 100%;
-  border-collapse: collapse;
-  background:#fff;
-  color:#000;
-  table-layout: fixed; 
-}
-#comparisonTable th, #comparisonTable td {
-  border:1px solid #ddd;
-  padding:12px;
-  text-align:center;
-  vertical-align: middle;
-}
-#comparisonTable th {
-  background:#2e1a47;
-  color:#fff;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-#comparisonTable th img {
-  display:inline-block;
-  vertical-align:middle;
-  height:20px;
-  margin-right:5px;
-}
+/* Comparison Table */
+.comparison {flex:1; padding:40px; background:rgba(0,0,0,0.7);}
+.comparison h2 {margin-bottom:20px; border-bottom:2px solid gold; display:inline-block; padding-bottom:5px;}
+#comparisonTable {width:100%; border-collapse: collapse; background:#fff; color:#000; table-layout: fixed;}
+#comparisonTable th, #comparisonTable td {border:1px solid #ddd; padding:12px; text-align:center; vertical-align: middle;}
+#comparisonTable th {background:#2e1a47; color:#fff; position: sticky; top:0; z-index:2;}
+#comparisonTable th:first-child, #comparisonTable td:first-child {position: sticky; left:0; background:#2e1a47; color:#fff; z-index:3;}
+#comparisonTable th img {height:20px; vertical-align:middle; margin-right:5px;}
 tr:nth-child(even){background:#f9f9f9;}
 tr:hover {background:#e6f7ff;}
-.highlight {
-  background: gold !important;
-  font-weight: bold;
-  font-size: 1.05em;
-}
+.highlight {background: gold !important; font-weight: bold; font-size: 1.05em;}
 
-/* ===== Collapsible Category Rows ===== */
-.category-row {
-  background:#3c245c;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
+/* Collapsible category rows */
+.category-row {background:#3c245c; color:#fff; font-weight:bold; cursor:pointer; transition: background 0.3s;}
+.category-row:hover {background:#4b2a7a;}
+.material-row {overflow:hidden; max-height:200px; transition:max-height 0.4s ease, opacity 0.4s ease;}
+.material-row.collapsed {max-height:0; opacity:0;}
 
-/* ===== Cards ===== */
-#cardWrapper {
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:20px 0;
-  scroll-behavior: smooth;
-}
-.card {
-  min-width:220px;
-  background: rgba(46,26,71,0.9);
-  border-radius:5px;
-  padding:15px;
-  color:#fff;
-  flex-shrink:0;
-  transition: transform 0.3s;
-}
+/* Scroll cards */
+#cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px 0; scroll-behavior: smooth;}
+.card {min-width:220px; background: rgba(46,26,71,0.9); border-radius:5px; padding:15px; color:#fff; flex-shrink:0; transition: transform 0.3s;}
 .card:hover {transform: translateY(-5px);}
 .card h3 {margin-bottom:10px;}
 .card .price-row {font-size:14px;}
+.card .highlight {font-weight:bold; color:gold;}
 
-/* ===== Map ===== */
-#supplierMap {
-  height:300px;
-  margin-top:20px;
-  border:2px solid gold;
-  border-radius:5px;
-}
+/* Map */
+#supplierMap {height:300px; margin-top:20px; border:2px solid gold; border-radius:5px;}
 
-/* ===== Footer ===== */
-footer {
-  background:#2e1a47;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-  border-top:4px solid gold;
-}
-footer a {color: gold; text-decoration: underline;}
+/* Footer */
+footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold;}
+footer a {color: gold; text-decoration: underline; margin:0 5px;}
 footer p {color:#fff;}
+
+/* Scroll-to-top */
+#scrollTopBtn {
+  display:none; position:fixed; bottom:30px; right:30px; z-index:100;
+  background:gold; color:#2e1a47; border:none; border-radius:50%; padding:12px 16px; cursor:pointer; font-size:18px; box-shadow:0 4px 6px rgba(0,0,0,0.3); transition: background 0.3s;
+}
+#scrollTopBtn:hover {background:#e6c200;}
 </style>
 </head>
 <body>
@@ -234,18 +130,10 @@ footer p {color:#fff;}
     <thead>
       <tr>
         <th>Material</th>
-        <th>
-          <img src="https://kello54.github.io/Buildy/docs/images/chadwicks-logo.png" alt="Chadwicks"> Chadwicks
-        </th>
-        <th>
-          <img src="https://kello54.github.io/Buildy/docs/images/tj-omahony-logo.png" alt="TJ O'Mahony"> TJ O'Mahony
-        </th>
-        <th>
-          <img src="https://kello54.github.io/Buildy/docs/images/woodies-logo.png" alt="Woodie's"> Woodie's
-        </th>
-        <th>
-          <img src="https://kello54.github.io/Buildy/docs/images/heiton-buckley-logo.png" alt="Heiton Buckley"> Heiton Buckley
-        </th>
+        <th>Chadwicks</th>
+        <th>TJ O'Mahony</th>
+        <th>Woodie's</th>
+        <th>Heiton Buckley</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -253,8 +141,9 @@ footer p {color:#fff;}
 </section>
 
 <div id="cardWrapper"></div>
-
 <section id="supplierMap"></section>
+
+<button id="scrollTopBtn" title="Go to top">↑</button>
 
 <footer>
   <p>Suppliers: <a href="#">Chadwicks</a>, <a href="#">TJ O'Mahony</a>, <a href="#">Woodie's</a>, <a href="#">Heiton Buckley</a></p>
@@ -262,18 +151,103 @@ footer p {color:#fff;}
   <p>&copy; 2025 Buildy. All Rights Reserved.</p>
 </footer>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-// ===== Materials =====
+// Materials & Suppliers
 const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Bricks", name:"Clay Bricks (per 100)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Paint", name:"Interior Emulsion (5L)"},{category:"Pipes", name:"PVC Pipe (2m)"},{category:"Electrical", name:"Light Switch (per unit)"},
-  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Tools", name:"Claw Hammer"},
-  {category:"Garden", name:"Wheelbarrow"}
+  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
+  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Roofing", name:"Roof Tiles (per 100)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Paint", name:"Interior Emulsion (5L)"}
 ];
 const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
 // Populate category filter
-const categorySelect = document.getElement
+const categorySelect = document.getElementById("categoryFilter");
+[...new Set(materials.map(m=>m.category))].forEach(c=>{
+  const opt=document.createElement("option"); opt.value=c; opt.text=c; categorySelect.appendChild(opt);
+});
+
+// Generate table
+function generateTable(filterCategory=""){
+  const tbody = document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
+  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
+  filtered.forEach(item=>{
+    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice = Math.min(...prices);
+    const row = document.createElement("tr"); row.className="material-row";
+    row.innerHTML=`<td>${item.name}</td>` + prices.map(p=>`<td class="${p==minPrice?'highlight':''}">€${p}</td>`).join('');
+    tbody.appendChild(row);
+  });
+}
+
+// Scroll cards
+function generateCards(filterCategory=""){
+  const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
+  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
+  filtered.forEach(item=>{
+    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice=Math.min(...prices);
+    const card=document.createElement("div"); card.className="card";
+    card.innerHTML=`<h3>${item.name}</h3>` + suppliers.map((s,i)=>`<div class="price-row">${s}: <span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`).join('');
+    wrapper.appendChild(card);
+  });
+}
+
+// Filter
+function filterMaterials(){
+  generateTable(categorySelect.value);
+  generateCards(categorySelect.value);
+}
+
+// Search
+function searchMaterials(){
+  const query=document.getElementById("searchBox").value.toLowerCase();
+  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
+  const filtered = materials.filter(m=>m.name.toLowerCase().includes(query));
+  filtered.forEach(item=>{
+    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice=Math.min(...prices);
+    const row=document.createElement("tr");
+    row.innerHTML=`<td>${item.name}</td>` + prices.map(p=>`<td class="${p==minPrice?'highlight':''}">€${p}</td>`).join('');
+    tbody.appendChild(row);
+  });
+}
+
+// Map
+const map = L.map('supplierMap').setView([53.3498, -6.2603], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
+const supplierData = [
+  {name:"Chadwicks", coords:[53.345, -6.270], url:"#"},
+  {name:"TJ O'Mahony", coords:[51.898, -8.475], url:"#"},
+  {name:"Woodie's", coords:[53.351, -6.260], url:"#"},
+  {name:"Heiton Buckley", coords:[54.281, -8.476], url:"#"}
+];
+supplierData.forEach(s=>{
+  L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`).on('click',()=>{
+    categorySelect.value="";
+    generateTable();
+    generateCards();
+  });
+});
+
+// Scroll-to-top
+const scrollBtn = document.getElementById("scrollTopBtn");
+window.onscroll = function() {
+  scrollBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "block" : "none";
+};
+scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+// Hero parallax
+window.addEventListener('scroll', function(){
+  const hero=document.querySelector('.hero');
+  const offset=window.pageYOffset; hero.style.backgroundPositionY = offset * 0.5 + "px";
+});
+
+// Initial load
+generateTable();
+generateCards();
+</script>
+
+</body>
+</html>
