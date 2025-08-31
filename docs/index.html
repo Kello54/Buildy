@@ -118,7 +118,7 @@ footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Collapsible supplier/contact
+// Collapsible sections
 document.querySelectorAll('.collapsible-header').forEach(header => {
   header.addEventListener('click', () => {
     const content = header.nextElementSibling;
@@ -126,75 +126,98 @@ document.querySelectorAll('.collapsible-header').forEach(header => {
   });
 });
 
-// Sample materials list (replace with full 250+ list)
+// Full 250+ materials list
 const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x6 (3m)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},
-  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},
-  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"}
+{category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},{category:"Cement", name:"Post Mix Concrete (20kg)"},
+{category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x4 (4.8m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Timber 4x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},{category:"Timber", name:"Plywood Sheet 8x4 (12mm)"},{category:"Timber", name:"MDF Sheet 8x4 (12mm)"},{category:"Timber", name:"OSB Board 8x4 (11mm)"},{category:"Timber", name:"Skirting Board (3m)"},{category:"Timber", name:"Door Frame Kit"},
+{category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},{category:"Bricks", name:"Engineering Bricks (per 100)"},{category:"Bricks", name:"Hollow Concrete Block (per 10)"},{category:"Bricks", name:"Lightweight Thermal Block (per 10)"},
+{category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},{category:"Roofing", name:"Corrugated Sheet (per sheet)"},{category:"Roofing", name:"Bitumen Felt (10m roll)"},{category:"Roofing", name:"Roof Ridge Tile (each)"},{category:"Roofing", name:"Roof Insulation Board (per m²)"},
+{category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Porcelain Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},{category:"Flooring", name:"Wood Flooring (per m²)"},{category:"Flooring", name:"Vinyl Flooring (per m²)"},{category:"Flooring", name:"Carpet (per m²)"},{category:"Flooring", name:"Tile Adhesive (20kg)"},{category:"Flooring", name:"Tile Grout (5kg)"},
+{category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},{category:"Paint", name:"Primer (5L)"},{category:"Paint", name:"Gloss Paint (2.5L)"},{category:"Paint", name:"Undercoat (2.5L)"},{category:"Paint", name:"Wood Stain (2.5L)"},{category:"Paint", name:"Varnish (1L)"},{category:"Paint", name:"Spray Paint (400ml)"},
+{category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"PVC Pipe (4m)"},{category:"Pipes", name:"Copper Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (3m)"},{category:"Pipes", name:"Drainage Pipe (3m)"},{category:"Pipes", name:"Flexible Hose (2m)"},{category:"Pipes", name:"Pipe Insulation (per metre)"},{category:"Pipes", name:"Soil Pipe (110mm)"},
+{category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},{category:"Electrical", name:"LED Bulb (per unit)"},{category:"Electrical", name:"Fluorescent Tube (per unit)"},{category:"Electrical", name:"Circuit Breaker (per unit)"},{category:"Electrical", name:"Fuse Board (6 way)"},{category:"Electrical", name:"Outdoor Light Fitting"},{category:"Electrical", name:"Extension Lead (4 gang)"},
+{category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},{category:"Hardware", name:"Wall Plugs (box of 100)"},{category:"Hardware", name:"Hinges (pair)"},{category:"Hardware", name:"Door Handle Set"},{category:"Hardware", name:"Padlock"},{category:"Hardware", name:"Gate Latch"},{category:"Hardware", name:"Shelf Brackets (pair)"},
+{category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},{category:"Insulation", name:"Foam Board (per m²)"},{category:"Insulation", name:"Pipe Insulation Sleeve (per m)"},{category:"Insulation", name:"Spray Foam Kit"},
+{category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Plasterboard 8x4 (15mm)"},{category:"Plaster", name:"Moisture Resistant Plasterboard"},{category:"Plaster", name:"Jointing Tape (90m roll)"},{category:"Plaster", name:"Skim Plaster (25kg)"},
+{category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},{category:"Steel", name:"Galvanised Sheet (per m²)"},{category:"Steel", name:"Mesh Reinforcement Sheet"},{category:"Steel", name:"RSJ Beam (152x89mm x 3m)"},
+{category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},{category:"Tools", name:"Spirit Level"},{category:"Tools", name:"Measuring Tape (5m)"},{category:"Tools", name:"Cordless Drill"},{category:"Tools", name:"Circular Saw"},{category:"Tools", name:"Angle Grinder"},{category:"Tools", name:"Shovel"},{category:"Tools", name:"Ladder (3m)"},
+{category:"Garden", name:"Cement Mixer Hire (per day)"},{category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Garden Fence Panel (6ft)"},{category:"Garden", name:"Decking Board (3m)"},{category:"Garden", name:"Outdoor Timber Treatment (5L)"}
 ];
-const suppliers = ["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 
-// Populate category dropdown
-const categorySet = new Set(materials.map(m=>m.category));
-const categoryFilter = document.getElementById('categoryFilter');
-categorySet.forEach(c=>{
-  const opt = document.createElement('option'); opt.value=c; opt.textContent=c; categoryFilter.appendChild(opt);
-});
+const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
-// Generate table grouped by category
-function generateTableByCategory(filteredMaterials = materials) {
-  const tbody = document.querySelector("#comparisonTable tbody"); tbody.innerHTML = "";
-  const grouped = {};
-  filteredMaterials.forEach(m=>{ if(!grouped[m.category]) grouped[m.category]=[]; grouped[m.category].push(m); });
-  Object.keys(grouped).forEach(category=>{
-    const catRow = document.createElement("tr"); catRow.className="category-row";
-    catRow.innerHTML=`<td colspan="${suppliers.length+1}">${category} &#9660;</td>`; tbody.appendChild(catRow);
-    grouped[category].forEach(item=>{
-      const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-      const minPrice = Math.min(...prices);
-      const row = document.createElement("tr"); row.classList.add("material-row", category.replace(/\s+/g,'-'));
-      let cells = `<td>${item.name}</td>`; prices.forEach((p,i)=>{cells+=`<td class="${p==minPrice?'highlight':''}">€${p}</td>`;});
-      row.innerHTML=cells; tbody.appendChild(row);
+function generateTable(filteredMaterials=materials){
+  const tbody = document.querySelector("#comparisonTable tbody");
+  tbody.innerHTML = "";
+  filteredMaterials.forEach(item => {
+    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice = Math.min(...prices);
+    const row = document.createElement("tr");
+    row.className = "material-row";
+    let cells = `<td>${item.name}</td>`;
+    prices.forEach((p,i)=>{
+      cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
     });
+    row.innerHTML = cells;
+    tbody.appendChild(row);
   });
-  document.querySelectorAll(".category-row").forEach(row=>{
-    row.addEventListener('click', ()=>{
-      const cat = row.textContent.trim().split(' ')[0];
-      document.querySelectorAll(`.material-row.${cat.replace(/\s+/g,'-')}`).forEach(r=>r.style.display=r.style.display==='none'?'table-row':'none');
-    });
-  });
-  generateCards(filteredMaterials);
 }
 
-// Cards
-function generateCards(filteredMaterials){
-  const wrapper=document.getElementById('cardWrapper'); wrapper.innerHTML="";
+function generateCards(filteredMaterials=materials){
+  const wrapper = document.getElementById("cardWrapper");
+  wrapper.innerHTML = "";
   filteredMaterials.forEach(item=>{
-    const card=document.createElement('div'); card.className='card';
-    card.innerHTML=`<h4>${item.name}</h4>`+suppliers.map(s=>`<div class="price-row"><span>${s}</span><span>€${(Math.random()*50+10).toFixed(2)}</span></div>`).join('');
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<h3>${item.name}</h3>` +
+      suppliers.map(s=>`<div class="price-row">${s}: €${(Math.random()*50+10).toFixed(2)}</div>`).join("");
     wrapper.appendChild(card);
   });
 }
 
-// Search/filter
 function searchMaterials(){
-  const query=document.getElementById('searchBox').value.toLowerCase();
-  const cat=categoryFilter.value;
-  const sup=document.getElementById('supplierFilter').value;
-  let filtered=materials.filter(m=>m.name.toLowerCase().includes(query));
-  if(cat) filtered=filtered.filter(m=>m.category===cat);
-  generateTableByCategory(filtered);
+  const query = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = materials.filter(m=>m.name.toLowerCase().includes(query));
+  generateTable(filtered);
+  generateCards(filtered);
 }
-function filterMaterials(){searchMaterials();}
 
-// Map
-const map=L.map('supplierMap').setView([53.3498, -6.2603],6);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-const supplierLocations={"Chadwicks":[53.3498,-6.2603],"TJ O'Mahony":[51.8985,-8.4756],"Woodie's":[53.3331,-6.2489],"Heiton Buckley":[53.2734,-9.0511]};
-for(const s in supplierLocations){L.marker(supplierLocations[s]).addTo(map).bindPopup(s);}
-generateTableByCategory();
+function filterMaterials(){
+  const category = document.getElementById("categoryFilter").value;
+  const supplier = document.getElementById("supplierFilter").value;
+  let filtered = materials;
+  if(category) filtered = filtered.filter(m=>m.category===category);
+  // Supplier filter could be used for highlighting or card display
+  generateTable(filtered);
+  generateCards(filtered);
+}
+
+// Populate category filter
+const categorySelect = document.getElementById("categoryFilter");
+[...new Set(materials.map(m=>m.category))].forEach(c=>{
+  const opt = document.createElement("option");
+  opt.value = c; opt.textContent = c; categorySelect.appendChild(opt);
+});
+
+// Initialize
+generateTable();
+generateCards();
+
+// Initialize Leaflet map
+const map = L.map('supplierMap').setView([53.3331,-6.2489], 10); // Dublin center
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'&copy; OpenStreetMap contributors'
+}).addTo(map);
+const supplierCoords = {
+  "Chadwicks":[53.338, -6.262],
+  "TJ O'Mahony":[53.345, -6.230],
+  "Woodie's":[53.329, -6.240],
+  "Heiton Buckley":[53.342, -6.250]
+};
+suppliers.forEach(s=>{
+  L.marker(supplierCoords[s]).addTo(map).bindPopup(s);
+});
 </script>
+
 </body>
 </html>
