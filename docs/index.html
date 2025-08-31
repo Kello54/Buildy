@@ -13,7 +13,6 @@ body{
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  position:relative;
   background:
     linear-gradient(to right, rgba(46,26,71,0.3) 0%, rgba(46,26,71,0.3) 100%),
     url('https://kello54.github.io/Buildy/docs/images/construction-bg.jpg') center/cover no-repeat fixed;
@@ -33,10 +32,11 @@ nav.subheader a{color:#fff;text-decoration:none;padding:0 20px;font-size:16px;po
 nav.subheader a:hover{color:gold;}
 nav.subheader a:not(:last-child)::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:2px;height:20px;background:gold;}
 .hero{padding:60px 20px;text-align:center;background:rgba(46,26,71,0.5);border-radius:10px;margin:20px 0;box-shadow:0 0 20px rgba(255,215,0,0.4);}
-.hero h1{font-size:36px;margin-bottom:20px;text-shadow:2px 2px 8px #000;}
+.hero h1{font-size:36px;margin-bottom:20px;text-shadow:2px 2px 8px #000;animation:fadeInDown 1s;}
 .hero input, .hero select, .hero button{padding:10px;margin:5px;border-radius:5px;border:1px solid gold;transition:0.3s;}
 .hero button{background:gold;border:none;font-weight:bold;cursor:pointer;box-shadow:0 0 8px rgba(255,215,0,0.7);}
 .hero button:hover{background:#ffd700;transform:scale(1.05);}
+@keyframes fadeInDown{0%{opacity:0;transform:translateY(-30px);}100%{opacity:1;transform:translateY(0);}}
 .collapsible-section{background:rgba(0,0,0,0.6);margin-bottom:20px;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.5);}
 .collapsible-header{padding:12px 20px;font-size:20px;color:gold;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;}
 .collapsible-header:hover{background:rgba(255,215,0,0.2);}
@@ -45,17 +45,38 @@ nav.subheader a:not(:last-child)::after{content:"";position:absolute;right:0;top
 .collapsible-content ul li{margin-bottom:8px;}
 .collapsible-content ul li a{text-decoration:none;color:#fff;transition:0.3s;}
 .collapsible-content ul li a:hover{color:gold;}
-.comparison-wrapper{background:rgba(0,0,0,0.5);padding:15px;border-radius:10px;margin-top:10px;backdrop-filter:brightness(0.6);}
-.card{background:rgba(46,26,71,0.8);margin-bottom:15px;padding:15px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);
-  opacity:0; transform: translateY(20px); animation: fadeSlideUp 0.6s forwards;}
-.card h3{margin-bottom:10px;}
-.price-row{display:flex;justify-content:space-between;margin-bottom:5px;}
-.price-row span.highlight{background:gold;color:#000;font-weight:bold;padding:2px 6px;border-radius:4px; animation:pulseHighlight 1.5s infinite;}
-@keyframes fadeSlideUp{to{opacity:1;transform:translateY(0);}}
+.filters {margin-bottom:10px; display:flex; gap:10px; flex-wrap:wrap; position:sticky; top:30px; z-index:3;}
+.table-wrapper {overflow-x:auto; margin-bottom:20px;}
+#comparisonTable {width:100%; border-collapse:collapse; background:#fff; color:#000;}
+#comparisonTable th, #comparisonTable td {border:1px solid #ddd; padding:12px; text-align:center; transition:0.3s;}
+#comparisonTable th {background:#2e1a47; color:#fff; position:sticky; top:0;}
+#comparisonTable tr:hover {background:#f9f1d1; transform:scale(1.01);}
+.highlight {background:gold; font-weight:bold; animation:pulseHighlight 1.5s infinite;}
 @keyframes pulseHighlight{0%,100%{background:gold;}50%{background:#ffd700;}}
-.leaflet-marker-icon:hover{animation:bounceMarker 0.6s;}
-@keyframes bounceMarker{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.card-wrapper {
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  scroll-behavior:smooth;
+}
+.card-wrapper::-webkit-scrollbar {height:8px;}
+.card-wrapper::-webkit-scrollbar-thumb {background:gold;border-radius:4px;}
+.card {
+  min-width:250px;
+  flex:0 0 auto;
+  cursor:pointer;
+  background:rgba(46,26,71,0.85);
+  color:#fff;
+  padding:15px;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {transform:translateY(-5px) scale(1.05); box-shadow:0 6px 18px rgba(255,215,0,0.7);}
+.price-row{display:flex;justify-content:space-between;margin-bottom:5px;}
 footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4px solid gold;margin-top:20px;}
+@media(max-width:768px){.card-wrapper{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -64,6 +85,7 @@ footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4
   <div class="logo"><img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo"><span>Buildy</span></div>
   <a href="#" class="login">Login</a>
 </header>
+
 <nav class="subheader">
   <a href="#">Home</a>
   <a href="#">Suppliers</a>
@@ -75,15 +97,35 @@ footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4
 <section class="hero">
   <h1>No.1 Building Material Price Comparison Website</h1>
   <input type="text" id="searchBox" placeholder="Search materials..." oninput="searchMaterials()">
-  <select id="categoryFilter" onchange="populateMaterialDropdown()"><option value="">All Categories</option></select>
-  <select id="materialFilter"><option value="">Select Material</option></select>
+  <select id="categoryFilter" onchange="filterMaterials()"><option value="">All Categories</option></select>
+  <select id="supplierFilter" onchange="filterMaterials()"><option value="">All Suppliers</option>
+    <option value="Chadwicks">Chadwicks</option>
+    <option value="TJ O'Mahony">TJ O'Mahony</option>
+    <option value="Woodie's">Woodie's</option>
+    <option value="Heiton Buckley">Heiton Buckley</option>
+  </select>
   <button onclick="searchMaterials()">Search</button>
 </section>
 
 <div class="collapsible-section">
   <div class="collapsible-header" onclick="toggleSection(this)">Materials ▼</div>
-  <div class="collapsible-content" id="materialsSection">
-    <div class="comparison-wrapper" id="comparisonWrapper"></div>
+  <div class="collapsible-content">
+    <div class="filters"></div>
+    <div class="table-wrapper">
+      <table id="comparisonTable">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Chadwicks</th>
+            <th>TJ O'Mahony</th>
+            <th>Woodie's</th>
+            <th>Heiton Buckley</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="card-wrapper" id="cardWrapper"></div>
   </div>
 </div>
 
@@ -122,83 +164,33 @@ window.addEventListener('load', ()=>document.body.classList.add('loaded'));
 // Collapsible toggle
 function toggleSection(header){
   const content = header.nextElementSibling;
-  if(content.style.display === "block"){
-    content.style.height = content.scrollHeight + "px";
-    requestAnimationFrame(()=> content.style.height = "0px");
-    content.style.overflow = "hidden";
-    setTimeout(()=> content.style.display="none", 300);
-  } else {
-    content.style.display = "block";
-    content.style.height = "0px";
-    requestAnimationFrame(()=> content.style.height = content.scrollHeight + "px");
-    content.style.overflow = "hidden";
-    setTimeout(()=> content.style.height = "", 310);
-  }
+  if(content.style.display==="block"){content.style.display="none";}
+  else{content.style.display="block";}
 }
 
-// Categories and materials
+// Materials + categories
 const categories=["Cement","Timber","Bricks","Roofing","Flooring","Paint","Pipes","Electrical","Hardware","Insulation","Plaster","Steel","Tools","Garden"];
 const materials=[];
-for(let i=1;i<=250;i++){
-  const cat=categories[i%categories.length];
-  materials.push({category:cat,name:`${cat} Material ${i}`});
-}
+for(let i=1;i<=250;i++){const cat=categories[i%categories.length];materials.push({category:cat,name:`${cat} Material ${i}`});}
 const suppliers=["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 const categorySelect=document.getElementById("categoryFilter");
-categories.forEach(c=>{ const opt=document.createElement("option"); opt.value=c; opt.textContent=c; categorySelect.appendChild(opt); });
+categories.forEach(c=>{const opt=document.createElement("option");opt.value=c;opt.textContent=c;categorySelect.appendChild(opt);});
 
-// Populate materials dropdown
-function populateMaterialDropdown(){
-  const category=document.getElementById("categoryFilter").value;
-  const materialSelect=document.getElementById("materialFilter");
-  materialSelect.innerHTML='<option value="">Select Material</option>';
-  materials.filter(m=>m.category===category).forEach(m=>{
-    const opt=document.createElement("option"); opt.value=m.name; opt.textContent=m.name;
-    materialSelect.appendChild(opt);
-  });
-}
-
-// Generate price cards
-function generateCards(data=materials){
-  const wrapper=document.getElementById('comparisonWrapper');
-  wrapper.innerHTML="";
-  data.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const card=document.createElement('div');
-    card.classList.add('card');
+// Generate table + clickable cards
+function generateComparison(filteredMaterials = materials){
+  const tbody = document.querySelector("#comparisonTable tbody");
+  const cardWrapper = document.getElementById("cardWrapper");
+  tbody.innerHTML = ""; cardWrapper.innerHTML = "";
+  filteredMaterials.forEach(item=>{
+    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice = Math.min(...prices);
+    // Table row
+    let row = "<tr><td>"+item.name+"</td>";
+    prices.forEach((p,i)=>{ row+=`<td class="${p==minPrice?'highlight':''}">€${p}</td>` });
+    row += "</tr>";
+    tbody.innerHTML += row;
+    // Card
+    const card=document.createElement("div");
+    card.className="card";
     card.innerHTML=`<h3>${item.name}</h3>`+suppliers.map((s,i)=>`<div class="price-row"><span>${s}</span> <span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`).join('');
-    wrapper.appendChild(card);
-  });
-}
-
-// Search function
-function searchMaterials(){
-  const query=document.getElementById("searchBox").value.toLowerCase();
-  const material=document.getElementById("materialFilter").value.toLowerCase();
-  const filtered=materials.filter(m=>m.name.toLowerCase().includes(query) && (!material || m.name.toLowerCase()===material));
-  generateCards(filtered);
-}
-
-// Initialize
-generateCards();
-populateMaterialDropdown();
-
-// Initialize map
-const map=L.map('supplierMap').setView([53.3498, -6.2603], 7); // Dublin
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  maxZoom:19,
-  attribution:'&copy; OpenStreetMap'
-}).addTo(map);
-const supplierCoords=[
-  {name:"Chadwicks",lat:53.3478,lng:-6.2597},
-  {name:"TJ O'Mahony",lat:52.6621,lng:-8.6265},
-  {name:"Woodie's",lat:53.3498,lng:-6.2603},
-  {name:"Heiton Buckley",lat:53.3500,lng:-6.2700}
-];
-supplierCoords.forEach(s=>{
-  L.marker([s.lat,s.lng]).addTo(map).bindPopup(s.name);
-});
-</script>
-</body>
-</html>
+    card.addEventListener('click',()=>window.location.href=`${suppliers[0].to
