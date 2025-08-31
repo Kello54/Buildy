@@ -7,6 +7,7 @@
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
+/* ===== Global Reset ===== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 body{background:url('https://kello54.github.io/Buildy/docs/images/construction-bg.jpg') center/cover no-repeat fixed;color:#fff;min-height:100vh;display:flex;flex-direction:column;position:relative;}
 body::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:0;}
@@ -27,14 +28,13 @@ nav.subheader a:not(:last-child)::after{content:"";position:absolute;right:0;top
 .hero button{padding:10px 20px;margin-left:10px;background:gold;border:none;border-radius:5px;cursor:pointer;font-weight:bold;transition:0.3s;box-shadow:0 0 8px rgba(255,215,0,0.7);}
 .hero button:hover{background:#ffd700;transform:scale(1.05);}
 .main-content{display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;}
-.comparison-wrapper{flex:2;min-width:300px;max-height:400px;overflow-y:auto;background:rgba(0,0,0,0.5);border-radius:10px;padding:20px;}
-.comparison h2{margin-bottom:20px;border-bottom:2px solid gold;display:inline-block;padding-bottom:5px;text-shadow:1px 1px 5px #000;}
-table{width:100%;border-collapse:collapse;background:#fff;color:#000;min-width:800px;}
-th,td{border:1px solid #ddd;padding:12px;text-align:center;transition:0.3s;}
-th{background:#2e1a47;color:#fff;position:sticky;top:0;z-index:3;}
-tbody tr:nth-child(even){background:#f4f4f4;}
-.highlight{background:gold;font-weight:bold;}
-tbody tr:hover{background: rgba(255,215,0,0.15); transform:scale(1.01);}
+.comparison-wrapper{flex:2;min-width:300px;max-height:600px;overflow-y:auto;}
+.card{background:rgba(0,0,0,0.6);border-radius:10px;margin-bottom:15px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.5);transition:0.3s;}
+.card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 25px rgba(255,215,0,0.6);}
+.card h3{font-size:20px;margin-bottom:15px;color:#ffd700;text-shadow:1px 1px 5px #000;}
+.price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.price-row span{padding:5px 10px;border-radius:5px;background:rgba(255,255,255,0.1);transition:0.3s;}
+.price-row .highlight{background:gold;color:#000;font-weight:bold;box-shadow:0 0 10px rgba(255,215,0,0.7);}
 .map-wrapper{flex:1;min-width:300px;position:relative;}
 .floating-map{width:100%;height:250px;border-radius:15px;box-shadow:0 10px 25px rgba(255,215,0,0.6);border:2px solid gold;background:rgba(255,255,255,0.1);backdrop-filter:blur(5px);transition: transform 0.1s linear, box-shadow 0.3s;}
 .floating-map:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 15px 30px rgba(255,215,0,0.8);}
@@ -42,12 +42,6 @@ tbody tr:hover{background: rgba(255,215,0,0.15); transform:scale(1.01);}
 footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4px solid gold;margin-top:20px;}
 @media(max-width:768px){
   .main-content{flex-direction:column;gap:15px;}
-  .comparison-wrapper,.map-wrapper{width:100%;max-height:none;overflow:auto;}
-  table,thead,tbody,th,td,tr{display:block;}
-  thead{display:none;}
-  tbody tr{margin-bottom:15px;border-radius:10px;background:#fff;color:#000;padding:10px;}
-  td{display:flex;justify-content:space-between;padding:5px;}
-  td:first-child{font-weight:bold;}
   .floating-map{height:200px;margin-top:10px;}
   .hero input,.hero select,.hero button{width:90%;max-width:none;margin:5px 0;display:block;}
   .hero button{margin-left:0;}
@@ -78,24 +72,7 @@ footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4
 </section>
 
 <section class="main-content">
-  <div class="comparison-wrapper">
-    <section class="comparison">
-      <h2>Price Comparison</h2>
-      <table id="comparisonTable">
-        <thead>
-          <tr>
-            <th>Material</th>
-            <th>Chadwicks</th>
-            <th>TJ O'Mahony</th>
-            <th>Woodie's</th>
-            <th>Heiton Buckley</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-  </div>
-
+  <div class="comparison-wrapper" id="comparisonWrapper"></div>
   <div class="map-wrapper">
     <h2>Supplier Locations</h2>
     <div id="supplierMap" class="floating-map"><div class="map-overlay"></div></div>
@@ -109,24 +86,28 @@ footer{background:#2e1a47;color:#fff;text-align:center;padding:20px;border-top:4
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Materials list example (expand to 250+)
-const materials=[
-  {category:"Cement",name:"Cement (25kg)"},{category:"Cement",name:"White Cement (25kg)"},
-  {category:"Timber",name:"Timber 2x4 (2.4m)"},{category:"Timber",name:"Plywood Sheet 8x4 (18mm)"},
-  {category:"Bricks",name:"Clay Bricks (per 100)"},{category:"Roofing",name:"Roof Tiles (per 100)"},
-  {category:"Flooring",name:"Ceramic Tiles (per m²)"},{category:"Paint",name:"Interior Emulsion (5L)"}
-];
+// Generate 250+ example materials
+const categories=["Cement","Timber","Bricks","Roofing","Flooring","Paint","Pipes","Electrical","Hardware","Insulation","Plaster","Steel","Tools","Garden"];
+const materials=[];
+for(let i=1;i<=250;i++){
+  const cat=categories[i%categories.length];
+  materials.push({category:cat,name:`${cat} Material ${i}`});
+}
+
 const suppliers=["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 
-function generateTable(data=materials){
-  const tbody=document.querySelector("#comparisonTable tbody");tbody.innerHTML="";
+function generateCards(data=materials){
+  const wrapper=document.getElementById('comparisonWrapper');
+  wrapper.innerHTML="";
   data.forEach(item=>{
     const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
     const minPrice=Math.min(...prices);
-    const row=document.createElement("tr");
-    let cells=`<td>${item.name}</td>`;
-    prices.forEach((p,i)=>{cells+=`<td class="${p==minPrice?'highlight':''}">€${p}</td>`;});
-    row.innerHTML=cells;tbody.appendChild(row);
+    let html=`<div class="card"><h3>${item.name}</h3>`;
+    suppliers.forEach((s,i)=>{
+      html+=`<div class="price-row"><span>${s}</span><span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`;
+    });
+    html+='</div>';
+    wrapper.innerHTML+=html;
   });
 }
 
@@ -134,15 +115,17 @@ function searchMaterials(){
   const query=document.getElementById("searchBox").value.toLowerCase();
   const category=document.getElementById("categoryFilter").value;
   const filtered=materials.filter(m=>m.name.toLowerCase().includes(query) && (category==""||m.category==category));
-  generateTable(filtered);
+  generateCards(filtered);
 }
 
 // Generate category filter dynamically
 [...new Set(materials.map(m=>m.category))].forEach(cat=>{
-  const opt=document.createElement("option");opt.value=cat;opt.textContent=cat;document.getElementById("categoryFilter").appendChild(opt);
+  const opt=document.createElement("option");
+  opt.value=cat; opt.textContent=cat;
+  document.getElementById("categoryFilter").appendChild(opt);
 });
 
-generateTable();
+generateCards();
 
 // Leaflet map setup
 const map=L.map('supplierMap').setView([53.3498,-6.2603],7);
