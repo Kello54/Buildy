@@ -1,22 +1,26 @@
 {
-  "Timber (2x4)": {
-    "Supplier A": 2.99,
-    "Supplier B": 3.10,
-    "Supplier C": 2.85
-  },
   "Cement (50kg)": {
-    "Supplier A": 6.50,
-    "Supplier B": 6.75,
-    "Supplier C": 6.40
+    "TJ O'Mahony's": 6.70,
+    "Chadwick's": 6.55,
+    "JJ Bolgers": 6.80,
+    "Woodie's": 6.60
+  },
+  "Timber (2x4)": {
+    "TJ O'Mahony's": 3.20,
+    "Chadwick's": 3.10,
+    "JJ Bolgers": 3.40,
+    "Woodie's": 3.50
   },
   "Bricks (per 100)": {
-    "Supplier A": 35.00,
-    "Supplier B": 34.50,
-    "Supplier C": 36.20
+    "TJ O'Mahony's": 45.00,
+    "Chadwick's": 46.20,
+    "JJ Bolgers": 44.50,
+    "Woodie's": 47.00
   },
-  "Roof Tiles (per m²)": {
-    "Supplier A": 12.90,
-    "Supplier B": 13.20,
-    "Supplier C": 12.50
+  "Roof Tiles (per 100)": {
+    "TJ O'Mahony's": 120.00,
+    "Chadwick's": 118.00,
+    "JJ Bolgers": 121.50,
+    "Woodie's": 122.00
   }
 }
