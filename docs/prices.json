@@ -1,0 +1,22 @@
+{
+  "Timber (2x4)": {
+    "Supplier A": 2.99,
+    "Supplier B": 3.10,
+    "Supplier C": 2.85
+  },
+  "Cement (50kg)": {
+    "Supplier A": 6.50,
+    "Supplier B": 6.75,
+    "Supplier C": 6.40
+  },
+  "Bricks (per 100)": {
+    "Supplier A": 35.00,
+    "Supplier B": 34.50,
+    "Supplier C": 36.20
+  },
+  "Roof Tiles (per m²)": {
+    "Supplier A": 12.90,
+    "Supplier B": 13.20,
+    "Supplier C": 12.50
+  }
+}
