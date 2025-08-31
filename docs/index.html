@@ -5,84 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - No.1 Building Material Price Comparison</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
-body {
+*{margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+body{
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
+  background:url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
   color:#fff;
-  position: relative;
+  position:relative;
 }
-body::before {
+body::before{
   content:"";
   position:absolute; top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.6);
-  z-index:0;
+  background:rgba(0,0,0,0.6); z-index:0;
 }
-.container {max-width:1200px; margin:0 auto; padding:0 20px; z-index:1; position:relative;}
-header {
+.container{max-width:1200px; margin:0 auto; padding:0 20px; position:relative; z-index:1;}
+header{
   background:#2e1a47; padding:15px 40px; display:flex; justify-content:space-between; align-items:center;
   border-bottom:4px solid gold; position:sticky; top:0; z-index:5; box-shadow:0 4px 10px rgba(0,0,0,0.4);
-  transition:0.3s;
 }
-header:hover {background:#3c245c;}
-header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
-header .logo img {height:40px;}
-header .login {color:#fff; font-size:16px; cursor:pointer; text-decoration:none; transition:0.3s;}
-header .login:hover {color:gold;}
-nav.subheader {
+header .logo{display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
+header .logo img{height:40px;}
+header .login{color:#fff; font-size:16px; cursor:pointer; text-decoration:none; transition:0.3s;}
+header .login:hover{color:gold;}
+nav.subheader{
   background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;
   position:sticky; top:64px; z-index:4; box-shadow:0 2px 6px rgba(0,0,0,0.4);
 }
-nav.subheader a {color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative; transition:0.3s;}
-nav.subheader a:hover {color:gold;}
-nav.subheader a:not(:last-child)::after {
+nav.subheader a{color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative; transition:0.3s;}
+nav.subheader a:hover{color:gold;}
+nav.subheader a:not(:last-child)::after{
   content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:2px; height:20px; background:gold;
 }
-.hero {
-  text-align:center; padding:80px 20px 40px; background:rgba(46,26,71,0.8); border-radius:10px; margin:20px 0;
-  box-shadow:0 0 20px rgba(255,215,0,0.4);
+.hero-map-wrapper{position:relative; margin:20px 0;}
+.hero{
+  text-align:center; padding:80px 20px 40px; background:rgba(46,26,71,0.8); border-radius:10px; margin:0 auto;
+  box-shadow:0 0 20px rgba(255,215,0,0.4); z-index:1; position:relative;
 }
-.hero h1 {font-size:36px; margin-bottom:20px; text-shadow: 2px 2px 8px #000;}
-.hero input, .hero select {padding:10px; max-width:200px; margin:5px; border-radius:5px; border:1px solid gold; transition:0.3s;}
-.hero input:focus, .hero select:focus {outline:none; border-color:#ffd700; box-shadow:0 0 10px gold;}
-.hero button {padding:10px 20px; margin-left:10px; background:gold; border:none; border-radius:5px; cursor:pointer; font-weight:bold; transition:0.3s; box-shadow:0 0 8px rgba(255,215,0,0.7);}
-.hero button:hover {background:#ffd700; transform:scale(1.05);}
-.comparison {
-  flex:1; padding:40px 20px; background:rgba(0,0,0,0.7); border-radius:10px; overflow-x:auto;
-  box-shadow:0 4px 15px rgba(0,0,0,0.5);
+.hero h1{font-size:36px; margin-bottom:20px; text-shadow:2px 2px 8px #000;}
+.hero input,.hero select{padding:10px; max-width:200px; margin:5px; border-radius:5px; border:1px solid gold; transition:0.3s;}
+.hero input:focus,.hero select:focus{outline:none; border-color:#ffd700; box-shadow:0 0 10px gold;}
+.hero button{padding:10px 20px; margin-left:10px; background:gold; border:none; border-radius:5px; cursor:pointer; font-weight:bold; transition:0.3s; box-shadow:0 0 8px rgba(255,215,0,0.7);}
+.hero button:hover{background:#ffd700; transform:scale(1.05);}
+.floating-map{
+  position:absolute; bottom:-60px; right:20px; width:350px; height:200px; border-radius:15px;
+  box-shadow:0 10px 25px rgba(255,215,0,0.6); z-index:2; border:2px solid gold;
+  overflow:hidden; transition:transform 0.1s linear, box-shadow 0.3s; background:rgba(255,255,255,0.1); backdrop-filter:blur(5px);
 }
-.comparison h2 {margin-bottom:20px; border-bottom:2px solid gold; display:inline-block; padding-bottom:5px; text-shadow:1px 1px 5px #000;}
-table {width:100%; border-collapse:collapse; background:#fff; color:#000; min-width:900px;}
-th, td {border:1px solid #ddd; padding:12px; text-align:center; transition:0.3s;}
-th {background:#2e1a47; color:#fff; cursor:pointer; position:sticky; top:0; z-index:3; box-shadow:0 2px 5px rgba(0,0,0,0.4);}
+.floating-map:hover{transform:translateY(-10px) scale(1.03); box-shadow:0 15px 30px rgba(255,215,0,0.8);}
+.map-overlay{position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0)); pointer-events:none; border-radius:15px;}
+.comparison{flex:1; padding:40px 20px; background:rgba(0,0,0,0.7); border-radius:10px; overflow-x:auto; box-shadow:0 4px 15px rgba(0,0,0,0.5);}
+.comparison h2{margin-bottom:20px; border-bottom:2px solid gold; display:inline-block; padding-bottom:5px; text-shadow:1px 1px 5px #000;}
+table{width:100%; border-collapse:collapse; background:#fff; color:#000; min-width:900px;}
+th,td{border:1px solid #ddd; padding:12px; text-align:center; transition:0.3s;}
+th{background:#2e1a47; color:#fff; cursor:pointer; position:sticky; top:0; z-index:3; box-shadow:0 2px 5px rgba(0,0,0,0.4);}
 tbody tr:nth-child(even){background:#f4f4f4;}
-.highlight {background:gold; font-weight:bold; box-shadow:0 0 8px rgba(255,215,0,0.7);}
-tbody tr:hover {background: rgba(255,215,0,0.15); transform:scale(1.01);}
-.category-row td {background:#2e1a47; color:gold; font-weight:bold; text-align:left; font-size:18px; animation: fadeSlideIn 0.6s ease forwards; text-shadow:1px 1px 5px #000;}
-@keyframes fadeSlideIn {from {opacity:0; transform:translateX(-20px);} to {opacity:1; transform:translateX(0);}}
-tbody tr {opacity:0; animation: rowFadeIn 0.5s forwards;}
-@keyframes rowFadeIn {from {opacity:0;} to {opacity:1;}}
-td:first-child, th:first-child {position: sticky; left:0; background:#fff; z-index:2;}
+.highlight{background:gold; font-weight:bold; box-shadow:0 0 8px rgba(255,215,0,0.7);}
+tbody tr:hover{background: rgba(255,215,0,0.15); transform:scale(1.01);}
+footer{background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold; margin-top:20px; text-shadow:1px 1px 5px #000;}
 @media(max-width:768px){
-  table, thead, tbody, th, td, tr {display:block;}
-  thead {display:none;}
-  tbody tr {margin-bottom:15px; border-radius:10px; background:#fff; color:#000; padding:10px;}
-  td {text-align:left; padding:5px; border:none; display:flex; justify-content:space-between;}
-  td:first-child {font-weight:bold;}
+  table,thead,tbody,th,td,tr{display:block;}
+  thead{display:none;}
+  tbody tr{margin-bottom:15px; border-radius:10px; background:#fff; color:#000; padding:10px;}
+  td{display:flex; justify-content:space-between; padding:5px; border:none;}
+  td:first-child{font-weight:bold;}
 }
-footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold; margin-top:20px; text-shadow:1px 1px 5px #000;}
 </style>
 </head>
 <body>
 <div class="container">
 <header>
-  <div class="logo">
-    <img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo">
-    <span>Buildy</span>
-  </div>
+  <div class="logo"><img src="https://kello54.github.io/Buildy/docs/images/logo.png" alt="Buildy Logo"><span>Buildy</span></div>
   <a href="#" class="login">Login</a>
 </header>
 
@@ -94,39 +89,43 @@ footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-
   <a href="#">Contact</a>
 </nav>
 
-<section class="hero">
-  <h1>No.1 Building Material Price Comparison Website</h1>
-  <input type="text" id="searchBox" placeholder="Search materials..." oninput="searchMaterials()">
-  <select id="categoryFilter" onchange="searchMaterials()">
-    <option value="">All Categories</option>
-    <option value="Cement">Cement</option>
-    <option value="Timber">Timber</option>
-    <option value="Bricks">Bricks</option>
-    <option value="Roofing">Roofing</option>
-    <option value="Flooring">Flooring</option>
-    <option value="Paint">Paint</option>
-    <option value="Pipes">Pipes</option>
-    <option value="Electrical">Electrical</option>
-    <option value="Hardware">Hardware</option>
-    <option value="Insulation">Insulation</option>
-    <option value="Plaster">Plaster</option>
-    <option value="Steel">Steel</option>
-    <option value="Tools">Tools</option>
-    <option value="Garden">Garden</option>
-  </select>
-  <button onclick="searchMaterials()">Search</button>
-</section>
+<div class="hero-map-wrapper">
+  <section class="hero">
+    <h1>No.1 Building Material Price Comparison Website</h1>
+    <input type="text" id="searchBox" placeholder="Search materials..." oninput="searchMaterials()">
+    <select id="categoryFilter" onchange="searchMaterials()">
+      <option value="">All Categories</option>
+      <option value="Cement">Cement</option>
+      <option value="Timber">Timber</option>
+      <option value="Bricks">Bricks</option>
+      <option value="Roofing">Roofing</option>
+      <option value="Flooring">Flooring</option>
+      <option value="Paint">Paint</option>
+      <option value="Pipes">Pipes</option>
+      <option value="Electrical">Electrical</option>
+      <option value="Hardware">Hardware</option>
+      <option value="Insulation">Insulation</option>
+      <option value="Plaster">Plaster</option>
+      <option value="Steel">Steel</option>
+      <option value="Tools">Tools</option>
+      <option value="Garden">Garden</option>
+    </select>
+    <button onclick="searchMaterials()">Search</button>
+  </section>
+
+  <div id="supplierMap" class="floating-map"><div class="map-overlay"></div></div>
+</div>
 
 <section class="comparison">
   <h2>Price Comparison</h2>
   <table id="comparisonTable">
     <thead>
       <tr>
-        <th onclick="sortColumn(0)">Material</th>
-        <th onclick="sortColumn(1)">Chadwicks</th>
-        <th onclick="sortColumn(2)">TJ O'Mahony</th>
-        <th onclick="sortColumn(3)">Woodie's</th>
-        <th onclick="sortColumn(4)">Heiton Buckley</th>
+        <th>Material</th>
+        <th>Chadwicks</th>
+        <th>TJ O'Mahony</th>
+        <th>Woodie's</th>
+        <th>Heiton Buckley</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -138,61 +137,44 @@ footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-
 </footer>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},{category:"Cement", name:"Quick Dry Cement (20kg)"},{category:"Cement", name:"Mortar Mix (30kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Timber 2x6 (3m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Bricks", name:"Concrete Blocks (per 50)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},{category:"Roofing", name:"Slate Tiles (per 100)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Flooring", name:"Laminate Flooring (per m²)"},
-  {category:"Paint", name:"Interior Emulsion (5L)"},{category:"Paint", name:"Exterior Masonry Paint (5L)"},
-  {category:"Pipes", name:"PVC Pipe (2m)"},{category:"Pipes", name:"Copper Pipe (2m)"},
-  {category:"Electrical", name:"Light Switch (per unit)"},{category:"Electrical", name:"Double Socket (per unit)"},
-  {category:"Hardware", name:"Nails (1kg pack)"},{category:"Hardware", name:"Screws (box of 100)"},
-  {category:"Insulation", name:"Rockwool Roll (per roll)"},{category:"Insulation", name:"Fibreglass Roll (per roll)"},
-  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},{category:"Plaster", name:"Skim Plaster (25kg)"},
-  {category:"Steel", name:"Rebar (12mm x 6m)"},{category:"Steel", name:"Steel Angle (50x50mm x 3m)"},
-  {category:"Tools", name:"Claw Hammer"},{category:"Tools", name:"Screwdriver Set"},
-  {category:"Garden", name:"Wheelbarrow"},{category:"Garden", name:"Decking Board (3m)"}
+const materials=[
+  {category:"Cement",name:"Cement (25kg)"},{category:"Cement",name:"White Cement (25kg)"},{category:"Timber",name:"Timber 2x4 (2.4m)"},{category:"Bricks",name:"Clay Bricks (per 100)"}
 ];
-
-const suppliers = ["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
-
-function generateTable(data = materials){
-  const tbody = document.querySelector("#comparisonTable tbody");
-  tbody.innerHTML = "";
-  data.forEach(item => {
-    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice = Math.min(...prices);
-    const row = document.createElement("tr");
-    let cells = `<td>${item.name}</td>`;
-    prices.forEach((p,i)=>{
-      cells += `<td class="${p==minPrice?'highlight':''}">€${p}</td>`;
-    });
-    row.innerHTML = cells;
-    tbody.appendChild(row);
+const suppliers=["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
+function generateTable(data=materials){
+  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
+  data.forEach(item=>{
+    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice=Math.min(...prices);
+    const row=document.createElement("tr"); 
+    let cells=`<td>${item.name}</td>`;
+    prices.forEach((p,i)=>{cells+=`<td class="${p==minPrice?'highlight':''}">€${p}</td>`;});
+    row.innerHTML=cells; tbody.appendChild(row);
   });
 }
 function searchMaterials(){
-  const query = document.getElementById("searchBox").value.toLowerCase();
-  const category = document.getElementById("categoryFilter").value;
-  const filtered = materials.filter(m=>{
-    return m.name.toLowerCase().includes(query) && (category=="" || m.category==category);
-  });
+  const query=document.getElementById("searchBox").value.toLowerCase();
+  const category=document.getElementById("categoryFilter").value;
+  const filtered=materials.filter(m=>m.name.toLowerCase().includes(query) && (category=="" || m.category==category));
   generateTable(filtered);
 }
-function sortColumn(colIndex){
-  const table = document.getElementById("comparisonTable");
-  let rows = Array.from(table.rows).slice(1);
-  let asc = table.asc = !(table.asc);
-  rows.sort((a,b)=>{
-    let x = colIndex==0 ? a.cells[colIndex].innerText.toLowerCase() : parseFloat(a.cells[colIndex].innerText.replace('€',''));
-    let y = colIndex==0 ? b.cells[colIndex].innerText.toLowerCase() : parseFloat(b.cells[colIndex].innerText.replace('€',''));
-    return asc ? x-y : y-x;
-  });
-  rows.forEach(r=>table.tBodies[0].appendChild(r));
-}
-window.onload = ()=>{generateTable();}
+window.onload=()=>{generateTable();};
+
+// Leaflet Map
+const suppliersLocations=[
+  {name:"Chadwicks", coords:[53.3478,-6.2597]},
+  {name:"TJ O'Mahony", coords:[53.3450,-6.2615]},
+  {name:"Woodie's", coords:[53.3485,-6.2643]},
+  {name:"Heiton Buckley", coords:[53.3432,-6.2560]}
+];
+const map=L.map('supplierMap').setView([53.3460,-6.2600],14);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
+suppliersLocations.forEach(s=>L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b>`));
+
+const floatingMap=document.querySelector('.floating-map');
+window.addEventListener('scroll',()=>{floatingMap.style.transform=`translateY(${window.scrollY*0.2}px)`;});
 </script>
 </body>
 </html>
