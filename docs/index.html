@@ -54,14 +54,15 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
   content:"";
   position:absolute;
   top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.05); /* light overlay for readability */
+  background: none; /* removed overlay */
   z-index:0;
 }
-.hero h1, #heroCTA {
+.hero h1, .hero .slogan, #heroCTA {
   position:relative; z-index:1;
   text-shadow:1px 1px 3px rgba(0,0,0,0.5);
 }
-.hero h1 {font-size:36px; margin-bottom:30px;}
+.hero h1 {font-size:36px; margin-bottom:20px;}
+.hero .slogan {font-size:18px; color:#f4b400; margin-bottom:20px;}
 #heroCTA {
   display:inline-block;
   padding:18px 35px;
@@ -80,7 +81,11 @@ footer {background:#2c3e50; color:#fff; text-align:center; padding:20px; border-
 footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
 
 /* ===== Responsive ===== */
-@media(max-width:768px){.hero h1{font-size:28px; padding:0 10px;}}
+@media(max-width:768px){
+  .hero h1{font-size:28px; padding:0 10px;}
+  .hero .slogan{font-size:16px;}
+  #heroCTA{font-size:16px; padding:15px 30px;}
+}
 </style>
 </head>
 <body>
@@ -102,6 +107,7 @@ footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
 
 <section class="hero">
   <h1>Find the Best Prices for Building Materials</h1>
+  <div class="slogan">No.1 Building Material Price Comparison Site in Wexford</div>
   <div id="heroCTA" onclick="goToComparison()">Get Started</div>
 </section>
 
