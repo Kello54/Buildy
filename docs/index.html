@@ -5,178 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - No.1 Building Material Price Comparison</title>
 <link rel="icon" href="https://kello54.github.io/Buildy/docs/images/favicon.png" type="image/png">
-
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<!-- SheetJS for Excel export -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
 <style>
 /* ===== Global Reset ===== */
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
-body {min-height:100vh; display:flex; flex-direction:column; color:#fff; background:url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;}
-a {text-decoration:none; color:inherit;}
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+body {min-height:100vh; color:#fff; margin:0; background:#2e1a47;}
 
-/* ===== Header ===== */
-header {background:#2e1a47; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid gold;}
-header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
+/* Header */
+header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#2e1a47; border-bottom:4px solid gold;}
+header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold;}
 header .logo img {height:40px;}
-header .login {color:#fff; font-size:16px; cursor:pointer; padding:6px 12px; border:1px solid rgba(255,215,0,0.3); border-radius:4px; transition:0.2s;}
-header .login:hover {background: rgba(255,215,0,0.2);}
+header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(255,215,0,0.3); border-radius:4px; cursor:pointer;}
+header .login:hover {background:rgba(255,215,0,0.2);}
 
-/* ===== Subheader ===== */
-nav.subheader {background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;}
-nav.subheader a {color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative;}
-nav.subheader a:not(:last-child)::after {content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:2px; height:20px; background:gold;}
-
-/* ===== Hero ===== */
+/* Hero */
 .hero {
   text-align:center;
-  padding:80px 20px 60px;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
-  color: #fff;
+  padding:80px 20px;
+  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
+  color:#fff;
+  position:relative;
 }
-.hero h1 {
-  font-size:36px;
-  margin-bottom:20px;
-  animation: fadeInDown 1.2s ease-out;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-}
-@keyframes fadeInDown {0%{opacity:0; transform:translateY(-30px);}100%{opacity:1; transform:translateY(0);}}
-
-.hero input {
-  padding:12px 15px;
-  width:320px;
-  max-width:90%;
-  color:#2e1a47;
-  background: rgba(255,255,255,0.85);
-  border:2px solid gold;
-  border-radius:6px;
-}
-.hero button, #heroCTA {
-  background:#ffd966;
-  color:#2e1a47;
-  border:none;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
+.hero h1 {font-size:36px; margin-bottom:20px; text-shadow:1px 1px 5px rgba(0,0,0,0.5);}
+.hero input {padding:12px 15px; width:320px; max-width:90%; border-radius:6px; border:2px solid gold; margin-bottom:10px;}
+.hero button, #heroCTA {background:#ffd966; color:#2e1a47; border:none; font-weight:bold; padding:12px 25px; border-radius:6px; cursor:pointer; margin-left:5px;}
 .hero button:hover, #heroCTA:hover {background:#ffcf33;}
-#heroCTA {padding:14px 30px; border-radius:6px; display:inline-block; margin-top:20px; text-decoration:none;}
 
-/* ===== Layout ===== */
-.layout {display:grid; grid-template-columns:380px 1fr; gap:18px; padding:20px;}
-.card {background: rgba(46,26,71,0.95); border-radius:8px; padding:15px; color:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.25);}
-.card h3 {margin-bottom:10px; border-bottom:1px solid gold; padding-bottom:4px;}
+/* Supplier Cards */
+#cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px;}
+.card {min-width:180px; flex-shrink:0; background: rgba(46,26,71,0.9); border-radius:6px; padding:10px; text-align:center; transition:transform 0.3s;}
+.card:hover {transform:translateY(-5px);}
+.card img {max-height:40px; margin-bottom:8px;}
 
-/* ===== Entries Table ===== */
-.comparison-table {width:100%; border-collapse:collapse; margin-top:15px; border-radius:8px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.25);}
-.comparison-table th, .comparison-table td {border:1px solid #ddd; padding:12px; text-align:center; vertical-align: middle;}
-.comparison-table th img {height:36px; margin-bottom:4px;}
-tbody tr:hover {background:rgba(255,255,255,0.1);}
-td.cheapest {background:#1fa05a; color:#fff; font-weight:700;}
-
-/* ===== Cards Scroll ===== */
-#cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px 0; scroll-behavior:smooth;}
-.card:hover {transform:translateY(-5px); transition:0.3s;}
-
-/* ===== Map ===== */
-#supplierMap {height:300px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.25); margin-top:20px;}
-
-/* ===== Scroll-to-top ===== */
-#scrollTopBtn {display:none; position:fixed; bottom:30px; right:30px; z-index:100; background:gold; color:#2e1a47; border:none; border-radius:50%; padding:12px 16px; cursor:pointer; font-size:18px; box-shadow:0 4px 6px rgba(0,0,0,0.3);}
-#scrollTopBtn:hover {background:#e6b800;}
-
-/* ===== Footer ===== */
+/* Footer */
 footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold;}
-footer a {color:#ffcf33; text-decoration: underline;}
+footer a {color:#ffcf33; text-decoration:underline;}
 
-/* ===== Responsive ===== */
-@media (max-width:768px){
-  .hero {padding:50px 10px 40px;}
-  .hero h1 {font-size:28px;}
-  .hero input, .hero button {width:100%; margin:5px 0;}
-  .layout {display:block; padding:10px;}
-  .layout > div {margin-bottom:20px;}
-  #supplierMap {height:250px;}
-}
-@media (max-width:480px){
-  #cardWrapper {overflow-x:auto;}
-  .card {min-width:180px; flex-shrink:0;}
-}
+/* Responsive */
+@media(max-width:768px){.hero h1{font-size:28px;}}
+@media(max-width:480px){#cardWrapper{overflow-x:auto;}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo"><img src="https://kello54.github.io/Buildy/docs/images/favicon.png" alt="Logo"> Buildy</div>
   <div class="login">Login</div>
 </header>
 
-<nav class="subheader">
-  <a href="#">Home</a><a href="#">Materials</a><a href="#">Suppliers</a><a href="#">Contact</a>
-</nav>
-
 <div class="hero">
   <h1>Compare Building Material Prices Instantly</h1>
-  <input type="text" id="searchBox" placeholder="Search material...">
-  <button onclick="searchMaterials()">Search</button>
-  <div id="heroCTA">Get Started</div>
+  <input type="text" placeholder="Search material..." id="searchHome">
+  <button onclick="goToComparison()">Search</button>
+  <div id="heroCTA" onclick="goToComparison()">Get Started</div>
 </div>
 
-<div class="layout">
-  <!-- Left Column: Form + Table -->
-  <div class="card">
-    <h3>Add / Update Material</h3>
-    <form id="priceForm">
-      <div class="row">
-        <label>Material Name</label>
-        <input type="text" id="materialName">
-      </div>
-      <div class="row">
-        <label>Category</label>
-        <select id="categorySelect"><option value="">All</option></select>
-      </div>
-      <div class="row">
-        <label>Supplier</label>
-        <select id="supplier"></select>
-      </div>
-      <div class="row">
-        <label>Price (€)</label>
-        <input type="number" id="priceInput">
-      </div>
-      <button type="button" onclick="addEntry()">Add / Update</button>
-      <button type="button" id="clearAllBtn" class="ghost small">Clear All</button>
-      <button type="button" id="exportJSONBtn" class="ghost small">Export JSON</button>
-      <button type="button" id="importJSONBtn" class="ghost small">Import JSON</button>
-      <button type="button" id="exportExcelBtn" class="ghost small">Export Excel</button>
-    </form>
-
-    <h3>Price Comparison</h3>
-    <div style="overflow-x:auto;">
-      <table id="comparisonTable" class="comparison-table">
-        <thead>
-          <tr>
-            <th>Material</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/chadwicks-logo.png" alt="Chadwicks"> Chadwicks</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/tj-omahony-logo.png" alt="TJ O'Mahony"> TJ O'Mahony</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/woodies-logo.png" alt="Woodie's"> Woodie's</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/heiton-buckley-logo.png" alt="Heiton Buckley"> Heiton Buckley</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Right Column: Cards + Map -->
-  <div>
-    <div id="cardWrapper"></div>
-    <div id="supplierMap"></div>
-  </div>
+<div id="cardWrapper">
+  <div class="card"><img src="https://kello54.github.io/Buildy/docs/images/chadwicks-logo.png" alt="Chadwicks"><div>Chadwicks</div></div>
+  <div class="card"><img src="https://kello54.github.io/Buildy/docs/images/tj-omahony-logo.png" alt="TJ O'Mahony"><div>TJ O'Mahony</div></div>
+  <div class="card"><img src="https://kello54.github.io/Buildy/docs/images/woodies-logo.png" alt="Woodie's"><div>Woodie's</div></div>
+  <div class="card"><img src="https://kello54.github.io/Buildy/docs/images/heiton-buckley-logo.png" alt="Heiton Buckley"><div>Heiton Buckley</div></div>
 </div>
-
-<button id="scrollTopBtn" title="Go to top">↑</button>
 
 <footer>
   <p>Suppliers: <a href="#">Chadwicks</a>, <a href="#">TJ O'Mahony</a>, <a href="#">Woodie's</a>, <a href="#">Heiton Buckley</a></p>
@@ -184,111 +71,13 @@ footer a {color:#ffcf33; text-decoration: underline;}
   <p>&copy; 2025 Buildy. All Rights Reserved.</p>
 </footer>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-// ===== Materials & Suppliers =====
-let materialsData = [
-  {category:"Cement", name:"Cement (25kg)"},
-  {category:"Cement", name:"White Cement (25kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},
-  {category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},
-  {category:"Roofing", name:"Roof Tiles (per 100)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},
-  {category:"Paint", name:"Interior Emulsion (5L)"},
-  {category:"Pipes", name:"PVC Pipe (2m)"},
-  {category:"Electrical", name:"Light Switch (per unit)"},
-  {category:"Hardware", name:"Nails (1kg pack)"},
-  {category:"Insulation", name:"Rockwool Roll (per roll)"},
-  {category:"Plaster", name:"Plasterboard 8x4 (12.5mm)"},
-  {category:"Steel", name:"Rebar (12mm x 6m)"},
-  {category:"Tools", name:"Claw Hammer"},
-  {category:"Garden", name:"Wheelbarrow"}
-];
-const suppliers = ["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
-
-// ===== Populate Selects =====
-const supplierSelect = document.getElementById("supplier");
-suppliers.forEach(s=>{let opt=document.createElement("option"); opt.value=s; opt.text=s; supplierSelect.appendChild(opt);});
-const categorySelect = document.getElementById("categorySelect");
-[...new Set(materialsData.map(m=>m.category))].forEach(c=>{let opt=document.createElement("option"); opt.value=c; opt.text=c; categorySelect.appendChild(opt);});
-
-// ===== Table & Cards =====
-function generateTable(filterCategory=""){
-  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  const filtered=filterCategory?materialsData.filter(m=>m.category===filterCategory):materialsData;
-  filtered.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const row=document.createElement("tr");
-    row.innerHTML=`<td>${item.name}</td>`+prices.map(p=>`<td class="${p==minPrice?'cheapest':''}">€${p}</td>`).join('');
-    tbody.appendChild(row);
-  });
+function goToComparison(){
+  let search=document.getElementById("searchHome").value;
+  let url='comparison.html';
+  if(search) url+='?search='+encodeURIComponent(search);
+  window.location.href=url;
 }
-function generateCards(filterCategory=""){
-  const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
-  const filtered=filterCategory?materialsData.filter(m=>m.category===filterCategory):materialsData;
-  filtered.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const card=document.createElement("div"); card.className="card";
-    card.innerHTML=`<h3>${item.name}</h3>`+suppliers.map((s,i)=>`<div>${s}: <span class="${prices[i]==minPrice?'cheapest':''}">€${prices[i]}</span></div>`).join('');
-    wrapper.appendChild(card);
-  });
-}
-categorySelect.addEventListener("change",()=>{generateTable(categorySelect.value); generateCards(categorySelect.value);});
-
-// ===== Search =====
-function searchMaterials(){
-  const query=document.getElementById("searchBox").value.toLowerCase();
-  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  const filtered=materialsData.filter(m=>m.name.toLowerCase().includes(query));
-  filtered.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const row=document.createElement("tr");
-    row.innerHTML=`<td>${item.name}</td>`+prices.map(p=>`<td class="${p==minPrice?'cheapest':''}">€${p}</td>`).join('');
-    tbody.appendChild(row);
-  });
-  generateCards();
-}
-
-// ===== Map =====
-const map=L.map('supplierMap').setView([53.3498,-6.2603],7);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-const supplierData=[
-  {name:"Chadwicks", coords:[53.345,-6.270], url:"#"},
-  {name:"TJ O'Mahony", coords:[51.898,-8.475], url:"#"},
-  {name:"Woodie's", coords:[53.351,-6.260], url:"#"},
-  {name:"Heiton Buckley", coords:[54.281,-8.476], url:"#"}
-];
-supplierData.forEach(s=>{L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`);});
-
-// ===== Scroll-to-top =====
-const scrollBtn=document.getElementById("scrollTopBtn");
-window.onscroll=function(){scrollBtn.style.display=(document.body.scrollTop>300||document.documentElement.scrollTop>300)?"block":"none";};
-scrollBtn.addEventListener("click",()=>{window.scrollTo({top:0, behavior:'smooth'});});
-
-// ===== Export/Import/Clear =====
-document.getElementById("exportJSONBtn").addEventListener("click",()=>{
-  const blob=new Blob([JSON.stringify(materialsData,null,2)],{type:"application/json"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="materials.json"; a.click();
-});
-document.getElementById("importJSONBtn").addEventListener("click",()=>{
-  const input=document.createElement("input"); input.type="file"; input.accept=".json";
-  input.onchange=e=>{const file=e.target.files[0]; const reader=new FileReader(); reader.onload=evt=>{materialsData=JSON.parse(evt.target.result); generateTable(); generateCards();}; reader.readAsText(file);}
-  input.click();
-});
-document.getElementById("exportExcelBtn").addEventListener("click",()=>{
-  const ws=XLSX.utils.json_to_sheet(materialsData);
-  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Materials"); XLSX.writeFile(wb,"materials.xlsx");
-});
-document.getElementById("clearAllBtn").addEventListener("click",()=>{if(confirm("Clear all materials?")){materialsData=[]; generateTable(); generateCards();}});
-
-// ===== Initial Load =====
-generateTable(); generateCards();
 </script>
 </body>
 </html>
