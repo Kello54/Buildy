@@ -1,717 +1,366 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Buildy - Core Data Handling</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy - No.1 Building Material Price Comparison</title>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- SheetJS for Excel export -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --accent:#0b5cff;
-      --muted:#666;
-      --success:#1fa05a;
-      --danger:#e04b4b;
-    }
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#eef3ff 0%, var(--bg) 100%);
-      margin:0;
-      padding:24px;
-      color:#0b1733;
-    }
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:18px;
-    }
-    header h1{ margin:0; font-size:20px; }
-    .layout{
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap:18px;
-    }
-    .card{
-      background:var(--card);
-      border-radius:10px;
-      box-shadow:0 6px 18px rgba(12,24,60,0.06);
-      padding:14px;
-    }
-    form .row{ display:flex; gap:8px; margin-bottom:8px; }
-    label{ font-size:12px; color:var(--muted) }
-    input[type="text"], input[type="number"], input[type="date"], select{
-      width:100%;
-      padding:8px 10px;
-      border-radius:6px;
-      border:1px solid #e3e6ee;
-      font-size:14px;
-      background:transparent;
-    }
-    button{
-      padding:8px 12px;
-      border-radius:8px;
-      border:0;
-      cursor:pointer;
-      background:var(--accent);
-      color:white;
-      font-weight:600;
-    }
-    button.ghost{ background:transparent; color:var(--accent); border:1px solid #e4e9ff; }
-    .small{ padding:6px 8px; font-size:13px; }
-    table{ width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
-    thead th{ text-align:left; padding:8px 6px; color:var(--muted); font-weight:600; border-bottom:1px solid #eef1f8; }
-    tbody td{ padding:8px 6px; vertical-align:middle; border-bottom:1px solid #f2f5fb; }
-    .actions button{ margin-right:6px; }
-    .muted{ color:var(--muted); font-size:13px; }
-    .suppliers{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
-    .supplier-card{
-      display:flex; align-items:center; gap:8px;
-      padding:6px 8px; border-radius:8px; border:1px solid #eef2ff; cursor:pointer;
-      background:linear-gradient(180deg,#fff 0%, #fbfdff 100%);
-    }
-    .supplier-card img{ width:36px; height:26px; object-fit:contain; }
-    .pill{ display:inline-block; padding:6px 8px; border-radius:999px; background:#f4f7ff; color:var(--muted); font-size:13px; }
-    .comparison-table td.cheapest{ background: #e6f7ea; color:var(--success); font-weight:700; }
-    .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px; }
-    .chart-wrap{ padding:6px; }
-    @media (max-width:1000px){
-      .layout{ grid-template-columns: 1fr; }
-    }
-  </style>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- SheetJS for Excel export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+/* === GLOBAL === */
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --accent:#0b5cff;
+  --gold:#d4af37;
+  --muted:#666;
+  --success:#1fa05a;
+  --danger:#e04b4b;
+}
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:url('https://cdn.pixabay.com/photo/2017/08/30/01/05/construction-2699620_1280.jpg') no-repeat center center fixed;
+  background-size:cover;
+  margin:0; padding:24px;
+  color:#0b1733;
+}
+body::before{
+  content:"";position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(255,255,255,0.85);z-index:-1;
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  border-bottom:2px solid var(--gold);
+  padding-bottom:12px;
+  margin-bottom:18px;
+}
+header h1{ margin:0; font-size:22px; font-weight:700; color:#0b1733; }
+header .sub{ font-size:14px; color:var(--muted); margin-top:2px; }
+.layout{
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:18px;
+}
+.card{
+  background:var(--card);
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(12,24,60,0.06);
+  padding:14px;
+}
+.card h3{ margin-top:0; font-size:18px; border-bottom:1px solid var(--gold); padding-bottom:6px;}
+form .row{ display:flex; gap:8px; margin-bottom:8px; }
+label{ font-size:12px; color:var(--muted) }
+input[type="text"], input[type="number"], input[type="date"], select{
+  width:100%;
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid #e3e6ee;
+  font-size:14px;
+  background:transparent;
+}
+button{
+  padding:8px 12px;
+  border-radius:8px;
+  border:0;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+  font-weight:600;
+  transition:0.2s;
+}
+button:hover{ opacity:0.9; }
+button.ghost{ background:transparent; color:var(--accent); border:1px solid #e4e9ff; }
+button.small{ padding:6px 8px; font-size:13px; }
+table{ width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+thead th{ text-align:left; padding:8px 6px; color:var(--muted); font-weight:600; border-bottom:1px solid #eef1f8; }
+tbody td{ padding:8px 6px; vertical-align:middle; border-bottom:1px solid #f2f5fb; }
+tbody tr:hover{ background:#f9f9f9; }
+.actions button{ margin-right:6px; }
+.muted{ color:var(--muted); font-size:13px; }
+.suppliers{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+.supplier-card{
+  display:flex; align-items:center; gap:8px;
+  padding:6px 8px; border-radius:8px; border:1px solid #eef2ff; cursor:pointer;
+  background:linear-gradient(180deg,#fff 0%, #fbfdff 100%);
+}
+.supplier-card img{ width:36px; height:26px; object-fit:contain; }
+.comparison-table th, .comparison-table td{text-align:center;}
+.comparison-table th img{ display:block; margin:0 auto; max-height:40px; }
+.comparison-table td.cheapest{ background: #e6f7ea; color:var(--success); font-weight:700; }
+.chart-wrap{ padding:6px; }
+#map{ height:300px; border-radius:8px; }
+@media (max-width:1000px){
+  .layout{ grid-template-columns: 1fr; }
+}
+.search-bar{ margin-bottom:8px; display:flex; gap:6px; flex-wrap:wrap; }
+.search-bar input{ flex:1; }
+</style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Buildy - Core Data (local demo)</h1>
-      <div class="muted">Add / update material prices • compare • trends • export</div>
-    </div>
-    <div>
-      <button id="clearAll" class="small ghost">Clear all data</button>
-    </div>
-  </header>
+<header>
+  <div>
+    <h1>Buildy</h1>
+    <div class="sub">No.1 Building Material Price Comparison</div>
+  </div>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <button id="importJSON" class="small ghost">Import JSON</button>
+    <button id="exportJSON" class="small ghost">Export JSON</button>
+    <button id="clearAll" class="small ghost">Clear all</button>
+  </div>
+</header>
 
-  <div class="layout">
-    <!-- LEFT: Form / Suppliers -->
-    <div class="card" id="leftCol">
-      <h3 style="margin-top:0">Add / Update Material Price</h3>
-      <form id="priceForm">
-        <input type="hidden" id="entryId" value="" />
-        <div class="row">
-          <div style="flex:1">
-            <label>Material</label>
-            <input id="material" type="text" placeholder="e.g. Cement 25kg, Sand (bulk)" required />
-          </div>
-          <div style="width:140px">
-            <label>Supplier</label>
-            <select id="supplier" required></select>
-          </div>
+<div class="layout">
+  <!-- LEFT -->
+  <div class="card">
+    <h3>Add / Update Material Price</h3>
+    <form id="priceForm">
+      <input type="hidden" id="entryId" />
+      <div class="row">
+        <div style="flex:1">
+          <label>Material</label>
+          <input id="material" type="text" required />
         </div>
-
-        <div class="row">
-          <div style="flex:1">
-            <label>Price (numeric)</label>
-            <input id="price" type="number" step="0.01" min="0" placeholder="e.g. 12.50" required />
-          </div>
-          <div style="width:140px">
-            <label>Date</label>
-            <input id="date" type="date" />
-          </div>
-        </div>
-
-        <div style="display:flex; gap:8px; margin-top:6px;">
-          <button id="saveBtn" type="submit">Save</button>
-          <button id="cancelEdit" type="button" class="ghost small">Cancel</button>
-          <div style="flex:1"></div>
-          <div class="muted" id="formNote">Duplicates prevented for same material+supplier.</div>
-        </div>
-      </form>
-
-      <hr style="margin:12px 0" />
-
-      <h4 style="margin:6px 0">All Suppliers</h4>
-      <div id="suppliersList" class="suppliers"></div>
-
-      <h4 style="margin-top:12px">Quick Stats</h4>
-      <div class="muted" id="statsArea"></div>
-    </div>
-
-    <!-- RIGHT: Main area (Table, Filters, Comparison, Trends) -->
-    <div>
-      <div class="card" style="margin-bottom:12px;">
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div>
-            <h3 style="margin:0">Price Entries</h3>
-            <div class="muted">Manage and filter entries (saved to localStorage)</div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <select id="filterSupplier"><option value="">All suppliers</option></select>
-            <select id="filterMaterial"><option value="">All materials</option></select>
-            <input id="filterFrom" type="date" />
-            <input id="filterTo" type="date" />
-            <button id="applyFilter" class="small ghost">Apply</button>
-            <button id="resetFilter" class="small ghost">Reset</button>
-            <button id="exportExcel" class="small">Export Excel</button>
-          </div>
-        </div>
-
-        <div style="overflow:auto; margin-top:10px;">
-          <table id="entriesTable">
-            <thead>
-              <tr>
-                <th>Material</th>
-                <th>Supplier</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th style="width:150px">Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <div style="width:140px">
+          <label>Supplier</label>
+          <select id="supplier" required></select>
         </div>
       </div>
-
-      <div class="card" style="margin-bottom:12px;">
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div>
-            <h3 style="margin:0">Price Comparison (cheapest per material)</h3>
-            <div class="muted">Shows lowest price for each material across suppliers.</div>
-          </div>
-          <div>
-            <button id="refreshComparison" class="small ghost">Refresh</button>
-          </div>
+      <div class="row">
+        <div style="flex:1">
+          <label>Price</label>
+          <input id="price" type="number" step="0.01" min="0" required />
         </div>
-
-        <div style="overflow:auto; margin-top:10px;">
-          <table id="comparisonTable" class="comparison-table">
-            <thead>
-              <tr><th>Material</th><th>Supplier</th><th>Price</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <div style="width:140px">
+          <label>Date</label>
+          <input id="date" type="date" />
         </div>
       </div>
-
-      <div class="card">
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <div>
-            <h3 style="margin:0">Price Trends</h3>
-            <div class="muted">Select material to view price trend over time.</div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <select id="trendMaterial"><option value="">Choose material</option></select>
-            <button id="drawTrend" class="small">Show Trend</button>
-          </div>
-        </div>
-
-        <div class="chart-wrap">
-          <canvas id="trendChart" height="160"></canvas>
-        </div>
+      <div style="margin-top:6px;">
+        <button id="saveBtn" type="submit">Save</button>
+        <button id="cancelEdit" type="button" class="ghost small">Cancel</button>
       </div>
+    </form>
+
+    <div class="search-bar">
+      <input type="text" id="searchMaterial" placeholder="Search material..." />
+      <button id="applySearch" class="small ghost">Search</button>
+      <button id="resetSearch" class="small ghost">Reset</button>
     </div>
+
+    <h4>All Suppliers</h4>
+    <div id="suppliersList" class="suppliers"></div>
+    <h4>Quick Stats</h4>
+    <div class="muted" id="statsArea"></div>
   </div>
 
-  <script>
-    /* --------------------------
-       Sample suppliers (logos as data URIs or placeholder)
-       Replace logos with real URLs in your repo if you like
-       -------------------------- */
-    const SAMPLE_SUPPLIERS = [
-      { id: 'chadwicks', name: "Chadwick's", logo: 'https://kello54.github.io/Buildy/docs/images/favicon.png' },
-      { id: 'woodies', name: "Woodie's", logo: 'https://kello54.github.io/Buildy/docs/images/favicon.png' },
-      { id: 'buckley', name: "Buckley", logo: 'https://kello54.github.io/Buildy/docs/images/favicon.png' },
-      { id: 'tjomahony', name: "TJ O'Mahony", logo: 'https://kello54.github.io/Buildy/docs/images/favicon.png' }
-    ];
+  <!-- RIGHT -->
+  <div>
+    <div class="card" style="margin-bottom:12px;">
+      <h3>Price Entries</h3>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+        <select id="filterSupplier"><option value="">All suppliers</option></select>
+        <select id="filterMaterial"><option value="">All materials</option></select>
+        <input id="filterFrom" type="date" />
+        <input id="filterTo" type="date" />
+        <button id="applyFilter" class="small ghost">Apply</button>
+        <button id="resetFilter" class="small ghost">Reset</button>
+        <button id="exportExcel" class="small">Export Excel</button>
+      </div>
+      <div style="overflow:auto;">
+        <table id="entriesTable">
+          <thead><tr><th>Material</th><th>Supplier</th><th>Price</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-    const LS_KEY = 'buildy_data_v1';
+    <div class="card" style="margin-bottom:12px;">
+      <h3>Supplier Comparison</h3>
+      <div style="overflow:auto;">
+        <table id="comparisonTable" class="comparison-table">
+          <thead>
+            <tr>
+              <th>Material</th>
+              <th><img src="https://www.chadwicksgroup.ie/wp-content/uploads/2023/07/Chadwicks-Logo.png" title="Chadwicks"><br>Chadwicks</th>
+              <th><img src="https://buckleygroup.ie/wp-content/uploads/2023/06/Buckley-Group-Logo.png" title="Buckley"><br>Buckley</th>
+              <th><img src="https://www.woodies.ie/media/wysiwyg/woodies-logo.svg" title="Woodie's"><br>Woodie's</th>
+              <th><img src="https://tjomahony.ie/wp-content/uploads/2023/05/TJ-OMahony-Logo.png" title="TJ O'Mahony"><br>TJ O'Mahony</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-    // DOM refs
-    const supplierSelect = document.getElementById('supplier');
-    const suppliersList = document.getElementById('suppliersList');
-    const entriesTableBody = document.querySelector('#entriesTable tbody');
-    const filterSupplier = document.getElementById('filterSupplier');
-    const filterMaterial = document.getElementById('filterMaterial');
-    const filterFrom = document.getElementById('filterFrom');
-    const filterTo = document.getElementById('filterTo');
-    const exportExcelBtn = document.getElementById('exportExcel');
-    const comparisonBody = document.querySelector('#comparisonTable tbody');
-    const trendMaterial = document.getElementById('trendMaterial');
-    const trendChartCanvas = document.getElementById('trendChart');
-    const statsArea = document.getElementById('statsArea');
-    const clearAllBtn = document.getElementById('clearAll');
+    <div class="card" style="margin-bottom:12px;">
+      <h3>Price Trends</h3>
+      <div style="margin-bottom:6px;">
+        <select id="trendMaterial"><option value="">Choose material</option></select>
+        <button id="drawTrend" class="small">Show Trend</button>
+      </div>
+      <div class="chart-wrap"><canvas id="trendChart" height="160"></canvas></div>
+    </div>
 
-    // Form
-    const form = document.getElementById('priceForm');
-    const materialInput = document.getElementById('material');
-    const priceInput = document.getElementById('price');
-    const dateInput = document.getElementById('date');
-    const entryIdInput = document.getElementById('entryId');
-    const saveBtn = document.getElementById('saveBtn');
-    const cancelEditBtn = document.getElementById('cancelEdit');
+    <div class="card">
+      <h3>Supplier Map</h3>
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
 
-    // Filter controls
-    const applyFilterBtn = document.getElementById('applyFilter');
-    const resetFilterBtn = document.getElementById('resetFilter');
+<script>
+// Supplier data with coords
+const SUPPLIERS = [
+  { id:'chadwicks', name:"Chadwick's", lat:53.3498, lng:-6.2603 },
+  { id:'woodies', name:"Woodie's", lat:53.3331, lng:-6.2489 },
+  { id:'buckley', name:"Buckley", lat:53.3472, lng:-6.2591 },
+  { id:'tjomahony', name:"TJ O'Mahony", lat:53.355, lng:-6.27 }
+];
+const LS_KEY = 'buildy_data_v3';
 
-    // Comparison refresh
-    const refreshComparisonBtn = document.getElementById('refreshComparison');
-    const drawTrendBtn = document.getElementById('drawTrend');
+// Mock API
+const api = {
+  async get(){ return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); },
+  async save(entries){ localStorage.setItem(LS_KEY, JSON.stringify(entries)); return true; },
+  async clear(){ localStorage.removeItem(LS_KEY); return true; }
+};
 
-    // In-memory data
-    let entries = []; // { id, material, supplierId, price, dateISO }
-    let trendChart = null;
+let entries = [];
 
-    function uid() {
-      return 'id-' + Math.random().toString(36).slice(2,9);
-    }
+// Elements
+const form=document.getElementById('priceForm');
+const entryIdInput=document.getElementById('entryId');
+const materialInput=document.getElementById('material');
+const supplierSelect=document.getElementById('supplier');
+const priceInput=document.getElementById('price');
+const dateInput=document.getElementById('date');
+const saveBtn=document.getElementById('saveBtn');
+const cancelEditBtn=document.getElementById('cancelEdit');
+const entriesTableBody=document.querySelector('#entriesTable tbody');
+const filterSupplier=document.getElementById('filterSupplier');
+const filterMaterial=document.getElementById('filterMaterial');
+const filterFrom=document.getElementById('filterFrom');
+const filterTo=document.getElementById('filterTo');
+const applyFilterBtn=document.getElementById('applyFilter');
+const resetFilterBtn=document.getElementById('resetFilter');
+const exportExcelBtn=document.getElementById('exportExcel');
+const comparisonBody=document.querySelector('#comparisonTable tbody');
+const trendMaterial=document.getElementById('trendMaterial');
+const drawTrendBtn=document.getElementById('drawTrend');
+const trendChartCanvas=document.getElementById('trendChart');
+const statsArea=document.getElementById('statsArea');
+const suppliersList=document.getElementById('suppliersList');
+const clearAllBtn=document.getElementById('clearAll');
+const exportJSONBtn=document.getElementById('exportJSON');
+const importJSONBtn=document.getElementById('importJSON');
+const searchInput=document.getElementById('searchMaterial');
+const applySearchBtn=document.getElementById('applySearch');
+const resetSearchBtn=document.getElementById('resetSearch');
 
-    function todayISO(){
-      const d = new Date();
-      d.setHours(0,0,0,0);
-      return d.toISOString().slice(0,10);
-    }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function supplierName(id){ return SUPPLIERS.find(s=>s.id===id)?.name || id; }
+function uid(){ return 'id-'+Math.random().toString(36).slice(2,9); }
 
-    // Init suppliers into selects and supplier list
-    function populateSuppliers(){
-      supplierSelect.innerHTML = '';
-      filterSupplier.innerHTML = '<option value="">All suppliers</option>';
-      SAMPLE_SUPPLIERS.forEach(s=>{
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        opt.textContent = s.name;
-        supplierSelect.appendChild(opt);
+// Render suppliers dropdown + cards
+function renderSuppliers(){
+  supplierSelect.innerHTML='';
+  filterSupplier.innerHTML='<option value="">All suppliers</option>';
+  SUPPLIERS.forEach(s=>{
+    let opt=document.createElement('option'); opt.value=s.id; opt.textContent=s.name; supplierSelect.appendChild(opt);
+    let card=document.createElement('div'); card.className='supplier-card';
+    let img=document.createElement('img'); img.src=`https://via.placeholder.com/36x26.png?text=${s.name[0]}`; // fallback
+    img.src=`https://www.google.com/s2/favicons?domain=${s.name.replace(/ /g,'')}.ie`; // optional small favicon
+    card.appendChild(img); let span=document.createElement('span'); span.textContent=s.name; card.appendChild(span);
+    card.onclick=()=>{ filterSupplier.value=s.id; applyFilter(); };
+    suppliersList.appendChild(card);
+    filterSupplier.appendChild(opt.cloneNode(true));
+  });
+}
 
-        const opt2 = opt.cloneNode(true);
-        filterSupplier.appendChild(opt2);
-      });
+function renderEntries(list=null){
+  const data=list||entries; entriesTableBody.innerHTML='';
+  data.forEach(e=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${e.material}</td>
+      <td>${supplierName(e.supplierId)}</td>
+      <td>${e.price.toFixed(2)}</td>
+      <td>${e.dateISO}</td>
+      <td>
+        <button class="small ghost" onclick="editEntry('${e.id}')">Edit</button>
+        <button class="small" onclick="deleteEntry('${e.id}')">Delete</button>
+      </td>`;
+    entriesTableBody.appendChild(tr);
+  });
+}
 
-      suppliersList.innerHTML = '';
-      SAMPLE_SUPPLIERS.forEach(s=>{
-        const div = document.createElement('div');
-        div.className = 'supplier-card';
-        div.title = 'Filter by ' + s.name;
-        div.dataset.supplier = s.id;
-        div.innerHTML = \`
-          <img src="\${s.logo}" alt="\${s.name}" />
-          <div>
-            <div style="font-weight:600; font-size:14px;">\${s.name}</div>
-            <div class="muted" style="font-size:12px;">Click to filter</div>
-          </div>
-        \`;
-        div.addEventListener('click', ()=> {
-          filterSupplier.value = s.id;
-          applyFilter();
-        });
-        suppliersList.appendChild(div);
-      });
-    }
+function buildFilters(){
+  const mats=[...new Set(entries.map(e=>e.material))].sort();
+  filterMaterial.innerHTML='<option value="">All materials</option>';
+  trendMaterial.innerHTML='<option value="">Choose material</option>';
+  mats.forEach(m=>{ filterMaterial.innerHTML+=`<option>${m}</option>`; trendMaterial.innerHTML+=`<option>${m}</option>`; });
+}
 
-    // Load/save
-    function saveToStorage(){
-      localStorage.setItem(LS_KEY, JSON.stringify(entries));
-      updateUI();
-    }
-    function loadFromStorage(){
-      const raw = localStorage.getItem(LS_KEY);
-      if(raw){
-        try{
-          entries = JSON.parse(raw);
-        }catch(e){
-          entries = [];
-        }
-      }else{
-        // Seed a small sample dataset for demo
-        entries = [
-          { id: uid(), material: "Cement 25kg", supplierId: "chadwicks", price: 12.30, dateISO: "2025-09-01" },
-          { id: uid(), material: "Cement 25kg", supplierId: "woodies", price: 11.80, dateISO: "2025-08-20" },
-          { id: uid(), material: "Sand (Bulk)", supplierId: "buckley", price: 55.00, dateISO: "2025-07-13" },
-          { id: uid(), material: "Concrete Blocks", supplierId: "tjomahony", price: 1.25, dateISO: "2025-06-30" },
-          { id: uid(), material: "Concrete Blocks", supplierId: "woodies", price: 1.10, dateISO: "2025-08-01" },
-        ];
-        saveToStorage();
-      }
-    }
-
-    // Utilities: get supplier name
-    function supplierName(id){
-      const s = SAMPLE_SUPPLIERS.find(x => x.id === id);
-      return s ? s.name : id;
-    }
-
-    // Render entries table
-    function renderEntriesList(filtered = null){
-      const dataset = filtered || entries.slice().sort((a,b)=> new Date(b.dateISO) - new Date(a.dateISO));
-      entriesTableBody.innerHTML = '';
-      dataset.forEach(entry => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = \`
-          <td>\${escapeHtml(entry.material)}</td>
-          <td>\${escapeHtml(supplierName(entry.supplierId))}</td>
-          <td>\${Number(entry.price).toFixed(2)}</td>
-          <td>\${entry.dateISO}</td>
-          <td class="actions">
-            <button class="small ghost" data-edit="\${entry.id}">Edit</button>
-            <button class="small" data-delete="\${entry.id}">Delete</button>
-          </td>
-        \`;
-        entriesTableBody.appendChild(tr);
-      });
-
-      // attach handlers
-      entriesTableBody.querySelectorAll('[data-edit]').forEach(btn=>{
-        btn.addEventListener('click', e=>{
-          const id = e.currentTarget.dataset.edit;
-          startEdit(id);
-        });
-      });
-      entriesTableBody.querySelectorAll('[data-delete]').forEach(btn=>{
-        btn.addEventListener('click', e=>{
-          const id = e.currentTarget.dataset.delete;
-          if(confirm('Delete this entry?')) {
-            entries = entries.filter(x=>x.id !== id);
-            saveToStorage();
-          }
-        });
-      });
-    }
-
-    // Escape HTML
-    function escapeHtml(s){
-      if(!s) return '';
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    // Start edit
-    function startEdit(id){
-      const e = entries.find(x=>x.id===id);
-      if(!e) return;
-      entryIdInput.value = e.id;
-      materialInput.value = e.material;
-      supplierSelect.value = e.supplierId;
-      priceInput.value = e.price;
-      dateInput.value = e.dateISO || todayISO();
-      saveBtn.textContent = 'Update';
-    }
-    function cancelEdit(){
-      entryIdInput.value = '';
-      materialInput.value = '';
-      supplierSelect.selectedIndex = 0;
-      priceInput.value = '';
-      dateInput.value = '';
-      saveBtn.textContent = 'Save';
-    }
-
-    // Validation & duplicate prevention
-    function isDuplicate(material, supplierId, excludeId = null){
-      return entries.some(e=>{
-        if(excludeId && e.id === excludeId) return false;
-        return e.material.trim().toLowerCase() === material.trim().toLowerCase()
-               && e.supplierId === supplierId;
-      });
-    }
-
-    // Form submit
-    form.addEventListener('submit', (ev)=>{
-      ev.preventDefault();
-      const id = entryIdInput.value || null;
-      const material = materialInput.value.trim();
-      const supplierId = supplierSelect.value;
-      const price = parseFloat(priceInput.value);
-      const dateISO = dateInput.value || todayISO();
-
-      if(!material || !supplierId || isNaN(price)){
-        alert('Please complete material, supplier and numeric price.');
-        return;
-      }
-
-      if(isDuplicate(material, supplierId, id)){
-        alert('An entry for this material & supplier already exists. Edit that entry to change price.');
-        return;
-      }
-
-      if(id){
-        // update
-        const target = entries.find(e=>e.id===id);
-        if(target){
-          target.material = material;
-          target.supplierId = supplierId;
-          target.price = price;
-          target.dateISO = dateISO;
-        }
-      } else {
-        entries.push({ id: uid(), material, supplierId, price, dateISO });
-      }
-      saveToStorage();
-      cancelEdit();
+function renderComparison(){
+  const byMat={};
+  entries.forEach(e=>{ (byMat[e.material]=byMat[e.material]||[]).push(e); });
+  comparisonBody.innerHTML='';
+  Object.keys(byMat).forEach(m=>{
+    const row=document.createElement('tr'); row.innerHTML=`<td>${m}</td>`;
+    SUPPLIERS.forEach(s=>{
+      const entry=byMat[m].find(x=>x.supplierId===s.id);
+      if(entry) row.innerHTML+=`<td class="${getCheapest(m,s.id)}">${entry.price.toFixed(2)}</td>`;
+      else row.innerHTML+='<td>—</td>';
     });
+    comparisonBody.appendChild(row);
+  });
+}
 
-    cancelEditBtn.addEventListener('click', ()=> {
-      cancelEdit();
-    });
+function getCheapest(material,supplierId){
+  const list=entries.filter(e=>e.material===material);
+  if(!list.length) return '';
+  const min=Math.min(...list.map(e=>e.price));
+  const entry=list.find(e=>e.price===min);
+  return entry.supplierId===supplierId?'cheapest':'';
+}
 
-    // Filters
-    function buildFilterOptions(){
-      // material options
-      const mats = [...new Set(entries.map(e=>e.material.trim()))].sort();
-      filterMaterial.innerHTML = '<option value="">All materials</option>';
-      trendMaterial.innerHTML = '<option value="">Choose material</option>';
-      mats.forEach(m=>{
-        const o = document.createElement('option'); o.value = m; o.textContent = m; filterMaterial.appendChild(o);
-        const o2 = document.createElement('option'); o2.value = m; o2.textContent = m; trendMaterial.appendChild(o2);
-      });
-    }
+let trendChart=null;
+function renderTrend(mat){
+  if(trendChart) trendChart.destroy();
+  if(!mat) return;
+  const data=entries.filter(e=>e.material===mat).sort((a,b)=>new Date(a.dateISO)-new Date(b.dateISO));
+  const dates=[...new Set(data.map(e=>e.dateISO))];
+  const bySup={}; data.forEach(e=>(bySup[e.supplierId]=bySup[e.supplierId]||[]).push(e));
+  const datasets=[];
+  Object.keys(bySup).forEach(sid=>{
+    const arr=bySup[sid];
+    const series=dates.map(d=>{ const upTo=arr.filter(x=>x.dateISO<=d); return upTo.length?upTo[upTo.length-1].price:null; });
+    datasets.push({label:supplierName(sid),data:series,fill:false,tension:0.2});
+  });
+  trendChart=new Chart(trendChartCanvas.getContext('2d'),{type:'line',data:{labels:dates,datasets},options:{plugins:{legend:{position:'bottom'}}}});
+}
 
-    function applyFilter(){
-      const sup = filterSupplier.value;
-      const mat = filterMaterial.value;
-      const from = filterFrom.value;
-      const to = filterTo.value;
+function updateStats(data=entries){ statsArea.textContent=`Entries: ${data.length} • Materials: ${new Set(data.map(e=>e.material)).size} • Suppliers: ${new Set(data.map(e=>e.supplierId)).size}`; }
 
-      let filtered = entries.slice();
-      if(sup) filtered = filtered.filter(e => e.supplierId === sup);
-      if(mat) filtered = filtered.filter(e => e.material === mat);
-      if(from) filtered = filtered.filter(e => e.dateISO >= from);
-      if(to) filtered = filtered.filter(e => e.dateISO <= to);
-
-      renderEntriesList(filtered);
-      updateStats(filtered);
-    }
-
-    applyFilterBtn.addEventListener('click', applyFilter);
-    resetFilterBtn.addEventListener('click', ()=>{
-      filterSupplier.value = '';
-      filterMaterial.value = '';
-      filterFrom.value = '';
-      filterTo.value = '';
-      renderEntriesList();
-      updateStats();
-    });
-
-    // Export to Excel using SheetJS
-    exportExcelBtn.addEventListener('click', ()=>{
-      // get currently filtered rows visible
-      let rows = Array.from(entriesTableBody.querySelectorAll('tr'));
-      if(rows.length === 0){
-        alert('No rows to export. Try resetting filters or add data.');
-        return;
-      }
-      // construct data array
-      const data = [['Material','Supplier','Price','Date']];
-      rows.forEach(tr=>{
-        const cols = tr.querySelectorAll('td');
-        const row = [cols[0].textContent, cols[1].textContent, parseFloat(cols[2].textContent), cols[3].textContent];
-        data.push(row);
-      });
-
-      // SheetJS
-      const ws = XLSX.utils.aoa_to_sheet(data);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Buildy Prices');
-      XLSX.writeFile(wb, 'buildy_prices.xlsx');
-    });
-
-    // Comparison: cheapest supplier per material
-    function computeComparison(){
-      // group by material, find min price
-      const byMat = {};
-      entries.forEach(e=>{
-        const m = e.material.trim();
-        if(!byMat[m]) byMat[m] = [];
-        byMat[m].push(e);
-      });
-      // build rows: pick minimum price and the supplier for that price
-      const rows = [];
-      Object.keys(byMat).sort().forEach(m=>{
-        const items = byMat[m];
-        // sort by price ascending, earliest date if tie
-        items.sort((a,b)=>{
-          if(a.price !== b.price) return a.price - b.price;
-          return new Date(a.dateISO) - new Date(b.dateISO);
-        });
-        const winner = items[0];
-        rows.push({
-          material: m,
-          supplierId: winner.supplierId,
-          price: winner.price.toFixed(2)
-        });
-      });
-      return rows;
-    }
-
-    function renderComparison(){
-      const rows = computeComparison();
-      comparisonBody.innerHTML = '';
-      rows.forEach(r=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = \`
-          <td>\${escapeHtml(r.material)}</td>
-          <td>\${escapeHtml(supplierName(r.supplierId))}</td>
-          <td class="cheapest">\${Number(r.price).toFixed(2)}</td>
-        \`;
-        comparisonBody.appendChild(tr);
-      });
-    }
-
-    refreshComparisonBtn.addEventListener('click', renderComparison);
-
-    // Trends: draw chart for selected material, grouped by supplier
-    function drawTrendForMaterial(material){
-      if(!material) {
-        if(trendChart){ trendChart.destroy(); trendChart = null; }
-        return;
-      }
-      // gather entries for material, group by supplier
-      const filtered = entries.filter(e => e.material === material).sort((a,b)=> new Date(a.dateISO) - new Date(b.dateISO));
-      const bySupplier = {};
-      filtered.forEach(e=>{
-        if(!bySupplier[e.supplierId]) bySupplier[e.supplierId] = [];
-        bySupplier[e.supplierId].push(e);
-      });
-
-      // Build datasets: for consistent x-axis (dates) merge all dates present
-      const allDates = [...new Set(filtered.map(e => e.dateISO))].sort();
-
-      // For each supplier, create data array mapped to allDates (use latest price up to that date)
-      const datasets = [];
-      Object.keys(bySupplier).forEach(sid=>{
-        // sort supplier entries by date
-        const arr = bySupplier[sid].slice().sort((a,b)=> new Date(a.dateISO) - new Date(b.dateISO));
-        const series = [];
-        // for each date in allDates, find latest price as of that date (or null)
-        allDates.forEach(d=>{
-          // find last entry <= d
-          const upTo = arr.filter(x => x.dateISO <= d);
-          if(upTo.length === 0) series.push(null);
-          else series.push(upTo[upTo.length-1].price);
-        });
-        // add dataset
-        datasets.push({
-          label: supplierName(sid),
-          data: series,
-          fill: false,
-          tension: 0.2,
-          borderWidth: 2,
-          // let Chart.js pick color
-        });
-      });
-
-      // Create / update chart
-      if(trendChart) trendChart.destroy();
-      trendChart = new Chart(trendChartCanvas.getContext('2d'), {
-        type: 'line',
-        data: {
-          labels: allDates,
-          datasets: datasets
-        },
-        options: {
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { position: 'bottom' },
-            title: { display: true, text: 'Price trend for: ' + material }
-          },
-          scales: {
-            y: { title: { display:true, text:'Price' } },
-            x: { title: { display:true, text:'Date' } }
-          }
-        }
-      });
-    }
-
-    drawTrendBtn.addEventListener('click', ()=>{
-      const mat = trendMaterial.value;
-      if(!mat) { alert('Choose a material from the dropdown'); return; }
-      drawTrendForMaterial(mat);
-    });
-
-    // Stats area
-    function updateStats(filtered = null){
-      const data = filtered || entries;
-      const total = data.length;
-      const materials = new Set(data.map(e=>e.material)).size;
-      const suppliers = new Set(data.map(e=>e.supplierId)).size;
-      statsArea.innerHTML = \`Entries: <strong>\${total}</strong> • Materials: <strong>\${materials}</strong> • Suppliers: <strong>\${suppliers}</strong>\`;
-    }
-
-    // Update all UI pieces
-    function updateUI(){
-      renderEntriesList();
-      buildFilterOptions();
-      renderComparison();
-      updateStats();
-    }
-
-    // Clear all data
-    clearAllBtn.addEventListener('click', ()=>{
-      if(confirm('Clear all saved Buildy data from localStorage? This cannot be undone.')){
-        entries = [];
-        saveToStorage();
-        localStorage.removeItem(LS_KEY);
-        location.reload();
-      }
-    });
-
-    // Helpers: apply current filter when entries change
-    function renderEntriesListAndFiltersAuto(){
-      // If there are filter values, keep them when updating table
-      if(filterSupplier.value || filterMaterial.value || filterFrom.value || filterTo.value){
-        applyFilter();
-      } else {
-        renderEntriesList();
-      }
-      buildFilterOptions();
-    }
-
-    // Listen for storage updates (if opened in multiple tabs)
-    window.addEventListener('storage', (e)=>{
-      if(e.key === LS_KEY) loadFromStorage(), updateUI();
-    });
-
-    // Initialization
-    (function init(){
-      populateSuppliers();
-      loadFromStorage();
-      updateUI();
-
-      // default date to today
-      dateInput.value = todayISO();
-
-      // When entries change in-memory, re-render related UI (we call saveToStorage which triggers updateUI)
-      // Hook saveToStorage to updateUI explicitly by wrapping it
-      const origSave = saveToStorage;
-      saveToStorage = function(){
-        localStorage.setItem(LS_KEY, JSON.stringify(entries));
-        renderEntriesListAndFiltersAuto();
-        renderComparison();
-        updateStats();
-      };
-
-      // initial render after wrapping save
-      saveToStorage();
-
-      // quick apply filter shortcut (press Enter on filter material)
-      filterMaterial.addEventListener('keydown', e => { if(e.key === 'Enter') applyFilter(); });
-
-      // Basic keyboard shortcuts
-      document.addEventListener('keydown', e=>{
-        // ctrl+shift+n clears form
-        if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'n'){ cancelEdit(); materialInput.focus(); }
-      });
-    })();
-
-    // small note: prevent accidental navigation on unsaved edit (optional)
-    window.addEventListener('beforeunload', (e)=>{
-      if(entryIdInput.value) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    });
-  </script>
-</body>
-</html>
+// Actions
+form.onsubmit=async e=>{
+  e.preventDefault();
+  const id=entryIdInput.value||uid();
+  const mat=materialInput.value.trim(); const sup=supplierSelect.value;
+  const price=parseFloat(priceInput.value); const date=dateInput.value||todayISO();
+  if(!mat||!sup||isNaN(price)) return alert("Fill all fields");
+  const exists=entries.find(x=>x.material.toLowerCase()===mat.toLowerCase()&&x.supplierId===sup&&x.id!==id);
+  if(exists) return alert("Duplicate material+supplier exists");
+  const obj={id,material:mat,supplierId:sup,price,date
