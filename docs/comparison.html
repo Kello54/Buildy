@@ -198,3 +198,12 @@ supplierData.forEach(s=>{
 
 // ===== Auto-search from URL =====
 function getQueryParam(name){
+  const params=new URLSearchParams(window.location.search);
+  return params.get(name)||"";
+}
+document.getElementById("searchBox").value=getQueryParam("search");
+if(getQueryParam("search")) searchMaterials(); else { generateTable(); generateCards(); }
+</script>
+
+</body>
+</html>
