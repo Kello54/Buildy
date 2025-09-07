@@ -16,38 +16,25 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
-/* ===== Global ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
-body {
-  min-height:100vh; display:flex; flex-direction:column; color:#fff;
-  background:url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;
-}
-body::before {
-  content:""; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(46,26,71,0.75); z-index:-1;
-}
+body {min-height:100vh; display:flex; flex-direction:column; color:#fff; background:url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed;}
+body::before {content:""; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(46,26,71,0.3); z-index:-1;}
 a {text-decoration:none; color:inherit;}
 
-/* ===== Header ===== */
-header {
-  background: #2e1a47; padding:15px 40px; display:flex; justify-content:space-between; align-items:center;
-  border-bottom:4px solid gold;
-}
+/* Header */
+header {background: #2e1a47; padding:15px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid gold;}
 header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img {height:40px;}
-header .login {color:#fff; font-size:16px; cursor:pointer;}
+header .login {color:#fff; font-size:16px; cursor:pointer; padding:6px 12px; border:1px solid rgba(255,215,0,0.3); border-radius:4px; transition:0.2s;}
+header .login:hover {background: rgba(255,215,0,0.2);}
 
-/* ===== Subheader ===== */
-nav.subheader {
-  background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;
-}
+/* Subheader */
+nav.subheader {background:#3c245c; display:flex; justify-content:center; padding:10px 0; border-bottom:2px solid gold;}
 nav.subheader a {color:#fff; text-decoration:none; padding:0 20px; font-size:16px; position:relative;}
-nav.subheader a:not(:last-child)::after {
-  content:""; position:absolute; right:0; top:50%; transform:translateY(-50%);
-  width:2px; height:20px; background:gold;
-}
+nav.subheader a:not(:last-child)::after {content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:2px; height:20px; background:gold;}
 
-/* ===== Hero ===== */
-.hero {text-align:center; padding:80px 20px 60px; background: rgba(46,26,71,0.7);}
+/* Hero */
+.hero {text-align:center; padding:80px 20px 60px; background: linear-gradient(rgba(46,26,71,0.5), rgba(46,26,71,0)), url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat fixed; color: #fff;}
 .hero h1 {font-size:36px; margin-bottom:20px; animation: fadeInDown 1.2s ease-out;}
 @keyframes fadeInDown {0%{opacity:0; transform:translateY(-30px);}100%{opacity:1; transform:translateY(0);}}
 .hero input {padding:10px; width:300px; max-width:90%; border-radius:5px; border:1px solid gold;}
@@ -55,26 +42,21 @@ nav.subheader a:not(:last-child)::after {
 #heroCTA {display:inline-block; margin-top:15px; transition: background 0.3s;}
 #heroCTA:hover {background:#e6c200;}
 
-/* ===== Layout ===== */
+/* Layout */
 .layout {display:grid; grid-template-columns:380px 1fr; gap:18px; padding:20px;}
-.card {
-  background: rgba(46,26,71,0.9); border-radius:8px; padding:15px; color:#fff;
-  box-shadow:0 6px 18px rgba(12,24,60,0.06);
-}
+.card {background: rgba(46,26,71,0.9); border-radius:8px; padding:15px; color:#fff; box-shadow:0 6px 18px rgba(12,24,60,0.06);}
 .card h3 {margin-bottom:10px; border-bottom:1px solid gold; padding-bottom:4px;}
 
-/* ===== Form ===== */
+/* Form */
 form .row {display:flex; gap:8px; margin-bottom:8px;}
 label {font-size:12px; color:#ddd;}
-input[type="text"], input[type="number"], input[type="date"], select {
-  width:100%; padding:8px; border-radius:6px; border:1px solid #eee; background:transparent; color:#fff;
-}
+input[type="text"], input[type="number"], input[type="date"], select {width:100%; padding:8px; border-radius:6px; border:1px solid #eee; background:transparent; color:#fff;}
 button {padding:8px 12px; border-radius:8px; border:0; cursor:pointer; background:gold; color:#2e1a47; font-weight:600; transition:0.2s;}
 button:hover {opacity:0.9;}
 button.ghost {background:transparent; color:gold; border:1px solid gold;}
 button.small {padding:6px 8px; font-size:13px;}
 
-/* ===== Table ===== */
+/* Entries Table */
 table {width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; color:#fff;}
 thead th {text-align:left; padding:8px 6px; color:gold; border-bottom:1px solid #eee;}
 tbody td {padding:8px 6px; border-bottom:1px solid rgba(255,255,255,0.2);}
@@ -85,6 +67,11 @@ td.cheapest {background:#1fa05a; color:#fff; font-weight:700;}
 .comparison-table {width:100%; border-collapse:collapse; margin-top:15px;}
 .comparison-table th, .comparison-table td {border:1px solid #ddd; padding:12px; text-align:center; vertical-align: middle;}
 .comparison-table th img {height:36px; margin-bottom:4px;}
+
+/* Collapsible categories */
+.category-row {background:#3c245c; color:#fff; font-weight:bold; cursor:pointer; transition: background 0.3s;}
+.category-row:hover {background:#4b2a7a;}
+.material-row {transition:0.3s;}
 
 /* Cards Scroll */
 #cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px 0; scroll-behavior:smooth;}
@@ -122,7 +109,7 @@ footer a {color: gold; text-decoration: underline;}
 </div>
 
 <div class="layout">
-  <!-- LEFT COLUMN -->
+  <!-- Left Column: Form + Entries -->
   <div class="card">
     <h3>Add / Update Material</h3>
     <form id="priceForm">
@@ -138,63 +125,72 @@ footer a {color: gold; text-decoration: underline;}
         </div>
       </div>
       <div class="row">
-        <div style="flex:1">
-          <label>Price</label>
-          <input type="number" id="price" step="0.01" min="0" required>
-        </div>
         <div style="width:140px">
+          <label>Category</label>
+          <select id="categorySelect">
+            <option value="Cement">Cement</option>
+            <option value="Timber">Timber</option>
+            <option value="Bricks">Bricks</option>
+            <option value="Roofing">Roofing</option>
+            <option value="Flooring">Flooring</option>
+            <option value="Paint">Paint</option>
+            <option value="Pipes">Pipes</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Hardware">Hardware</option>
+            <option value="Insulation">Insulation</option>
+            <option value="Plaster">Plaster</option>
+            <option value="Steel">Steel</option>
+            <option value="Tools">Tools</option>
+            <option value="Garden">Garden</option>
+          </select>
+        </div>
+        <div style="width:100px">
+          <label>Price (€)</label>
+          <input type="number" step="0.01" id="price" required>
+        </div>
+        <div style="width:120px">
           <label>Date</label>
           <input type="date" id="date">
         </div>
       </div>
-      <div style="margin-top:6px;">
-        <button id="saveBtn" type="submit">Save</button>
-        <button id="cancelEdit" type="button" class="ghost small">Cancel</button>
-      </div>
+      <button type="submit" id="saveBtn">Save</button>
+      <button type="button" id="cancelEdit" class="ghost small">Cancel</button>
     </form>
-    <h4>Suppliers</h4>
-    <div id="suppliersList"></div>
-    <h4>Stats</h4>
-    <div id="statsArea"></div>
+
+    <div style="margin-top:10px;">
+      <button id="exportExcelBtn">Export Excel</button>
+      <button id="exportJSONBtn">Export JSON</button>
+      <button id="importJSONBtn">Import JSON</button>
+      <button id="clearAllBtn" class="ghost small">Clear All</button>
+    </div>
+
+    <div id="statsArea" style="margin-top:10px;"></div>
+
+    <table id="entriesTable">
+      <thead><tr><th>Material</th><th>Supplier</th><th>Price</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </div>
 
-  <!-- RIGHT COLUMN -->
+  <!-- Right Column: Comparison + Cards + Map -->
   <div>
-    <div class="card">
-      <h3>Price Entries</h3>
-      <div style="overflow:auto;">
-        <table id="entriesTable">
-          <thead><tr><th>Material</th><th>Supplier</th><th>Price</th><th>Date</th><th>Actions</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
+    <h3>Supplier Comparison</h3>
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th><img src="https://kello54.github.io/Buildy/docs/images/chadwicks-logo.png" alt="Chadwicks"><br>Chadwicks</th>
+          <th><img src="https://kello54.github.io/Buildy/docs/images/tj-omahony-logo.png" alt="TJ O'Mahony"><br>TJ O'Mahony</th>
+          <th><img src="https://kello54.github.io/Buildy/docs/images/woodies-logo.png" alt="Woodie's"><br>Woodie's</th>
+          <th><img src="https://kello54.github.io/Buildy/docs/images/heiton-buckley-logo.png" alt="Heiton Buckley"><br>Heiton Buckley</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-    <div class="card">
-      <h3>Supplier Comparison</h3>
-      <table id="comparisonTable" class="comparison-table">
-        <thead>
-          <tr>
-            <th>Material</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/chadwicks-logo.png" alt="Chadwicks"><br>Chadwicks</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/tj-omahony-logo.png" alt="TJ O'Mahony"><br>TJ O'Mahony</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/woodies-logo.png" alt="Woodie's"><br>Woodie's</th>
-            <th><img src="https://kello54.github.io/Buildy/docs/images/heiton-buckley-logo.png" alt="Heiton Buckley"><br>Heiton Buckley</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <h3>Price Trends</h3>
-      <canvas id="trendChart" height="160"></canvas>
-      <select id="trendMaterial" style="margin-top:10px;"></select>
-    </div>
-
-    <div class="card" id="cardWrapper"></div>
-
-    <div id="supplierMap" class="card"></div>
+    <div id="cardWrapper"></div>
+    <canvas id="trendChart" class="card" style="margin-top:15px;"></canvas>
+    <div id="supplierMap"></div>
   </div>
 </div>
 
@@ -211,36 +207,27 @@ footer a {color: gold; text-decoration: underline;}
 // ===== Data =====
 const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 let entries = [];
-
-// Populate supplier select
 const supplierSelect = document.getElementById("supplier");
 suppliers.forEach(s=>{const opt=document.createElement("option"); opt.value=s; opt.text=s; supplierSelect.appendChild(opt);});
 
-// ===== Form =====
-const priceForm = document.getElementById("priceForm");
-const entryIdInput = document.getElementById("entryId");
-const materialInput = document.getElementById("material");
-const priceInput = document.getElementById("price");
-const dateInput = document.getElementById("date");
-const saveBtn = document.getElementById("saveBtn");
-const cancelEditBtn = document.getElementById("cancelEdit");
+// Form elements
+const priceForm=document.getElementById("priceForm"), entryIdInput=document.getElementById("entryId"),
+      materialInput=document.getElementById("material"), priceInput=document.getElementById("price"),
+      dateInput=document.getElementById("date"), categoryInput=document.getElementById("categorySelect"),
+      saveBtn=document.getElementById("saveBtn"), cancelEditBtn=document.getElementById("cancelEdit");
 
+// ===== Form Submit =====
 priceForm.addEventListener("submit", e=>{
   e.preventDefault();
-  const obj={id:entryIdInput.value||Date.now(), material:materialInput.value, supplier:supplierSelect.value, price:parseFloat(priceInput.value), date:dateInput.value||new Date().toISOString().split("T")[0]};
+  const obj={id:entryIdInput.value||Date.now(), material:materialInput.value, supplier:supplierSelect.value, price:parseFloat(priceInput.value), date:dateInput.value||new Date().toISOString().split("T")[0], category:categoryInput.value};
   const idx=entries.findIndex(x=>x.id==obj.id);
   if(idx>=0) entries[idx]=obj; else entries.push(obj);
   resetForm(); renderEntries(); renderComparison(); renderCards(); updateStats(); renderTrendOptions();
 });
-
 cancelEditBtn.addEventListener("click", resetForm);
+function resetForm(){entryIdInput.value=''; materialInput.value=''; priceInput.value=''; dateInput.value=''; categoryInput.selectedIndex=0; saveBtn.textContent='Save';}
 
-function resetForm(){
-  entryIdInput.value=''; materialInput.value=''; priceInput.value=''; dateInput.value=''; supplierSelect.selectedIndex=0;
-  saveBtn.textContent='Save';
-}
-
-// ===== Render Functions =====
+// ===== Render Entries =====
 function renderEntries(){
   const tbody=document.querySelector("#entriesTable tbody"); tbody.innerHTML="";
   entries.forEach(e=>{
@@ -253,75 +240,70 @@ function renderEntries(){
     tbody.appendChild(tr);
   });
 }
-
-function editEntry(id){
-  const e = entries.find(x=>x.id==id); if(!e) return;
-  entryIdInput.value=e.id; materialInput.value=e.material; priceInput.value=e.price; dateInput.value=e.date; supplierSelect.value=e.supplier;
-  saveBtn.textContent='Update';
+function editEntry(id){ const e=entries.find(x=>x.id==id); if(!e) return;
+  entryIdInput.value=e.id; materialInput.value=e.material; priceInput.value=e.price; dateInput.value=e.date; supplierSelect.value=e.supplier; categoryInput.value=e.category; saveBtn.textContent='Update';
 }
-
 function deleteEntry(id){ entries=entries.filter(x=>x.id!=id); renderEntries(); renderComparison(); renderCards(); updateStats(); renderTrendOptions(); }
 
-// ===== Supplier Comparison =====
+// ===== Comparison Table with Collapsible Categories =====
 function renderComparison(){
-  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  const mats = [...new Set(entries.map(e=>e.material))];
-  mats.forEach(mat=>{
-    const row=document.createElement("tr"); 
-    row.innerHTML=`<td>${mat}</td>` + suppliers.map(s=>{
-      const e=entries.filter(en=>en.material==mat && en.supplier==s);
-      const price = e.length? Math.min(...e.map(x=>x.price)) : 0;
-      return `<td class="${price && price==Math.min(...entries.filter(en=>en.material==mat).map(x=>x.price))?'cheapest':''}">${price? '€'+price.toFixed(2):'-'}</td>`;
-    }).join('');
-    tbody.appendChild(row);
+  const tbody = document.querySelector("#comparisonTable tbody");
+  tbody.innerHTML = "";
+  const grouped = {};
+  entries.forEach(e=>{if(!grouped[e.category]) grouped[e.category]=[]; grouped[e.category].push(e);});
+  Object.keys(grouped).forEach(cat=>{
+    const catRow=document.createElement("tr"); catRow.className="category-row"; catRow.innerHTML=`<td colspan="${suppliers.length+1}">${cat}</td>`; tbody.appendChild(catRow);
+    grouped[cat].forEach(matEntry=>{
+      const row=document.createElement("tr"); row.className="material-row";
+      row.innerHTML=`<td>${matEntry.material}</td>` + suppliers.map(s=>{
+        const e=entries.filter(en=>en.material==matEntry.material && en.supplier==s);
+        const price=e.length? Math.min(...e.map(x=>x.price)):0;
+        const isCheapest=price && price===Math.min(...entries.filter(en=>en.material==matEntry.material).map(x=>x.price));
+        return `<td class="${isCheapest?'cheapest':''}">${price? '€'+price.toFixed(2) : '-'}</td>`;
+      }).join('');
+      tbody.appendChild(row);
+    });
   });
+  document.querySelectorAll(".category-row").forEach(catRow=>{catRow.addEventListener("click", ()=>{
+    let next=catRow.nextElementSibling;
+    while(next && !next.classList.contains("category-row")){next.style.display=(next.style.display==="none")?"":"none"; next=next.nextElementSibling;}
+  });});
 }
 
 // ===== Cards =====
 function renderCards(){
   const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
-  const mats = [...new Set(entries.map(e=>e.material))];
+  const mats=[...new Set(entries.map(e=>e.material))];
   mats.forEach(mat=>{
     const card=document.createElement("div"); card.className="card";
     card.innerHTML=`<h3>${mat}</h3>` + suppliers.map(s=>{
       const e=entries.filter(en=>en.material==mat && en.supplier==s);
-      const price = e.length? Math.min(...e.map(x=>x.price)) : 0;
-      return `<div>${s}: <span class="${price && price==Math.min(...entries.filter(en=>en.material==mat).map(x=>x.price))?'highlight':''}">${price? '€'+price.toFixed(2):'-'}</span></div>`;
+      const price=e.length? Math.min(...e.map(x=>x.price)):0;
+      return `<div>${s}: <span class="${price && price===Math.min(...entries.filter(en=>en.material==mat).map(x=>x.price))?'highlight':''}">${price? '€'+price.toFixed(2):'-'}</span></div>`;
     }).join('');
     wrapper.appendChild(card);
   });
 }
 
 // ===== Stats =====
-function updateStats(){
-  const area=document.getElementById("statsArea"); area.innerHTML="";
-  area.innerHTML=`<p>Total entries: ${entries.length}</p>`;
-}
+function updateStats(){document.getElementById("statsArea").innerHTML=`<p>Total entries: ${entries.length}</p>`;}
 
-// ===== Price Trends =====
-const trendMaterialSelect = document.getElementById("trendMaterial");
-const trendChartCtx = document.getElementById("trendChart").getContext('2d');
+// ===== Trend Chart =====
+const trendChartCtx=document.getElementById("trendChart");
 let trendChart=null;
-
 function renderTrendOptions(){
-  trendMaterialSelect.innerHTML=""; 
-  const mats = [...new Set(entries.map(e=>e.material))];
-  mats.forEach(m=>{const opt=document.createElement("option"); opt.value=m; opt.text=m; trendMaterialSelect.appendChild(opt);});
+  const select = document.createElement("select"); select.id="trendMaterial"; document.body.appendChild(select);
+  const mats=[...new Set(entries.map(e=>e.material))];
+  mats.forEach(m=>{const opt=document.createElement("option"); opt.value=m; opt.text=m; select.appendChild(opt);});
   renderTrend(mats[0]);
 }
-
 function renderTrend(material){
   if(!material) return;
-  const data = entries.filter(e=>e.material==material).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const labels = data.map(d=>d.date); const prices = data.map(d=>d.price);
+  const data=entries.filter(e=>e.material==material).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const labels=data.map(d=>d.date); const prices=data.map(d=>d.price);
   if(trendChart) trendChart.destroy();
-  trendChart = new Chart(trendChartCtx,{
-    type:'line', data:{labels, datasets:[{label:material, data:prices, borderColor:'gold', backgroundColor:'rgba(255,215,0,0.2)'}]},
-    options:{responsive:true, plugins:{legend:{display:true}}}
-  });
+  trendChart=new Chart(trendChartCtx,{type:'line', data:{labels,datasets:[{label:material,data:prices,borderColor:'gold',backgroundColor:'rgba(255,215,0,0.2)'}]}, options:{responsive:true}});
 }
-
-trendMaterialSelect.addEventListener("change", ()=>renderTrend(trendMaterialSelect.value));
 
 // ===== Search =====
 function searchMaterials(){
@@ -330,31 +312,47 @@ function searchMaterials(){
   entries.filter(e=>e.material.toLowerCase().includes(q)).forEach(e=>{
     const tr=document.createElement("tr");
     tr.innerHTML=`<td>${e.material}</td><td>${e.supplier}</td><td>€${e.price.toFixed(2)}</td><td>${e.date}</td>
-      <td>
-        <button class="small" onclick="editEntry('${e.id}')">Edit</button>
-        <button class="small ghost" onclick="deleteEntry('${e.id}')">Delete</button>
-      </td>`;
+      <td><button class="small" onclick="editEntry('${e.id}')">Edit</button>
+          <button class="small ghost" onclick="deleteEntry('${e.id}')">Delete</button></td>`;
     tbody.appendChild(tr);
   });
 }
 
 // ===== Map =====
-const map = L.map('supplierMap').setView([53.3498, -6.2603], 7);
+const map=L.map('supplierMap').setView([53.3498,-6.2603],7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-const supplierData = [
-  {name:"Chadwicks", coords:[53.345, -6.270], url:"#"},
-  {name:"TJ O'Mahony", coords:[51.898, -8.475], url:"#"},
-  {name:"Woodie's", coords:[53.351, -6.260], url:"#"},
-  {name:"Heiton Buckley", coords:[54.281, -8.476], url:"#"}
+const supplierData=[
+  {name:"Chadwicks", coords:[53.345,-6.270], url:"#"},
+  {name:"TJ O'Mahony", coords:[51.898,-8.475], url:"#"},
+  {name:"Woodie's", coords:[53.351,-6.260], url:"#"},
+  {name:"Heiton Buckley", coords:[54.281,-8.476], url:"#"}
 ];
-supplierData.forEach(s=>{
-  L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`);
-});
+supplierData.forEach(s=>{L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`);});
 
 // ===== Scroll Top =====
-const scrollBtn = document.getElementById("scrollTopBtn");
-window.onscroll = function() {scrollBtn.style.display=(document.documentElement.scrollTop>300)?"block":"none";}
+const scrollBtn=document.getElementById("scrollTopBtn");
+window.onscroll=function(){scrollBtn.style.display=(document.documentElement.scrollTop>300)?"block":"none";}
 scrollBtn.addEventListener("click", ()=>{window.scrollTo({top:0, behavior:'smooth'});});
+
+// ===== Export / Import =====
+document.getElementById("exportExcelBtn").onclick=()=>{
+  const data=[["Material","Supplier","Price","Date","Category"]];
+  entries.forEach(e=>data.push([e.material,e.supplier,e.price,e.date,e.category]));
+  const ws=XLSX.utils.aoa_to_sheet(data);
+  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Buildy"); XLSX.writeFile(wb,"buildy.xlsx");
+};
+document.getElementById("exportJSONBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download="buildy.json"; a.click();
+};
+document.getElementById("importJSONBtn").onclick=()=>{
+  const input=document.createElement("input"); input.type="file"; input.accept=".json";
+  input.onchange=e=>{const file=e.target.files[0]; const reader=new FileReader();
+    reader.onload=ev=>{try{entries=JSON.parse(ev.target.result); renderEntries(); renderComparison(); renderCards(); updateStats(); renderTrendOptions();}catch(err){alert("Invalid JSON file");}};
+    reader.readAsText(file);
+  }; input.click();
+};
+document.getElementById("clearAllBtn").onclick=()=>{if(confirm("Are you sure you want to clear all entries?")){entries=[]; renderEntries(); renderComparison(); renderCards(); updateStats(); renderTrendOptions();}};
 
 // ===== Init =====
 renderEntries(); renderComparison(); renderCards(); updateStats(); renderTrendOptions();
