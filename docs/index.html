@@ -363,4 +363,42 @@ form.onsubmit=async e=>{
   if(!mat||!sup||isNaN(price)) return alert("Fill all fields");
   const exists=entries.find(x=>x.material.toLowerCase()===mat.toLowerCase()&&x.supplierId===sup&&x.id!==id);
   if(exists) return alert("Duplicate material+supplier exists");
-  const obj={id,material:mat,supplierId:sup,price,date
+  const obj={id,material:mat,supplierId:sup,price,dateISO:date};
+  const idx=entries.findIndex(x=>x.id===id); if(idx>=0) entries[idx]=obj; else entries.push(obj);
+  await api.save(entries); cancelEdit(); refresh();
+};
+function cancelEdit(){ entryIdInput.value=''; materialInput.value=''; priceInput.value=''; supplierSelect.selectedIndex=0; dateInput.value=todayISO(); saveBtn.textContent='Save'; }
+window.editEntry=function(id){ const e=entries.find(x=>x.id===id); if(!e) return; entryIdInput.value=e.id; materialInput.value=e.material; supplierSelect.value=e.supplierId; priceInput.value=e.price; dateInput.value=e.dateISO; saveBtn.textContent='Update'; };
+window.deleteEntry=async function(id){ if(!confirm("Delete?")) return; entries=entries.filter(x=>x.id!==id); await api.save(entries); refresh(); };
+
+applyFilterBtn.onclick=()=>{ let data=entries; if(filterSupplier.value) data=data.filter(e=>e.supplierId===filterSupplier.value); if(filterMaterial.value) data=data.filter(e=>e.material===filterMaterial.value); if(filterFrom.value) data=data.filter(e=>e.dateISO>=filterFrom.value); if(filterTo.value) data=data.filter(e=>e.dateISO<=filterTo.value); renderEntries(data); updateStats(data); };
+resetFilterBtn.onclick=()=>{ filterSupplier.value='';filterMaterial.value='';filterFrom.value='';filterTo.value=''; refresh(); };
+
+applySearchBtn.onclick=()=>{ const q=searchInput.value.trim().toLowerCase(); if(!q) return refresh(); const data=entries.filter(e=>e.material.toLowerCase().includes(q)); renderEntries(data); updateStats(data); };
+resetSearchBtn.onclick=()=>{ searchInput.value=''; refresh(); };
+
+exportExcelBtn.onclick=()=>{
+  const data=[["Material","Supplier","Price","Date"]]; entries.forEach(e=>data.push([e.material,supplierName(e.supplierId),e.price,e.dateISO]));
+  const ws=XLSX.utils.aoa_to_sheet(data); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Prices"); XLSX.writeFile(wb,"buildy.xlsx");
+};
+
+clearAllBtn.onclick=async()=>{ if(confirm("Clear all data?")){ entries=[]; await api.clear(); refresh(); } };
+exportJSONBtn.onclick=()=>{ const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='buildy.json'; a.click(); };
+importJSONBtn.onclick=()=>{ const input=document.createElement('input'); input.type='file'; input.accept='.json'; input.onchange=e=>{ const file=e.target.files[0]; const reader=new FileReader(); reader.onload=async ev=>{ try{ entries=JSON.parse(ev.target.result); await api.save(entries); refresh(); }catch(err){alert("Invalid JSON");} }; reader.readAsText(file); }; input.click(); };
+
+function refresh(){ renderEntries(); renderComparison(); buildFilters(); renderTrend(trendMaterial.value); updateStats(); }
+
+// Initialize
+async function init(){ entries=await api.get(); renderSuppliers(); refresh(); renderMap(); }
+init();
+
+// Leaflet Map
+let map=null;
+function renderMap(){
+  map=L.map('map').setView([53.35,-6.26],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+  SUPPLIERS.forEach(s=>{ L.marker([s.lat,s.lng]).addTo(map).bindPopup(s.name); });
+}
+</script>
+</body>
+</html>
