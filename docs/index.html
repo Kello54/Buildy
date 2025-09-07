@@ -10,14 +10,30 @@
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
 body {min-height:100vh; color:#fff; margin:0; background:#2e1a47;}
 
-/* Header */
-header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#2e1a47; border-bottom:4px solid gold;}
+/* ===== Header ===== */
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background: rgba(0,0,0,0.6); /* toned down */
+  border-bottom:4px solid gold;
+}
 header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold;}
 header .logo img {height:40px;}
 header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(255,215,0,0.3); border-radius:4px; cursor:pointer;}
 header .login:hover {background:rgba(255,215,0,0.2);}
 
-/* Hero */
+/* ===== Subheader ===== */
+nav.subheader {
+  background: rgba(0,0,0,0.5);
+  padding:10px;
+  text-align:center;
+  border-bottom:2px solid gold;
+}
+nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
+
+/* ===== Hero ===== */
 .hero {
   text-align:center;
   padding:80px 20px;
@@ -25,22 +41,33 @@ header .login:hover {background:rgba(255,215,0,0.2);}
   color:#fff;
   position:relative;
 }
-.hero h1 {font-size:36px; margin-bottom:20px; text-shadow:1px 1px 5px rgba(0,0,0,0.5);}
+.hero::before {
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(46,26,71,0.1); /* very light overlay */
+  z-index:0;
+}
+.hero h1, .hero input, .hero button, #heroCTA {
+  position:relative; z-index:1;
+  text-shadow:1px 1px 4px rgba(0,0,0,0.5);
+}
+.hero h1 {font-size:36px; margin-bottom:20px;}
 .hero input {padding:12px 15px; width:320px; max-width:90%; border-radius:6px; border:2px solid gold; margin-bottom:10px;}
 .hero button, #heroCTA {background:#ffd966; color:#2e1a47; border:none; font-weight:bold; padding:12px 25px; border-radius:6px; cursor:pointer; margin-left:5px;}
 .hero button:hover, #heroCTA:hover {background:#ffcf33;}
 
-/* Supplier Cards */
+/* ===== Supplier Cards ===== */
 #cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px;}
-.card {min-width:180px; flex-shrink:0; background: rgba(46,26,71,0.9); border-radius:6px; padding:10px; text-align:center; transition:transform 0.3s;}
+.card {min-width:180px; flex-shrink:0; background: rgba(0,0,0,0.5); border-radius:6px; padding:10px; text-align:center; transition:transform 0.3s;}
 .card:hover {transform:translateY(-5px);}
 .card img {max-height:40px; margin-bottom:8px;}
 
-/* Footer */
+/* ===== Footer ===== */
 footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold;}
 footer a {color:#ffcf33; text-decoration:underline;}
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media(max-width:768px){.hero h1{font-size:28px;}}
 @media(max-width:480px){#cardWrapper{overflow-x:auto;}}
 </style>
@@ -50,6 +77,13 @@ footer a {color:#ffcf33; text-decoration:underline;}
   <div class="logo"><img src="https://kello54.github.io/Buildy/docs/images/favicon.png" alt="Logo"> Buildy</div>
   <div class="login">Login</div>
 </header>
+
+<nav class="subheader">
+  <a href="#">Home</a>
+  <a href="#">Materials</a>
+  <a href="#">Suppliers</a>
+  <a href="#">Contact</a>
+</nav>
 
 <div class="hero">
   <h1>Compare Building Material Prices Instantly</h1>
@@ -74,9 +108,9 @@ footer a {color:#ffcf33; text-decoration:underline;}
 <script>
 function goToComparison(){
   let search=document.getElementById("searchHome").value;
-  let url='comparison.html';
+  let url='docs/comparison.html';
   if(search) url+='?search='+encodeURIComponent(search);
-  window.location.href=url;
+  window.location.href = url;
 }
 </script>
 </body>
