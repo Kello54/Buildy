@@ -22,19 +22,12 @@ header {
 }
 header .logo {
   display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:2px;
+  align-items:center;
   font-size:24px;
   font-weight:bold;
   color:#fff;
 }
 header .logo img {height:40px;}
-header .logo .slogan {
-  font-size:14px;
-  color:#f4b400; /* warm gold */
-  margin-top:2px;
-}
 header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(244,180,0,0.3); border-radius:4px; cursor:pointer;}
 header .login:hover {background:rgba(244,180,0,0.2);}
 
@@ -50,20 +43,26 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
   color:#fff;
   position:relative;
 }
+
 .hero::before {
   content:"";
   position:absolute;
   top:0; left:0; right:0; bottom:0;
-  background: none; /* removed overlay */
+  background: none; /* no overlay */
   z-index:0;
 }
-.hero h1, .hero .slogan, #heroCTA {
+
+.hero .slogan-hero {
   position:relative; z-index:1;
-  text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+  font-size:36px;
+  font-weight:bold;
+  color:#f4b400; /* warm gold */
+  text-shadow:2px 2px 5px rgba(0,0,0,0.5);
+  margin-bottom:40px;
 }
-.hero h1 {font-size:36px; margin-bottom:20px;}
-.hero .slogan {font-size:18px; color:#f4b400; margin-bottom:20px;}
+
 #heroCTA {
+  position:relative; z-index:1;
   display:inline-block;
   padding:18px 35px;
   background:#f4b400;
@@ -74,6 +73,7 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
   cursor:pointer;
   transition: background 0.3s;
 }
+
 #heroCTA:hover {background:#e6ac00;}
 
 /* ===== Footer ===== */
@@ -82,8 +82,7 @@ footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
 
 /* ===== Responsive ===== */
 @media(max-width:768px){
-  .hero h1{font-size:28px; padding:0 10px;}
-  .hero .slogan{font-size:16px;}
+  .hero .slogan-hero{font-size:28px; padding:0 10px;}
   #heroCTA{font-size:16px; padding:15px 30px;}
 }
 </style>
@@ -93,7 +92,6 @@ footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
 <header>
   <div class="logo">
     <img src="images/favicon.png" alt="Buildy Logo"> Buildy
-    <div class="slogan">No.1 Building Material Price Comparison Site in Wexford</div>
   </div>
   <div class="login">Login</div>
 </header>
@@ -106,8 +104,9 @@ footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
 </nav>
 
 <section class="hero">
-  <h1>Find the Best Prices for Building Materials</h1>
-  <div class="slogan">No.1 Building Material Price Comparison Site in Wexford</div>
+  <div class="slogan-hero">
+    No.1 Building Material Price Comparison Site in Wexford
+  </div>
   <div id="heroCTA" onclick="goToComparison()">Get Started</div>
 </section>
 
