@@ -12,50 +12,61 @@
 <style>
 /* ===== Global ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
-body {min-height:100vh; display:flex; flex-direction:column; color:#000; background:#f0f0f0;}
+body {min-height:100vh; display:flex; flex-direction:column; color:#1f1f1f; background:#f5f5f5;}
 
 /* ===== Header ===== */
-header {background:#2e1a47; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:15px 20px; border-bottom:4px solid gold;}
-header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold;}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:#2c3e50; /* dark slate */
+  border-bottom:4px solid #f4b400; /* warm gold */
+}
+header .logo {display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img {height:40px;}
-header .login {color:#fff; font-size:16px; cursor:pointer; padding:5px 10px; border:1px solid rgba(255,215,0,0.3); border-radius:4px;}
-header .login:hover {background:rgba(255,215,0,0.2);}
+header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(244,180,0,0.3); border-radius:4px; cursor:pointer;}
+header .login:hover {background:rgba(244,180,0,0.2);}
 
 /* ===== Subheader ===== */
-nav.subheader {background: rgba(0,0,0,0.5); padding:10px; text-align:center; border-bottom:2px solid gold;}
+nav.subheader {background:#34495e; padding:10px; text-align:center;}
 nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 
 /* ===== Search Section ===== */
-#searchSection {text-align:center; padding:30px 20px; background:#ffd966; color:#2e1a47;}
-#searchSection input, #searchSection select {padding:10px 12px; margin:5px; border-radius:6px; border:1px solid #2e1a47;}
-#searchSection button {padding:10px 20px; background:#2e1a47; color:#ffd966; border:none; border-radius:6px; cursor:pointer; margin-left:5px;}
-#searchSection button:hover {background:#1f1430;}
+#searchSection {text-align:center; padding:30px 20px; background:#f4b400; color:#1f1f1f;}
+#searchSection input, #searchSection select {padding:10px 12px; margin:5px; border-radius:6px; border:1px solid #2c3e50;}
+#searchSection button {padding:10px 20px; background:#2c3e50; color:#f4b400; border:none; border-radius:6px; cursor:pointer; margin-left:5px;}
+#searchSection button:hover {background:#1f1f1f; color:#f4b400;}
 
 /* ===== Table ===== */
 .comparison {flex:1; padding:30px;}
 #comparisonTable {width:100%; border-collapse:collapse; background:#fff; table-layout: fixed;}
 #comparisonTable th, #comparisonTable td {border:1px solid #ddd; padding:12px; text-align:center; vertical-align: middle;}
-#comparisonTable th {background:#2e1a47; color:#fff; position:sticky; top:0; z-index:2;}
+#comparisonTable th {background:#2c3e50; color:#fff; position:sticky; top:0; z-index:2;}
 #comparisonTable th img {height:20px; margin-right:5px;}
 tr:nth-child(even){background:#f9f9f9;}
 tr:hover {background:#e6f7ff;}
-.highlight {background: gold !important; font-weight:bold; font-size:1.05em;}
+.highlight {background:#f4b400 !important; font-weight:bold; font-size:1.05em;}
 
 /* ===== Cards ===== */
 #cardWrapper {display:flex; overflow-x:auto; gap:10px; padding:20px;}
-.card {min-width:180px; flex-shrink:0; background: rgba(46,26,71,0.5); border-radius:6px; padding:10px; text-align:center; transition:transform 0.3s;}
+.card {min-width:180px; flex-shrink:0; background:rgba(255,255,255,0.9); border-radius:6px; padding:10px; text-align:center; transition:transform 0.3s;}
 .card:hover {transform:translateY(-5px);}
 .card img {max-height:40px; margin-bottom:8px;}
 
 /* ===== Map ===== */
-#supplierMap {height:300px; margin:20px 0; border:2px solid gold; border-radius:5px;}
+#supplierMap {height:300px; margin:20px 0; border:2px solid #f4b400; border-radius:5px;}
 
 /* ===== Footer ===== */
-footer {background:#2e1a47; color:#fff; text-align:center; padding:20px; border-top:4px solid gold;}
-footer a {color:#ffcf33; text-decoration:underline; margin:0 5px;}
+footer {background:#2c3e50; color:#fff; text-align:center; padding:20px; border-top:4px solid #f4b400;}
+footer a {color:#f4b400; text-decoration:underline; margin:0 5px;}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){#cardWrapper{overflow-x:auto;}}
 </style>
 </head>
 <body>
+
 <header>
   <div class="logo"><img src="images/favicon.png" alt="Logo"> Buildy</div>
   <div class="login">Login</div>
@@ -107,15 +118,19 @@ footer a {color:#ffcf33; text-decoration:underline; margin:0 5px;}
 <script>
 // ===== Materials & Suppliers =====
 const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Roofing", name:"Roof Tiles (per 100)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Paint", name:"Interior Emulsion (5L)"}
+  {category:"Cement", name:"Cement (25kg)"},
+  {category:"Cement", name:"White Cement (25kg)"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},
+  {category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
+  {category:"Bricks", name:"Clay Bricks (per 100)"},
+  {category:"Roofing", name:"Roof Tiles (per 100)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},
+  {category:"Paint", name:"Interior Emulsion (5L)"}
 ];
 const suppliers = ["Chadwicks","TJ O'Mahony","Woodie's","Heiton Buckley"];
 
 // Populate category filter
-const categorySelect = document.getElementById("categoryFilter");
+const categorySelect=document.getElementById("categoryFilter");
 [...new Set(materials.map(m=>m.category))].forEach(c=>{
   const opt=document.createElement("option"); opt.value=c; opt.text=c; categorySelect.appendChild(opt);
 });
@@ -123,10 +138,10 @@ const categorySelect = document.getElementById("categoryFilter");
 // ===== Generate Table =====
 function generateTable(filterCategory=""){
   const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
+  const filtered=filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
   filtered.forEach(item=>{
-    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice = Math.min(...prices);
+    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
+    const minPrice=Math.min(...prices);
     const row=document.createElement("tr");
     row.innerHTML=`<td>${item.name}</td>` + prices.map(p=>`<td class="${p==minPrice?'highlight':''}">€${p}</td>`).join('');
     tbody.appendChild(row);
@@ -136,7 +151,7 @@ function generateTable(filterCategory=""){
 // ===== Generate Cards =====
 function generateCards(filterCategory=""){
   const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
-  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
+  const filtered=filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
   filtered.forEach(item=>{
     const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
     const minPrice=Math.min(...prices);
@@ -183,18 +198,3 @@ supplierData.forEach(s=>{
 
 // ===== Auto-search from URL =====
 function getQueryParam(name){
-  const urlParams=new URLSearchParams(window.location.search);
-  return urlParams.get(name) || "";
-}
-const initialSearch=getQueryParam('search');
-if(initialSearch){
-  document.getElementById("searchBox").value=initialSearch;
-  searchMaterials();
-}
-
-// ===== Initial Load =====
-generateTable();
-generateCards();
-</script>
-</body>
-</html>
