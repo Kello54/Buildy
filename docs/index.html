@@ -49,7 +49,7 @@ nav.subheader a:last-child { border-right:none; }
 }
 #heroCTA:hover {background: rgba(31,38,48,1); transform: scale(1.05);}
 
-/* ===== Collapsible Categories ===== */
+/* ===== Main & Categories ===== */
 main {max-width:1200px; margin:40px auto; padding:0 20px;}
 .category {border-bottom:2px solid #d4af37; padding:20px 0;}
 .category-header {
@@ -61,6 +61,10 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
 .category-content table {width:100%; border-collapse: collapse; margin-top:15px;}
 .category-content th, .category-content td {padding:10px; text-align:left; border-bottom:1px solid #d4af37;}
 .category-content tr:nth-child(even) {background:#f9f9f9;}
+.category-content img {height:40px; border-radius:4px;}
+
+/* ===== Search Bar ===== */
+#searchBar {width:100%; padding:10px 15px; margin-bottom:20px; font-size:16px; border:1px solid #ccc; border-radius:6px;}
 
 /* ===== Footer ===== */
 footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
@@ -71,6 +75,8 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
   .hero .slogan-hero{font-size:28px; padding:10px 15px;}
   #heroCTA{font-size:16px; padding:15px 30px;}
   nav.subheader a{margin:0 5px; padding:5px 5px;}
+  .category-content table {font-size:0.9em;}
+  #searchBar {font-size:14px;}
 }
 </style>
 </head>
@@ -94,18 +100,18 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 </section>
 
 <main>
-  <!-- Cement & Aggregates -->
+  <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()">
+
+  <!-- Example category: Cement & Aggregates -->
   <section class="category">
     <h2 class="category-header" onclick="toggleCategory(this)">Cement & Aggregates</h2>
     <div class="category-content">
       <table>
-        <thead>
-          <tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th></tr>
-        </thead>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
         <tbody>
-          <tr><td>Chadwick’s</td><td>Portland Cement 25kg</td><td>€12</td><td>In Stock</td></tr>
-          <tr><td>Woodies</td><td>Concrete Mix 25kg</td><td>€11.50</td><td>Limited</td></tr>
-          <tr><td>B&Q</td><td>Sand 50kg</td><td>€8</td><td>In Stock</td></tr>
+          <tr><td>Chadwick’s</td><td>Portland Cement 25kg</td><td>€12</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1610949826164-bfa9ebfb37f6?auto=format&fit=crop&w=100&q=80" alt="Cement"></td></tr>
+          <tr><td>Woodies</td><td>Concrete Mix 25kg</td><td>€11.50</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1581091012184-f66c68e6182c?auto=format&fit=crop&w=100&q=80" alt="Concrete Mix"></td></tr>
+          <tr><td>B&Q</td><td>Sand 50kg</td><td>€8</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1581091012176-0430e3c89b5c?auto=format&fit=crop&w=100&q=80" alt="Sand"></td></tr>
         </tbody>
       </table>
     </div>
@@ -116,13 +122,10 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
     <h2 class="category-header" onclick="toggleCategory(this)">Timber & Wood</h2>
     <div class="category-content">
       <table>
-        <thead>
-          <tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th></tr>
-        </thead>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
         <tbody>
-          <tr><td>Woodies</td><td>Pine Timber 2x4x8ft</td><td>€6.50</td><td>In Stock</td></tr>
-          <tr><td>Chadwick’s</td><td>Oak Board 2x6x8ft</td><td>€12</td><td>Limited</td></tr>
-          <tr><td>B&Q</td><td>Decking Timber 3m</td><td>€18</td><td>In Stock</td></tr>
+          <tr><td>Woodies</td><td>Pine Board 2x4x8ft</td><td>€6.50</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1566407035695-cf1fffd7c8c6?auto=format&fit=crop&w=100&q=80" alt="Pine Board"></td></tr>
+          <tr><td>Chadwick’s</td><td>Oak Board 2x6x8ft</td><td>€12</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1589287686302-2aa2062f4c41?auto=format&fit=crop&w=100&q=80" alt="Oak Board"></td></tr>
         </tbody>
       </table>
     </div>
@@ -133,17 +136,71 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
     <h2 class="category-header" onclick="toggleCategory(this)">Tools & Hardware</h2>
     <div class="category-content">
       <table>
-        <thead>
-          <tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th></tr>
-        </thead>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
         <tbody>
-          <tr><td>HomeValue</td><td>Hammer 16oz</td><td>€10</td><td>In Stock</td></tr>
-          <tr><td>Woodies</td><td>Drill Set 18V</td><td>€95</td><td>Limited</td></tr>
-          <tr><td>B&Q</td><td>Screwdriver Set 6pc</td><td>€15</td><td>In Stock</td></tr>
+          <tr><td>HomeValue</td><td>Hammer 16oz</td><td>€10</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1598706763986-d26a53d94607?auto=format&fit=crop&w=100&q=80" alt="Hammer"></td></tr>
+          <tr><td>Woodies</td><td>Drill Set 18V</td><td>€95</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1597570607064-b5f5c1634edb?auto=format&fit=crop&w=100&q=80" alt="Drill"></td></tr>
         </tbody>
       </table>
     </div>
   </section>
+
+  <!-- Paint & Decorating -->
+  <section class="category">
+    <h2 class="category-header" onclick="toggleCategory(this)">Paint & Decorating</h2>
+    <div class="category-content">
+      <table>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
+        <tbody>
+          <tr><td>B&Q</td><td>Emulsion Paint 5L White</td><td>€25</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1593050766606-0b2906a4de83?auto=format&fit=crop&w=100&q=80" alt="Paint"></td></tr>
+          <tr><td>Woodies</td><td>Paint Roller Set</td><td>€12</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1616745304931-8634e3a13c5b?auto=format&fit=crop&w=100&q=80" alt="Roller"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Bathroom & Plumbing -->
+  <section class="category">
+    <h2 class="category-header" onclick="toggleCategory(this)">Bathroom & Plumbing</h2>
+    <div class="category-content">
+      <table>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
+        <tbody>
+          <tr><td>Woodies</td><td>Shower Head Chrome</td><td>€35</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1600180758890-207c53c00dcf?auto=format&fit=crop&w=100&q=80" alt="Shower"></td></tr>
+          <tr><td>B&Q</td><td>Tap Set Basin</td><td>€28</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1600180758914-c6e8d4df5fbb?auto=format&fit=crop&w=100&q=80" alt="Tap"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Lawn & Garden -->
+  <section class="category">
+    <h2 class="category-header" onclick="toggleCategory(this)">Lawn & Garden</h2>
+    <div class="category-content">
+      <table>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
+        <tbody>
+          <tr><td>Woodies</td><td>Compost 50L</td><td>€6</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1586201375761-83865001e5d1?auto=format&fit=crop&w=100&q=80" alt="Compost"></td></tr>
+          <tr><td>B&Q</td><td>Lawn Mower Electric</td><td>€150</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1602337050198-44b9bbbe676f?auto=format&fit=crop&w=100&q=80" alt="Lawn Mower"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Outdoor Living -->
+  <section class="category">
+    <h2 class="category-header" onclick="toggleCategory(this)">Outdoor Living</h2>
+    <div class="category-content">
+      <table>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
+        <tbody>
+          <tr><td>B&Q</td><td>Garden Shed 6x4ft</td><td>€250</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1600585154526-220b97ed7b79?auto=format&fit=crop&w=100&q=80" alt="Shed"></td></tr>
+          <tr><td>Woodies</td><td>Outdoor Table Set</td><td>€120</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1598899134739-bf6e13096e96?auto=format&fit=crop&w=100&q=80" alt="Table Set"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -163,6 +220,18 @@ function toggleCategory(header){
   } else {
     content.style.maxHeight = content.scrollHeight + "px";
   }
+}
+
+// Filter products
+function filterProducts() {
+  const input = document.getElementById("searchBar").value.toLowerCase();
+  const tables = document.querySelectorAll(".category-content table tbody");
+  tables.forEach(tbody => {
+    tbody.querySelectorAll("tr").forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(input) ? "" : "none";
+    });
+  });
 }
 </script>
 
