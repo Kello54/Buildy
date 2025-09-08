@@ -50,11 +50,14 @@ nav.subheader a:last-child { border-right:none; }
   background-size: cover;
 }
 .hero .slogan-hero {
+  display:inline-block;
+  padding:15px 25px;
+  background: rgba(0,0,0,0.4); /* semi-transparent background for readability */
+  border-radius:6px;
   font-size:36px;
   font-weight:bold;
-  color: #ffffff; /* bright text for visibility */
+  color:#ffffff;
   margin-bottom:40px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* slight shadow to improve readability */
 }
 #heroCTA {
   display:inline-block;
@@ -101,7 +104,7 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 
 /* ===== Responsive ===== */
 @media(max-width:768px){
-  .hero .slogan-hero{font-size:28px; padding:0 10px;}
+  .hero .slogan-hero{font-size:28px; padding:10px 15px;}
   #heroCTA{font-size:16px; padding:15px 30px;}
   nav.subheader a{margin:0 5px; padding:5px 5px;}
 }
