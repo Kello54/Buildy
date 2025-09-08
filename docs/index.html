@@ -44,33 +44,48 @@ nav.subheader a:last-child { border-right:none; }
 .hero {
   position: relative;
   text-align: center;
-  padding:120px 20px;
+  padding:150px 20px; /* extra space from top */
   color: #fff;
   background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
   background-size: cover;
+  overflow: hidden;
 }
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
 .hero .slogan-hero {
   display:inline-block;
   padding:15px 25px;
-  background: rgba(0,0,0,0.4); /* semi-transparent background for readability */
-  border-radius:6px;
-  font-size:36px;
-  font-weight:bold;
+  background: rgba(0,0,0,0.35);
+  border-radius:8px;
+  font-size:38px;
+  font-weight:500;
   color:#ffffff;
-  margin-bottom:40px;
+  margin-bottom:50px;
+  animation: fadeInUp 1s ease-out forwards;
 }
+
 #heroCTA {
   display:inline-block;
-  padding:18px 35px;
+  padding:18px 40px;
   background: rgba(31, 38, 48, 0.85);
   color: #fff;
   font-weight:bold;
   font-size:18px;
   border-radius:6px;
   cursor:pointer;
-  transition: background 0.3s;
+  transition: transform 0.3s, background 0.3s;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
 }
-#heroCTA:hover {background: rgba(31, 38, 48, 1);}
+
+#heroCTA:hover {
+  background: rgba(31, 38, 48, 1);
+  transform: scale(1.05);
+}
 
 /* ===== Category Sections ===== */
 main {
