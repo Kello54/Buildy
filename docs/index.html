@@ -18,40 +18,50 @@ header {
   border-bottom:4px solid #F39C12; /* warm amber */
 }
 header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
-header .logo img{height:40px;}
+header .logo img{height:40px; margin-right:8px;}
 header .login {
   color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;
 }
 header .login:hover {background:rgba(243,156,18,0.2);}
 
-/* ===== Subheader ===== */
-nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
-nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
+/* ===== Subheader / Category Nav ===== */
+nav.subheader {
+  background:#1f2a38;
+  padding:10px 0;
+  text-align:center;
+  border-bottom:2px solid #d4af37; /* visible gold line */
+}
+nav.subheader a {
+  color:#fff;
+  margin:0 10px;
+  text-decoration:none;
+  padding:5px 10px;
+  border-right:2px solid #d4af37;
+}
+nav.subheader a:last-child { border-right:none; }
 
 /* ===== Hero ===== */
 .hero {
-  text-align:center;
+  position: relative;
+  text-align: center;
   padding:120px 20px;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
-  color:#fff;
-  position:relative;
+  color: #fff;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url("https://images.unsplash.com/photo-1561948955-9c6b5b9f7c8d?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
+  background-size: cover;
 }
 .hero .slogan-hero {
-  position:relative;
-  z-index:1;
   font-size:36px;
   font-weight:bold;
-  color: rgba(31, 38, 48, 0.85); /* Matches Get Started button color */
-  text-shadow: none;
+  color: #888888; /* matches Get Started button */
   margin-bottom:40px;
+  text-shadow: none;
 }
 #heroCTA {
-  position:relative;
-  z-index:1;
   display:inline-block;
   padding:18px 35px;
-  background: rgba(31, 38, 48, 0.85); /* dark semi-transparent */
-  color: #FFFFFF;
+  background: rgba(31, 38, 48, 0.85);
+  color: #fff;
   font-weight:bold;
   font-size:18px;
   border-radius:6px;
@@ -59,6 +69,26 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
   transition: background 0.3s;
 }
 #heroCTA:hover {background: rgba(31, 38, 48, 1);}
+
+/* ===== Category Sections ===== */
+main {
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+.category {
+  border-bottom:2px solid #d4af37; /* visible gold line */
+  padding:20px 0;
+}
+.category h2 {
+  font-size:1.8em;
+  margin-bottom:10px;
+  color:#1f2a38;
+}
+.category p {
+  font-size:1em;
+  line-height:1.6;
+}
 
 /* ===== Footer ===== */
 footer {
@@ -74,6 +104,7 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 @media(max-width:768px){
   .hero .slogan-hero{font-size:28px; padding:0 10px;}
   #heroCTA{font-size:16px; padding:15px 30px;}
+  nav.subheader a{margin:0 5px; padding:5px 5px;}
 }
 </style>
 </head>
@@ -99,6 +130,21 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
   </div>
   <div id="heroCTA" onclick="goToComparison()">Get Started</div>
 </section>
+
+<main>
+  <section class="category">
+    <h2>Cement & Aggregates</h2>
+    <p>Compare prices from multiple suppliers to get the best deal.</p>
+  </section>
+  <section class="category">
+    <h2>Timber & Wood</h2>
+    <p>Find quality timber at competitive prices from trusted suppliers.</p>
+  </section>
+  <section class="category">
+    <h2>Tools & Hardware</h2>
+    <p>Save time and money by comparing tool prices in your area.</p>
+  </section>
+</main>
 
 <footer>
   <p>&copy; 2025 Buildy. All Rights Reserved.</p>
