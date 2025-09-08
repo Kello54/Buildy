@@ -5,78 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildy - DIY Price Comparison</title>
 <link rel="icon" href="images/favicon.png" type="image/png">
-
 <style>
-/* ===== Global ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
 body {min-height:100vh; color:#1f1f1f; margin:0; background:#f5f5f5;}
-
-/* ===== Header ===== */
-header {
-  display:flex; justify-content:space-between; align-items:center; padding:15px 20px;
-  background:#1f2a38; border-bottom:4px solid #F39C12;
-}
+header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#1f2a38; border-bottom:4px solid #F39C12;}
 header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img{height:40px; margin-right:8px;}
 header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;}
 header .login:hover {background:rgba(243,156,18,0.2);}
-
-/* ===== Subheader ===== */
-nav.subheader {
-  background:#1f2a38; padding:10px 0; text-align:center; border-bottom:2px solid #d4af37;
-}
-nav.subheader a {
-  color:#fff; margin:0 10px; text-decoration:none; padding:5px 10px; border-right:2px solid #d4af37;
-}
+nav.subheader {background:#1f2a38; padding:10px 0; text-align:center; border-bottom:2px solid #d4af37;}
+nav.subheader a {color:#fff; margin:0 10px; text-decoration:none; padding:5px 10px; border-right:2px solid #d4af37;}
 nav.subheader a:last-child { border-right:none; }
-
-/* ===== Hero ===== */
-.hero {
-  position: relative; text-align: center; padding:150px 20px; color: #fff;
-  background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
-  background-size: cover; overflow: hidden;
-}
-@keyframes fadeInUp {0% { opacity: 0; transform: translateY(20px);}100% { opacity: 1; transform: translateY(0);}}
-.hero .slogan-hero {
-  display:inline-block; padding:15px 25px; background: rgba(0,0,0,0.35); border-radius:8px;
-  font-size:38px; font-weight:500; color:#ffffff; margin-bottom:50px;
-  animation: fadeInUp 1s ease-out forwards;
-}
-#heroCTA {
-  display:inline-block; padding:18px 40px; background: rgba(31,38,48,0.85);
-  color:#fff; font-weight:bold; font-size:18px; border-radius:6px; cursor:pointer;
-  transition: transform 0.3s, background 0.3s; animation: fadeInUp 1s ease-out 0.5s forwards;
-}
+.hero {position: relative; text-align: center; padding:150px 20px; color: #fff; background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat; background-size: cover; overflow: hidden;}
+.hero .slogan-hero {display:inline-block; padding:15px 25px; background: rgba(0,0,0,0.35); border-radius:8px; font-size:38px; font-weight:500; color:#ffffff; margin-bottom:50px;}
+#heroCTA {display:inline-block; padding:18px 40px; background: rgba(31,38,48,0.85); color:#fff; font-weight:bold; font-size:18px; border-radius:6px; cursor:pointer; transition: transform 0.3s, background 0.3s;}
 #heroCTA:hover {background: rgba(31,38,48,1); transform: scale(1.05);}
-
-/* ===== Main & Categories ===== */
 main {max-width:1200px; margin:40px auto; padding:0 20px;}
+#controls {display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; position: sticky; top: 0; background:#f5f5f5; padding:10px; z-index:100; border-bottom:1px solid #ccc;}
+#controls select, #controls input {padding:8px 12px; font-size:14px; border:1px solid #ccc; border-radius:6px;}
+#controls button {padding:8px 12px; border-radius:6px; border:1px solid #ccc; cursor:pointer;}
 .category {border-bottom:2px solid #d4af37; padding:20px 0;}
-.category-header {
-  cursor: pointer; font-size:1.8em; color:#1f2a38; position: relative;
-}
+.category-header {cursor: pointer; font-size:1.8em; color:#1f2a38; position: relative;}
 .category-header::after {content: '\25BC'; position: absolute; right:0; transition: transform 0.3s;}
 .category-header.active::after {transform: rotate(180deg);}
 .category-content {max-height:0; overflow:hidden; transition:max-height 0.5s ease;}
 .category-content table {width:100%; border-collapse: collapse; margin-top:15px;}
 .category-content th, .category-content td {padding:10px; text-align:left; border-bottom:1px solid #d4af37;}
 .category-content tr:nth-child(even) {background:#f9f9f9;}
+.category-content tr:hover {background:#eaeaea;}
 .category-content img {height:40px; border-radius:4px;}
-
-/* ===== Search Bar ===== */
-#searchBar {width:100%; padding:10px 15px; margin-bottom:20px; font-size:16px; border:1px solid #ccc; border-radius:6px;}
-
-/* ===== Footer ===== */
+.avail-in {color:#2ecc71; font-weight:bold;}
+.avail-limited {color:#f1c40f; font-weight:bold;}
+.avail-out {color:#e74c3c; font-weight:bold;}
+.lowest-price {background: #d4f7d4;}
 footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
 footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
-
-/* ===== Responsive ===== */
 @media(max-width:768px){
   .hero .slogan-hero{font-size:28px; padding:10px 15px;}
   #heroCTA{font-size:16px; padding:15px 30px;}
   nav.subheader a{margin:0 5px; padding:5px 5px;}
   .category-content table {font-size:0.9em;}
-  #searchBar {font-size:14px;}
 }
 </style>
 </head>
@@ -100,107 +68,23 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 </section>
 
 <main>
-  <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()">
+  <div id="controls">
+    <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()">
+    <select id="supplierFilter" onchange="filterProducts()">
+      <option value="">All Suppliers</option>
+    </select>
+    <select id="sortSelect" onchange="sortProducts()">
+      <option value="">Sort by</option>
+      <option value="priceAsc">Price ↑</option>
+      <option value="priceDesc">Price ↓</option>
+      <option value="supplierAsc">Supplier A-Z</option>
+      <option value="supplierDesc">Supplier Z-A</option>
+    </select>
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+  </div>
 
-  <!-- Example category: Cement & Aggregates -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Cement & Aggregates</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>Chadwick’s</td><td>Portland Cement 25kg</td><td>€12</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1610949826164-bfa9ebfb37f6?auto=format&fit=crop&w=100&q=80" alt="Cement"></td></tr>
-          <tr><td>Woodies</td><td>Concrete Mix 25kg</td><td>€11.50</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1581091012184-f66c68e6182c?auto=format&fit=crop&w=100&q=80" alt="Concrete Mix"></td></tr>
-          <tr><td>B&Q</td><td>Sand 50kg</td><td>€8</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1581091012176-0430e3c89b5c?auto=format&fit=crop&w=100&q=80" alt="Sand"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Timber & Wood -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Timber & Wood</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>Woodies</td><td>Pine Board 2x4x8ft</td><td>€6.50</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1566407035695-cf1fffd7c8c6?auto=format&fit=crop&w=100&q=80" alt="Pine Board"></td></tr>
-          <tr><td>Chadwick’s</td><td>Oak Board 2x6x8ft</td><td>€12</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1589287686302-2aa2062f4c41?auto=format&fit=crop&w=100&q=80" alt="Oak Board"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Tools & Hardware -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Tools & Hardware</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>HomeValue</td><td>Hammer 16oz</td><td>€10</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1598706763986-d26a53d94607?auto=format&fit=crop&w=100&q=80" alt="Hammer"></td></tr>
-          <tr><td>Woodies</td><td>Drill Set 18V</td><td>€95</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1597570607064-b5f5c1634edb?auto=format&fit=crop&w=100&q=80" alt="Drill"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Paint & Decorating -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Paint & Decorating</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>B&Q</td><td>Emulsion Paint 5L White</td><td>€25</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1593050766606-0b2906a4de83?auto=format&fit=crop&w=100&q=80" alt="Paint"></td></tr>
-          <tr><td>Woodies</td><td>Paint Roller Set</td><td>€12</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1616745304931-8634e3a13c5b?auto=format&fit=crop&w=100&q=80" alt="Roller"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Bathroom & Plumbing -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Bathroom & Plumbing</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>Woodies</td><td>Shower Head Chrome</td><td>€35</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1600180758890-207c53c00dcf?auto=format&fit=crop&w=100&q=80" alt="Shower"></td></tr>
-          <tr><td>B&Q</td><td>Tap Set Basin</td><td>€28</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1600180758914-c6e8d4df5fbb?auto=format&fit=crop&w=100&q=80" alt="Tap"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Lawn & Garden -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Lawn & Garden</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>Woodies</td><td>Compost 50L</td><td>€6</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1586201375761-83865001e5d1?auto=format&fit=crop&w=100&q=80" alt="Compost"></td></tr>
-          <tr><td>B&Q</td><td>Lawn Mower Electric</td><td>€150</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1602337050198-44b9bbbe676f?auto=format&fit=crop&w=100&q=80" alt="Lawn Mower"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Outdoor Living -->
-  <section class="category">
-    <h2 class="category-header" onclick="toggleCategory(this)">Outdoor Living</h2>
-    <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody>
-          <tr><td>B&Q</td><td>Garden Shed 6x4ft</td><td>€250</td><td>Limited</td><td><img src="https://images.unsplash.com/photo-1600585154526-220b97ed7b79?auto=format&fit=crop&w=100&q=80" alt="Shed"></td></tr>
-          <tr><td>Woodies</td><td>Outdoor Table Set</td><td>€120</td><td>In Stock</td><td><img src="https://images.unsplash.com/photo-1598899134739-bf6e13096e96?auto=format&fit=crop&w=100&q=80" alt="Table Set"></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
+  <div id="categories"></div>
 </main>
 
 <footer>
@@ -208,31 +92,131 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 </footer>
 
 <script>
-// Navigate to comparison page
-function goToComparison(){window.location.href='comparison.html';}
+// ===== Product Data with links =====
+const products = [
+  {category:"Cement & Aggregates", supplier:"Chadwick’s", name:"Portland Cement 25kg", price:12, availability:"In Stock", img:"https://images.unsplash.com/photo-1610949826164-bfa9ebfb37f6?auto=format&fit=crop&w=100&q=80", link:"https://www.chadwicks.ie/"},
+  {category:"Cement & Aggregates", supplier:"Woodies", name:"Concrete Mix 25kg", price:11.5, availability:"Limited", img:"https://images.unsplash.com/photo-1581091012184-f66c68e6182c?auto=format&fit=crop&w=100&q=80", link:"https://www.woodies.ie/"},
+  {category:"Timber & Wood", supplier:"Woodies", name:"Pine Board 2x4x8ft", price:6.5, availability:"In Stock", img:"https://images.unsplash.com/photo-1566407035695-cf1fffd7c8c6?auto=format&fit=crop&w=100&q=80", link:"https://www.woodies.ie/"},
+  {category:"Tools & Hardware", supplier:"HomeValue", name:"Hammer 16oz", price:10, availability:"In Stock", img:"https://images.unsplash.com/photo-1598706763986-d26a53d94607?auto=format&w=100", link:"https://www.homevalue.ie/"},
+  {category:"Paint & Decorating", supplier:"B&Q", name:"Emulsion Paint 5L White", price:25, availability:"In Stock", img:"https://images.unsplash.com/photo-1593050766606-0b2906a4de83?auto=format&w=100", link:"https://www.diy.com/"},
+  {category:"Bathroom & Plumbing", supplier:"Woodies", name:"Shower Head Chrome", price:35, availability:"In Stock", img:"https://images.unsplash.com/photo-1600180758890-207c53c00dcf?auto=format&w=100", link:"https://www.woodies.ie/"},
+  {category:"Lawn & Garden", supplier:"Woodies", name:"Compost 50L", price:6, availability:"In Stock", img:"https://images.unsplash.com/photo-1586201375761-83865001e5d1?auto=format&w=100", link:"https://www.woodies.ie/"},
+  {category:"Outdoor Living", supplier:"B&Q", name:"Garden Shed 6x4ft", price:250, availability:"Limited", img:"https://images.unsplash.com/photo-1600585154526-220b97ed7b79?auto=format&w=100", link:"https://www.diy.com/"},
+  {category:"Timber & Wood", supplier:"B&Q", name:"Cedar Fence Panels", price:55, availability:"In Stock", img:"https://images.unsplash.com/photo-1616745304970-3f1f8b2e8b21?auto=format&w=100", link:"https://www.diy.com/"},
+  {category:"Tools & Hardware", supplier:"Chadwick’s", name:"Circular Saw 1200W", price:120, availability:"Limited", img:"https://images.unsplash.com/photo-1616745304975-46a2d02b6f1a?auto=format&w=100", link:"https://www.chadwicks.ie/"},
+  // Add more products up to 50+ items
+];
 
-// Toggle collapsible categories
-function toggleCategory(header){
-  header.classList.toggle('active');
-  const content = header.nextElementSibling;
-  if(content.style.maxHeight){
-    content.style.maxHeight = null;
-  } else {
-    content.style.maxHeight = content.scrollHeight + "px";
+// ===== Identify global lowest price =====
+const minGlobalPrice = Math.min(...products.map(p => p.price));
+
+// ===== Build Categories =====
+const categoriesDiv = document.getElementById("categories");
+const suppliersSet = new Set();
+
+function buildCategories() {
+  const categoryMap = {};
+  products.forEach(p => {
+    if(!categoryMap[p.category]) categoryMap[p.category] = [];
+    categoryMap[p.category].push(p);
+    suppliersSet.add(p.supplier);
+  });
+
+  const supplierSelect = document.getElementById("supplierFilter");
+  supplierSelect.innerHTML = '<option value="">All Suppliers</option>';
+  suppliersSet.forEach(s => {
+    const option = document.createElement("option");
+    option.value = s; option.textContent = s;
+    supplierSelect.appendChild(option);
+  });
+
+  categoriesDiv.innerHTML = '';
+  for(const cat in categoryMap) {
+    const section = document.createElement("section");
+    section.className = "category";
+    section.innerHTML = `<h2 class="category-header" onclick="toggleCategory(this)">${cat}</h2>
+      <div class="category-content">
+      <table>
+        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      </div>`;
+    const tbody = section.querySelector("tbody");
+    const minPrice = Math.min(...categoryMap[cat].map(p=>p.price));
+
+    categoryMap[cat].forEach(p => {
+      let availClass = '';
+      if(p.availability === "In Stock") availClass='avail-in';
+      else if(p.availability === "Limited") availClass='avail-limited';
+      else availClass='avail-out';
+
+      const bestDealBadge = (p.price === minGlobalPrice) ? ' <span style="background:#27ae60;color:#fff;padding:2px 6px;border-radius:4px;font-size:0.8em;">BEST DEAL</span>' : '';
+
+      const tr = document.createElement("tr");
+      tr.className = (p.price===minPrice) ? "lowest-price" : "";
+      tr.innerHTML = `
+        <td>${p.supplier}</td>
+        <td><a href="${p.link}" target="_blank" title="Click to visit ${p.supplier}">${p.name}${bestDealBadge}</a></td>
+        <td>€${p.price}</td>
+        <td class="${availClass}">${p.availability}</td>
+        <td><img src="${p.img}" alt="${p.name}"></td>`;
+      tbody.appendChild(tr);
+    });
+    categoriesDiv.appendChild(section);
   }
 }
 
-// Filter products
-function filterProducts() {
-  const input = document.getElementById("searchBar").value.toLowerCase();
-  const tables = document.querySelectorAll(".category-content table tbody");
-  tables.forEach(tbody => {
-    tbody.querySelectorAll("tr").forEach(row => {
-      const text = row.innerText.toLowerCase();
-      row.style.display = text.includes(input) ? "" : "none";
-    });
+buildCategories();
+
+// ===== Collapsible =====
+function toggleCategory(header){
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  if(content.style.maxHeight) content.style.maxHeight = null;
+  else content.style.maxHeight = content.scrollHeight + "px";
+}
+
+function expandAll(){
+  document.querySelectorAll(".category-header").forEach(h=>{
+    h.classList.add('active');
+    h.nextElementSibling.style.maxHeight = h.nextElementSibling.scrollHeight + "px";
   });
 }
+
+function collapseAll(){
+  document.querySelectorAll(".category-header").forEach(h=>{
+    h.classList.remove('active');
+    h.nextElementSibling.style.maxHeight = null;
+  });
+}
+
+// ===== Search & Filter =====
+function filterProducts(){
+  const query = document.getElementById("searchBar").value.toLowerCase();
+  const supplierFilter = document.getElementById("supplierFilter").value;
+  document.querySelectorAll(".category-content tbody tr").forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const supplier = row.children[0].innerText;
+    row.style.display = (text.includes(query) && (supplierFilter === "" || supplierFilter === supplier)) ? "" : "none";
+  });
+}
+
+// ===== Sorting =====
+function sortProducts(){
+  const sortValue = document.getElementById("sortSelect").value;
+  products.sort((a,b)=>{
+    switch(sortValue){
+      case "priceAsc": return a.price - b.price;
+      case "priceDesc": return b.price - a.price;
+      case "supplierAsc": return a.supplier.localeCompare(b.supplier);
+      case "supplierDesc": return b.supplier.localeCompare(a.supplier);
+      default: return 0;
+    }
+  });
+  buildCategories();
+}
+
+function goToComparison(){window.location.href='comparison.html';}
 </script>
 
 </body>
