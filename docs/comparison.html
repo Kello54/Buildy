@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - Compare Prices</title>
+<title>Buildy - Material Comparison</title>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <style>
+/* ===== Global ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
-body {min-height:100vh; color:#1f1f1f; background:#f5f5f5;}
+body {background:#f5f5f5; color:#1f1f1f; min-height:100vh;}
+header, footer, nav {width:100%;}
 header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#1f2a38; border-bottom:4px solid #F39C12;}
 header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
 header .logo img{height:40px; margin-right:10px;}
@@ -16,29 +18,30 @@ header .login:hover {background:rgba(243,156,18,0.2);}
 nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
 nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 nav.subheader a:hover {text-decoration:underline;}
-section#comparison {padding:50px 20px; max-width:1200px; margin:auto;}
-h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
-#searchInput {width:100%; padding:12px 20px; margin-bottom:20px; font-size:16px; border:1px solid #ddd; border-radius:4px;}
-.category-header {width:100%; text-align:left; padding:12px 20px; font-size:18px; font-weight:bold; background:#1f2a38; color:#fff; border:none; border-radius:4px; outline:none; margin-top:10px; cursor:pointer;}
-.category-header:hover {background:#2b3a4a;}
-.subcategory-header {width:100%; text-align:left; padding:10px 30px; font-size:16px; font-weight:bold; background:#2b3a4a; color:#fff; border:none; border-radius:4px; outline:none; margin-top:5px; cursor:pointer;}
-.subcategory-header:hover {background:#3b4a5a;}
-.product-table {width:100%; border-collapse:collapse; margin-top:10px; display:none;}
-th, td {padding:10px; border:1px solid #ddd;}
-th {background:#1f2a38; color:#fff;}
-tbody tr:nth-child(even) {background:#f9f9f9;}
-tbody tr:nth-child(odd) {background:#ffffff;}
-tbody tr:hover {background:#f1f1f1;}
-.cheapest {background:#d4ffd4 !important;}
-footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
-footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
-@media(max-width:768px){
-  .product-table{display:block; overflow-x:auto; white-space:nowrap;}
-  th, td{padding:8px;}
-  .category-header{font-size:16px; padding:10px;}
-  .subcategory-header{font-size:14px; padding:8px 25px;}
-  #searchInput {font-size:14px; padding:10px;}
-}
+
+/* ===== Main Content ===== */
+main {max-width:1200px; margin:40px auto; padding:0 20px;}
+.category {border-bottom:2px solid #F39C12; margin-bottom:20px;}
+.category-header {display:flex; justify-content:space-between; align-items:center; padding:15px; cursor:pointer; background:#e0e0e0; border-radius:5px;}
+.category-header h2 {font-size:1.5rem;}
+.category-header span {font-size:1.2rem; transition:transform 0.3s;}
+.category-header.active span {transform:rotate(90deg);}
+.subcategory {display:none; padding:10px 0;}
+.subcategory table {width:100%; border-collapse:collapse; margin-bottom:20px;}
+.subcategory th, .subcategory td {padding:10px; border:1px solid #ddd; text-align:left;}
+.subcategory th {background:#1f2a38; color:#fff; cursor:pointer;}
+.subcategory tr:nth-child(even){background:#f9f9f9;}
+
+/* ===== Filters ===== */
+.filters {margin-bottom:10px; display:flex; flex-wrap:wrap; gap:15px; align-items:center;}
+.filters label {font-weight:bold;}
+.filters select {padding:5px 8px; border-radius:5px; border:1px solid #ddd;}
+
+/* ===== Back to Top ===== */
+#backToTop {position:fixed; bottom:30px; right:30px; background:#F39C12; color:#fff; padding:10px 15px; border-radius:50px; cursor:pointer; display:none; font-weight:bold; transition:background 0.3s;}
+#backToTop:hover {background:#e08b00;}
+
+@media(max-width:768px){.category-header h2{font-size:1.2rem;} .subcategory th, .subcategory td{padding:8px; font-size:14px;}}
 </style>
 </head>
 <body>
@@ -57,179 +60,236 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
   <a href="#">Contact</a>
 </nav>
 
-<section id="comparison">
-  <h2>Compare Building Materials Prices</h2>
-  
-  <input type="text" id="searchInput" placeholder="Search products or suppliers..." onkeyup="filterProducts()">
+<main>
 
-  <!-- ===== Cement ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('cementTable')">Cement &#x25BC;</button>
-    <table id="cementTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>O'Brien Premium Cement 25kg</td><td>Goodwins</td><td>6.95</td><td>Eco-efficient Portland limestone cement</td></tr>
-        <tr><td>Irish Cement 25kg</td><td>McMahons</td><td>7.69</td><td>General-purpose cement</td></tr>
-        <tr><td>Irish Cement 25kg</td><td>Centenary Thurles</td><td>8.50</td><td>Suitable for brick laying</td></tr>
-      </tbody>
+<!-- ===== Category Template ===== -->
+<div class="category">
+  <div class="category-header" onclick="toggleCategory(this)">
+    <h2>Timber</h2>
+    <span>&#9654;</span>
+  </div>
+  <div class="subcategory">
+    <div class="filters">
+      <label for="timberSupplier">Filter by Supplier:</label>
+      <select id="timberSupplier" onchange="filterTable('timberTable', this.value)">
+        <option value="all">All</option>
+        <option value="Chadwick's">Chadwick's</option>
+        <option value="Woodies">Woodies</option>
+        <option value="TJ O Mahony">TJ O Mahony</option>
+        <option value="Buckley">Buckley</option>
+      </select>
+      <label for="timberSort">Sort by Price:</label>
+      <select id="timberSort" onchange="sortTable('timberTable', this.value)">
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
+      </select>
+    </div>
+
+    <h3>Softwood</h3>
+    <table id="timberTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Pine 2x4</td><td>Chadwick's</td><td>5.50</td></tr>
+      <tr><td>Spruce 2x4</td><td>Woodies</td><td>5.20</td></tr>
+      <tr><td>Douglas Fir 2x4</td><td>TJ O Mahony</td><td>5.80</td></tr>
+      <tr><td>Oak 2x4</td><td>Buckley</td><td>9.50</td></tr>
     </table>
   </div>
+</div>
 
-  <!-- ===== Timber ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('timberTable')">Timber &#x25BC;</button>
+<!-- ===== Concrete & Blocks ===== -->
+<div class="category">
+  <div class="category-header" onclick="toggleCategory(this)">
+    <h2>Concrete & Blocks</h2>
+    <span>&#9654;</span>
+  </div>
+  <div class="subcategory">
+    <div class="filters">
+      <label for="concreteSupplier">Filter by Supplier:</label>
+      <select id="concreteSupplier" onchange="filterTable('concreteTable', this.value)">
+        <option value="all">All</option>
+        <option value="Chadwick's">Chadwick's</option>
+        <option value="Woodies">Woodies</option>
+        <option value="TJ O Mahony">TJ O Mahony</option>
+        <option value="Buckley">Buckley</option>
+      </select>
+      <label for="concreteSort">Sort by Price:</label>
+      <select id="concreteSort" onchange="sortTable('concreteTable', this.value)">
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
+      </select>
+    </div>
 
-    <button class="subcategory-header" onclick="toggleTable('timberSoftwood')">Softwood &#x25BC;</button>
-    <table id="timberSoftwood" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Pine Board 18mm x 1220mm</td><td>Woodie's</td><td>15.99</td><td>Versatile softwood board</td></tr>
-        <tr><td>Spruce Timber 50x100mm</td><td>Heiton Buckley</td><td>3.25/m</td><td>Construction timber</td></tr>
-      </tbody>
+    <h3>Cement</h3>
+    <table id="concreteTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Portland Cement 25kg</td><td>Woodies</td><td>12.50</td></tr>
+      <tr><td>Rapid Set Cement 25kg</td><td>Chadwick's</td><td>13.20</td></tr>
     </table>
 
-    <button class="subcategory-header" onclick="toggleTable('timberHardwood')">Hardwood &#x25BC;</button>
-    <table id="timberHardwood" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Oak Board 25mm x 1200mm</td><td>TJ O'Mahony</td><td>29.99</td><td>Premium hardwood</td></tr>
-        <tr><td>Mahogany Board 20mm x 1200mm</td><td>Chadwicks</td><td>35.50</td><td>Decorative hardwood</td></tr>
-      </tbody>
+    <h3>Concrete Blocks</h3>
+    <table id="concreteBlocksTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Standard 440x215x100mm</td><td>TJ O Mahony</td><td>1.20</td></tr>
+      <tr><td>High Strength 440x215x100mm</td><td>Buckley</td><td>1.50</td></tr>
     </table>
   </div>
+</div>
 
-  <!-- ===== Bricks ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('bricksTable')">Bricks &#x25BC;</button>
-    <table id="bricksTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Class A Solid Engineering Brick</td><td>McMahons</td><td>2.15</td><td>High-strength brick</td></tr>
-        <tr><td>Viola Brick</td><td>McMahons</td><td>2.24</td><td>Facade brick</td></tr>
-        <tr><td>Fire Brick 9x4x3 inch</td><td>McMahons</td><td>5.00</td><td>Fireplace brick</td></tr>
-      </tbody>
+<!-- ===== Roofing ===== -->
+<div class="category">
+  <div class="category-header" onclick="toggleCategory(this)">
+    <h2>Roofing</h2>
+    <span>&#9654;</span>
+  </div>
+  <div class="subcategory">
+    <div class="filters">
+      <label for="roofSupplier">Filter by Supplier:</label>
+      <select id="roofSupplier" onchange="filterTable('roofTable', this.value)">
+        <option value="all">All</option>
+        <option value="Chadwick's">Chadwick's</option>
+        <option value="Woodies">Woodies</option>
+        <option value="TJ O Mahony">TJ O Mahony</option>
+        <option value="Buckley">Buckley</option>
+      </select>
+      <label for="roofSort">Sort by Price:</label>
+      <select id="roofSort" onchange="sortTable('roofTable', this.value)">
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
+      </select>
+    </div>
+
+    <h3>Tiles</h3>
+    <table id="roofTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Concrete Tile</td><td>Woodies</td><td>1.50</td></tr>
+      <tr><td>Clay Tile</td><td>Chadwick's</td><td>2.20</td></tr>
+    </table>
+
+    <h3>Sheets</h3>
+    <table id="roofSheetsTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Metal Sheet 2m</td><td>Buckley</td><td>15.00</td></tr>
     </table>
   </div>
+</div>
 
-  <!-- ===== Roofing ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('roofingTable')">Roofing Materials &#x25BC;</button>
-    <table id="roofingTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Gutter & Downpipe Set</td><td>Chadwicks</td><td>45.00</td><td>Complete set</td></tr>
-        <tr><td>Roofing Felt</td><td>Chadwicks</td><td>15.50</td><td>Various sizes</td></tr>
-        <tr><td>Roofing Membranes</td><td>Woodie's</td><td>35.00</td><td>High-quality membranes</td></tr>
-      </tbody>
+<!-- ===== Insulation ===== -->
+<div class="category">
+  <div class="category-header" onclick="toggleCategory(this)">
+    <h2>Insulation</h2>
+    <span>&#9654;</span>
+  </div>
+  <div class="subcategory">
+    <div class="filters">
+      <label for="insulationSupplier">Filter by Supplier:</label>
+      <select id="insulationSupplier" onchange="filterTable('insulationTable', this.value)">
+        <option value="all">All</option>
+        <option value="Chadwick's">Chadwick's</option>
+        <option value="Woodies">Woodies</option>
+        <option value="TJ O Mahony">TJ O Mahony</option>
+        <option value="Buckley">Buckley</option>
+      </select>
+      <label for="insulationSort">Sort by Price:</label>
+      <select id="insulationSort" onchange="sortTable('insulationTable', this.value)">
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
+      </select>
+    </div>
+
+    <h3>Wall Insulation</h3>
+    <table id="insulationTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Glass Wool Roll</td><td>TJ O Mahony</td><td>25.00</td></tr>
+      <tr><td>Rock Wool Board</td><td>Woodies</td><td>28.00</td></tr>
+    </table>
+
+    <h3>Roof Insulation</h3>
+    <table id="insulationRoofTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Polyurethane Board 50mm</td><td>Buckley</td><td>35.00</td></tr>
     </table>
   </div>
+</div>
 
-  <!-- ===== Insulation ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('insulationTable')">Insulation &#x25BC;</button>
-    <table id="insulationTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Glass Wool Roll 100mm</td><td>Woodie's</td><td>25.00</td><td>Standard wall insulation</td></tr>
-        <tr><td>Foil-backed PIR Board 50mm</td><td>Chadwicks</td><td>42.50</td><td>High-performance</td></tr>
-      </tbody>
+<!-- ===== Paint & Finishes ===== -->
+<div class="category">
+  <div class="category-header" onclick="toggleCategory(this)">
+    <h2>Paint & Finishes</h2>
+    <span>&#9654;</span>
+  </div>
+  <div class="subcategory">
+    <div class="filters">
+      <label for="paintSupplier">Filter by Supplier:</label>
+      <select id="paintSupplier" onchange="filterTable('paintTable', this.value)">
+        <option value="all">All</option>
+        <option value="Chadwick's">Chadwick's</option>
+        <option value="Woodies">Woodies</option>
+        <option value="TJ O Mahony">TJ O Mahony</option>
+        <option value="Buckley">Buckley</option>
+      </select>
+      <label for="paintSort">Sort by Price:</label>
+      <select id="paintSort" onchange="sortTable('paintTable', this.value)">
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
+      </select>
+    </div>
+
+    <h3>Interior Paint</h3>
+    <table id="paintTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Emulsion 10L</td><td>Woodies</td><td>32.00</td></tr>
+      <tr><td>Gloss 5L</td><td>Chadwick's</td><td>28.00</td></tr>
+      <tr><td>Primer 5L</td><td>Buckley</td><td>24.00</td></tr>
     </table>
   </div>
+</div>
 
-  <!-- ===== Paint ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('paintTable')">Paint &#x25BC;</button>
-    <table id="paintTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Dulux Weathershield Exterior 10L</td><td>Woodie's</td><td>65.00</td><td>Exterior long-lasting paint</td></tr>
-        <tr><td>Sandtex Trade Masonry 10L</td><td>Chadwicks</td><td>59.00</td><td>Good coverage</td></tr>
-      </tbody>
-    </table>
-  </div>
+</main>
 
-  <!-- ===== Plumbing ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('plumbingTable')">Plumbing &#x25BC;</button>
-    <table id="plumbingTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>15mm Copper Pipe 3m</td><td>Heiton Buckley</td><td>4.50</td><td>Standard plumbing</td></tr>
-        <tr><td>25mm PVC Pipe 3m</td><td>Chadwicks</td><td>3.90</td><td>Drainage</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ===== Electrical ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('electricalTable')">Electrical &#x25BC;</button>
-    <table id="electricalTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>16A Double Socket</td><td>Woodie's</td><td>6.50</td><td>Standard socket</td></tr>
-        <tr><td>32A Circuit Breaker</td><td>Chadwicks</td><td>12.00</td><td>Safety breaker</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ===== Flooring ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('flooringTable')">Flooring &#x25BC;</button>
-    <table id="flooringTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>Laminate Flooring 1.8m² Pack</td><td>Woodie's</td><td>22.00</td><td>Quick install</td></tr>
-        <tr><td>Vinyl Tiles 2m² Pack</td><td>Chadwicks</td><td>24.50</td><td>Durable</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ===== Windows & Doors ===== -->
-  <div class="category">
-    <button class="category-header" onclick="toggleTable('windowsTable')">Windows & Doors &#x25BC;</button>
-    <table id="windowsTable" class="product-table">
-      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr class="cheapest"><td>uPVC Window 1200x1200</td><td>McMahons</td><td>145.00</td><td>Double-glazed</td></tr>
-        <tr><td>External Door 900x2100</td><td>TJ O'Mahony</td><td>320.00</td><td>Oak finish</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-</section>
+<div id="backToTop" onclick="scrollTop()">↑ Top</div>
 
 <footer>
   <p>&copy; 2025 Buildy. All Rights Reserved.</p>
 </footer>
 
 <script>
-function toggleTable(id){
-  const table = document.getElementById(id);
-  table.style.display = (table.style.display === 'none' || table.style.display === '') ? 'table' : 'none';
+// ===== Toggle categories =====
+function toggleCategory(header){
+  header.classList.toggle('active');
+  const sub = header.nextElementSibling;
+  sub.style.display = sub.style.display === "block" ? "none" : "block";
 }
 
-function filterProducts(){
-  const input = document.getElementById('searchInput');
-  const filter = input.value.toLowerCase();
-  const tables = document.querySelectorAll('.product-table');
-  
-  tables.forEach(table => {
-    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    let hasMatch = false;
-    for(let i=0;i<rows.length;i++){
-      const cells = rows[i].getElementsByTagName('td');
-      let rowMatch = false;
-      for(let j=0;j<cells.length;j++){
-        if(cells[j].textContent.toLowerCase().indexOf(filter) > -1){
-          rowMatch = true;
-          break;
-        }
-      }
-      rows[i].style.display = rowMatch ? '' : 'none';
-      if(rowMatch) hasMatch = true;
-    }
-    table.style.display = hasMatch ? 'table' : 'none';
+// ===== Back to top =====
+const backToTop = document.getElementById('backToTop');
+window.onscroll = function(){
+  if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
+    backToTop.style.display = "block";
+  } else {
+    backToTop.style.display = "none";
+  }
+}
+function scrollTop(){window.scrollTo({top:0, behavior:'smooth'});}
+
+// ===== Filter table by supplier =====
+function filterTable(tableId, supplier){
+  const table = document.getElementById(tableId);
+  for(let i=1; i<table.rows.length; i++){
+    const rowSupplier = table.rows[i].cells[1].innerText;
+    table.rows[i].style.display = (supplier==='all' || rowSupplier===supplier) ? '' : 'none';
+  }
+}
+
+// ===== Sort table by price =====
+function sortTable(tableId, order){
+  const table = document.getElementById(tableId);
+  let rows = Array.from(table.rows).slice(1);
+  rows.sort((a,b)=>{
+    const priceA = parseFloat(a.cells[2].innerText);
+    const priceB = parseFloat(b.cells[2].innerText);
+    return order==='asc' ? priceA-priceB : priceB-priceA;
   });
+  for(let row of rows){ table.tBodies[0].appendChild(row); }
 }
 </script>
 
