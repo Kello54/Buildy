@@ -29,20 +29,29 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 /* ===== Filters ===== */
 #filters {
   display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:20px; background:#fff;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1); border-radius:6px; margin:20px;
 }
 #filters input, #filters select {
   padding:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; width:200px;
 }
+#filters button {
+  padding:10px 20px; background:#F39C12; border:none; color:#fff; font-weight:bold; border-radius:5px; cursor:pointer;
+}
+#filters button:hover {background:#e6a428;}
 
 /* ===== Table ===== */
 #comparisonTable {
   width:100%; border-collapse:collapse; margin:20px auto; background:#fff; max-width:1200px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;
 }
 #comparisonTable th, #comparisonTable td {
   border:1px solid #ddd; padding:12px; text-align:center; vertical-align:middle;
 }
 #comparisonTable th {
-  background:#1f2a38; color:#fff; position:sticky; top:0; z-index:2;
+  background:#273746; color:#fff; position:sticky; top:0; z-index:2;
+}
+#comparisonTable th:first-child, #comparisonTable td:first-child {
+  position:sticky; left:0; background:#273746; color:#fff; z-index:3;
 }
 #comparisonTable th img {height:20px; vertical-align:middle; margin-right:5px;}
 tr:nth-child(even){background:#f9f9f9;}
@@ -95,6 +104,7 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
   <select id="categoryFilter">
     <option value="">All Categories</option>
   </select>
+  <button id="resetFilters">Reset Filters</button>
 </div>
 
 <!-- Desktop Table -->
@@ -171,6 +181,12 @@ document.getElementById("searchBox").addEventListener('input',()=>{
   const filtered = materials.filter(m=>m.name.toLowerCase().includes(query));
   generateTableFiltered(filtered);
   generateCardsFiltered(filtered);
+});
+document.getElementById("resetFilters").addEventListener('click',()=>{
+  categorySelect.value="";
+  document.getElementById("searchBox").value="";
+  generateTable();
+  generateCards();
 });
 function generateTableFiltered(filtered){
   const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
