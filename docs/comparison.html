@@ -18,6 +18,7 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 nav.subheader a:hover {text-decoration:underline;}
 section#comparison {padding:50px 20px; max-width:1200px; margin:auto;}
 h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
+#searchInput {width:100%; padding:12px 20px; margin-bottom:20px; font-size:16px; border:1px solid #ddd; border-radius:4px;}
 .category-header {width:100%; text-align:left; padding:12px 20px; font-size:18px; font-weight:bold; background:#1f2a38; color:#fff; border:none; border-radius:4px; outline:none; margin-top:10px; cursor:pointer;}
 .category-header:hover {background:#2b3a4a;}
 .subcategory-header {width:100%; text-align:left; padding:10px 30px; font-size:16px; font-weight:bold; background:#2b3a4a; color:#fff; border:none; border-radius:4px; outline:none; margin-top:5px; cursor:pointer;}
@@ -36,6 +37,7 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
   th, td{padding:8px;}
   .category-header{font-size:16px; padding:10px;}
   .subcategory-header{font-size:14px; padding:8px 25px;}
+  #searchInput {font-size:14px; padding:10px;}
 }
 </style>
 </head>
@@ -57,21 +59,142 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 
 <section id="comparison">
   <h2>Compare Building Materials Prices</h2>
+  
+  <input type="text" id="searchInput" placeholder="Search products or suppliers..." onkeyup="filterProducts()">
 
-  <!-- Example Category: Cement -->
+  <!-- ===== Cement ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('cementTable')">Cement &#x25BC;</button>
     <table id="cementTable" class="product-table">
       <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr class="cheapest"><td>O'Brien Premium Cement 25kg</td><td>Goodwins</td><td>€6.95</td><td>Eco-efficient Portland limestone cement</td></tr>
-        <tr><td>Irish Cement 25kg</td><td>McMahons</td><td>€7.69</td><td>General-purpose cement</td></tr>
-        <tr><td>Irish Cement 25kg</td><td>Centenary Thurles</td><td>€8.50</td><td>Suitable for brick laying</td></tr>
+        <tr class="cheapest"><td>O'Brien Premium Cement 25kg</td><td>Goodwins</td><td>6.95</td><td>Eco-efficient Portland limestone cement</td></tr>
+        <tr><td>Irish Cement 25kg</td><td>McMahons</td><td>7.69</td><td>General-purpose cement</td></tr>
+        <tr><td>Irish Cement 25kg</td><td>Centenary Thurles</td><td>8.50</td><td>Suitable for brick laying</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Timber, Bricks, Roofing, Insulation, Paint etc. (same structure as previous comparison.html) -->
+  <!-- ===== Timber ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('timberTable')">Timber &#x25BC;</button>
+
+    <button class="subcategory-header" onclick="toggleTable('timberSoftwood')">Softwood &#x25BC;</button>
+    <table id="timberSoftwood" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Pine Board 18mm x 1220mm</td><td>Woodie's</td><td>15.99</td><td>Versatile softwood board</td></tr>
+        <tr><td>Spruce Timber 50x100mm</td><td>Heiton Buckley</td><td>3.25/m</td><td>Construction timber</td></tr>
+      </tbody>
+    </table>
+
+    <button class="subcategory-header" onclick="toggleTable('timberHardwood')">Hardwood &#x25BC;</button>
+    <table id="timberHardwood" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Oak Board 25mm x 1200mm</td><td>TJ O'Mahony</td><td>29.99</td><td>Premium hardwood</td></tr>
+        <tr><td>Mahogany Board 20mm x 1200mm</td><td>Chadwicks</td><td>35.50</td><td>Decorative hardwood</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Bricks ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('bricksTable')">Bricks &#x25BC;</button>
+    <table id="bricksTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Class A Solid Engineering Brick</td><td>McMahons</td><td>2.15</td><td>High-strength brick</td></tr>
+        <tr><td>Viola Brick</td><td>McMahons</td><td>2.24</td><td>Facade brick</td></tr>
+        <tr><td>Fire Brick 9x4x3 inch</td><td>McMahons</td><td>5.00</td><td>Fireplace brick</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Roofing ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('roofingTable')">Roofing Materials &#x25BC;</button>
+    <table id="roofingTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Gutter & Downpipe Set</td><td>Chadwicks</td><td>45.00</td><td>Complete set</td></tr>
+        <tr><td>Roofing Felt</td><td>Chadwicks</td><td>15.50</td><td>Various sizes</td></tr>
+        <tr><td>Roofing Membranes</td><td>Woodie's</td><td>35.00</td><td>High-quality membranes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Insulation ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('insulationTable')">Insulation &#x25BC;</button>
+    <table id="insulationTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Glass Wool Roll 100mm</td><td>Woodie's</td><td>25.00</td><td>Standard wall insulation</td></tr>
+        <tr><td>Foil-backed PIR Board 50mm</td><td>Chadwicks</td><td>42.50</td><td>High-performance</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Paint ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('paintTable')">Paint &#x25BC;</button>
+    <table id="paintTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Dulux Weathershield Exterior 10L</td><td>Woodie's</td><td>65.00</td><td>Exterior long-lasting paint</td></tr>
+        <tr><td>Sandtex Trade Masonry 10L</td><td>Chadwicks</td><td>59.00</td><td>Good coverage</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Plumbing ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('plumbingTable')">Plumbing &#x25BC;</button>
+    <table id="plumbingTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>15mm Copper Pipe 3m</td><td>Heiton Buckley</td><td>4.50</td><td>Standard plumbing</td></tr>
+        <tr><td>25mm PVC Pipe 3m</td><td>Chadwicks</td><td>3.90</td><td>Drainage</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Electrical ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('electricalTable')">Electrical &#x25BC;</button>
+    <table id="electricalTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>16A Double Socket</td><td>Woodie's</td><td>6.50</td><td>Standard socket</td></tr>
+        <tr><td>32A Circuit Breaker</td><td>Chadwicks</td><td>12.00</td><td>Safety breaker</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Flooring ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('flooringTable')">Flooring &#x25BC;</button>
+    <table id="flooringTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Laminate Flooring 1.8m² Pack</td><td>Woodie's</td><td>22.00</td><td>Quick install</td></tr>
+        <tr><td>Vinyl Tiles 2m² Pack</td><td>Chadwicks</td><td>24.50</td><td>Durable</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Windows & Doors ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('windowsTable')">Windows & Doors &#x25BC;</button>
+    <table id="windowsTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>uPVC Window 1200x1200</td><td>McMahons</td><td>145.00</td><td>Double-glazed</td></tr>
+        <tr><td>External Door 900x2100</td><td>TJ O'Mahony</td><td>320.00</td><td>Oak finish</td></tr>
+      </tbody>
+    </table>
+  </div>
 
 </section>
 
@@ -83,6 +206,30 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 function toggleTable(id){
   const table = document.getElementById(id);
   table.style.display = (table.style.display === 'none' || table.style.display === '') ? 'table' : 'none';
+}
+
+function filterProducts(){
+  const input = document.getElementById('searchInput');
+  const filter = input.value.toLowerCase();
+  const tables = document.querySelectorAll('.product-table');
+  
+  tables.forEach(table => {
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    let hasMatch = false;
+    for(let i=0;i<rows.length;i++){
+      const cells = rows[i].getElementsByTagName('td');
+      let rowMatch = false;
+      for(let j=0;j<cells.length;j++){
+        if(cells[j].textContent.toLowerCase().indexOf(filter) > -1){
+          rowMatch = true;
+          break;
+        }
+      }
+      rows[i].style.display = rowMatch ? '' : 'none';
+      if(rowMatch) hasMatch = true;
+    }
+    table.style.display = hasMatch ? 'table' : 'none';
+  });
 }
 </script>
 
