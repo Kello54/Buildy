@@ -6,7 +6,6 @@
 <title>Buildy - Material Comparison</title>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <style>
-/* ===== Global ===== */
 * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
 body {background:#f5f5f5; color:#1f1f1f; min-height:100vh;}
 header, footer, nav {width:100%;}
@@ -18,8 +17,6 @@ header .login:hover {background:rgba(243,156,18,0.2);}
 nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
 nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 nav.subheader a:hover {text-decoration:underline;}
-
-/* ===== Main Content ===== */
 main {max-width:1200px; margin:40px auto; padding:0 20px;}
 .category {border-bottom:2px solid #F39C12; margin-bottom:20px;}
 .category-header {display:flex; justify-content:space-between; align-items:center; padding:15px; cursor:pointer; background:#e0e0e0; border-radius:5px;}
@@ -31,16 +28,11 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
 .subcategory th, .subcategory td {padding:10px; border:1px solid #ddd; text-align:left;}
 .subcategory th {background:#1f2a38; color:#fff; cursor:pointer;}
 .subcategory tr:nth-child(even){background:#f9f9f9;}
-
-/* ===== Filters ===== */
 .filters {margin-bottom:10px; display:flex; flex-wrap:wrap; gap:15px; align-items:center;}
 .filters label {font-weight:bold;}
 .filters select {padding:5px 8px; border-radius:5px; border:1px solid #ddd;}
-
-/* ===== Back to Top ===== */
 #backToTop {position:fixed; bottom:30px; right:30px; background:#F39C12; color:#fff; padding:10px 15px; border-radius:50px; cursor:pointer; display:none; font-weight:bold; transition:background 0.3s;}
 #backToTop:hover {background:#e08b00;}
-
 @media(max-width:768px){.category-header h2{font-size:1.2rem;} .subcategory th, .subcategory td{padding:8px; font-size:14px;}}
 </style>
 </head>
@@ -62,7 +54,7 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
 
 <main>
 
-<!-- ===== Category Template ===== -->
+<!-- ===== Timber ===== -->
 <div class="category">
   <div class="category-header" onclick="toggleCategory(this)">
     <h2>Timber</h2>
@@ -70,16 +62,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
   </div>
   <div class="subcategory">
     <div class="filters">
-      <label for="timberSupplier">Filter by Supplier:</label>
-      <select id="timberSupplier" onchange="filterTable('timberTable', this.value)">
+      <label>Filter by Supplier:</label>
+      <select onchange="filterTable('timberTable', this.value)">
         <option value="all">All</option>
-        <option value="Chadwick's">Chadwick's</option>
-        <option value="Woodies">Woodies</option>
-        <option value="TJ O Mahony">TJ O Mahony</option>
-        <option value="Buckley">Buckley</option>
+        <option>Chadwick's</option>
+        <option>Woodies</option>
+        <option>TJ O Mahony</option>
+        <option>Buckley</option>
       </select>
-      <label for="timberSort">Sort by Price:</label>
-      <select id="timberSort" onchange="sortTable('timberTable', this.value)">
+      <label>Sort by Price:</label>
+      <select onchange="sortTable('timberTable', this.value)">
         <option value="asc">Low → High</option>
         <option value="desc">High → Low</option>
       </select>
@@ -91,7 +83,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><td>Pine 2x4</td><td>Chadwick's</td><td>5.50</td></tr>
       <tr><td>Spruce 2x4</td><td>Woodies</td><td>5.20</td></tr>
       <tr><td>Douglas Fir 2x4</td><td>TJ O Mahony</td><td>5.80</td></tr>
-      <tr><td>Oak 2x4</td><td>Buckley</td><td>9.50</td></tr>
+      <tr><td>Larch 2x4</td><td>Buckley</td><td>6.00</td></tr>
+    </table>
+
+    <h3>Hardwood</h3>
+    <table id="timberHardTable">
+      <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
+      <tr><td>Oak 2x4</td><td>Chadwick's</td><td>9.50</td></tr>
+      <tr><td>Ash 2x4</td><td>Woodies</td><td>8.80</td></tr>
+      <tr><td>Beech 2x4</td><td>TJ O Mahony</td><td>9.20</td></tr>
+      <tr><td>Mahogany 2x4</td><td>Buckley</td><td>12.00</td></tr>
     </table>
   </div>
 </div>
@@ -104,16 +105,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
   </div>
   <div class="subcategory">
     <div class="filters">
-      <label for="concreteSupplier">Filter by Supplier:</label>
-      <select id="concreteSupplier" onchange="filterTable('concreteTable', this.value)">
+      <label>Filter by Supplier:</label>
+      <select onchange="filterTable('concreteTable', this.value)">
         <option value="all">All</option>
-        <option value="Chadwick's">Chadwick's</option>
-        <option value="Woodies">Woodies</option>
-        <option value="TJ O Mahony">TJ O Mahony</option>
-        <option value="Buckley">Buckley</option>
+        <option>Chadwick's</option>
+        <option>Woodies</option>
+        <option>TJ O Mahony</option>
+        <option>Buckley</option>
       </select>
-      <label for="concreteSort">Sort by Price:</label>
-      <select id="concreteSort" onchange="sortTable('concreteTable', this.value)">
+      <label>Sort by Price:</label>
+      <select onchange="sortTable('concreteTable', this.value)">
         <option value="asc">Low → High</option>
         <option value="desc">High → Low</option>
       </select>
@@ -124,6 +125,7 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Portland Cement 25kg</td><td>Woodies</td><td>12.50</td></tr>
       <tr><td>Rapid Set Cement 25kg</td><td>Chadwick's</td><td>13.20</td></tr>
+      <tr><td>White Cement 25kg</td><td>TJ O Mahony</td><td>14.00</td></tr>
     </table>
 
     <h3>Concrete Blocks</h3>
@@ -131,6 +133,7 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Standard 440x215x100mm</td><td>TJ O Mahony</td><td>1.20</td></tr>
       <tr><td>High Strength 440x215x100mm</td><td>Buckley</td><td>1.50</td></tr>
+      <tr><td>Lightweight 440x215x100mm</td><td>Chadwick's</td><td>1.35</td></tr>
     </table>
   </div>
 </div>
@@ -143,16 +146,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
   </div>
   <div class="subcategory">
     <div class="filters">
-      <label for="roofSupplier">Filter by Supplier:</label>
-      <select id="roofSupplier" onchange="filterTable('roofTable', this.value)">
+      <label>Filter by Supplier:</label>
+      <select onchange="filterTable('roofTable', this.value)">
         <option value="all">All</option>
-        <option value="Chadwick's">Chadwick's</option>
-        <option value="Woodies">Woodies</option>
-        <option value="TJ O Mahony">TJ O Mahony</option>
-        <option value="Buckley">Buckley</option>
+        <option>Chadwick's</option>
+        <option>Woodies</option>
+        <option>TJ O Mahony</option>
+        <option>Buckley</option>
       </select>
-      <label for="roofSort">Sort by Price:</label>
-      <select id="roofSort" onchange="sortTable('roofTable', this.value)">
+      <label>Sort by Price:</label>
+      <select onchange="sortTable('roofTable', this.value)">
         <option value="asc">Low → High</option>
         <option value="desc">High → Low</option>
       </select>
@@ -163,12 +166,14 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Concrete Tile</td><td>Woodies</td><td>1.50</td></tr>
       <tr><td>Clay Tile</td><td>Chadwick's</td><td>2.20</td></tr>
+      <tr><td>Slate Tile</td><td>TJ O Mahony</td><td>3.50</td></tr>
     </table>
 
     <h3>Sheets</h3>
     <table id="roofSheetsTable">
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Metal Sheet 2m</td><td>Buckley</td><td>15.00</td></tr>
+      <tr><td>Bitumen Sheet 2m</td><td>Woodies</td><td>12.50</td></tr>
     </table>
   </div>
 </div>
@@ -181,16 +186,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
   </div>
   <div class="subcategory">
     <div class="filters">
-      <label for="insulationSupplier">Filter by Supplier:</label>
-      <select id="insulationSupplier" onchange="filterTable('insulationTable', this.value)">
+      <label>Filter by Supplier:</label>
+      <select onchange="filterTable('insulationTable', this.value)">
         <option value="all">All</option>
-        <option value="Chadwick's">Chadwick's</option>
-        <option value="Woodies">Woodies</option>
-        <option value="TJ O Mahony">TJ O Mahony</option>
-        <option value="Buckley">Buckley</option>
+        <option>Chadwick's</option>
+        <option>Woodies</option>
+        <option>TJ O Mahony</option>
+        <option>Buckley</option>
       </select>
-      <label for="insulationSort">Sort by Price:</label>
-      <select id="insulationSort" onchange="sortTable('insulationTable', this.value)">
+      <label>Sort by Price:</label>
+      <select onchange="sortTable('insulationTable', this.value)">
         <option value="asc">Low → High</option>
         <option value="desc">High → Low</option>
       </select>
@@ -201,12 +206,14 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Glass Wool Roll</td><td>TJ O Mahony</td><td>25.00</td></tr>
       <tr><td>Rock Wool Board</td><td>Woodies</td><td>28.00</td></tr>
+      <tr><td>EPS Board 50mm</td><td>Chadwick's</td><td>22.50</td></tr>
     </table>
 
     <h3>Roof Insulation</h3>
     <table id="insulationRoofTable">
       <tr><th>Product</th><th>Supplier</th><th>Price (€)</th></tr>
       <tr><td>Polyurethane Board 50mm</td><td>Buckley</td><td>35.00</td></tr>
+      <tr><td>PIR Board 50mm</td><td>Woodies</td><td>37.50</td></tr>
     </table>
   </div>
 </div>
@@ -219,16 +226,16 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
   </div>
   <div class="subcategory">
     <div class="filters">
-      <label for="paintSupplier">Filter by Supplier:</label>
-      <select id="paintSupplier" onchange="filterTable('paintTable', this.value)">
+      <label>Filter by Supplier:</label>
+      <select onchange="filterTable('paintTable', this.value)">
         <option value="all">All</option>
-        <option value="Chadwick's">Chadwick's</option>
-        <option value="Woodies">Woodies</option>
-        <option value="TJ O Mahony">TJ O Mahony</option>
-        <option value="Buckley">Buckley</option>
+        <option>Chadwick's</option>
+        <option>Woodies</option>
+        <option>TJ O Mahony</option>
+        <option>Buckley</option>
       </select>
-      <label for="paintSort">Sort by Price:</label>
-      <select id="paintSort" onchange="sortTable('paintTable', this.value)">
+      <label>Sort by Price:</label>
+      <select onchange="sortTable('paintTable', this.value)">
         <option value="asc">Low → High</option>
         <option value="desc">High → Low</option>
       </select>
@@ -240,6 +247,7 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
       <tr><td>Emulsion 10L</td><td>Woodies</td><td>32.00</td></tr>
       <tr><td>Gloss 5L</td><td>Chadwick's</td><td>28.00</td></tr>
       <tr><td>Primer 5L</td><td>Buckley</td><td>24.00</td></tr>
+      <tr><td>Masonry 10L</td><td>TJ O Mahony</td><td>34.00</td></tr>
     </table>
   </div>
 </div>
@@ -253,14 +261,14 @@ main {max-width:1200px; margin:40px auto; padding:0 20px;}
 </footer>
 
 <script>
-// ===== Toggle categories =====
+// Toggle categories
 function toggleCategory(header){
   header.classList.toggle('active');
   const sub = header.nextElementSibling;
   sub.style.display = sub.style.display === "block" ? "none" : "block";
 }
 
-// ===== Back to top =====
+// Back to top
 const backToTop = document.getElementById('backToTop');
 window.onscroll = function(){
   if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
@@ -271,7 +279,7 @@ window.onscroll = function(){
 }
 function scrollTop(){window.scrollTo({top:0, behavior:'smooth'});}
 
-// ===== Filter table by supplier =====
+// Filter table by supplier
 function filterTable(tableId, supplier){
   const table = document.getElementById(tableId);
   for(let i=1; i<table.rows.length; i++){
@@ -280,7 +288,7 @@ function filterTable(tableId, supplier){
   }
 }
 
-// ===== Sort table by price =====
+// Sort table by price
 function sortTable(tableId, order){
   const table = document.getElementById(tableId);
   let rows = Array.from(table.rows).slice(1);
