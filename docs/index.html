@@ -1,115 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - No.1 Building Material Price Comparison</title>
-<link rel="icon" href="images/favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Dream Home</title>
+  <style>
+    /* ===== Global Styles ===== */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-<style>
-/* ===== Global ===== */
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
-body {min-height:100vh; color:#1f1f1f; margin:0; background:#f5f5f5;}
+    /* ===== Hero Section ===== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      background-image: url('images/house.jpg'); /* Updated image name */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-/* ===== Header ===== */
-header {
-  display:flex; justify-content:space-between; align-items:center; padding:15px 20px;
-  background:#1f2a38; border-bottom:4px solid #F39C12;
-}
-header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
-header .logo img{height:40px;}
-header .login {
-  color:#fff; font-size:16px; padding:6px 12px;
-  border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;
-}
-header .login:hover {background:rgba(243,156,18,0.2);}
+    /* ===== Overlay for readability ===== */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      flex-direction: column;
+    }
 
-/* ===== Subheader ===== */
-nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
-nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
+    /* ===== Slogan ===== */
+    .hero-slogan {
+      color: #ffd700;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      transition: transform 0.3s ease, text-shadow 0.3s ease, opacity 1.5s ease;
+      cursor: default;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
 
-/* ===== Hero ===== */
-.hero {
-  text-align:center;
-  padding:120px 20px;
-  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
-  background-size: cover;
-  color:#fff;
-  position:relative;
-}
-.hero .slogan-hero {
-  position:relative;
-  z-index:1;
-  font-size:36px;
-  font-weight:bold;
-  color:#e0e0e0; /* light grey for readability */
-  text-shadow: none;
-  margin-bottom:40px;
-}
-#heroCTA {
-  position:relative;
-  z-index:1;
-  display:inline-block;
-  padding:18px 35px;
-  background: rgba(31, 38, 48, 0.85);
-  color: #e0e0e0;
-  font-weight:bold;
-  font-size:18px;
-  border-radius:6px;
-  cursor:pointer;
-  transition: background 0.3s;
-}
-#heroCTA:hover {background: rgba(31, 38, 48, 1);}
+    /* ===== Scroll Indicator ===== */
+    .scroll-down {
+      margin-top: 50px;
+      font-size: 2rem;
+      color: #ffd700;
+      animation: bounce 2s infinite;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
 
-/* ===== Footer ===== */
-footer {
-  background:#1f2a38;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-  border-top:4px solid #F39C12;
-}
-footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
+    /* ===== Hover Animation ===== */
+    .hero-slogan:hover {
+      transform: scale(1.1);
+      text-shadow: 4px 4px 12px rgba(0,0,0,0.8);
+    }
 
-/* ===== Responsive ===== */
-@media(max-width:768px){
-  .hero .slogan-hero{font-size:28px; padding:0 10px;}
-  #heroCTA{font-size:16px; padding:15px 30px;}
-}
-</style>
+    /* ===== Fade-in Animation ===== */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* ===== Bounce Animation for Scroll Arrow ===== */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(10px);
+      }
+      60% {
+        transform: translateY(5px);
+      }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero-slogan {
+        font-size: 2rem;
+      }
+      .scroll-down {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-slogan {
+        font-size: 1.5rem;
+      }
+      .scroll-down {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <img src="images/favicon.png" alt="Buildy Logo"> Buildy
-  </div>
-  <div class="login">Login</div>
-</header>
-
-<nav class="subheader">
-  <a href="#">Home</a>
-  <a href="#">Materials</a>
-  <a href="#">Suppliers</a>
-  <a href="#">Contact</a>
-</nav>
-
-<section class="hero">
-  <div class="slogan-hero">
-    No.1 Building Material Price Comparison Site in Wexford
-  </div>
-  <div id="heroCTA" onclick="goToComparison()">Get Started</div>
-</section>
-
-<footer>
-  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
-</footer>
-
-<script>
-function goToComparison(){
-  window.location.href = 'comparison.html';
-}
-</script>
+  <!-- ===== Hero Section ===== -->
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1 class="hero-slogan">Build Your Dream Home Today</h1>
+      <div class="scroll-down">&#x21E3;</div> <!-- Downwards arrow -->
+    </div>
+  </section>
 
 </body>
 </html>
