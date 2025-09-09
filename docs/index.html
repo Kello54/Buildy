@@ -1,223 +1,700 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - DIY Price Comparison</title>
-<link rel="icon" href="images/favicon.png" type="image/png">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DIY Builder — Phase 3</title>
 <style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
-body {min-height:100vh; color:#1f1f1f; margin:0; background:#f5f5f5;}
-header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#1f2a38; border-bottom:4px solid #F39C12;}
-header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
-header .logo img{height:40px; margin-right:8px;}
-header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;}
-header .login:hover {background:rgba(243,156,18,0.2);}
-nav.subheader {background:#1f2a38; padding:10px 0; text-align:center; border-bottom:2px solid #d4af37;}
-nav.subheader a {color:#fff; margin:0 10px; text-decoration:none; padding:5px 10px; border-right:2px solid #d4af37;}
-nav.subheader a:last-child { border-right:none; }
-.hero {position: relative; text-align: center; padding:150px 20px; color: #fff; background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat; background-size: cover; overflow: hidden;}
-.hero .slogan-hero {display:inline-block; padding:15px 25px; background: rgba(0,0,0,0.35); border-radius:8px; font-size:38px; font-weight:500; color:#ffffff; margin-bottom:50px;}
-#heroCTA {display:inline-block; padding:18px 40px; background: rgba(31,38,48,0.85); color:#fff; font-weight:bold; font-size:18px; border-radius:6px; cursor:pointer; transition: transform 0.3s, background 0.3s;}
-#heroCTA:hover {background: rgba(31,38,48,1); transform: scale(1.05);}
-main {max-width:1200px; margin:40px auto; padding:0 20px;}
-#controls {display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; position: sticky; top: 0; background:#f5f5f5; padding:10px; z-index:100; border-bottom:1px solid #ccc;}
-#controls select, #controls input {padding:8px 12px; font-size:14px; border:1px solid #ccc; border-radius:6px;}
-#controls button {padding:8px 12px; border-radius:6px; border:1px solid #ccc; cursor:pointer;}
-.category {border-bottom:2px solid #d4af37; padding:20px 0;}
-.category-header {cursor: pointer; font-size:1.8em; color:#1f2a38; position: relative;}
-.category-header::after {content: '\25BC'; position: absolute; right:0; transition: transform 0.3s;}
-.category-header.active::after {transform: rotate(180deg);}
-.category-content {max-height:0; overflow:hidden; transition:max-height 0.5s ease;}
-.category-content table {width:100%; border-collapse: collapse; margin-top:15px;}
-.category-content th, .category-content td {padding:10px; text-align:left; border-bottom:1px solid #d4af37;}
-.category-content tr:nth-child(even) {background:#f9f9f9;}
-.category-content tr:hover {background:#eaeaea;}
-.category-content img {height:40px; border-radius:4px;}
-.avail-in {color:#2ecc71; font-weight:bold;}
-.avail-limited {color:#f1c40f; font-weight:bold;}
-.avail-out {color:#e74c3c; font-weight:bold;}
-.lowest-price {background: #d4f7d4;}
-footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
-footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
-@media(max-width:768px){
-  .hero .slogan-hero{font-size:28px; padding:10px 15px;}
-  #heroCTA{font-size:16px; padding:15px 30px;}
-  nav.subheader a{margin:0 5px; padding:5px 5px;}
-  .category-content table {font-size:0.9em;}
-}
+  :root{
+    --accent: #2e8b57; /* subtle green for cheapest highlight */
+    --accent-soft: rgba(46,139,87,0.08);
+    --gold: #b8860b;
+    --bg-overlay: rgba(0,0,0,0.45);
+    --card-bg: rgba(255,255,255,0.95);
+    --muted: #6b7280;
+    --max-width: 1100px;
+    --radius: 8px;
+  }
+
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  body{
+    background-image: url('images/construction-bg.jpg'); /* <-- change your background here */
+    background-size: cover;
+    background-position: center;
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* hero overlay to keep text readable */
+  .overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.38));
+    min-height: 220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+    color:white;
+  }
+  .hero {
+    width:100%;
+    max-width:var(--max-width);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .logo{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .logo img{height:56px; border-radius:6px; background:rgba(255,255,255,0.12); padding:6px;}
+  .hero h1{margin:0;font-size:22px;letter-spacing:0.2px;}
+  .hero p{margin:0;color:rgba(255,255,255,0.85); font-size:13px;}
+
+  /* main app container */
+  .app {
+    max-width: var(--max-width);
+    margin: -60px auto 60px; /* pull up over hero */
+    padding: 18px;
+    box-sizing:border-box;
+  }
+
+  .card{
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 30px rgba(2,6,23,0.12);
+    padding:16px;
+    margin-bottom:16px;
+    overflow:visible;
+  }
+
+  /* search & controls */
+  .controls{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .search {
+    flex:1 1 420px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .search input{
+    flex:1;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #e6e6e8;
+    font-size:14px;
+  }
+  .filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .filters button{
+    padding:8px 12px;border-radius:999px;border:1px solid #eee;background:#fff;font-size:13px;cursor:pointer;
+  }
+  .filters button.active{border-color:var(--gold); box-shadow: 0 2px 8px rgba(184,134,11,0.08);}
+
+  /* stats / small controls */
+  .meta{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .badge{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    padding:8px 10px;
+    border-radius:999px;
+    background:rgba(0,0,0,0.04);
+    font-size:13px;
+  }
+
+  /* accordion categories */
+  .accordion{
+    margin-top:12px;
+  }
+  .category{
+    margin-bottom:10px;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid rgba(0,0,0,0.06);
+  }
+  .category-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 14px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.96));
+    cursor:pointer;
+  }
+  .category-header h3{margin:0;font-size:15px;}
+  .category-body{padding:12px 14px;border-top:1px solid rgba(0,0,0,0.04);}
+
+  /* product table */
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{padding:10px 8px;text-align:left;border-bottom:1px dashed rgba(0,0,0,0.06);}
+  th{font-weight:600;font-size:13px;color:var(--muted);}
+  .prod-name{min-width:180px;font-weight:600;}
+  .supplier-cell{min-width:120px;}
+  .cheapest{background:linear-gradient(90deg,var(--accent-soft),transparent);border-radius:6px;}
+  .price{font-weight:700;}
+  .small{font-size:12px;color:var(--muted);}
+
+  /* action buttons */
+  .btn{
+    padding:8px 10px;border-radius:8px;border:0;cursor:pointer;font-weight:600;
+  }
+  .btn-green{background:var(--accent);color:white;}
+  .btn-outline{background:transparent;border:1px solid rgba(0,0,0,0.08);}
+
+  /* supplier column with contact icons */
+  .supplier-meta{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .supplier-meta img{height:28px;width:28px;object-fit:contain;border-radius:6px;background:#fff;padding:4px;border:1px solid rgba(0,0,0,0.04);}
+
+  /* cart/wishlist floating */
+  .floating {
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:1400;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .floating button{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:10px 12px;
+    border-radius:999px;
+    border:0;
+    box-shadow: 0 8px 24px rgba(2,6,23,0.12);
+    background:rgba(255,255,255,0.98);
+    cursor:pointer;
+    font-weight:600;
+  }
+  .floating .count{
+    background:var(--gold);
+    color:white;padding:6px 8px;border-radius:999px;font-weight:700;font-size:13px;
+  }
+
+  /* responsive */
+  @media (max-width:880px){
+    .hero h1{font-size:18px;}
+    .logo img{height:46px;}
+    th,td{font-size:13px;padding:8px 6px;}
+    .app{margin: -40px 12px 60px;}
+  }
+  @media (max-width:560px){
+    .controls{flex-direction:column;align-items:stretch;}
+    .search input{font-size:14px;padding:9px;}
+    table{font-size:13px;}
+    .supplier-cell{display:flex;flex-direction:column;gap:6px;}
+  }
+
+  footer{max-width:var(--max-width);margin:24px auto;color:var(--muted);font-size:13px;padding:0 16px;}
 </style>
 </head>
 <body>
+  <div class="overlay" role="banner" aria-label="Hero">
+    <div class="hero" >
+      <div class="logo">
+        <img src="images/logo-placeholder.png" alt="DIY Builder logo" />
+        <div>
+          <h1>DIY Builder — Price Compare</h1>
+          <p>Phase 3 — Search, filter, compare & save. Background kept as requested.</p>
+        </div>
+      </div>
 
-<header>
-  <div class="logo"><img src="images/favicon.png" alt="Buildy Logo"> Buildy</div>
-  <div class="login">Login</div>
-</header>
-
-<nav class="subheader">
-  <a href="#">Home</a>
-  <a href="#">Materials</a>
-  <a href="#">Suppliers</a>
-  <a href="#">Contact</a>
-</nav>
-
-<section class="hero">
-  <div class="slogan-hero">No.1 Building Material Price Comparison Site in Wexford</div>
-  <div id="heroCTA" onclick="goToComparison()">Get Started</div>
-</section>
-
-<main>
-  <div id="controls">
-    <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()">
-    <select id="supplierFilter" onchange="filterProducts()">
-      <option value="">All Suppliers</option>
-    </select>
-    <select id="sortSelect" onchange="sortProducts()">
-      <option value="">Sort by</option>
-      <option value="priceAsc">Price ↑</option>
-      <option value="priceDesc">Price ↓</option>
-      <option value="supplierAsc">Supplier A-Z</option>
-      <option value="supplierDesc">Supplier Z-A</option>
-    </select>
-    <button onclick="expandAll()">Expand All</button>
-    <button onclick="collapseAll()">Collapse All</button>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div style="text-align:right;color:rgba(255,255,255,0.9);">
+          <div style="font-weight:700">Project: Home Extension</div>
+          <div style="font-size:13px;opacity:0.9">Ireland • Materials pricing</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="categories"></div>
-</main>
+  <main class="app" role="main" aria-labelledby="app-title">
+    <section class="card" id="controls-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1 1 60%;">
+          <div class="controls">
+            <div class="search" role="search" aria-label="Search products">
+              <input id="searchInput" placeholder="Search products, brands or codes..." aria-label="Search products" />
+              <button id="clearSearch" class="btn btn-outline" title="Clear">Clear</button>
+            </div>
 
-<footer>
-  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
-</footer>
+            <div class="filters" role="toolbar" aria-label="Category filters">
+              <button class="filter-btn active" data-cat="all">All</button>
+              <button class="filter-btn" data-cat="timber">Timber</button>
+              <button class="filter-btn" data-cat="cement">Cement & Aggregates</button>
+              <button class="filter-btn" data-cat="paint">Paint & Finishes</button>
+              <button class="filter-btn" data-cat="tools">Tools & Fixings</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta">
+          <div class="badge">Suppliers: <strong style="margin-left:6px">Chadwicks • Woodies • Buckley</strong></div>
+          <div class="badge">Mode: <span class="small" style="margin-left:6px">Comparison (local)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 id="app-title" style="margin:0;font-size:16px">Products & Price Comparison</h2>
+        <div class="small">Tap a category to expand. Cheapest price is highlighted.</div>
+      </div>
+
+      <div class="accordion" id="accordionRoot" aria-live="polite">
+        <!-- categories render here -->
+      </div>
+    </section>
+
+    <section class="card" id="saved-card" aria-live="polite">
+      <h3 style="margin:0 0 8px 0">Saved / Quick Cart</h3>
+      <div id="quickSummary" class="small">You have <strong id="wishlistCount">0</strong> saved items and <strong id="cartCount">0</strong> items in cart.</div>
+      <div style="margin-top:12px;">
+        <button id="viewCart" class="btn btn-green">View Cart</button>
+        <button id="clearAll" class="btn btn-outline">Clear Cart & Wishlist</button>
+        <div id="cartPreview" style="margin-top:12px;"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="floating" aria-hidden="false">
+    <button id="goWishlist" title="Wishlist / Saved">
+      ♥ Saved <span id="wishBadge" class="count">0</span>
+    </button>
+    <button id="goCart" title="Cart">
+      🛒 Cart <span id="cartBadge" class="count">0</span>
+    </button>
+  </div>
+
+  <footer>
+    Tip: change the hero background at the top of the CSS `body { background-image: url(...) }` line.
+  </footer>
 
 <script>
-// ===== Product Data with links =====
-const products = [
-  {category:"Cement & Aggregates", supplier:"Chadwick’s", name:"Portland Cement 25kg", price:12, availability:"In Stock", img:"https://images.unsplash.com/photo-1610949826164-bfa9ebfb37f6?auto=format&fit=crop&w=100&q=80", link:"https://www.chadwicks.ie/"},
-  {category:"Cement & Aggregates", supplier:"Woodies", name:"Concrete Mix 25kg", price:11.5, availability:"Limited", img:"https://images.unsplash.com/photo-1581091012184-f66c68e6182c?auto=format&fit=crop&w=100&q=80", link:"https://www.woodies.ie/"},
-  {category:"Timber & Wood", supplier:"Woodies", name:"Pine Board 2x4x8ft", price:6.5, availability:"In Stock", img:"https://images.unsplash.com/photo-1566407035695-cf1fffd7c8c6?auto=format&fit=crop&w=100&q=80", link:"https://www.woodies.ie/"},
-  {category:"Tools & Hardware", supplier:"HomeValue", name:"Hammer 16oz", price:10, availability:"In Stock", img:"https://images.unsplash.com/photo-1598706763986-d26a53d94607?auto=format&w=100", link:"https://www.homevalue.ie/"},
-  {category:"Paint & Decorating", supplier:"B&Q", name:"Emulsion Paint 5L White", price:25, availability:"In Stock", img:"https://images.unsplash.com/photo-1593050766606-0b2906a4de83?auto=format&w=100", link:"https://www.diy.com/"},
-  {category:"Bathroom & Plumbing", supplier:"Woodies", name:"Shower Head Chrome", price:35, availability:"In Stock", img:"https://images.unsplash.com/photo-1600180758890-207c53c00dcf?auto=format&w=100", link:"https://www.woodies.ie/"},
-  {category:"Lawn & Garden", supplier:"Woodies", name:"Compost 50L", price:6, availability:"In Stock", img:"https://images.unsplash.com/photo-1586201375761-83865001e5d1?auto=format&w=100", link:"https://www.woodies.ie/"},
-  {category:"Outdoor Living", supplier:"B&Q", name:"Garden Shed 6x4ft", price:250, availability:"Limited", img:"https://images.unsplash.com/photo-1600585154526-220b97ed7b79?auto=format&w=100", link:"https://www.diy.com/"},
-  {category:"Timber & Wood", supplier:"B&Q", name:"Cedar Fence Panels", price:55, availability:"In Stock", img:"https://images.unsplash.com/photo-1616745304970-3f1f8b2e8b21?auto=format&w=100", link:"https://www.diy.com/"},
-  {category:"Tools & Hardware", supplier:"Chadwick’s", name:"Circular Saw 1200W", price:120, availability:"Limited", img:"https://images.unsplash.com/photo-1616745304975-46a2d02b6f1a?auto=format&w=100", link:"https://www.chadwicks.ie/"},
-  // Add more products up to 50+ items
+/* --------------------------
+   Sample product dataset
+   (Replace / extend with live data later)
+   -------------------------- */
+const suppliers = [
+  { id: 'chadwicks', name:'Chadwicks', phone:'+35312345601', website:'https://chadwicks.example', logo:'images/chadwicks.png' },
+  { id: 'woodies',   name:'Woodies',   phone:'+35312345602', website:'https://woodies.example', logo:'images/woodies.png' },
+  { id: 'buckley',   name:'Buckley',   phone:'+35312345603', website:'https://buckley.example', logo:'images/buckley.png' }
 ];
 
-// ===== Identify global lowest price =====
-const minGlobalPrice = Math.min(...products.map(p => p.price));
+const products = [
+  /* Timber category */
+  { id:'t1', name:'Pressure Treated 2x4 Timber (3m)', cat:'timber', sku:'T-2X4-3M', prices:{ chadwicks:19.49, woodies:20.10, buckley:18.95 }},
+  { id:'t2', name:'Plywood 12mm (2440x1220)', cat:'timber', sku:'PLY-12-2440', prices:{ chadwicks:35.90, woodies:34.75, buckley:36.00 }},
+  /* Cement & Aggregates */
+  { id:'c1', name:'Portland Cement 25kg', cat:'cement', sku:'CEM-25', prices:{ chadwicks:8.50, woodies:8.95, buckley:8.30 }},
+  { id:'c2', name:'Sharp Sand (per tonne)', cat:'cement', sku:'SAND-1T', prices:{ chadwicks:42.00, woodies:40.50, buckley:41.20 }},
+  /* Paint & Finishes */
+  { id:'p1', name:'Exterior Masonry Paint 10L', cat:'paint', sku:'PAINT-MEX-10', prices:{ chadwicks:79.99, woodies:75.50, buckley:78.00 }},
+  { id:'p2', name:'Primer Undercoat 5L', cat:'paint', sku:'PRIM-5L', prices:{ chadwicks:32.50, woodies:30.99, buckley:31.49 }},
+  /* Tools & Fixings */
+  { id:'s1', name:'50mm Timber Screws (Box 200)', cat:'tools', sku:'SCREW-50-200', prices:{ chadwicks:14.99, woodies:15.50, buckley:13.95 }},
+  { id:'s2', name:'Cordless Drill (18V)', cat:'tools', sku:'DRILL-18V', prices:{ chadwicks:89.99, woodies:85.00, buckley:92.00 }},
+];
 
-// ===== Build Categories =====
-const categoriesDiv = document.getElementById("categories");
-const suppliersSet = new Set();
+/* --------------------------
+   Local storage helpers (cart & wishlist)
+   -------------------------- */
+const LS_CART = 'phase3_cart_v1';
+const LS_WISH = 'phase3_wish_v1';
 
-function buildCategories() {
-  const categoryMap = {};
-  products.forEach(p => {
-    if(!categoryMap[p.category]) categoryMap[p.category] = [];
-    categoryMap[p.category].push(p);
-    suppliersSet.add(p.supplier);
+function loadCart(){ try { return JSON.parse(localStorage.getItem(LS_CART)) || {}; } catch(e){ return {}; } }
+function loadWish(){ try { return JSON.parse(localStorage.getItem(LS_WISH)) || {}; } catch(e){ return {}; } }
+function saveCart(obj){ localStorage.setItem(LS_CART, JSON.stringify(obj)); }
+function saveWish(obj){ localStorage.setItem(LS_WISH, JSON.stringify(obj)); }
+
+let cart = loadCart();
+let wish = loadWish();
+
+/* --------------------------
+   Render logic
+   -------------------------- */
+const accordionRoot = document.getElementById('accordionRoot');
+
+function groupByCategory(items){
+  const map = {};
+  items.forEach(p=>{
+    if(!map[p.cat]) map[p.cat]=[];
+    map[p.cat].push(p);
   });
+  return map;
+}
 
-  const supplierSelect = document.getElementById("supplierFilter");
-  supplierSelect.innerHTML = '<option value="">All Suppliers</option>';
-  suppliersSet.forEach(s => {
-    const option = document.createElement("option");
-    option.value = s; option.textContent = s;
-    supplierSelect.appendChild(option);
-  });
+function renderCategories(filterCat='all', query=''){
+  accordionRoot.innerHTML='';
+  const grouped = groupByCategory(products);
+  const order = ['timber','cement','paint','tools'];
+  const names = {
+    timber:'Timber',
+    cement:'Cement & Aggregates',
+    paint:'Paint & Finishes',
+    tools:'Tools & Fixings'
+  };
 
-  categoriesDiv.innerHTML = '';
-  for(const cat in categoryMap) {
-    const section = document.createElement("section");
-    section.className = "category";
-    section.innerHTML = `<h2 class="category-header" onclick="toggleCategory(this)">${cat}</h2>
-      <div class="category-content">
-      <table>
-        <thead><tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th></tr></thead>
-        <tbody></tbody>
-      </table>
-      </div>`;
-    const tbody = section.querySelector("tbody");
-    const minPrice = Math.min(...categoryMap[cat].map(p=>p.price));
-
-    categoryMap[cat].forEach(p => {
-      let availClass = '';
-      if(p.availability === "In Stock") availClass='avail-in';
-      else if(p.availability === "Limited") availClass='avail-limited';
-      else availClass='avail-out';
-
-      const bestDealBadge = (p.price === minGlobalPrice) ? ' <span style="background:#27ae60;color:#fff;padding:2px 6px;border-radius:4px;font-size:0.8em;">BEST DEAL</span>' : '';
-
-      const tr = document.createElement("tr");
-      tr.className = (p.price===minPrice) ? "lowest-price" : "";
-      tr.innerHTML = `
-        <td>${p.supplier}</td>
-        <td><a href="${p.link}" target="_blank" title="Click to visit ${p.supplier}">${p.name}${bestDealBadge}</a></td>
-        <td>€${p.price}</td>
-        <td class="${availClass}">${p.availability}</td>
-        <td><img src="${p.img}" alt="${p.name}"></td>`;
-      tbody.appendChild(tr);
+  order.forEach(cat=>{
+    if(filterCat!=='all' && filterCat!==cat) return;
+    const list = grouped[cat] || [];
+    const filtered = list.filter(p => {
+      if(!query) return true;
+      const q = query.toLowerCase();
+      return (p.name||'').toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q);
     });
-    categoriesDiv.appendChild(section);
+    if(filtered.length===0) return;
+
+    const catEl = document.createElement('div');
+    catEl.className='category';
+    const header = document.createElement('div');
+    header.className='category-header';
+    header.setAttribute('role','button');
+    header.setAttribute('aria-expanded','false');
+    header.innerHTML = \`
+      <div>
+        <h3>\${names[cat] || cat}</h3>
+        <div class="small" style="margin-top:4px;color:var(--muted)">\${filtered.length} item(s)</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="small">Tap to expand</div>
+        <div style="font-size:18px;transform:rotate(90deg)">❯</div>
+      </div>
+    \`;
+    const body = document.createElement('div');
+    body.className='category-body';
+    body.style.display='none';
+
+    body.appendChild(renderTableFor(filtered));
+
+    header.addEventListener('click', () => {
+      const expanded = header.getAttribute('aria-expanded') === 'true';
+      header.setAttribute('aria-expanded', String(!expanded));
+      body.style.display = expanded ? 'none' : 'block';
+    });
+
+    catEl.appendChild(header);
+    catEl.appendChild(body);
+    accordionRoot.appendChild(catEl);
+  });
+}
+
+/* build a price table per category */
+function renderTableFor(list){
+  const wrapper = document.createElement('div');
+  wrapper.style.overflowX = 'auto';
+  const table = document.createElement('table');
+  table.setAttribute('role','table');
+  const thead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+
+  headerRow.innerHTML = \`
+    <th>Product</th>
+    <th class="small">SKU</th>
+    \${suppliers.map(s => '<th>'+s.name+'</th>').join('')}
+    <th style="min-width:130px">Actions</th>
+  \`;
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+
+  list.forEach(prod=>{
+    // determine cheapest supplier(s)
+    const entries = suppliers.map(s => ({ id:s.id, price: prod.prices[s.id] ?? null }));
+    const valid = entries.filter(e => e.price !== null && !Number.isNaN(e.price));
+    let min = null;
+    if(valid.length) min = Math.min(...valid.map(e=>e.price));
+
+    const row = document.createElement('tr');
+
+    const nameCell = document.createElement('td');
+    nameCell.className='prod-name';
+    nameCell.innerHTML = '<div>'+prod.name+'</div><div class="small">'+(prod.cat)+' </div>';
+    row.appendChild(nameCell);
+
+    const skuCell = document.createElement('td');
+    skuCell.className='small';
+    skuCell.textContent = prod.sku || '-';
+    row.appendChild(skuCell);
+
+    suppliers.forEach(s=>{
+      const td = document.createElement('td');
+      td.className='supplier-cell';
+      const price = prod.prices[s.id];
+      if(price === undefined || price === null){
+        td.innerHTML = '<div class="small">—</div>';
+      } else {
+        const cheapestClass = (min !== null && price === min) ? 'cheapest' : '';
+        td.innerHTML = \`
+          <div class="\${cheapestClass}" style="padding:6px;border-radius:6px;display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <img src="\${s.logo}" alt="\${s.name} logo" style="height:28px;width:28px;object-fit:contain;border-radius:6px" onerror="this.style.display='none'"/>
+              <div>
+                <div class="price">€\${price.toFixed(2)}</div>
+                <div class="small">per unit</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+              <a href="tel:\${s.phone}" class="small" title="Call \${s.name}">Call</a>
+              <a href="\${s.website}" target="_blank" rel="noopener" class="small">Visit</a>
+            </div>
+          </div>
+        \`;
+      }
+      row.appendChild(td);
+    });
+
+    // actions
+    const actionTd = document.createElement('td');
+    actionTd.style.display='flex';
+    actionTd.style.gap='8px';
+    actionTd.style.alignItems='center';
+
+    const addBtn = document.createElement('button');
+    addBtn.className='btn btn-outline';
+    addBtn.textContent='Add to Cart';
+    addBtn.addEventListener('click', ()=> {
+      addToCart(prod.id);
+    });
+
+    const wishBtn = document.createElement('button');
+    wishBtn.className='btn';
+    wishBtn.textContent = wish[prod.id] ? 'Saved' : 'Save';
+    wishBtn.addEventListener('click', ()=>{
+      toggleWish(prod.id);
+      wishBtn.textContent = wish[prod.id] ? 'Saved' : 'Save';
+    });
+
+    actionTd.appendChild(addBtn);
+    actionTd.appendChild(wishBtn);
+    row.appendChild(actionTd);
+
+    tbody.appendChild(row);
+  });
+
+  table.appendChild(tbody);
+  wrapper.appendChild(table);
+  return wrapper;
+}
+
+/* --------------------------
+   Interaction helpers
+   -------------------------- */
+
+function addToCart(prodId){
+  cart[prodId] = (cart[prodId] || 0) + 1;
+  saveCart(cart);
+  updateBadges();
+  renderCartPreview();
+  toast('Added to cart');
+}
+
+function toggleWish(prodId){
+  if(wish[prodId]) delete wish[prodId];
+  else wish[prodId] = { savedAt: Date.now() };
+  saveWish(wish);
+  updateBadges();
+  renderCartPreview();
+}
+
+function updateBadges(){
+  const wishCount = Object.keys(wish).length;
+  const cartCount = Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('wishBadge').textContent = wishCount;
+  document.getElementById('cartBadge').textContent = cartCount;
+  document.getElementById('wishlistCount').textContent = wishCount;
+  document.getElementById('cartCount').textContent = cartCount;
+}
+
+/* cart preview */
+function renderCartPreview(){
+  const el = document.getElementById('cartPreview');
+  el.innerHTML = '';
+  const cartItems = Object.keys(cart);
+  if(cartItems.length===0 && Object.keys(wish).length===0){
+    el.innerHTML = '<div class="small">No saved items or cart items yet.</div>';
+    return;
+  }
+  if(cartItems.length){
+    const title = document.createElement('div');
+    title.innerHTML = '<strong>Cart</strong>';
+    el.appendChild(title);
+    cartItems.forEach(pid=>{
+      const prod = products.find(p=>p.id===pid);
+      if(!prod) return;
+      const row = document.createElement('div');
+      row.style.display='flex'; row.style.justifyContent='space-between'; row.style.gap='8px'; row.style.padding='6px 0';
+      row.innerHTML = \`<div>\${prod.name} <div class="small">x\${cart[pid]}</div></div><div class="small">€\${minPrice(prod).toFixed(2)} ea</div>\`;
+      el.appendChild(row);
+    });
+    const checkout = document.createElement('div');
+    checkout.style.marginTop='8px';
+    checkout.innerHTML = '<button id="exportCart" class="btn btn-green">Export Cart (CSV)</button>';
+    el.appendChild(checkout);
+    document.getElementById('exportCart').addEventListener('click', exportCartCSV);
+  }
+
+  const wishKeys = Object.keys(wish);
+  if(wishKeys.length){
+    const title = document.createElement('div');
+    title.innerHTML = '<strong style="margin-top:8px;display:block">Saved</strong>';
+    el.appendChild(title);
+    wishKeys.forEach(pid=>{
+      const prod = products.find(p=>p.id===pid);
+      if(!prod) return;
+      const row = document.createElement('div');
+      row.style.display='flex'; row.style.justifyContent='space-between'; row.style.gap='8px'; row.style.padding='6px 0';
+      row.innerHTML = \`<div>\${prod.name}</div><div><button class="btn btn-outline" data-id="\${pid}" onclick="addFromPreview('\${pid}')">Add</button></div>\`;
+      el.appendChild(row);
+    });
   }
 }
 
-buildCategories();
-
-// ===== Collapsible =====
-function toggleCategory(header){
-  header.classList.toggle('active');
-  const content = header.nextElementSibling;
-  if(content.style.maxHeight) content.style.maxHeight = null;
-  else content.style.maxHeight = content.scrollHeight + "px";
+function addFromPreview(pid){
+  addToCart(pid);
 }
 
-function expandAll(){
-  document.querySelectorAll(".category-header").forEach(h=>{
-    h.classList.add('active');
-    h.nextElementSibling.style.maxHeight = h.nextElementSibling.scrollHeight + "px";
+/* quick utility to find min price */
+function minPrice(prod){
+  const vals = Object.values(prod.prices).filter(v=>typeof v==='number' && !Number.isNaN(v));
+  return vals.length ? Math.min(...vals) : 0;
+}
+
+/* export cart as CSV (simple) */
+function exportCartCSV(){
+  const rows = [['SKU','Product','Qty','UnitPriceEUR','SupplierOfUnitPrice']];
+  Object.keys(cart).forEach(pid=>{
+    const prod = products.find(p=>p.id===pid);
+    if(!prod) return;
+    // pick cheapest supplier
+    let chosenSupplier = null;
+    let chosenPrice = Number.POSITIVE_INFINITY;
+    suppliers.forEach(s=>{
+      const p = prod.prices[s.id];
+      if(typeof p === 'number' && p < chosenPrice){ chosenPrice = p; chosenSupplier = s.name; }
+    });
+    rows.push([prod.sku || '', prod.name, cart[pid], chosenPrice.toFixed(2), chosenSupplier || '']);
   });
+  const csv = rows.map(r => r.map(c => '\"'+String(c).replace(/\"/g,'\"\"')+'\"').join(',')).join('\\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'cart_export.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
-function collapseAll(){
-  document.querySelectorAll(".category-header").forEach(h=>{
-    h.classList.remove('active');
-    h.nextElementSibling.style.maxHeight = null;
+/* toast notifications (simple) */
+let toastTimer = null;
+function toast(msg){
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.position = 'fixed';
+  t.style.left = '50%';
+  t.style.transform = 'translateX(-50%)';
+  t.style.bottom = '24px';
+  t.style.padding = '10px 16px';
+  t.style.background = 'rgba(0,0,0,0.8)';
+  t.style.color = 'white';
+  t.style.borderRadius = '999px';
+  t.style.zIndex = 2200;
+  document.body.appendChild(t);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.remove(); }, 2000);
+}
+
+/* --------------------------
+   Filtering & events
+   -------------------------- */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.getAttribute('data-cat');
+    const q = document.getElementById('searchInput').value.trim();
+    renderCategories(cat, q);
   });
+});
+
+document.getElementById('searchInput').addEventListener('input', (e)=>{
+  const q = e.target.value.trim();
+  const active = document.querySelector('.filter-btn.active')?.getAttribute('data-cat') || 'all';
+  renderCategories(active, q);
+});
+
+document.getElementById('clearSearch').addEventListener('click', ()=>{
+  document.getElementById('searchInput').value = '';
+  const active = document.querySelector('.filter-btn.active')?.getAttribute('data-cat') || 'all';
+  renderCategories(active, '');
+});
+
+/* floating buttons */
+document.getElementById('goWishlist').addEventListener('click', ()=>{
+  document.querySelector('.filter-btn[data-cat="all"]').click();
+  toast('Opened wishlist section (scroll down).');
+});
+document.getElementById('goCart').addEventListener('click', ()=>{
+  document.getElementById('viewCart').click();
+  toast('Opened cart preview.');
+});
+
+document.getElementById('viewCart').addEventListener('click', ()=>{
+  // simple toggle of quick summary visibility
+  const el = document.getElementById('cartPreview');
+  el.style.display = el.style.display==='block' ? 'none' : 'block';
+});
+
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  if(confirm('Clear cart and saved items?')) {
+    cart = {}; wish = {};
+    saveCart(cart); saveWish(wish);
+    updateBadges(); renderCartPreview();
+  }
+});
+
+/* export helper used earlier (global) */
+window.addFromPreview = function(pid){
+  addFromPreview(pid);
 }
 
-// ===== Search & Filter =====
-function filterProducts(){
-  const query = document.getElementById("searchBar").value.toLowerCase();
-  const supplierFilter = document.getElementById("supplierFilter").value;
-  document.querySelectorAll(".category-content tbody tr").forEach(row => {
-    const text = row.innerText.toLowerCase();
-    const supplier = row.children[0].innerText;
-    row.style.display = (text.includes(query) && (supplierFilter === "" || supplierFilter === supplier)) ? "" : "none";
-  });
-}
+/* --------------------------
+   Init
+   -------------------------- */
+(function init(){
+  // ensure supplier images placeholders exist (if not they'll hide)
+  // initial render
+  renderCategories('all','');
+  updateBadges();
+  renderCartPreview();
 
-// ===== Sorting =====
-function sortProducts(){
-  const sortValue = document.getElementById("sortSelect").value;
-  products.sort((a,b)=>{
-    switch(sortValue){
-      case "priceAsc": return a.price - b.price;
-      case "priceDesc": return b.price - a.price;
-      case "supplierAsc": return a.supplier.localeCompare(b.supplier);
-      case "supplierDesc": return b.supplier.localeCompare(a.supplier);
-      default: return 0;
-    }
-  });
-  buildCategories();
-}
-
-function goToComparison(){window.location.href='comparison.html';}
+  // accessibility: expand first category by default
+  const firstHeader = document.querySelector('.category .category-header');
+  if(firstHeader) firstHeader.click();
+})();
 </script>
-
 </body>
 </html>
