@@ -3,30 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - Building Material Price Comparison</title>
+<title>Buildy - Compare Prices</title>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <style>
-/* ===== Global Styles ===== */
-body, html {
-  margin:0; padding:0; font-family:Arial,sans-serif; background:#f5f5f5; color:#1f1f1f;
-}
+/* ===== Global ===== */
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+body {min-height:100vh; color:#1f1f1f; background:#f5f5f5;}
 
-/* ===== Hero Section ===== */
-.hero {
-  height:50vh;
-  background:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('images/house.jpg') center/cover no-repeat;
-  display:flex; align-items:center; justify-content:center;
-}
-.hero-overlay { text-align:center; }
-.hero-slogan { color:#ffd700; font-size:2.5rem; font-weight:bold; }
+/* ===== Header ===== */
+header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#1f2a38; border-bottom:4px solid #F39C12;}
+header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
+header .logo img{height:40px; margin-right:10px;}
+header .login {color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;}
+header .login:hover {background:rgba(243,156,18,0.2);}
+
+/* ===== Subheader ===== */
+nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
+nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
+nav.subheader a:hover {text-decoration:underline;}
+
+/* ===== Comparison Section ===== */
+section#comparison {padding:50px 20px; max-width:1200px; margin:auto;}
+h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
 
 /* ===== Categories ===== */
-.category-header {
-  width:100%; text-align:left; padding:12px 20px;
-  font-size:18px; font-weight:bold; background:#1f2a38; color:#fff;
-  border:none; border-radius:4px; outline:none; margin-top:10px; cursor:pointer;
-}
+.category-header {width:100%; text-align:left; padding:12px 20px; font-size:18px; font-weight:bold; background:#1f2a38; color:#fff; border:none; border-radius:4px; outline:none; margin-top:10px; cursor:pointer;}
 .category-header:hover {background:#2b3a4a;}
+.subcategory-header {width:100%; text-align:left; padding:10px 30px; font-size:16px; font-weight:bold; background:#2b3a4a; color:#fff; border:none; border-radius:4px; outline:none; margin-top:5px; cursor:pointer;}
+.subcategory-header:hover {background:#3b4a5a;}
 .product-table {width:100%; border-collapse:collapse; margin-top:10px; display:none;}
 th, td {padding:10px; border:1px solid #ddd;}
 th {background:#1f2a38; color:#fff;}
@@ -35,25 +39,34 @@ tbody tr:nth-child(odd) {background:#ffffff;}
 tbody tr:hover {background:#f1f1f1;}
 .cheapest {background:#d4ffd4 !important;}
 
+/* ===== Footer ===== */
+footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
+footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
+
 /* ===== Responsive ===== */
 @media(max-width:768px){
-  .product-table {display:block; overflow-x:auto; white-space:nowrap;}
-  th, td {padding:8px;}
-  .category-header {font-size:16px; padding:10px;}
+  .product-table{display:block; overflow-x:auto; white-space:nowrap;}
+  th, td{padding:8px;}
+  .category-header{font-size:16px; padding:10px;}
+  .subcategory-header{font-size:14px; padding:8px 25px;}
 }
-
-section {padding:50px 20px; max-width:1200px; margin:auto;}
-h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
 </style>
 </head>
 <body>
 
-<!-- ===== Hero Section ===== -->
-<section class="hero">
-  <div class="hero-overlay">
-    <h1 class="hero-slogan">Find the Best Price Fast</h1>
+<header>
+  <div class="logo">
+    <img src="images/favicon.png" alt="Buildy Logo"> Buildy
   </div>
-</section>
+  <div class="login">Login</div>
+</header>
+
+<nav class="subheader">
+  <a href="index.html">Home</a>
+  <a href="#">Materials</a>
+  <a href="#">Suppliers</a>
+  <a href="#">Contact</a>
+</nav>
 
 <section id="comparison">
   <h2>Compare Building Materials Prices</h2>
@@ -62,9 +75,7 @@ h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
   <div class="category">
     <button class="category-header" onclick="toggleTable('cementTable')">Cement &#x25BC;</button>
     <table id="cementTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
         <tr class="cheapest"><td>O'Brien Premium Cement 25kg</td><td>Goodwins</td><td>€6.95</td><td>Eco-efficient Portland limestone cement</td></tr>
         <tr><td>Irish Cement 25kg</td><td>McMahons</td><td>€7.69</td><td>General-purpose cement</td></tr>
@@ -76,14 +87,22 @@ h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
   <!-- ===== Timber ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('timberTable')">Timber &#x25BC;</button>
-    <table id="timberTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+    
+    <button class="subcategory-header" onclick="toggleTable('timberSoftwood')">Softwood &#x25BC;</button>
+    <table id="timberSoftwood" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Chipboard FSC 18mm x 1830mm</td><td>Woodie's</td><td>€24.99</td><td>Suitable for various applications</td></tr>
-        <tr class="cheapest"><td>Chipboard FSC 18mm x 1220mm</td><td>Woodie's</td><td>€17.99</td><td>Versatile and cost-effective</td></tr>
-        <tr><td>MDF Board 18mm x 915mm x 610mm</td><td>Woodie's</td><td>€22.99</td><td>Ideal for furniture and cabinetry</td></tr>
+        <tr class="cheapest"><td>Pine Board 18mm x 1220mm</td><td>Woodie's</td><td>€15.99</td><td>Versatile softwood board</td></tr>
+        <tr><td>Spruce Timber 50x100mm</td><td>Heiton Buckley</td><td>€3.25/m</td><td>Common construction timber</td></tr>
+      </tbody>
+    </table>
+
+    <button class="subcategory-header" onclick="toggleTable('timberHardwood')">Hardwood &#x25BC;</button>
+    <table id="timberHardwood" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Oak Board 25mm x 1200mm</td><td>TJ O'Mahony</td><td>€29.99</td><td>Premium hardwood for furniture</td></tr>
+        <tr><td>Mahogany Board 20mm x 1200mm</td><td>Chadwicks</td><td>€35.50</td><td>Decorative high-quality wood</td></tr>
       </tbody>
     </table>
   </div>
@@ -92,28 +111,24 @@ h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
   <div class="category">
     <button class="category-header" onclick="toggleTable('bricksTable')">Bricks &#x25BC;</button>
     <table id="bricksTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
         <tr class="cheapest"><td>Class A Solid Engineering Brick</td><td>McMahons</td><td>€2.15</td><td>High-strength brick for construction</td></tr>
         <tr><td>Viola Brick</td><td>McMahons</td><td>€2.24</td><td>Aesthetic brick suitable for facades</td></tr>
-        <tr><td>Fire Brick 9 x 4 x 3 inch</td><td>McMahons</td><td>€5.00</td><td>Heat-resistant brick for fireplaces</td></tr>
+        <tr><td>Fire Brick 9x4x3 inch</td><td>McMahons</td><td>€5.00</td><td>Heat-resistant brick for fireplaces</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- ===== Roofing Materials ===== -->
+  <!-- ===== Roofing ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('roofingTable')">Roofing Materials &#x25BC;</button>
     <table id="roofingTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Roofing Felt</td><td>Chadwicks</td><td>Varies</td><td>Available in various sizes</td></tr>
-        <tr><td>Roofing Membranes</td><td>Chadwicks</td><td>Varies</td><td>High-quality membranes</td></tr>
-        <tr><td>Gutter & Downpipe Systems</td><td>Chadwicks</td><td>Varies</td><td>Durable systems for rainwater management</td></tr>
+        <tr><td>Roofing Felt</td><td>Chadwicks</td><td>€15.50</td><td>Various sizes</td></tr>
+        <tr><td>Roofing Membranes</td><td>Chadwicks</td><td>€35.00</td><td>High-quality membranes</td></tr>
+        <tr class="cheapest"><td>Gutter & Downpipe Systems</td><td>Chadwicks</td><td>€12.50</td><td>Durable rainwater system</td></tr>
       </tbody>
     </table>
   </div>
@@ -122,12 +137,10 @@ h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
   <div class="category">
     <button class="category-header" onclick="toggleTable('insulationTable')">Insulation &#x25BC;</button>
     <table id="insulationTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Baumit External Wall Insulation</td><td>Heiton Buckley</td><td>Varies</td><td>Energy-efficient insulation solution</td></tr>
-        <tr><td>Insulation Boards</td><td>Chadwicks</td><td>Varies</td><td>Various types available</td></tr>
+        <tr class="cheapest"><td>Baumit External Wall Insulation</td><td>Heiton Buckley</td><td>€18.50/m²</td><td>Energy-efficient insulation</td></tr>
+        <tr><td>Insulation Boards</td><td>Chadwicks</td><td>€20.00/m²</td><td>Various types available</td></tr>
       </tbody>
     </table>
   </div>
@@ -136,31 +149,67 @@ h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
   <div class="category">
     <button class="category-header" onclick="toggleTable('paintTable')">Paint &#x25BC;</button>
     <table id="paintTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr class="cheapest"><td>Ronseal Anti Condensation Paint</td><td>Woodie's</td><td>€23.19</td><td>Helps prevent condensation and mold</td></tr>
-        <tr><td>Interior Paint</td><td>Woodie's</td><td>Varies</td><td>Wide range of colors and finishes</td></tr>
+        <tr class="cheapest"><td>Ronseal Anti Condensation Paint</td><td>Woodie's</td><td>€23.19</td><td>Prevents condensation & mold</td></tr>
+        <tr><td>Interior Paint</td><td>Woodie's</td><td>€25.50</td><td>Wide range of colors</td></tr>
       </tbody>
     </table>
   </div>
 
   <!-- ===== Plumbing ===== -->
   <div class="category">
-    <button class="category-header" onclick="toggleTable('plumbingTable')">Plumbing Materials &#x25BC;</button>
+    <button class="category-header" onclick="toggleTable('plumbingTable')">Plumbing &#x25BC;</button>
     <table id="plumbingTable" class="product-table">
-      <thead>
-        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Plumbing Fixtures</td><td>Chadwicks</td><td>Varies</td><td>Extensive range of fixtures</td></tr>
-        <tr><td>Pipe Insulation</td><td>Chadwicks</td><td>Varies</td><td>Essential for energy efficiency</td></tr>
+        <tr class="cheapest"><td>PVC Pipe 110mm x 3m</td><td>Chadwicks</td><td>€9.50</td><td>Durable water pipe</td></tr>
+        <tr><td>Brass Tap</td><td>Heiton Buckley</td><td>€14.99</td><td>High-quality kitchen tap</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Electrical ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('electricalTable')">Electrical &#x25BC;</button>
+    <table id="electricalTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>16A Circuit Breaker</td><td>Woodie's</td><td>€5.50</td><td>Domestic use</td></tr>
+        <tr><td>Switch Socket Combo</td><td>Heiton Buckley</td><td>€3.99</td><td>Standard white socket</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Flooring ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('flooringTable')">Flooring &#x25BC;</button>
+    <table id="flooringTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>Laminated Flooring 2.5m²</td><td>Woodie's</td><td>€29.99</td><td>Easy to install</td></tr>
+        <tr><td>Vinyl Plank 1m²</td><td>Chadwicks</td><td>€15.50</td><td>Waterproof flooring</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Windows & Doors ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('windowsTable')">Windows & Doors &#x25BC;</button>
+    <table id="windowsTable" class="product-table">
+      <thead><tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cheapest"><td>uPVC Window 1200x1200mm</td><td>Chadwicks</td><td>€99.00</td><td>Double glazed, energy efficient</td></tr>
+        <tr><td>Exterior Door 900x2100mm</td><td>Heiton Buckley</td><td>€179.00</td><td>Solid timber, insulated</td></tr>
       </tbody>
     </table>
   </div>
 
 </section>
+
+<footer>
+  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
+</footer>
 
 <script>
 function toggleTable(id){
