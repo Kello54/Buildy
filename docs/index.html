@@ -3,214 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildy - No.1 Building Material Price Comparison</title>
+<title>Buildy - Building Material Price Comparison</title>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <style>
 /* ===== Global Styles ===== */
-* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
-body {min-height:100vh; color:#1f1f1f; background:#f5f5f5;}
-a {text-decoration:none;}
-button {cursor:pointer;}
-
-/* ===== Header ===== */
-header {
-  display:flex; justify-content:space-between; align-items:center; padding:15px 20px;
-  background:#1f2a38; border-bottom:4px solid #F39C12;
+body, html {
+  margin:0; padding:0; font-family:Arial,sans-serif; background:#f5f5f5; color:#1f1f1f;
 }
-header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
-header .logo img{height:40px; margin-right:10px;}
-header .login {
-  color:#fff; font-size:16px; padding:6px 12px;
-  border:1px solid rgba(243,156,18,0.3); border-radius:4px;
-}
-header .login:hover {background:rgba(243,156,18,0.2);}
-
-/* ===== Subheader ===== */
-nav.subheader {background:#1f2a38; padding:10px; text-align:center;}
-nav.subheader a {color:#fff; margin:0 15px;}
 
 /* ===== Hero Section ===== */
 .hero {
-  position: relative;
-  width: 100%;
-  height: 80vh;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6)),
-              url('images/house.jpg') center/cover no-repeat;
-  background-attachment: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  height:50vh;
+  background:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('images/house.jpg') center/cover no-repeat;
+  display:flex; align-items:center; justify-content:center;
 }
-@media (max-width:768px){ .hero {background-attachment: scroll;} }
+.hero-overlay { text-align:center; }
+.hero-slogan { color:#ffd700; font-size:2.5rem; font-weight:bold; }
 
-.hero-overlay {
-  position: absolute;
-  top: 0; left:0;
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 0 20px;
-}
-.hero-slogan {
-  color:#ffd700;
-  font-size:3rem;
-  font-weight:bold;
-  text-shadow:2px 2px 8px rgba(0,0,0,0.7);
-  opacity:0;
-  transform: translateY(20px);
-  animation: fadeSlideIn 2s forwards;
-  transition: transform 0.3s, text-shadow 0.3s;
-}
-.hero-slogan:hover {
-  transform: scale(1.1);
-  text-shadow: 4px 4px 12px rgba(0,0,0,0.8);
-}
-#heroCTA {
-  margin-top:30px;
-  padding:18px 35px;
-  background: rgba(31, 38, 48, 0.85);
-  color: #e0e0e0;
-  font-weight:bold;
-  font-size:18px;
-  border-radius:6px;
-  cursor:pointer;
-  transition: background 0.3s;
-}
-#heroCTA:hover {background: rgba(31, 38, 48, 1);}
-
-/* ===== Comparison Section ===== */
-section#comparison {padding:50px 20px; max-width:1200px; margin:auto;}
-section#comparison h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
-.category {margin-bottom:20px;}
+/* ===== Categories ===== */
 .category-header {
   width:100%; text-align:left; padding:12px 20px;
   font-size:18px; font-weight:bold; background:#1f2a38; color:#fff;
-  border:none; border-radius:4px; outline:none;
+  border:none; border-radius:4px; outline:none; margin-top:10px; cursor:pointer;
 }
 .category-header:hover {background:#2b3a4a;}
-.category table {width:100%; border-collapse: collapse; margin-top:10px; display:none;}
-.category th, .category td {padding:10px; border:1px solid #ddd;}
-.category th {background:#1f2a38; color:#fff; text-align:left;}
-
-/* ===== Footer ===== */
-footer {
-  background:#1f2a38;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-  border-top:4px solid #F39C12;
-}
-footer a {color:#F39C12; margin:0 5px;}
-
-/* ===== Animations ===== */
-@keyframes fadeSlideIn {
-  to {opacity:1; transform: translateY(0);}
-}
+.product-table {width:100%; border-collapse:collapse; margin-top:10px; display:none;}
+th, td {padding:10px; border:1px solid #ddd;}
+th {background:#1f2a38; color:#fff;}
+tbody tr:nth-child(even) {background:#f9f9f9;}
+tbody tr:nth-child(odd) {background:#ffffff;}
+tbody tr:hover {background:#f1f1f1;}
+.cheapest {background:#d4ffd4 !important;}
 
 /* ===== Responsive ===== */
 @media(max-width:768px){
-  .hero-slogan{font-size:2rem;}
-  #heroCTA{font-size:16px; padding:15px 30px;}
+  .product-table {display:block; overflow-x:auto; white-space:nowrap;}
+  th, td {padding:8px;}
+  .category-header {font-size:16px; padding:10px;}
 }
-@media(max-width:480px){
-  .hero-slogan{font-size:1.5rem;}
-  #heroCTA{font-size:14px; padding:12px 25px;}
-}
+
+section {padding:50px 20px; max-width:1200px; margin:auto;}
+h2 {text-align:center; margin-bottom:30px; color:#1f2a38;}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <img src="images/favicon.png" alt="Buildy Logo"> Buildy
-  </div>
-  <div class="login">Login</div>
-</header>
-
-<nav class="subheader">
-  <a href="#">Home</a>
-  <a href="#">Materials</a>
-  <a href="#">Suppliers</a>
-  <a href="#">Contact</a>
-</nav>
-
+<!-- ===== Hero Section ===== -->
 <section class="hero">
   <div class="hero-overlay">
-    <h1 class="hero-slogan">Compare. Save. Build Smarter.</h1>
-    <div id="heroCTA" onclick="goToComparison()">Get Started</div>
+    <h1 class="hero-slogan">Find the Best Price Fast</h1>
   </div>
 </section>
 
 <section id="comparison">
   <h2>Compare Building Materials Prices</h2>
 
-  <!-- Cement Category -->
+  <!-- ===== Cement ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('cementTable')">Cement &#x25BC;</button>
-    <table id="cementTable">
+    <table id="cementTable" class="product-table">
       <thead>
-        <tr><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td>Chadwicks</td><td>€7.50</td><td>Portland Cement 25kg</td></tr>
-        <tr><td>TJ O'Mahony</td><td>€7.80</td><td>Portland Cement 25kg</td></tr>
+        <tr class="cheapest"><td>O'Brien Premium Cement 25kg</td><td>Goodwins</td><td>€6.95</td><td>Eco-efficient Portland limestone cement</td></tr>
+        <tr><td>Irish Cement 25kg</td><td>McMahons</td><td>€7.69</td><td>General-purpose cement</td></tr>
+        <tr><td>Irish Cement 25kg</td><td>Centenary Thurles</td><td>€8.50</td><td>Suitable for brick laying</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Timber Category -->
+  <!-- ===== Timber ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('timberTable')">Timber &#x25BC;</button>
-    <table id="timberTable">
+    <table id="timberTable" class="product-table">
       <thead>
-        <tr><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td>Woodies</td><td>€12.50</td><td>Pine Plank 2m</td></tr>
-        <tr><td>Heiton Buckley</td><td>€13.00</td><td>Pine Plank 2m</td></tr>
+        <tr><td>Chipboard FSC 18mm x 1830mm</td><td>Woodie's</td><td>€24.99</td><td>Suitable for various applications</td></tr>
+        <tr class="cheapest"><td>Chipboard FSC 18mm x 1220mm</td><td>Woodie's</td><td>€17.99</td><td>Versatile and cost-effective</td></tr>
+        <tr><td>MDF Board 18mm x 915mm x 610mm</td><td>Woodie's</td><td>€22.99</td><td>Ideal for furniture and cabinetry</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Bricks Category -->
+  <!-- ===== Bricks ===== -->
   <div class="category">
     <button class="category-header" onclick="toggleTable('bricksTable')">Bricks &#x25BC;</button>
-    <table id="bricksTable">
+    <table id="bricksTable" class="product-table">
       <thead>
-        <tr><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td>Chadwicks</td><td>€0.60</td><td>Standard Red Brick</td></tr>
-        <tr><td>TJ O'Mahony</td><td>€0.65</td><td>Standard Red Brick</td></tr>
+        <tr class="cheapest"><td>Class A Solid Engineering Brick</td><td>McMahons</td><td>€2.15</td><td>High-strength brick for construction</td></tr>
+        <tr><td>Viola Brick</td><td>McMahons</td><td>€2.24</td><td>Aesthetic brick suitable for facades</td></tr>
+        <tr><td>Fire Brick 9 x 4 x 3 inch</td><td>McMahons</td><td>€5.00</td><td>Heat-resistant brick for fireplaces</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Roofing Category -->
+  <!-- ===== Roofing Materials ===== -->
   <div class="category">
-    <button class="category-header" onclick="toggleTable('roofingTable')">Roofing &#x25BC;</button>
-    <table id="roofingTable">
+    <button class="category-header" onclick="toggleTable('roofingTable')">Roofing Materials &#x25BC;</button>
+    <table id="roofingTable" class="product-table">
       <thead>
-        <tr><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td>Woodies</td><td>€25.00</td><td>Tile Sheet 1m²</td></tr>
-        <tr><td>Heiton Buckley</td><td>€26.50</td><td>Tile Sheet 1m²</td></tr>
+        <tr><td>Roofing Felt</td><td>Chadwicks</td><td>Varies</td><td>Available in various sizes</td></tr>
+        <tr><td>Roofing Membranes</td><td>Chadwicks</td><td>Varies</td><td>High-quality membranes</td></tr>
+        <tr><td>Gutter & Downpipe Systems</td><td>Chadwicks</td><td>Varies</td><td>Durable systems for rainwater management</td></tr>
       </tbody>
     </table>
   </div>
+
+  <!-- ===== Insulation ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('insulationTable')">Insulation &#x25BC;</button>
+    <table id="insulationTable" class="product-table">
+      <thead>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Baumit External Wall Insulation</td><td>Heiton Buckley</td><td>Varies</td><td>Energy-efficient insulation solution</td></tr>
+        <tr><td>Insulation Boards</td><td>Chadwicks</td><td>Varies</td><td>Various types available</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Paint ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('paintTable')">Paint &#x25BC;</button>
+    <table id="paintTable" class="product-table">
+      <thead>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr class="cheapest"><td>Ronseal Anti Condensation Paint</td><td>Woodie's</td><td>€23.19</td><td>Helps prevent condensation and mold</td></tr>
+        <tr><td>Interior Paint</td><td>Woodie's</td><td>Varies</td><td>Wide range of colors and finishes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Plumbing ===== -->
+  <div class="category">
+    <button class="category-header" onclick="toggleTable('plumbingTable')">Plumbing Materials &#x25BC;</button>
+    <table id="plumbingTable" class="product-table">
+      <thead>
+        <tr><th>Product</th><th>Supplier</th><th>Price (€)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Plumbing Fixtures</td><td>Chadwicks</td><td>Varies</td><td>Extensive range of fixtures</td></tr>
+        <tr><td>Pipe Insulation</td><td>Chadwicks</td><td>Varies</td><td>Essential for energy efficiency</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </section>
 
-<footer>
-  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
-</footer>
-
 <script>
-function goToComparison(){ window.location.href='comparison.html'; }
 function toggleTable(id){
   const table = document.getElementById(id);
-  table.style.display = (table.style.display==='none' || table.style.display==='') ? 'table' : 'none';
+  table.style.display = (table.style.display === 'none' || table.style.display === '') ? 'table' : 'none';
 }
 </script>
 
