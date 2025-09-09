@@ -28,35 +28,30 @@ nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 
 /* ===== Filters ===== */
 #filters {
-  display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:20px; background:#fff;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1); border-radius:6px; margin:20px;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:20px; background:#fff; border-radius:6px; margin:20px auto; max-width:1200px;
 }
-#filters input, #filters select {
+#filters input, #filters select, #filters button {
   padding:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; width:200px;
 }
 #filters button {
-  padding:10px 20px; background:#F39C12; border:none; color:#fff; font-weight:bold; border-radius:5px; cursor:pointer;
+  background:#F39C12; color:#1f2a38; font-weight:bold; border:none; cursor:pointer; transition: background 0.3s;
 }
-#filters button:hover {background:#e6a428;}
+#filters button:hover {background:#e08e0b;}
 
 /* ===== Table ===== */
 #comparisonTable {
-  width:100%; border-collapse:collapse; margin:20px auto; background:#fff; max-width:1200px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;
+  width:100%; border-collapse:collapse; margin:20px auto; background:#fff; max-width:1200px; border-radius:6px; overflow:hidden;
 }
 #comparisonTable th, #comparisonTable td {
   border:1px solid #ddd; padding:12px; text-align:center; vertical-align:middle;
 }
 #comparisonTable th {
-  background:#273746; color:#fff; position:sticky; top:0; z-index:2;
-}
-#comparisonTable th:first-child, #comparisonTable td:first-child {
-  position:sticky; left:0; background:#273746; color:#fff; z-index:3;
+  background:#1f2a38; color:#fff; position:sticky; top:0; z-index:2; cursor:pointer;
 }
 #comparisonTable th img {height:20px; vertical-align:middle; margin-right:5px;}
 tr:nth-child(even){background:#f9f9f9;}
 tr:hover {background:#e6f7ff;}
-.highlight {background:#F39C12 !important; color:#fff; font-weight:bold;}
+.highlight {background:#F39C12 !important; color:#1f2a38; font-weight:bold;}
 
 /* ===== Cards (Mobile) ===== */
 #cardWrapper {display:none; flex-direction:column; gap:10px; padding:20px;}
@@ -68,7 +63,7 @@ tr:hover {background:#e6f7ff;}
 .card .highlight {color:#F39C12; font-weight:bold;}
 
 /* ===== Map ===== */
-#supplierMap {height:300px; margin:20px; border:2px solid #F39C12; border-radius:6px;}
+#supplierMap {height:300px; margin:20px auto; max-width:1200px; border:2px solid #F39C12; border-radius:6px;}
 
 /* ===== Footer ===== */
 footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
@@ -78,7 +73,7 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 @media(max-width:768px){
   #comparisonTable {display:none;}
   #cardWrapper {display:flex;}
-  #filters input, #filters select {width:100%; max-width:300px;}
+  #filters input, #filters select, #filters button {width:100%; max-width:300px;}
 }
 </style>
 </head>
@@ -111,11 +106,11 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 <table id="comparisonTable">
   <thead>
     <tr>
-      <th>Material</th>
-      <th><img src="images/chadwicks-logo.png" alt="Chadwicks"> Chadwicks</th>
-      <th><img src="images/tj-omahony-logo.png" alt="TJ O'Mahony"> TJ O'Mahony</th>
-      <th><img src="images/woodies-logo.png" alt="Woodie's"> Woodie's</th>
-      <th><img src="images/heiton-buckley-logo.png" alt="Heiton Buckley"> Heiton Buckley</th>
+      <th data-index="0">Material</th>
+      <th data-index="1"><img src="images/chadwicks-logo.png" alt="Chadwicks"> Chadwicks</th>
+      <th data-index="2"><img src="images/tj-omahony-logo.png" alt="TJ O'Mahony"> TJ O'Mahony</th>
+      <th data-index="3"><img src="images/woodies-logo.png" alt="Woodie's"> Woodie's</th>
+      <th data-index="4"><img src="images/heiton-buckley-logo.png" alt="Heiton Buckley"> Heiton Buckley</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -135,10 +130,14 @@ footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 <script>
 // ===== Materials & Suppliers =====
 const materials = [
-  {category:"Cement", name:"Cement (25kg)"},{category:"Cement", name:"White Cement (25kg)"},
-  {category:"Timber", name:"Timber 2x4 (2.4m)"},{category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
-  {category:"Bricks", name:"Clay Bricks (per 100)"},{category:"Roofing", name:"Roof Tiles (per 100)"},
-  {category:"Flooring", name:"Ceramic Tiles (per m²)"},{category:"Paint", name:"Interior Emulsion (5L)"}
+  {category:"Cement", name:"Cement (25kg)"},
+  {category:"Cement", name:"White Cement (25kg)"},
+  {category:"Timber", name:"Timber 2x4 (2.4m)"},
+  {category:"Timber", name:"Plywood Sheet 8x4 (18mm)"},
+  {category:"Bricks", name:"Clay Bricks (per 100)"},
+  {category:"Roofing", name:"Roof Tiles (per 100)"},
+  {category:"Flooring", name:"Ceramic Tiles (per m²)"},
+  {category:"Paint", name:"Interior Emulsion (5L)"}
 ];
 const suppliers = ["Chadwicks", "TJ O'Mahony", "Woodie's", "Heiton Buckley"];
 
@@ -148,81 +147,74 @@ const categorySelect = document.getElementById("categoryFilter");
   const opt=document.createElement("option"); opt.value=c; opt.text=c; categorySelect.appendChild(opt);
 });
 
-// Generate table
-function generateTable(filterCategory=""){
+// Generate Table & Cards
+function generateTable(filterList=materials){
   const tbody = document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
-  filtered.forEach(item=>{
+  filterList.forEach(item=>{
     const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
     const minPrice = Math.min(...prices);
     const row = document.createElement("tr");
     row.innerHTML=`<td>${item.name}</td>` + prices.map(p=>`<td class="${p==minPrice?'highlight':''}">€${p}</td>`).join('');
     tbody.appendChild(row);
+    item.prices = prices; // store prices for sorting
   });
 }
 
-// Generate cards
-function generateCards(filterCategory=""){
-  const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
-  const filtered = filterCategory ? materials.filter(m=>m.category===filterCategory) : materials;
-  filtered.forEach(item=>{
-    const prices = suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice = Math.min(...prices);
-    const card=document.createElement("div"); card.className="card";
-    card.innerHTML=`<h3>${item.name}</h3>` + suppliers.map((s,i)=>`<div class="price-row">${s}: <span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`).join('');
+function generateCards(filterList=materials){
+  const wrapper = document.getElementById("cardWrapper"); wrapper.innerHTML="";
+  filterList.forEach(item=>{
+    const minPrice = Math.min(...item.prices);
+    const card = document.createElement("div"); card.className="card";
+    card.innerHTML=`<h3>${item.name}</h3>` + suppliers.map((s,i)=>`<div class="price-row">${s}: <span class="${item.prices[i]==minPrice?'highlight':''}">€${item.prices[i]}</span></div>`).join('');
     wrapper.appendChild(card);
   });
 }
 
 // Filter & Search
-categorySelect.addEventListener('change',()=>{generateTable(categorySelect.value); generateCards(categorySelect.value);});
-document.getElementById("searchBox").addEventListener('input',()=>{
-  const query=document.getElementById("searchBox").value.toLowerCase();
-  const filtered = materials.filter(m=>m.name.toLowerCase().includes(query));
-  generateTableFiltered(filtered);
-  generateCardsFiltered(filtered);
-});
+function filterMaterials(){
+  const query = document.getElementById("searchBox").value.toLowerCase();
+  const category = categorySelect.value;
+  return materials.filter(m => 
+    (!category || m.category===category) &&
+    (!query || m.name.toLowerCase().includes(query))
+  );
+}
+
+categorySelect.addEventListener('change',()=>{ const f=filterMaterials(); generateTable(f); generateCards(f); });
+document.getElementById("searchBox").addEventListener('input',()=>{ const f=filterMaterials(); generateTable(f); generateCards(f); });
 document.getElementById("resetFilters").addEventListener('click',()=>{
-  categorySelect.value="";
-  document.getElementById("searchBox").value="";
-  generateTable();
-  generateCards();
+  categorySelect.value=""; document.getElementById("searchBox").value="";
+  generateTable(); generateCards();
 });
-function generateTableFiltered(filtered){
-  const tbody=document.querySelector("#comparisonTable tbody"); tbody.innerHTML="";
-  filtered.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const row=document.createElement("tr");
-    row.innerHTML=`<td>${item.name}</td>` + prices.map(p=>`<td class="${p==minPrice?'highlight':''}">€${p}</td>`).join('');
-    tbody.appendChild(row);
+
+// Sorting
+let sortDirection=1;
+document.querySelectorAll("#comparisonTable th").forEach(th=>{
+  th.addEventListener('click',()=>{
+    const index = parseInt(th.dataset.index);
+    const filtered = filterMaterials();
+    filtered.sort((a,b)=>{
+      if(index==0) return a.name.localeCompare(b.name)*sortDirection;
+      else return (a.prices[index-1]-b.prices[index-1])*sortDirection;
+    });
+    sortDirection*=-1;
+    generateTable(filtered);
+    generateCards(filtered);
   });
-}
-function generateCardsFiltered(filtered){
-  const wrapper=document.getElementById("cardWrapper"); wrapper.innerHTML="";
-  filtered.forEach(item=>{
-    const prices=suppliers.map(()=> (Math.random()*50+10).toFixed(2));
-    const minPrice=Math.min(...prices);
-    const card=document.createElement("div"); card.className="card";
-    card.innerHTML=`<h3>${item.name}</h3>` + suppliers.map((s,i)=>`<div class="price-row">${s}: <span class="${prices[i]==minPrice?'highlight':''}">€${prices[i]}</span></div>`).join('');
-    wrapper.appendChild(card);
-  });
-}
+});
 
 // Map
-const map = L.map('supplierMap').setView([52.5, -6.5], 7);
+const map = L.map('supplierMap').setView([52.5,-6.5],7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-const supplierData = [
-  {name:"Chadwicks", coords:[52.334, -6.457], url:"#"},
-  {name:"TJ O'Mahony", coords:[52.321, -6.645], url:"#"},
-  {name:"Woodie's", coords:[52.389, -6.580], url:"#"},
-  {name:"Heiton Buckley", coords:[52.340, -6.520], url:"#"}
+const supplierData=[
+  {name:"Chadwicks", coords:[52.334,-6.457], url:"#"},
+  {name:"TJ O'Mahony", coords:[52.321,-6.645], url:"#"},
+  {name:"Woodie's", coords:[52.389,-6.580], url:"#"},
+  {name:"Heiton Buckley", coords:[52.340,-6.520], url:"#"}
 ];
-supplierData.forEach(s=>{
-  L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`);
-});
+supplierData.forEach(s=>{ L.marker(s.coords).addTo(map).bindPopup(`<b>${s.name}</b><br><a href="${s.url}">Visit Page</a>`); });
 
-// Initial load
+// Initial Load
 generateTable();
 generateCards();
 </script>
