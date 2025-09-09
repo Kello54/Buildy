@@ -3,185 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIY Store Directory</title>
+<title>Buildy - No.1 Building Material Price Comparison</title>
+<link rel="icon" href="images/favicon.png" type="image/png">
 
 <style>
-/* ===== Reset & Base ===== */
-* {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
-body {background: url('https://images.unsplash.com/photo-1509228627153-1c3a3f7a31b3?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed; background-size: cover; color:#333;}
-a {text-decoration:none; color:inherit;}
+/* ===== Global ===== */
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+body {min-height:100vh; color:#1f1f1f; margin:0; background:#f5f5f5;}
 
-/* ===== Header & Subheader ===== */
-header {background: rgba(31,38,48,0.9); padding:15px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100;}
-header img {height:50px;}
-nav.subheader {background:#1f2a38; padding:10px 20px; text-align:center;}
-nav.subheader a {margin:0 8px; padding:5px 5px; color:#F39C12; font-weight:bold; transition:0.3s;}
-nav.subheader a:hover {color:#fff;}
+/* ===== Header ===== */
+header {
+  display:flex; justify-content:space-between; align-items:center; padding:15px 20px;
+  background:#1f2a38; /* deeper slate */
+  border-bottom:4px solid #F39C12; /* warm amber */
+}
+header .logo {display:flex; align-items:center; font-size:24px; font-weight:bold; color:#fff;}
+header .logo img{height:40px;}
+header .login {
+  color:#fff; font-size:16px; padding:6px 12px; border:1px solid rgba(243,156,18,0.3); border-radius:4px; cursor:pointer;
+}
+header .login:hover {background:rgba(243,156,18,0.2);}
+
+/* ===== Subheader ===== */
+nav.subheader {
+  background:#1f2a38; /* matching header */
+  padding:10px; text-align:center;
+}
+nav.subheader a {color:#fff; margin:0 15px; text-decoration:none;}
 
 /* ===== Hero ===== */
-.hero {text-align:center; padding:100px 20px; color:#fff; text-shadow: 2px 2px 4px #000;}
-.hero .slogan-hero{font-size:28px; padding:10px 15px;}
-#heroCTA{font-size:16px; padding:15px 30px; background:#F39C12; color:#1f2a38; border:none; cursor:pointer; transition:0.3s;}
-#heroCTA:hover {background: rgba(31,38,48,1); transform: scale(1.05);}
-
-/* ===== Collapsible Categories ===== */
-main {max-width:1200px; margin:40px auto; padding:0 20px;}
-.category {border-bottom:2px solid #d4af37; padding:20px 0;}
-.category-header {cursor:pointer; font-size:22px; color:#1f2a38; margin-bottom:5px; transition:0.3s;}
-.category-header:hover {color:#F39C12;}
-.category-content {max-height:0; overflow:hidden; transition:max-height 0.5s ease;}
-.category-content table {width:100%; border-collapse: collapse; margin-top:15px;}
-.category-content th, .category-content td {padding:10px; text-align:left; border-bottom:1px solid #d4af37;}
-.category-content tr:nth-child(even) {background:#f9f9f9;}
-.category-content img {height:40px; border-radius:4px;}
-
-/* Highlight cheapest price */
-.category-content td.price-lowest {background: #d4edda;}
-
-/* ===== Search Bar ===== */
-#searchBar {width:100%; padding:10px 15px; margin-bottom:20px; font-size:16px; border:1px solid #ccc; border-radius:6px;}
+.hero {
+  text-align:center;
+  padding:120px 20px;
+  background: url("https://kello54.github.io/Buildy/docs/images/construction-bg.jpg") center/cover no-repeat;
+  color:#fff;
+  position:relative;
+}
+.hero .slogan-hero {
+  position:relative;
+  z-index:1;
+  font-size:36px;
+  font-weight:bold;
+  color:#FFFFFF; /* White for readability */
+  text-shadow: none; /* Removed shadow */
+  margin-bottom:40px;
+}
+#heroCTA {
+  position:relative;
+  z-index:1;
+  display:inline-block;
+  padding:18px 35px;
+  background: rgba(31, 38, 48, 0.85); /* dark semi-transparent */
+  color: #FFFFFF;
+  font-weight:bold;
+  font-size:18px;
+  border-radius:6px;
+  cursor:pointer;
+  transition: background 0.3s;
+}
+#heroCTA:hover {background: rgba(31, 38, 48, 1);}
 
 /* ===== Footer ===== */
-footer {background:#1f2a38; color:#fff; text-align:center; padding:20px; border-top:4px solid #F39C12;}
-
-/* ===== Floating Cart/Wishlist ===== */
-#floatingCart, #floatingWishlist {position:fixed; bottom:20px; right:20px; background:#F39C12; color:#1f2a38; padding:12px 18px; border-radius:50px; cursor:pointer; font-weight:bold; z-index:100;}
-#floatingWishlist {right:140px;}
-#floatingCart span {margin-left:10px;}
-
-/* ===== Back to top ===== */
-#backToTop {position:fixed; bottom:90px; right:20px; background:#1f2a38; color:#F39C12; padding:10px 15px; border-radius:50%; cursor:pointer; display:none; z-index:100; font-weight:bold;}
+footer {
+  background:#1f2a38;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+  border-top:4px solid #F39C12;
+}
+footer a {color:#F39C12; text-decoration:underline; margin:0 5px;}
 
 /* ===== Responsive ===== */
 @media(max-width:768px){
-  .hero .slogan-hero{font-size:22px; padding:10px;}
-  #heroCTA{font-size:14px; padding:12px 25px;}
-  nav.subheader a{margin:0 4px; padding:5px 3px;}
-  .category-content table {font-size:0.9em;}
-  #searchBar {font-size:14px;}
+  .hero .slogan-hero{font-size:28px; padding:0 10px;}
+  #heroCTA{font-size:16px; padding:15px 30px;}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo">
-  <button id="heroCTA">Get Started</button>
+  <div class="logo">
+    <img src="images/favicon.png" alt="Buildy Logo"> Buildy
+  </div>
+  <div class="login">Login</div>
 </header>
 
 <nav class="subheader">
-  <a href="#cement">Cement & Aggregates</a>
-  <a href="#timber">Timber & Wood</a>
-  <a href="#tools">Tools & Hardware</a>
-  <a href="#paint">Paint & Decorating</a>
-  <a href="#bathroom">Bathroom & Plumbing</a>
-  <a href="#garden">Lawn & Garden</a>
-  <a href="#outdoor">Outdoor Living</a>
+  <a href="#">Home</a>
+  <a href="#">Materials</a>
+  <a href="#">Suppliers</a>
+  <a href="#">Contact</a>
 </nav>
 
-<main>
-  <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()">
-
-  <!-- ===== Categories ===== -->
-  <!-- Example: Cement & Aggregates -->
-  <section class="category" id="cement">
-    <h2 class="category-header" onclick="toggleCategory(this)">Cement & Aggregates</h2>
-    <div class="category-content">
-      <table>
-        <thead>
-          <tr><th>Supplier</th><th>Product</th><th>Price</th><th>Availability</th><th>Image</th><th>Contact</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Chadwick’s</td>
-            <td>Portland Cement 25kg</td>
-            <td class="price-lowest">€12</td>
-            <td>In Stock</td>
-            <td><img src="https://images.unsplash.com/photo-1610949826164-bfa9ebfb37f6?auto=format&fit=crop&w=100&q=80" alt="Cement"></td>
-            <td><button onclick="contactSupplier('Chadwick’s')">Contact</button></td>
-          </tr>
-          <tr>
-            <td>Woodies</td>
-            <td>Concrete Mix 25kg</td>
-            <td>€11.50</td>
-            <td>Limited</td>
-            <td><img src="https://images.unsplash.com/photo-1581091012184-f66c68e6182c?auto=format&fit=crop&w=100&q=80" alt="Concrete Mix"></td>
-            <td><button onclick="contactSupplier('Woodies')">Contact</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Repeat other categories similarly... Timber, Tools, Paint, Bathroom, Garden, Outdoor -->
-  <!-- You can copy the structure above and just update content -->
-
-</main>
-
-<!-- Floating Cart & Wishlist -->
-<div id="floatingWishlist">Wishlist <span id="wishlistCount">0</span></div>
-<div id="floatingCart">Cart <span id="cartCount">0</span> (€<span id="cartTotal">0</span>)</div>
-
-<!-- Back to Top -->
-<div id="backToTop" onclick="scrollToTop()">↑</div>
+<section class="hero">
+  <div class="slogan-hero">
+    No.1 Building Material Price Comparison Site in Wexford
+  </div>
+  <div id="heroCTA" onclick="goToComparison()">Get Started</div>
+</section>
 
 <footer>
-  &copy; 2025 DIY Store Directory
+  <p>&copy; 2025 Buildy. All Rights Reserved.</p>
 </footer>
 
 <script>
-// ===== Collapsible Categories =====
-function toggleCategory(header){
-  const content = header.nextElementSibling;
-  if(content.style.maxHeight){content.style.maxHeight=null;}
-  else{content.style.maxHeight=content.scrollHeight + "px";}
+function goToComparison(){
+  window.location.href='comparison.html';
 }
-
-// ===== Filter Products =====
-function filterProducts(){
-  const input=document.getElementById("searchBar").value.toLowerCase();
-  document.querySelectorAll(".category-content table tbody").forEach(tbody=>{
-    tbody.querySelectorAll("tr").forEach(row=>{
-      const text=row.innerText.toLowerCase();
-      row.style.display = text.includes(input) ? "" : "none";
-    });
-  });
-}
-
-// ===== Floating Cart/Wishlist =====
-let cart = [], wishlist = [];
-
-function contactSupplier(name){
-  alert('Contact '+name+' via their website or phone.');
-}
-
-// Update floating buttons (example)
-function addToCart(product, price){
-  cart.push({product, price});
-  updateCartDisplay();
-}
-
-function addToWishlist(product){
-  wishlist.push(product);
-  updateWishlistDisplay();
-}
-
-function updateCartDisplay(){
-  let total = cart.reduce((sum,item)=>sum+parseFloat(item.price.replace('€','')),0).toFixed(2);
-  document.getElementById('cartCount').innerText = cart.length;
-  document.getElementById('cartTotal').innerText = total;
-}
-
-function updateWishlistDisplay(){
-  document.getElementById('wishlistCount').innerText = wishlist.length;
-}
-
-// ===== Back to Top =====
-window.onscroll = function(){
-  document.getElementById('backToTop').style.display = (document.documentElement.scrollTop > 200) ? 'block':'none';
-}
-function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
 </script>
 
 </body>
